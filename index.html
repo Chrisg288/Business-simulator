@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V6.2</title>
+<title>Business Simulator V6.3</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -57,7 +57,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V6.2</h1><p>V6.2: every variable row has an always-visible editable slider. Change values, then Reset or Commit. Inputs feed work; work creates value; payment converts value to dollars.</p></header>
+<header><h1>Business Simulator V6.3</h1><p>V6.3: corrected efficiency display, gentler food-truck economics, and always-visible variable sliders.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -124,8 +124,24 @@ function setupProfiles(){
  sel.onchange=()=>loadProfile(sel.value);
 }
 
+
+function normalizeProfileDefaults(k){
+ if(k==="food_truck"){
+  if(currentProfile.revenue<24)currentProfile.revenue=24;
+  if(currentProfile.overhead>85)currentProfile.overhead=75;
+  if(currentProfile.startCash<12000)currentProfile.startCash=12000;
+  currentProfile.strength=Math.max(currentProfile.strength||60,65);
+  // Correct wording: food truck does not need "Paid Order Ticket" before food is served.
+  currentProfile.panels.forEach(p=>{
+   if(p.o==="Paid Order Ticket")p.o="Order Ticket";
+   if(p.feed==="Paid Order Ticket")p.feed="Order Ticket";
+   p.ins.forEach(r=>{if(r[0]==="Order Ticket")r[0]="Order Ticket";});
+  });
+ }
+}
+
 function loadProfile(k){
- currentKey=k;currentProfile=clone(profiles[k]);panels=currentProfile.panels;editDraft=null;editMode=false;document.body.classList.remove("editing");
+ currentKey=k;currentProfile=clone(profiles[k]);normalizeProfileDefaults(k);panels=currentProfile.panels;editDraft=null;editMode=false;document.body.classList.remove("editing");
  $("profileSelect").value=k;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.overhead;$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;
  $("valueLabel").textContent=currentProfile.valueLabel || "Value Units";$("profileNote").textContent=currentProfile.note;
  labels();reset();
@@ -151,7 +167,9 @@ function stageUnitValue(i){
 function stageUnitCost(i){
  let rev=num("revenue");
  let n=Math.max(1,panels.length);
- return Math.max(1,rev*(0.08+(i/n)*0.10));
+ let base=rev*(0.035+(i/n)*0.045);
+ if(currentKey==="food_truck")base=rev*(0.025+(i/n)*0.035);
+ return Math.max(0.25,base);
 }
 
 function renderInputRow(p,i,k){
@@ -179,7 +197,7 @@ function render(){
   let bt=s.run?"PAUSE":"RUN",bc=s.run?"pbtn":"pbtn run";
   let unitValue=stageUnitValue(i), unitCost=stageUnitCost(i);
   let used=s.stageUsed[i]||0, tickOut=s.stageOutTick[i]||0, outVal=s.stageValue[i]||0, stCost=s.stageCost[i]||0;
-  let eff=used>0?(tickOut/used)*100:0;
+  let rawEff=used>0?(tickOut/used)*100:0; let eff=Math.min(100,rawEff);
   let valuePct=Math.min(100,(outVal/(Math.max(1,s.totalRevenue+s.totalCost+outVal)))*100);
 
   h+=`<div class="${cls}">
@@ -205,7 +223,7 @@ function render(){
      <div><b>Total output</b><span class="outnum">${Math.round(s.outs[i]||0)}</span></div>
      <div><b>Stage value</b><span class="money">${money(outVal)}</span></div>
      <div><b>Used → Made</b>${used.toFixed(1)} → ${tickOut.toFixed(1)}</div>
-     <div><b>Efficiency</b>${eff.toFixed(0)}%</div>
+     <div><b>Efficiency</b>${eff.toFixed(0)}%${rawEff>100?' + gain':''}</div>
     </div>
     <div class="deliv">${p.d}</div>
   </div></div>
