@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V6</title>
+<title>Business Simulator V6.1</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -54,7 +54,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V6</h1><p>Shows time, cost, value creation, revenue, tax, and profit. Inputs feed work; work creates value; payment converts value to dollars.</p></header>
+<header><h1>Business Simulator V6.1</h1><p>Corrected V6.1: shows time, cost, value creation, revenue, tax, profit, and inline edit mode. Inputs feed work; work creates value; payment converts value to dollars.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -207,7 +207,6 @@ function render(){
  let gp=s.totalRevenue-s.totalCost, tax=Math.max(0,gp*num("taxRate")/100), net=gp-tax;
  $("grossProfit").textContent=money(gp);$("taxBox").textContent=money(tax);$("netProfit").textContent=money(net);
  $("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
- $("cycle").textContent=s.tick;
  $("editMode").textContent=editMode?"EXIT EDIT MODE":"EDIT MODE";
 }
 
