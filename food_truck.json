@@ -49,7 +49,7 @@
       "s": "Convert ready customer to order.",
       "w": "\ud83e\uddfe",
       "c": "Take Order",
-      "o": "Paid Order Ticket",
+      "o": "Order Ticket",
       "d": "Order entered, payment intent, service queue position",
       "feed": "Ready Customer",
       "unit": "Order tickets",
@@ -87,7 +87,7 @@
       "c": "Cook",
       "o": "Prepared Meal",
       "d": "Correct recipe, safe food, portion, packaging",
-      "feed": "Paid Order Ticket",
+      "feed": "Order Ticket",
       "unit": "Prepared meals",
       "ins": [
         [
