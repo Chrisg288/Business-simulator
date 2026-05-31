@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V6.4</title>
+<title>Business Simulator V6.5</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -57,7 +57,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V6.4</h1><p>V6.4: fixes revenue math. Payment-stage output now converts directly to revenue units.</p></header>
+<header><h1>Business Simulator V6.5</h1><p>V6.5: time-step control. One tick can represent 0.5 hour up to 1 business day. Default is 1 day per tick.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -94,7 +94,15 @@ body.editing .editBanner{display:block}
 <label>Overhead Per Hour <span id="ohLab"></span></label><input type="range" id="overhead" min="0" max="2000" step="25" value="350">
 <label>Revenue Per Paid Unit <span id="revLab"></span></label><input type="range" id="revenue" min="10" max="5000" step="5" value="800">
 <label>Tax Rate <span id="taxLab"></span></label><input type="range" id="taxRate" min="0" max="50" step="1" value="20">
-<label>Run Speed <span id="speedLab"></span></label><input type="range" id="speed" min="500" max="5000" step="250" value="2500">
+<label>Simulation Time Step <span id="timeStepLab"></span></label>
+<select id="timeStep">
+<option value="0.5">0.5 hour per tick</option>
+<option value="1">1 hour per tick</option>
+<option value="2">2 hours per tick</option>
+<option value="4">4 hours per tick</option>
+<option value="8" selected>1 business day per tick</option>
+</select>
+<label>Animation Speed <span id="speedLab"></span></label><input type="range" id="speed" min="500" max="4000" step="250" value="2000">
 </details>
 
 <div id="seq"></div><div class="log" id="log"></div>
@@ -147,9 +155,16 @@ function loadProfile(k){
  labels();reset();
 }
 
+function timeStepLabel(){
+ let h=Number($("timeStep").value);
+ if(h===8)return "1 business day / tick";
+ if(h===0.5)return "0.5 hour / tick";
+ return h+" hours / tick";
+}
+
 function labels(){
  $("cashLab").textContent=money(num("startCash"));$("strLab").textContent=num("strength")+"%";$("ohLab").textContent=money(num("overhead"));
- $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec";
+ $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("timeStepLab").textContent=timeStepLabel();$("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec/tick";
 }
 
 function blocks(v,c){
@@ -230,7 +245,9 @@ function render(){
   <div class="foot"><b>Input stock:</b> ${Math.round(s.stock[i])} &nbsp; <b>${p.o}:</b> ${Math.round(s.outs[i])}</div></div>`;
  }
  $("seq").innerHTML=h;
- $("timeBox").textContent=`Day ${Math.floor(s.hours/8)+1} Hr ${s.hours%8}`;
+ let wholeDays=Math.floor(s.hours/8)+1;
+ let remHours=s.hours%8;
+ $("timeBox").textContent=`Day ${wholeDays} Hr ${remHours}`;
  $("cash").textContent=money(s.cash);
  $("totalCost").textContent=money(s.totalCost);
  $("totalRevenue").textContent=money(s.totalRevenue);
@@ -294,15 +311,15 @@ function reset(){
 
 function step(){
  if(s.cash<=0){status("cash is zero");pauseRun();return}
- s.tick++;s.hours++;
- let overhead=num("overhead");s.cash-=overhead;s.totalCost+=overhead;
+ s.tick++;s.hours+=Number($("timeStep").value);
+ let stepHours=Number($("timeStep").value);let overhead=num("overhead")*stepHours;s.cash-=overhead;s.totalCost+=overhead;
  let st=num("strength")/100;s.active=panels.map(()=>false);s.stageUsed=panels.map(()=>0);s.stageOutTick=panels.map(()=>0);
 
  for(let i=0;i<panels.length;i++){
-  if(i==0)s.stock[0]=Math.min(100,s.stock[0]+(3+Math.random()*5));
+  if(i==0)s.stock[0]=Math.min(100,s.stock[0]+(3+Math.random()*5)*stepHours);
   let available=s.stock[i],otherAvg=(s.vals[i][1]+s.vals[i][2]+s.vals[i][3])/3;
   if(available<1||otherAvg<1)continue;
-  let proc=Math.min(available,otherAvg,(5+Math.random()*5)*st);if(proc<=0)continue;
+  let proc=Math.min(available,otherAvg,(5+Math.random()*5)*st*stepHours);if(proc<=0)continue;
 
   s.active[i]=true;s.stock[i]=Math.max(0,s.stock[i]-proc);s.stageUsed[i]=proc;
   for(let k=1;k<4;k++)s.vals[i][k]=Math.max(0,s.vals[i][k]-proc*(.20+Math.random()*.25));
@@ -328,7 +345,7 @@ function step(){
   }
  }
  if(s.cash<0){s.cash=0;log("FAILURE: cash reached zero.");pauseRun()}
- status("tick "+s.tick+" / hour "+s.hours+" processed value and money.");render();
+ status("tick "+s.tick+" / "+timeStepLabel()+" processed value and money.");render();
 }
 
 function startRun(){if(s.run)return;if(editMode){status("commit or exit edit mode before running.");return}s.run=true;$("start").textContent="RUNNING";status("running.");s.timer=setInterval(step,num("speed"));render()}
@@ -342,7 +359,7 @@ function exportJson(){currentProfile.revenue=num("revenue");currentProfile.overh
 
 $("start").onclick=startRun;$("pause").onclick=pauseRun;$("step").onclick=step;$("reset").onclick=reset;
 $("editMode").onclick=enterEditMode;$("commitEdits").onclick=commitEdits;$("saveLocal").onclick=saveLocal;$("loadLocal").onclick=loadLocal;$("resetDefaults").onclick=resetDefaults;$("exportJson").onclick=exportJson;
-["startCash","strength","overhead","revenue","taxRate","speed"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
+["startCash","strength","overhead","revenue","taxRate","speed","timeStep"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
 init();
 </script>
 </body>
