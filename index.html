@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V6.3</title>
+<title>Business Simulator V6.4</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -57,7 +57,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V6.3</h1><p>V6.3: corrected efficiency display, gentler food-truck economics, and always-visible variable sliders.</p></header>
+<header><h1>Business Simulator V6.4</h1><p>V6.4: fixes revenue math. Payment-stage output now converts directly to revenue units.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -314,8 +314,14 @@ function step(){
   if(i<panels.length-1)s.stock[i+1]=Math.min(100,s.stock[i+1]+out);
 
   if(i==panels.length-2){
-   let paid=Math.max(0,Math.round(out/8));
-   if(paid>0){let rev=paid*num("revenue");s.paid+=paid;s.cash+=rev;s.totalRevenue+=rev;}
+   // Payment-stage output equals paid revenue units in this simplified model.
+   let paid=Math.max(0,out);
+   if(paid>0){
+    let rev=paid*num("revenue");
+    s.paid+=paid;
+    s.cash+=rev;
+    s.totalRevenue+=rev;
+   }
   }
   if(i==panels.length-1){
    s.stock[0]=Math.min(100,s.stock[0]+out*.30);s.vals[0][1]=Math.min(100,s.vals[0][1]+out*.12);
