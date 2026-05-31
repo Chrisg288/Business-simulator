@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V6.1</title>
+<title>Business Simulator V6.2</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -30,6 +30,9 @@ body.editing .panel{border-color:#7557c8}
 .bar{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;height:10px}.blk{background:#e7edf4;border:1px solid #ccd;border-radius:3px}
 .on.b{background:#1976d2}.on.g{background:#29972d}.on.y{background:#f0b600}.on.o{background:#b96d22}.on.p{background:#7557c8}.on.r{background:#b00020}
 .editSlider{height:22px;margin-top:2px;accent-color:#7557c8}.defaultHint{font-size:10px;color:#555;margin-top:2px}
+.miniEdit{height:18px;margin-top:2px;accent-color:#7557c8}
+.editHint{font-size:10px;color:#555;margin-top:1px}
+
 .process,.out{border:2px solid #123b64;border-radius:12px;overflow:hidden;text-align:center;background:#f8fbff;min-height:135px}
 .out{border-color:#1f7a2e;background:#fbfffb}
 .process h3,.out h3{margin:0;padding:5px;background:#0b5da6;color:white;font-size:12px}.out h3{background:#1f8a2e}
@@ -54,7 +57,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V6.1</h1><p>Corrected V6.1: shows time, cost, value creation, revenue, tax, profit, and inline edit mode. Inputs feed work; work creates value; payment converts value to dollars.</p></header>
+<header><h1>Business Simulator V6.2</h1><p>V6.2: every variable row has an always-visible editable slider. Change values, then Reset or Commit. Inputs feed work; work creates value; payment converts value to dollars.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -63,7 +66,7 @@ body.editing .editBanner{display:block}
 </div>
 
 <div class="controls">
-<button id="editMode">EDIT MODE</button><button id="commitEdits">COMMIT VALUES</button><button id="saveLocal">SAVE LOCAL</button><button id="exportJson">EXPORT JSON</button>
+<button id="editMode">OPTIONAL EDIT MODE</button><button id="commitEdits">COMMIT / RESET VALUES</button><button id="saveLocal">SAVE LOCAL</button><button id="exportJson">EXPORT JSON</button>
 </div>
 
 <div class="controls">
@@ -152,12 +155,21 @@ function stageUnitCost(i){
 }
 
 function renderInputRow(p,i,k){
- const r=p.ins[k];let displayVal=(k==0)?s.stock[i]:s.vals[i][k];
- if(editMode){
-  let def=(editDraft||panels)[i].ins[k][3];
-  return `<div class="row"><div>${r[1]}</div><div><div class="name">${r[0]}</div><input class="editSlider" type="range" min="0" max="100" step="1" value="${def}" data-p="${i}" data-i="${k}" oninput="sliderChange(this)"><div class="defaultHint">new default: <span id="draft_${i}_${k}">${def}</span> | current: ${Math.round(displayVal)}</div></div><div class="val">${def}</div><div class="inarrow">→</div></div>`;
- }
- return `<div class="row"><div>${r[1]}</div><div><div class="name">${r[0]}</div>${blocks(displayVal,r[2])}</div><div class="val">${Math.round(displayVal)}</div><div class="inarrow">→</div></div>`;
+ const r=p.ins[k];
+ let displayVal=(k==0)?s.stock[i]:s.vals[i][k];
+ let def=panels[i].ins[k][3];
+
+ return `<div class="row">
+  <div>${r[1]}</div>
+  <div>
+   <div class="name">${r[0]}</div>
+   ${blocks(displayVal,r[2])}
+   <input class="miniEdit" type="range" min="0" max="100" step="1" value="${def}" data-p="${i}" data-i="${k}" oninput="liveDefaultChange(this)">
+   <div class="editHint">default: <span id="def_${i}_${k}">${def}</span> | current run: ${Math.round(displayVal)}</div>
+  </div>
+  <div class="val">${Math.round(displayVal)}</div>
+  <div class="inarrow">→</div>
+ </div>`;
 }
 
 function render(){
@@ -210,6 +222,16 @@ function render(){
  $("editMode").textContent=editMode?"EXIT EDIT MODE":"EDIT MODE";
 }
 
+
+function liveDefaultChange(inp){
+ let p=Number(inp.dataset.p),i=Number(inp.dataset.i),v=Number(inp.value);
+ panels[p].ins[i][3]=v;
+ currentProfile.panels[p].ins[i][3]=v;
+ let span=$("def_"+p+"_"+i);
+ if(span)span.textContent=v;
+ status("edited "+panels[p].ins[i][0]+" default to "+v+". Click RESET to restart using changed defaults, or SAVE LOCAL / EXPORT JSON.");
+}
+
 function sliderChange(inp){
  if(!editDraft)return;let p=Number(inp.dataset.p),i=Number(inp.dataset.i),v=Number(inp.value);editDraft[p].ins[i][3]=v;
  let span=$("draft_"+p+"_"+i);if(span)span.textContent=v;inp.closest(".row").querySelector(".val").textContent=v;
@@ -223,9 +245,20 @@ function enterEditMode(){
 }
 
 function commitEdits(){
- if(!editMode||!editDraft){status("edit mode is not active.");return}
- panels=clone(editDraft);currentProfile.panels=clone(editDraft);editDraft=null;editMode=false;document.body.classList.remove("editing");
- status("values committed. Simulation reset with new defaults.");reset();
+ if(editMode&&editDraft){
+  panels=clone(editDraft);
+  currentProfile.panels=clone(editDraft);
+  editDraft=null;
+  editMode=false;
+  document.body.classList.remove("editing");
+ }
+ currentProfile.revenue=num("revenue");
+ currentProfile.overhead=num("overhead");
+ currentProfile.startCash=num("startCash");
+ currentProfile.strength=num("strength");
+ currentProfile.panels=clone(panels);
+ status("values committed. Simulation reset with current defaults.");
+ reset();
 }
 
 function log(x){$("log").innerHTML+=x+"<br>";$("log").scrollTop=$("log").scrollHeight}
