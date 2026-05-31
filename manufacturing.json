@@ -1,0 +1,300 @@
+{
+  "name": "Custom Manufacturing",
+  "note": "Sell a product, define it, buy materials, build to spec, deliver, get paid, and improve.",
+  "paidLabel": "Paid Jobs",
+  "valueLabel": "Validated Products",
+  "revenue": 1800,
+  "overhead": 500,
+  "startCash": 25000,
+  "strength": 60,
+  "panels": [
+    {
+      "t": "Customer List",
+      "s": "Find possible buyers.",
+      "w": "\ud83d\udcc7",
+      "c": "Identify",
+      "o": "Qualified Lead",
+      "d": "Prospect list, decision makers, needs, contact info",
+      "feed": "Market source",
+      "unit": "Qualified leads",
+      "ins": [
+        [
+          "Market",
+          "\ud83c\udf0e",
+          "b",
+          60
+        ],
+        [
+          "Research",
+          "\ud83d\udd0e",
+          "b",
+          58
+        ],
+        [
+          "Data Quality",
+          "\u2705",
+          "y",
+          52
+        ],
+        [
+          "Cash",
+          "\ud83d\udcb5",
+          "g",
+          60
+        ]
+      ]
+    },
+    {
+      "t": "Sales",
+      "s": "Convert lead to order.",
+      "w": "\ud83d\udcde",
+      "c": "Sell",
+      "o": "Sales Contract",
+      "d": "Quote, accepted scope, price, deposit/order",
+      "feed": "Qualified Lead",
+      "unit": "Signed contracts",
+      "ins": [
+        [
+          "Qualified Lead",
+          "\ud83c\udfaf",
+          "b",
+          0
+        ],
+        [
+          "Sales Labor",
+          "\u260e\ufe0f",
+          "b",
+          55
+        ],
+        [
+          "Quote",
+          "\ud83e\uddfe",
+          "y",
+          62
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "g",
+          50
+        ]
+      ]
+    },
+    {
+      "t": "Design / Engineering",
+      "s": "Define buildable product.",
+      "w": "\ud83e\uddd1\u200d\ud83d\udcbb",
+      "c": "Engineer",
+      "o": "Build Package",
+      "d": "Drawings, BOMs, specs, routings, approvals",
+      "feed": "Sales Contract",
+      "unit": "Build packages",
+      "ins": [
+        [
+          "Contract",
+          "\ud83e\uddfe",
+          "b",
+          0
+        ],
+        [
+          "Eng Hours",
+          "\ud83d\udcd0",
+          "b",
+          65
+        ],
+        [
+          "Customer Info",
+          "\ud83d\uddc2\ufe0f",
+          "y",
+          58
+        ],
+        [
+          "Cash",
+          "\ud83d\udcb5",
+          "g",
+          55
+        ]
+      ]
+    },
+    {
+      "t": "Supply Chain",
+      "s": "Prepare materials.",
+      "w": "\ud83d\ude9a",
+      "c": "Procure",
+      "o": "Material Kit",
+      "d": "Right material, quantity, quality, price, place, time",
+      "feed": "Build Package",
+      "unit": "Material kits",
+      "ins": [
+        [
+          "Build Package",
+          "\u2705",
+          "b",
+          0
+        ],
+        [
+          "Suppliers",
+          "\ud83c\udfed",
+          "p",
+          55
+        ],
+        [
+          "Purchasing",
+          "\ud83d\uded2",
+          "b",
+          60
+        ],
+        [
+          "Cash",
+          "\ud83d\udcb5",
+          "g",
+          48
+        ]
+      ]
+    },
+    {
+      "t": "Factory",
+      "s": "Build to spec.",
+      "w": "\ud83d\udee0\ufe0f",
+      "c": "Build",
+      "o": "Conforming Product",
+      "d": "Finished product, inspection, test, quality record",
+      "feed": "Material Kit",
+      "unit": "Conforming units",
+      "ins": [
+        [
+          "Material Kit",
+          "\ud83d\udce6",
+          "o",
+          0
+        ],
+        [
+          "Build Package",
+          "\ud83d\udcd0",
+          "b",
+          0
+        ],
+        [
+          "Shop Labor",
+          "\ud83d\udc77",
+          "b",
+          62
+        ],
+        [
+          "Quality",
+          "\u2705",
+          "y",
+          68
+        ]
+      ]
+    },
+    {
+      "t": "Turnover",
+      "s": "Deliver and accept.",
+      "w": "\ud83e\udd1d",
+      "c": "Turnover",
+      "o": "Accepted Delivery",
+      "d": "Handoff, training, documents, acceptance signature",
+      "feed": "Conforming Product",
+      "unit": "Accepted deliveries",
+      "ins": [
+        [
+          "Product",
+          "\ud83d\ude9a",
+          "b",
+          0
+        ],
+        [
+          "Handoff",
+          "\ud83d\udccb",
+          "b",
+          55
+        ],
+        [
+          "Customer Ready",
+          "\ud83e\udd1d",
+          "y",
+          60
+        ],
+        [
+          "Docs",
+          "\ud83d\udcd8",
+          "p",
+          58
+        ]
+      ]
+    },
+    {
+      "t": "Payment",
+      "s": "Collect cash.",
+      "w": "\ud83d\udcb3",
+      "c": "Collect",
+      "o": "Paid Job",
+      "d": "Invoice, payment, margin, receivable closed",
+      "feed": "Accepted Delivery",
+      "unit": "Paid jobs",
+      "ins": [
+        [
+          "Accepted Delivery",
+          "\u2705",
+          "b",
+          0
+        ],
+        [
+          "Invoice Work",
+          "\ud83e\uddfe",
+          "b",
+          70
+        ],
+        [
+          "Payment Trust",
+          "\ud83e\udd1d",
+          "y",
+          58
+        ],
+        [
+          "Cash Buffer",
+          "\ud83d\udcb5",
+          "g",
+          50
+        ]
+      ]
+    },
+    {
+      "t": "Satisfaction",
+      "s": "Validate delivered value.",
+      "w": "\u2b50",
+      "c": "Validate",
+      "o": "Validated Product",
+      "d": "CSAT, issue closure, referral, repeat demand",
+      "feed": "Paid Job",
+      "unit": "Validated products",
+      "ins": [
+        [
+          "Paid Job",
+          "\ud83d\udcb0",
+          "g",
+          0
+        ],
+        [
+          "Support",
+          "\ud83c\udfa7",
+          "b",
+          55
+        ],
+        [
+          "Quality Experience",
+          "\u2705",
+          "y",
+          70
+        ],
+        [
+          "Follow-Up",
+          "\ud83d\udce3",
+          "y",
+          45
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "name": "Tire Sales / Tire Shop",
+  "note": "Identify vehicle need, sell tires, source inventory, install safely, collect payment, and retain customer.",
+  "paidLabel": "Paid Tire Jobs",
+  "valueLabel": "Safe Vehicles",
+  "revenue": 850,
+  "overhead": 325,
+  "startCash": 15000,
+  "strength": 62,
+  "panels": [
+    {
+      "t": "Vehicle Need",
+      "s": "Identify tire requirement.",
+      "w": "\ud83d\ude97",
+      "c": "Diagnose",
+      "o": "Tire Need",
+      "d": "Vehicle info, size, season, wear, urgency",
+      "feed": "Drivers / appointments",
+      "unit": "Tire needs",
+      "ins": [
+        [
+          "Drivers",
+          "\ud83d\ude97",
+          "b",
+          58
+        ],
+        [
+          "Inspection",
+          "\ud83d\udd0e",
+          "b",
+          70
+        ],
+        [
+          "Fitment Data",
+          "\ud83d\udccb",
+          "y",
+          72
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "g",
+          62
+        ]
+      ]
+    },
+    {
+      "t": "Sales Quote",
+      "s": "Convert need to approved tire sale.",
+      "w": "\ud83d\udcde",
+      "c": "Quote",
+      "o": "Approved Tire Order",
+      "d": "Tire selection, quote, approval, appointment",
+      "feed": "Tire Need",
+      "unit": "Approved orders",
+      "ins": [
+        [
+          "Tire Need",
+          "\ud83c\udfaf",
+          "b",
+          0
+        ],
+        [
+          "Sales Labor",
+          "\u260e\ufe0f",
+          "b",
+          65
+        ],
+        [
+          "Price / Offer",
+          "\ud83e\uddfe",
+          "y",
+          58
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "g",
+          62
+        ]
+      ]
+    },
+    {
+      "t": "Inventory / Supply",
+      "s": "Get correct tires ready.",
+      "w": "\ud83d\udce6",
+      "c": "Source",
+      "o": "Ready Tire Set",
+      "d": "Right tire size, rating, quantity, location, time",
+      "feed": "Approved Tire Order",
+      "unit": "Ready tire sets",
+      "ins": [
+        [
+          "Approved Order",
+          "\u2705",
+          "b",
+          0
+        ],
+        [
+          "Supplier Stock",
+          "\ud83c\udfed",
+          "p",
+          60
+        ],
+        [
+          "Purchasing",
+          "\ud83d\uded2",
+          "b",
+          68
+        ],
+        [
+          "Cash",
+          "\ud83d\udcb5",
+          "g",
+          52
+        ]
+      ]
+    },
+    {
+      "t": "Install",
+      "s": "Mount, balance, torque.",
+      "w": "\ud83d\udd27",
+      "c": "Install",
+      "o": "Installed Tire Set",
+      "d": "Mounted tires, balanced wheels, torque record",
+      "feed": "Ready Tire Set",
+      "unit": "Install jobs",
+      "ins": [
+        [
+          "Tire Set",
+          "\ud83d\udede",
+          "o",
+          0
+        ],
+        [
+          "Technician",
+          "\ud83d\udc77",
+          "b",
+          62
+        ],
+        [
+          "Equipment",
+          "\u2699\ufe0f",
+          "p",
+          75
+        ],
+        [
+          "Safety Standard",
+          "\u2705",
+          "y",
+          82
+        ]
+      ]
+    },
+    {
+      "t": "Payment / Invoice",
+      "s": "Collect and close.",
+      "w": "\ud83d\udcb3",
+      "c": "Collect",
+      "o": "Paid Tire Job",
+      "d": "Invoice, payment, warranty registration",
+      "feed": "Installed Tire Set",
+      "unit": "Paid jobs",
+      "ins": [
+        [
+          "Installed Set",
+          "\ud83d\udede",
+          "b",
+          0
+        ],
+        [
+          "Invoice Work",
+          "\ud83e\uddfe",
+          "b",
+          78
+        ],
+        [
+          "Payment Trust",
+          "\ud83e\udd1d",
+          "y",
+          66
+        ],
+        [
+          "Cash Drawer",
+          "\ud83d\udcb5",
+          "g",
+          65
+        ]
+      ]
+    },
+    {
+      "t": "Retention",
+      "s": "Bring customer back.",
+      "w": "\u2b50",
+      "c": "Retain",
+      "o": "Return Customer",
+      "d": "Rotation reminder, review, seasonal changeover lead",
+      "feed": "Paid Tire Job",
+      "unit": "Return customers",
+      "ins": [
+        [
+          "Paid Job",
+          "\ud83d\udcb0",
+          "g",
+          0
+        ],
+        [
+          "Service Quality",
+          "\u2705",
+          "y",
+          78
+        ],
+        [
+          "Follow-Up",
+          "\ud83d\udce3",
+          "b",
+          48
+        ],
+        [
+          "Customer Record",
+          "\ud83d\udccb",
+          "p",
+          70
+        ]
+      ]
+    }
+  ]
+}

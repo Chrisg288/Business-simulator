@@ -1,0 +1,192 @@
+{
+  "name": "Hair Salon",
+  "note": "Book customer, consult, perform service, checkout, rebook, and earn referral.",
+  "paidLabel": "Paid Appointments",
+  "valueLabel": "Satisfied Clients",
+  "revenue": 58,
+  "overhead": 125,
+  "startCash": 6000,
+  "strength": 63,
+  "panels": [
+    {
+      "t": "Booking",
+      "s": "Fill appointment calendar.",
+      "w": "\ud83d\udcc5",
+      "c": "Book",
+      "o": "Booked Appointment",
+      "d": "Client, service type, time slot, stylist assigned",
+      "feed": "Client demand",
+      "unit": "Booked appointments",
+      "ins": [
+        [
+          "Demand",
+          "\ud83d\ude4b",
+          "b",
+          45
+        ],
+        [
+          "Availability",
+          "\ud83d\udcc5",
+          "p",
+          68
+        ],
+        [
+          "Reception Time",
+          "\u260e\ufe0f",
+          "b",
+          60
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "g",
+          55
+        ]
+      ]
+    },
+    {
+      "t": "Consultation",
+      "s": "Clarify desired look.",
+      "w": "\ud83d\udcac",
+      "c": "Consult",
+      "o": "Service Plan",
+      "d": "Style goal, color/cut plan, risk agreement",
+      "feed": "Booked Appointment",
+      "unit": "Service plans",
+      "ins": [
+        [
+          "Appointment",
+          "\ud83d\udcc5",
+          "b",
+          0
+        ],
+        [
+          "Stylist Skill",
+          "\u2702\ufe0f",
+          "y",
+          72
+        ],
+        [
+          "Client Info",
+          "\ud83d\udccb",
+          "b",
+          62
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "g",
+          58
+        ]
+      ]
+    },
+    {
+      "t": "Service Delivery",
+      "s": "Perform salon service.",
+      "w": "\u2702\ufe0f",
+      "c": "Style",
+      "o": "Completed Service",
+      "d": "Cut, color, wash, style completed to expectation",
+      "feed": "Service Plan",
+      "unit": "Completed services",
+      "ins": [
+        [
+          "Service Plan",
+          "\ud83e\uddfe",
+          "b",
+          0
+        ],
+        [
+          "Stylist Labor",
+          "\u2702\ufe0f",
+          "b",
+          70
+        ],
+        [
+          "Products",
+          "\ud83e\uddf4",
+          "o",
+          62
+        ],
+        [
+          "Quality",
+          "\u2705",
+          "y",
+          72
+        ]
+      ]
+    },
+    {
+      "t": "Checkout",
+      "s": "Collect payment.",
+      "w": "\ud83d\udcb3",
+      "c": "Collect",
+      "o": "Paid Appointment",
+      "d": "Payment, product upsell, receipt, tip",
+      "feed": "Completed Service",
+      "unit": "Paid appointments",
+      "ins": [
+        [
+          "Completed Service",
+          "\u2705",
+          "b",
+          0
+        ],
+        [
+          "POS Time",
+          "\ud83d\udcb3",
+          "b",
+          75
+        ],
+        [
+          "Client Trust",
+          "\ud83e\udd1d",
+          "y",
+          64
+        ],
+        [
+          "Cash Drawer",
+          "\ud83d\udcb5",
+          "g",
+          60
+        ]
+      ]
+    },
+    {
+      "t": "Rebook / Satisfaction",
+      "s": "Create repeat client.",
+      "w": "\u2b50",
+      "c": "Rebook",
+      "o": "Satisfied Client",
+      "d": "Rebooked appointment, review, referral, product recommendation",
+      "feed": "Paid Appointment",
+      "unit": "Satisfied clients",
+      "ins": [
+        [
+          "Paid Appointment",
+          "\ud83d\udcb0",
+          "g",
+          0
+        ],
+        [
+          "Result Quality",
+          "\u2705",
+          "y",
+          72
+        ],
+        [
+          "Follow-Up",
+          "\ud83d\udce3",
+          "b",
+          40
+        ],
+        [
+          "Relationship",
+          "\ud83e\udd1d",
+          "g",
+          62
+        ]
+      ]
+    }
+  ]
+}

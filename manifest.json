@@ -1,0 +1,32 @@
+[
+  {
+    "key": "food_truck",
+    "name": "Food Service / Food Truck",
+    "file": "food_truck.json"
+  },
+  {
+    "key": "manufacturing",
+    "name": "Custom Manufacturing",
+    "file": "manufacturing.json"
+  },
+  {
+    "key": "tire_shop",
+    "name": "Tire Sales / Tire Shop",
+    "file": "tire_shop.json"
+  },
+  {
+    "key": "auto_repair",
+    "name": "Auto Repair Shop",
+    "file": "auto_repair.json"
+  },
+  {
+    "key": "hair_salon",
+    "name": "Hair Salon",
+    "file": "hair_salon.json"
+  },
+  {
+    "key": "hotel",
+    "name": "Hotel / Lodging",
+    "file": "hotel.json"
+  }
+]

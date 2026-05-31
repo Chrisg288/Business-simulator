@@ -1,0 +1,228 @@
+{
+  "name": "Hotel / Lodging",
+  "note": "Attract guest, reserve room, prepare room, host stay, collect payment, and earn review/repeat.",
+  "paidLabel": "Paid Stays",
+  "valueLabel": "Satisfied Guests",
+  "revenue": 190,
+  "overhead": 600,
+  "startCash": 30000,
+  "strength": 57,
+  "panels": [
+    {
+      "t": "Demand / Listing",
+      "s": "Attract potential guest.",
+      "w": "\ud83c\udfe8",
+      "c": "Attract",
+      "o": "Booking Lead",
+      "d": "Listing visibility, rate, availability, guest interest",
+      "feed": "Travel demand",
+      "unit": "Booking leads",
+      "ins": [
+        [
+          "Travel Demand",
+          "\ud83c\udf0e",
+          "b",
+          50
+        ],
+        [
+          "Listing Quality",
+          "\ud83d\udcf8",
+          "y",
+          62
+        ],
+        [
+          "Rate Offer",
+          "\ud83d\udcb2",
+          "g",
+          55
+        ],
+        [
+          "Reputation",
+          "\u2b50",
+          "p",
+          58
+        ]
+      ]
+    },
+    {
+      "t": "Reservation",
+      "s": "Convert lead to booking.",
+      "w": "\ud83d\udcc5",
+      "c": "Reserve",
+      "o": "Confirmed Reservation",
+      "d": "Guest info, dates, room type, deposit/guarantee",
+      "feed": "Booking Lead",
+      "unit": "Reservations",
+      "ins": [
+        [
+          "Booking Lead",
+          "\ud83c\udfaf",
+          "b",
+          0
+        ],
+        [
+          "Front Desk",
+          "\u260e\ufe0f",
+          "b",
+          60
+        ],
+        [
+          "Room Availability",
+          "\ud83d\udecf\ufe0f",
+          "p",
+          72
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "g",
+          62
+        ]
+      ]
+    },
+    {
+      "t": "Room Prep",
+      "s": "Make room guest-ready.",
+      "w": "\ud83e\uddf9",
+      "c": "Prepare",
+      "o": "Ready Room",
+      "d": "Clean room, stocked supplies, inspection, key/code ready",
+      "feed": "Confirmed Reservation",
+      "unit": "Ready rooms",
+      "ins": [
+        [
+          "Reservation",
+          "\ud83d\udcc5",
+          "b",
+          0
+        ],
+        [
+          "Housekeeping",
+          "\ud83e\uddf9",
+          "b",
+          64
+        ],
+        [
+          "Supplies",
+          "\ud83e\uddf4",
+          "o",
+          68
+        ],
+        [
+          "Clean Standard",
+          "\u2705",
+          "y",
+          78
+        ]
+      ]
+    },
+    {
+      "t": "Guest Stay",
+      "s": "Deliver lodging service.",
+      "w": "\ud83d\udecf\ufe0f",
+      "c": "Host",
+      "o": "Completed Stay",
+      "d": "Check-in, room nights, service requests, check-out",
+      "feed": "Ready Room",
+      "unit": "Completed stays",
+      "ins": [
+        [
+          "Ready Room",
+          "\ud83d\udecf\ufe0f",
+          "b",
+          0
+        ],
+        [
+          "Guest Service",
+          "\ud83d\ude4b",
+          "b",
+          58
+        ],
+        [
+          "Facilities",
+          "\ud83c\udfe8",
+          "p",
+          70
+        ],
+        [
+          "Comfort",
+          "\u2705",
+          "y",
+          66
+        ]
+      ]
+    },
+    {
+      "t": "Payment",
+      "s": "Collect charges.",
+      "w": "\ud83d\udcb3",
+      "c": "Collect",
+      "o": "Paid Stay",
+      "d": "Room charge, taxes, fees, incidentals, folio closed",
+      "feed": "Completed Stay",
+      "unit": "Paid stays",
+      "ins": [
+        [
+          "Completed Stay",
+          "\u2705",
+          "b",
+          0
+        ],
+        [
+          "Billing Work",
+          "\ud83e\uddfe",
+          "b",
+          70
+        ],
+        [
+          "Payment Trust",
+          "\ud83e\udd1d",
+          "y",
+          62
+        ],
+        [
+          "Cash / Card",
+          "\ud83d\udcb5",
+          "g",
+          68
+        ]
+      ]
+    },
+    {
+      "t": "Review / Loyalty",
+      "s": "Create future demand.",
+      "w": "\u2b50",
+      "c": "Retain",
+      "o": "Satisfied Guest",
+      "d": "Review, loyalty record, referral, repeat booking",
+      "feed": "Paid Stay",
+      "unit": "Satisfied guests",
+      "ins": [
+        [
+          "Paid Stay",
+          "\ud83d\udcb0",
+          "g",
+          0
+        ],
+        [
+          "Service Quality",
+          "\u2705",
+          "y",
+          66
+        ],
+        [
+          "Follow-Up",
+          "\ud83d\udce3",
+          "b",
+          42
+        ],
+        [
+          "Reputation",
+          "\u2b50",
+          "p",
+          58
+        ]
+      ]
+    }
+  ]
+}

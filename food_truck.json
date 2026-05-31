@@ -1,0 +1,228 @@
+{
+  "name": "Food Service / Food Truck",
+  "note": "Attract hungry customers, take orders, prepare safe meals, collect payment, and earn repeat demand.",
+  "paidLabel": "Paid Meals",
+  "valueLabel": "Happy Customers",
+  "revenue": 18,
+  "overhead": 220,
+  "startCash": 8000,
+  "strength": 58,
+  "panels": [
+    {
+      "t": "Menu / Demand",
+      "s": "Match food offer to hungry customers.",
+      "w": "\ud83c\udf54",
+      "c": "Attract",
+      "o": "Ready Customer",
+      "d": "Visible menu, location, appetite, offer clarity",
+      "feed": "Foot traffic / attention",
+      "unit": "Ready customers",
+      "ins": [
+        [
+          "Foot Traffic",
+          "\ud83d\udeb6",
+          "b",
+          65
+        ],
+        [
+          "Menu Appeal",
+          "\ud83c\udf7d\ufe0f",
+          "y",
+          70
+        ],
+        [
+          "Location",
+          "\ud83d\udccd",
+          "p",
+          55
+        ],
+        [
+          "Cash",
+          "\ud83d\udcb5",
+          "g",
+          45
+        ]
+      ]
+    },
+    {
+      "t": "Order Taking",
+      "s": "Convert ready customer to order.",
+      "w": "\ud83e\uddfe",
+      "c": "Take Order",
+      "o": "Paid Order Ticket",
+      "d": "Order entered, payment intent, service queue position",
+      "feed": "Ready Customer",
+      "unit": "Order tickets",
+      "ins": [
+        [
+          "Ready Customer",
+          "\ud83d\ude4b",
+          "b",
+          0
+        ],
+        [
+          "POS Time",
+          "\ud83d\udcb3",
+          "b",
+          75
+        ],
+        [
+          "Menu Clarity",
+          "\ud83d\udccb",
+          "y",
+          68
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "g",
+          62
+        ]
+      ]
+    },
+    {
+      "t": "Food Prep",
+      "s": "Prepare food to standard.",
+      "w": "\ud83d\udc68\u200d\ud83c\udf73",
+      "c": "Cook",
+      "o": "Prepared Meal",
+      "d": "Correct recipe, safe food, portion, packaging",
+      "feed": "Paid Order Ticket",
+      "unit": "Prepared meals",
+      "ins": [
+        [
+          "Order Ticket",
+          "\ud83e\uddfe",
+          "b",
+          0
+        ],
+        [
+          "Ingredients",
+          "\ud83e\udd6c",
+          "o",
+          70
+        ],
+        [
+          "Kitchen Labor",
+          "\ud83d\udc68\u200d\ud83c\udf73",
+          "b",
+          65
+        ],
+        [
+          "Food Safety",
+          "\u2705",
+          "y",
+          80
+        ]
+      ]
+    },
+    {
+      "t": "Handoff",
+      "s": "Deliver meal to customer.",
+      "w": "\ud83e\udd1d",
+      "c": "Serve",
+      "o": "Served Meal",
+      "d": "Meal handed off, correct customer, napkins/condiments",
+      "feed": "Prepared Meal",
+      "unit": "Served meals",
+      "ins": [
+        [
+          "Prepared Meal",
+          "\ud83c\udf71",
+          "b",
+          0
+        ],
+        [
+          "Service Labor",
+          "\ud83d\ude4b",
+          "b",
+          70
+        ],
+        [
+          "Accuracy",
+          "\u2705",
+          "y",
+          75
+        ],
+        [
+          "Speed",
+          "\u26a1",
+          "p",
+          62
+        ]
+      ]
+    },
+    {
+      "t": "Payment Close",
+      "s": "Complete payment and margin.",
+      "w": "\ud83d\udcb3",
+      "c": "Collect",
+      "o": "Paid Meal",
+      "d": "Payment captured, tip, receipt, food cost covered",
+      "feed": "Served Meal",
+      "unit": "Paid meals",
+      "ins": [
+        [
+          "Served Meal",
+          "\ud83c\udf71",
+          "b",
+          0
+        ],
+        [
+          "POS",
+          "\ud83d\udcb3",
+          "b",
+          82
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "y",
+          70
+        ],
+        [
+          "Cash Drawer",
+          "\ud83d\udcb5",
+          "g",
+          65
+        ]
+      ]
+    },
+    {
+      "t": "Satisfaction",
+      "s": "Create repeat demand.",
+      "w": "\u2b50",
+      "c": "Delight",
+      "o": "Repeat Customer",
+      "d": "Good taste, clean service, review, return visit",
+      "feed": "Paid Meal",
+      "unit": "Happy customers",
+      "ins": [
+        [
+          "Paid Meal",
+          "\ud83d\udcb0",
+          "g",
+          0
+        ],
+        [
+          "Taste",
+          "\ud83d\ude0b",
+          "y",
+          72
+        ],
+        [
+          "Service",
+          "\ud83d\ude4b",
+          "b",
+          68
+        ],
+        [
+          "Follow-Up",
+          "\ud83d\udce3",
+          "p",
+          35
+        ]
+      ]
+    }
+  ]
+}

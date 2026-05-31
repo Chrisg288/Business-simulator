@@ -1,0 +1,264 @@
+{
+  "name": "Auto Repair Shop",
+  "note": "Diagnose vehicle, approve repair, source parts, repair/test, collect, and retain trust.",
+  "paidLabel": "Paid Repairs",
+  "valueLabel": "Fixed Vehicles",
+  "revenue": 650,
+  "overhead": 380,
+  "startCash": 18000,
+  "strength": 58,
+  "panels": [
+    {
+      "t": "Intake",
+      "s": "Capture complaint and vehicle data.",
+      "w": "\ud83d\udcdd",
+      "c": "Intake",
+      "o": "Repair Order",
+      "d": "Customer complaint, VIN, symptoms, authorization",
+      "feed": "Customer vehicles",
+      "unit": "Repair orders",
+      "ins": [
+        [
+          "Vehicle",
+          "\ud83d\ude97",
+          "b",
+          55
+        ],
+        [
+          "Advisor Time",
+          "\ud83d\ude4b",
+          "b",
+          62
+        ],
+        [
+          "Customer Info",
+          "\ud83d\udccb",
+          "y",
+          60
+        ],
+        [
+          "Trust",
+          "\ud83e\udd1d",
+          "g",
+          58
+        ]
+      ]
+    },
+    {
+      "t": "Diagnosis",
+      "s": "Find root cause.",
+      "w": "\ud83d\udd0e",
+      "c": "Diagnose",
+      "o": "Approved Estimate",
+      "d": "Diagnostic result, estimate, customer approval",
+      "feed": "Repair Order",
+      "unit": "Approved estimates",
+      "ins": [
+        [
+          "Repair Order",
+          "\ud83e\uddfe",
+          "b",
+          0
+        ],
+        [
+          "Tech Time",
+          "\ud83d\udc77",
+          "b",
+          58
+        ],
+        [
+          "Scan / Tools",
+          "\u2699\ufe0f",
+          "p",
+          70
+        ],
+        [
+          "Knowledge",
+          "\ud83e\udde0",
+          "y",
+          66
+        ]
+      ]
+    },
+    {
+      "t": "Parts Supply",
+      "s": "Get correct parts.",
+      "w": "\ud83d\udce6",
+      "c": "Source",
+      "o": "Ready Parts",
+      "d": "Right part, quality, price, delivery time",
+      "feed": "Approved Estimate",
+      "unit": "Parts kits",
+      "ins": [
+        [
+          "Estimate",
+          "\u2705",
+          "b",
+          0
+        ],
+        [
+          "Supplier",
+          "\ud83c\udfed",
+          "p",
+          58
+        ],
+        [
+          "Parts Work",
+          "\ud83d\uded2",
+          "b",
+          62
+        ],
+        [
+          "Cash",
+          "\ud83d\udcb5",
+          "g",
+          48
+        ]
+      ]
+    },
+    {
+      "t": "Repair",
+      "s": "Fix the vehicle.",
+      "w": "\ud83d\udd27",
+      "c": "Repair",
+      "o": "Repaired Vehicle",
+      "d": "Repair work completed to standard",
+      "feed": "Ready Parts",
+      "unit": "Repaired vehicles",
+      "ins": [
+        [
+          "Parts Kit",
+          "\ud83d\udce6",
+          "o",
+          0
+        ],
+        [
+          "Tech Labor",
+          "\ud83d\udc77",
+          "b",
+          60
+        ],
+        [
+          "Tools",
+          "\u2699\ufe0f",
+          "p",
+          75
+        ],
+        [
+          "Procedure",
+          "\ud83d\udccb",
+          "y",
+          68
+        ]
+      ]
+    },
+    {
+      "t": "QC / Road Test",
+      "s": "Verify repair.",
+      "w": "\u2705",
+      "c": "Verify",
+      "o": "Released Vehicle",
+      "d": "Inspection, road test, codes cleared, customer ready",
+      "feed": "Repaired Vehicle",
+      "unit": "Released vehicles",
+      "ins": [
+        [
+          "Repaired Vehicle",
+          "\ud83d\ude97",
+          "b",
+          0
+        ],
+        [
+          "QC Time",
+          "\u2705",
+          "b",
+          55
+        ],
+        [
+          "Test Route",
+          "\ud83d\udee3\ufe0f",
+          "p",
+          70
+        ],
+        [
+          "Standards",
+          "\ud83d\udccb",
+          "y",
+          70
+        ]
+      ]
+    },
+    {
+      "t": "Payment",
+      "s": "Collect and close.",
+      "w": "\ud83d\udcb3",
+      "c": "Collect",
+      "o": "Paid Repair",
+      "d": "Invoice, payment, warranty note, repair order closed",
+      "feed": "Released Vehicle",
+      "unit": "Paid repairs",
+      "ins": [
+        [
+          "Released Vehicle",
+          "\u2705",
+          "b",
+          0
+        ],
+        [
+          "Invoice Work",
+          "\ud83e\uddfe",
+          "b",
+          75
+        ],
+        [
+          "Payment Trust",
+          "\ud83e\udd1d",
+          "y",
+          62
+        ],
+        [
+          "Cash Drawer",
+          "\ud83d\udcb5",
+          "g",
+          65
+        ]
+      ]
+    },
+    {
+      "t": "Satisfaction",
+      "s": "Maintain trust.",
+      "w": "\u2b50",
+      "c": "Retain",
+      "o": "Trusted Customer",
+      "d": "Review, follow-up, maintenance reminder, repeat visit",
+      "feed": "Paid Repair",
+      "unit": "Fixed vehicles",
+      "ins": [
+        [
+          "Paid Repair",
+          "\ud83d\udcb0",
+          "g",
+          0
+        ],
+        [
+          "Outcome Quality",
+          "\u2705",
+          "y",
+          70
+        ],
+        [
+          "Follow-Up",
+          "\ud83d\udce3",
+          "b",
+          42
+        ],
+        [
+          "Customer Trust",
+          "\ud83e\udd1d",
+          "g",
+          64
+        ]
+      ]
+    }
+  ]
+}
