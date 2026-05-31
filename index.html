@@ -64,8 +64,8 @@ let s={run:false,timer:null,tick:0,cash:25000,paid:0,vals:[],outs:[],stock:[],ac
 const $=id=>document.getElementById(id),money=v=>"$"+Math.round(v).toLocaleString(),num=id=>Number($(id).value);
 async function init(){
  try{
-  manifest=await fetch("profiles/manifest.json").then(r=>r.json());
-  for(const item of manifest){profiles[item.key]=await fetch("profiles/"+item.file).then(r=>r.json());}
+  manifest=await fetch("manifest.json").then(r=>r.json());
+  for(const item of manifest){profiles[item.key]=await fetch(item.file).then(r=>r.json());}
   setupProfiles();loadProfile(manifest[0].key);
  }catch(e){$("status").textContent="ERROR loading profiles: "+e.message;}
 }
