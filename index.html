@@ -1,1 +1,502 @@
-index_phone_optimized.html
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Business Simulator System V2</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
+header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
+h1{margin:0;font-size:18px}p{margin:5px 0}
+main{padding:8px;max-width:1000px;margin:auto}
+.controls,.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+button{min-height:40px;border-radius:12px;border:1px solid #777;background:white;font-size:14px;font-weight:900}
+#start{background:#0b5da6;color:white}
+#pause{background:#b00020;color:white}
+.card,.panel,details{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
+.metric b{display:block;font-size:11px;color:#667;text-transform:uppercase}
+.metric span{font-size:19px;font-weight:900}
+label{display:flex;justify-content:space-between;font-weight:800;margin-top:10px;font-size:14px}
+input{width:100%;height:30px}
+.panel{border:2px solid #bfd0df}
+.panel.active{border-color:#1976d2;box-shadow:0 0 10px #9dc8ef}
+.panel.waiting{border-color:#d5c274}
+.head{display:grid;grid-template-columns:1fr 74px;gap:6px;align-items:center}
+.title{font-size:15px;font-weight:900}
+.sub{font-size:11px;color:#667}
+.pbtn{min-height:32px;border-radius:10px;font-size:12px;background:#b00020;color:white}
+.pbtn.run{background:#1f8a2e;color:white}
+.grid{display:grid;grid-template-columns:1fr;gap:4px;margin-top:6px}
+.inputs{display:grid;gap:4px}
+.row{display:grid;grid-template-columns:26px 1fr 42px;gap:5px;align-items:center;border:1px solid #dce5ee;border-radius:10px;padding:4px}
+.name{font-size:11px;font-weight:900}
+.val{text-align:right;font-weight:900;font-size:13px}
+.bar{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;height:10px}
+.blk{background:#e7edf4;border:1px solid #ccd;border-radius:3px}
+.on.b{background:#1976d2}
+.on.g{background:#29972d}
+.on.y{background:#f0b600}
+.on.o{background:#b96d22}
+.on.p{background:#7557c8}
+.on.r{background:#b00020}
+.arrow{height:10px;width:24px;background:#1976d2;border-radius:3px;position:relative;transform:rotate(90deg);margin:auto;animation:pulse .9s infinite}
+.arrow:after{content:"";position:absolute;right:-9px;top:-5px;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:10px solid #1976d2}
+.arrow.g{background:#1f8a2e}
+.arrow.g:after{border-left-color:#1f8a2e}
+@keyframes pulse{50%{opacity:.45}}
+.box,.out{border:2px solid #123b64;border-radius:12px;overflow:hidden;min-height:58px;text-align:center;background:#f8fbff}
+.out{border-color:#1f7a2e;background:#fbfffb}
+.box h3,.out h3{margin:0;padding:4px;background:#0b5da6;color:white;font-size:11px}
+.out h3{background:#1f8a2e}
+.worker{font-size:24px;padding-top:3px;animation:work .7s infinite alternate}
+@keyframes work{from{transform:rotate(-2deg)}to{transform:rotate(2deg) translateY(-3px)}}
+.stack{display:flex;flex-wrap:wrap;align-content:flex-end;justify-content:center;gap:3px;height:24px;padding:3px}
+.cube{width:10px;height:10px;background:#57c237;border:1px solid #17651d;border-radius:3px}
+.outnum{font-size:15px;font-weight:900;color:#1f8a2e}
+.deliv{font-size:10px;color:#333;padding:0 4px 4px 4px;line-height:1.2}
+.foot{font-size:12px;margin-top:4px}
+.log{background:#111;color:#eee;border-radius:12px;padding:8px;font-family:monospace;font-size:12px;max-height:150px;overflow:auto}
+@media(min-width:900px){
+ .grid{grid-template-columns:1fr 28px 1fr 28px 1fr}
+ .arrow{transform:none}
+ .box,.out{min-height:96px}
+ .worker{font-size:38px}
+ .stack{height:46px}
+ .cube{width:15px;height:15px}
+}
+</style>
+</head>
+
+<body>
+<header>
+<h1>Business Simulator System V2</h1>
+<p>Deliverable-based revenue sequence. Each panel creates a measurable unit of value.</p>
+</header>
+
+<main>
+<div class="controls">
+<button id="start">START ALL</button>
+<button id="pause">PAUSE ALL</button>
+<button id="step">STEP</button>
+<button id="reset">RESET</button>
+</div>
+
+<div class="card" id="status">JavaScript: loading...</div>
+
+<div class="metrics">
+<div class="card metric"><b>Ticks</b><span id="cycle">0</span></div>
+<div class="card metric"><b>Cash</b><span id="cash">$0</span></div>
+<div class="card metric"><b>Paid Orders</b><span id="paid">0</span></div>
+<div class="card metric"><b>Validated Value</b><span id="systemOut">0</span></div>
+</div>
+
+<details open>
+<summary><b>Scenario Controls</b></summary>
+
+<label>Starting Cash <span id="cashLab"></span></label>
+<input type="range" id="startCash" min="1000" max="100000" step="1000" value="25000">
+
+<label>Process Strength <span id="strLab"></span></label>
+<input type="range" id="strength" min="10" max="100" step="5" value="60">
+
+<label>Overhead Per Tick <span id="ohLab"></span></label>
+<input type="range" id="overhead" min="0" max="2000" step="50" value="350">
+
+<label>Revenue Per Paid Unit <span id="revLab"></span></label>
+<input type="range" id="revenue" min="100" max="5000" step="100" value="800">
+
+<label>Run Speed <span id="speedLab"></span></label>
+<input type="range" id="speed" min="1000" max="5000" step="250" value="2500">
+</details>
+
+<div id="seq"></div>
+<div class="log" id="log"></div>
+</main>
+
+<script>
+const panels=[
+{
+ t:"Market / Customer List",
+ s:"Build usable contact inventory.",
+ w:"📇",
+ c:"Identify",
+ o:"Callable Customer List",
+ d:"Names, phone numbers, contact records, segment tags, permission/status",
+ feed:"Market source",
+ unit:"Contact records",
+ ins:[
+  ["Raw Market","🌎","b"],
+  ["Research","🔎","b"],
+  ["Data Quality","✅","y"],
+  ["Cash","💵","g"]
+ ]
+},
+{
+ t:"Sales",
+ s:"Convert contacts into contracts.",
+ w:"📞",
+ c:"Sell",
+ o:"Sales Contract",
+ d:"Calls made, conversations, qualified prospects, quotes, signed order/deposit",
+ feed:"Callable Customer List",
+ unit:"Signed contracts",
+ ins:[
+  ["Customer List","📇","b"],
+  ["Call Labor","☎️","b"],
+  ["Offer / Quote","🧾","y"],
+  ["Trust","🤝","g"]
+ ]
+},
+{
+ t:"Design / Engineering",
+ s:"Convert contract into build definition.",
+ w:"🧑‍💻",
+ c:"Engineer",
+ o:"Build Package",
+ d:"Drawings, BOMs, engineering specs, routings, approvals, revision-controlled instructions",
+ feed:"Sales Contract",
+ unit:"Approved build packages",
+ ins:[
+  ["Sales Contract","🧾","b"],
+  ["Eng Hours","📐","b"],
+  ["Customer Info","🗂️","y"],
+  ["Cash","💵","g"]
+ ]
+},
+{
+ t:"Supply Chain",
+ s:"Make the material kit production-ready.",
+ w:"🚚",
+ c:"Procure",
+ o:"Material Kit",
+ d:"Right material, quantity, quality, price, supplier, place, and time",
+ feed:"Build Package",
+ unit:"Ready material kits",
+ ins:[
+  ["Build Package","✅","b"],
+  ["Supplier Capacity","🏭","p"],
+  ["Purchasing Work","🛒","b"],
+  ["Cash","💵","g"]
+ ]
+},
+{
+ t:"Factory",
+ s:"Convert package and kit into product.",
+ w:"🛠️",
+ c:"Build",
+ o:"Conforming Product",
+ d:"Finished product made to drawings, specs, quality checks, and standards",
+ feed:"Material Kit",
+ unit:"Conforming units",
+ ins:[
+  ["Material Kit","📦","o"],
+  ["Build Package","📐","b"],
+  ["Shop Labor","👷","b"],
+  ["Quality Standard","✅","y"]
+ ]
+},
+{
+ t:"Transaction / Turnover",
+ s:"Deliver value to customer.",
+ w:"🤝",
+ c:"Turnover",
+ o:"Accepted Delivery",
+ d:"Delivered unit, handoff, training, documents, acceptance signature, punch list",
+ feed:"Conforming Product",
+ unit:"Accepted deliveries",
+ ins:[
+  ["Product","🚚","b"],
+  ["Handoff Work","📋","b"],
+  ["Customer Ready","🤝","y"],
+  ["Docs / Training","📘","p"]
+ ]
+},
+{
+ t:"Payment / Collection",
+ s:"Convert acceptance into cash.",
+ w:"💳",
+ c:"Collect",
+ o:"Paid Order",
+ d:"Invoice issued, payment collected, margin captured, receivable closed",
+ feed:"Accepted Delivery",
+ unit:"Paid invoices",
+ ins:[
+  ["Accepted Delivery","✅","b"],
+  ["Invoice Work","🧾","b"],
+  ["Payment Trust","🤝","y"],
+  ["Cash Buffer","💵","g"]
+ ]
+},
+{
+ t:"Customer Satisfaction",
+ s:"Validate delivered value.",
+ w:"⭐",
+ c:"Validate",
+ o:"Validated Customer Value",
+ d:"CSAT, issue closure, support record, testimonial, referral, repeat lead, improvement signal",
+ feed:"Paid Order",
+ unit:"Validated value records",
+ ins:[
+  ["Paid Order","💰","g"],
+  ["Support","🎧","b"],
+  ["Quality Experience","✅","y"],
+  ["Follow-Up","📣","y"]
+ ]
+}
+];
+
+let s={
+ run:false,
+ timer:null,
+ tick:0,
+ cash:25000,
+ paid:0,
+ vals:[],
+ outs:[],
+ stock:[],
+ active:[]
+};
+
+const $=id=>document.getElementById(id);
+const money=v=>"$"+Math.round(v).toLocaleString();
+const num=id=>Number($(id).value);
+
+function labels(){
+ $("cashLab").textContent=money(num("startCash"));
+ $("strLab").textContent=num("strength")+"%";
+ $("ohLab").textContent=money(num("overhead"));
+ $("revLab").textContent=money(num("revenue"));
+ $("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec";
+}
+
+function blocks(v,c){
+ let n=Math.round(Math.max(0,Math.min(100,v))/10);
+ let h='<div class="bar">';
+ for(let i=0;i<10;i++){
+  h+=`<div class="blk ${i<n?'on '+c:''}"></div>`;
+ }
+ return h+"</div>";
+}
+
+function cubes(v){
+ let n=Math.min(20,Math.round(v/5));
+ let h="";
+ for(let i=0;i<n;i++){
+  h+='<div class="cube"></div>';
+ }
+ return h;
+}
+
+function render(){
+ let h="";
+
+ for(let i=0;i<panels.length;i++){
+  const p=panels[i];
+
+  let cls="panel";
+  if(s.active[i])cls+=" active";
+  if(!s.active[i] && s.stock[i] < 1 && i>0)cls+=" waiting";
+
+  let btnText=s.run?"PAUSE":"RUN";
+  let btnClass=s.run?"pbtn":"pbtn run";
+
+  h+=`<div class="${cls}">
+  <div class="head">
+   <div>
+    <div class="title">PANEL ${i+1}: ${p.t}</div>
+    <div class="sub">Needs: ${p.feed} | Unit: ${p.unit}</div>
+   </div>
+   <button class="${btnClass}" onclick="toggleRunAll()">${btnText}</button>
+  </div>
+
+  <div class="grid">
+  <div class="inputs">`;
+
+  for(let k=0;k<p.ins.length;k++){
+   const r=p.ins[k];
+   let v=(k==0)?s.stock[i]:s.vals[i][k];
+
+   h+=`<div class="row">
+   <div>${r[1]}</div>
+   <div><div class="name">${r[0]}</div>${blocks(v,r[2])}</div>
+   <div class="val">${Math.round(v)}</div>
+   </div>`;
+  }
+
+  h+=`</div>
+  <div class="arrow"></div>
+  <div class="box"><h3>Conversion - ${p.c}</h3><div class="worker">${p.w}</div></div>
+  <div class="arrow g"></div>
+  <div class="out">
+   <h3>Output - ${p.o}</h3>
+   <div class="stack">${cubes(s.outs[i])}</div>
+   <div class="outnum">${Math.round(s.outs[i])}</div>
+   <div class="deliv">${p.d}</div>
+  </div>
+  </div>
+
+  <div class="foot">
+   <b>Input stock:</b> ${Math.round(s.stock[i])}
+   &nbsp; <b>${p.o}:</b> ${Math.round(s.outs[i])}
+  </div>
+  </div>`;
+ }
+
+ $("seq").innerHTML=h;
+ $("cycle").textContent=s.tick;
+ $("cash").textContent=money(s.cash);
+ $("paid").textContent=s.paid;
+ $("systemOut").textContent=Math.round(s.outs[7]);
+}
+
+function log(x){
+ $("log").innerHTML+=x+"<br>";
+ $("log").scrollTop=$("log").scrollHeight;
+}
+
+function status(x){
+ $("status").textContent="JavaScript: RUNNING — "+x;
+}
+
+function reset(){
+ clearInterval(s.timer);
+ s.run=false;
+ $("start").textContent="START ALL";
+
+ s.tick=0;
+ s.cash=num("startCash");
+ s.paid=0;
+ s.vals=[];
+ s.outs=[];
+ s.stock=[];
+ s.active=[];
+
+ for(let i=0;i<panels.length;i++){
+  s.vals.push([100,100,100,100]);
+  s.outs.push(0);
+  s.stock.push(i==0?100:0);
+  s.active.push(false);
+ }
+
+ $("log").innerHTML="";
+ log("Reset. System file loaded: deliverable-based sequence.");
+ status("each panel creates a measurable deliverable.");
+ render();
+}
+
+function step(){
+ if(s.cash<=0){
+  status("cash is zero");
+  pauseRun();
+  return;
+ }
+
+ s.tick++;
+ s.cash-=num("overhead");
+
+ let st=num("strength")/100;
+ s.active=panels.map(()=>false);
+
+ for(let i=0;i<panels.length;i++){
+  if(i==0){
+   s.stock[0]=Math.min(100,s.stock[0]+(4+Math.random()*5));
+  }
+
+  let available=s.stock[i];
+  let otherAvg=(s.vals[i][1]+s.vals[i][2]+s.vals[i][3])/3;
+
+  if(available<1 || otherAvg<1)continue;
+
+  let proc=Math.min(available,otherAvg,(5+Math.random()*5)*st);
+
+  if(proc<=0)continue;
+
+  s.active[i]=true;
+  s.stock[i]=Math.max(0,s.stock[i]-proc);
+
+  for(let k=1;k<4;k++){
+   s.vals[i][k]=Math.max(0,s.vals[i][k]-proc*(.25+Math.random()*.25));
+  }
+
+  let out=proc*(.80+st*.70);
+  s.outs[i]+=out;
+
+  if(i<panels.length-1){
+   s.stock[i+1]=Math.min(100,s.stock[i+1]+out);
+  }
+
+  if(i==6){
+   let paid=Math.max(0,Math.round(out/8));
+   if(paid>0){
+    s.paid+=paid;
+    s.cash+=paid*num("revenue");
+   }
+  }
+
+  if(i==7){
+   s.stock[0]=Math.min(100,s.stock[0]+out*.35);
+   s.vals[0][1]=Math.min(100,s.vals[0][1]+out*.15);
+  }
+ }
+
+ if(s.cash<0){
+  s.cash=0;
+  log("FAILURE: cash reached zero.");
+  pauseRun();
+ }
+
+ status("tick "+s.tick+" processed deliverable flow.");
+ render();
+}
+
+function startRun(){
+ if(s.run)return;
+
+ s.run=true;
+ $("start").textContent="RUNNING";
+ status("running system flow.");
+ s.timer=setInterval(step,num("speed"));
+ render();
+}
+
+function pauseRun(){
+ clearInterval(s.timer);
+ s.run=false;
+ $("start").textContent="START ALL";
+ status("paused");
+ render();
+}
+
+function toggleRunAll(){
+ if(s.run){
+  pauseRun();
+ }else{
+  startRun();
+ }
+}
+
+$("start").onclick=startRun;
+$("pause").onclick=pauseRun;
+$("step").onclick=step;
+$("reset").onclick=reset;
+
+["startCash","strength","overhead","revenue","speed"].forEach(id=>{
+ $(id).oninput=()=>{
+  labels();
+
+  if(id=="speed"&&s.run){
+   pauseRun();
+   startRun();
+  }
+
+  if(s.tick==0){
+   s.cash=num("startCash");
+   render();
+  }
+ };
+});
+
+labels();
+reset();
+</script>
+</body>
+</html>
