@@ -1,68 +1,182 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Business Simulator Test</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #eef3f8;
-    }
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      border: 1px solid #ccc;
-    }
-    button {
-      width: 100%;
-      min-height: 55px;
-      font-size: 22px;
-      font-weight: bold;
-      border-radius: 12px;
-      background: #222;
-      color: white;
-    }
-    .box {
-      margin-top: 15px;
-      padding: 15px;
-      background: #f5f5f5;
-      border-radius: 12px;
-      font-size: 22px;
-      font-weight: bold;
-    }
-  </style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Business Simulator</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
+header{background:#111;color:white;padding:14px;position:sticky;top:0;z-index:10}
+h1{margin:0;font-size:21px} p{margin:6px 0}
+main{padding:10px;max-width:900px;margin:auto}
+.controls,.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.metrics{grid-template-columns:1fr 1fr}
+button{min-height:50px;border-radius:14px;border:1px solid #777;background:white;font-size:18px;font-weight:800}
+button.primary{background:#222;color:white}
+.card,.panel,details{background:white;border:1px solid #bfd0df;border-radius:16px;padding:10px;margin-bottom:10px}
+.metric b{display:block;font-size:12px;color:#667;text-transform:uppercase}.metric span{font-size:22px;font-weight:900}
+label{display:flex;justify-content:space-between;font-weight:800;margin-top:12px}
+input{width:100%;height:34px}
+.panel{border:2px solid #bfd0df}.panel.active{border-color:#1976d2;box-shadow:0 0 12px #9dc8ef}
+.title{font-size:18px;font-weight:900}.sub{font-size:12px;color:#667}
+.grid{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr;gap:8px;align-items:center;margin-top:8px}
+.inputs{display:grid;gap:6px}
+.row{display:grid;grid-template-columns:30px 1fr 42px;gap:6px;align-items:center;border:1px solid #dce5ee;border-radius:10px;padding:6px}
+.name{font-size:12px;font-weight:900}.val{text-align:right;font-weight:900}
+.bar{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;height:14px}
+.blk{background:#e7edf4;border:1px solid #ccd;border-radius:3px}
+.on.b{background:#1976d2}.on.g{background:#29972d}.on.y{background:#f0b600}.on.o{background:#b96d22}
+.arrow{height:16px;background:#1976d2;border-radius:3px;position:relative;animation:pulse .8s infinite}
+.arrow:after{content:"";position:absolute;right:-13px;top:-7px;border-top:15px solid transparent;border-bottom:15px solid transparent;border-left:15px solid #1976d2}
+.arrow.g{background:#1f8a2e}.arrow.g:after{border-left-color:#1f8a2e}
+@keyframes pulse{50%{opacity:.4;transform:translateX(5px)}}
+.box{border:2px solid #123b64;border-radius:14px;overflow:hidden;min-height:130px;text-align:center;background:#f8fbff}
+.box h3,.out h3{margin:0;padding:7px;background:#0b5da6;color:white;font-size:14px}
+.worker{font-size:50px;padding-top:18px;animation:work .7s infinite alternate}.note{font-size:12px;font-weight:800;color:#667}
+@keyframes work{from{transform:rotate(-2deg)}to{transform:rotate(2deg) translateY(-4px)}}
+.out{border:2px solid #1f7a2e;border-radius:14px;overflow:hidden;min-height:130px;text-align:center;background:#fbfffb}
+.out h3{background:#1f8a2e}
+.stack{display:flex;flex-wrap:wrap;align-content:flex-end;justify-content:center;gap:3px;height:72px;padding:6px}
+.cube{width:18px;height:18px;background:#57c237;border:1px solid #17651d;border-radius:4px}
+.outnum{font-size:24px;font-weight:900;color:#1f8a2e}
+.log{background:#111;color:#eee;border-radius:12px;padding:8px;font-family:monospace;font-size:12px;max-height:140px;overflow:auto}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.arrow{transform:rotate(90deg);margin:auto;width:30px}.metrics{grid-template-columns:1fr 1fr}}
+</style>
 </head>
 <body>
-  <div class="card">
-    <h1>Business Simulator Test</h1>
-    <p>This proves JavaScript works from GitHub Pages.</p>
+<header>
+<h1>Business Revenue Sequence Simulator</h1>
+<p>Panels represent the minimum steps required to get paid.</p>
+</header>
+<main>
+<div class="controls">
+<button class="primary" id="start">Start</button>
+<button id="step">Step</button>
+<button id="reset">Reset</button>
+</div>
 
-    <button onclick="step()">Step Conversion</button>
+<div class="card" id="status">JavaScript: loading...</div>
 
-    <div class="box">JavaScript Status: <span id="status">Not running</span></div>
-    <div class="box">Step Count: <span id="count">0</span></div>
-    <div class="box">Inputs Remaining: <span id="inputs">100</span></div>
-    <div class="box">Output Created: <span id="output">0</span></div>
-  </div>
+<div class="metrics">
+<div class="card metric"><b>Cycle</b><span id="cycle">0</span></div>
+<div class="card metric"><b>Panel</b><span id="panelNo">--</span></div>
+<div class="card metric"><b>Cash</b><span id="cash">$0</span></div>
+<div class="card metric"><b>Paid Orders</b><span id="paid">0</span></div>
+</div>
 
-  <script>
-    let count = 0;
-    let inputs = 100;
-    let output = 0;
+<details open>
+<summary><b>Scenario Controls</b></summary>
+<label>Starting Cash <span id="cashLab"></span></label>
+<input type="range" id="startCash" min="1000" max="100000" step="1000" value="25000">
+<label>Process Strength <span id="strLab"></span></label>
+<input type="range" id="strength" min="10" max="100" step="5" value="60">
+<label>Overhead Per Step <span id="ohLab"></span></label>
+<input type="range" id="overhead" min="0" max="2000" step="50" value="350">
+<label>Revenue Per Paid Unit <span id="revLab"></span></label>
+<input type="range" id="revenue" min="100" max="5000" step="100" value="800">
+</details>
 
-    document.getElementById("status").textContent = "RUNNING";
+<div id="seq"></div>
+<div class="log" id="log"></div>
+</main>
 
-    function step() {
-      count = count + 1;
-      inputs = Math.max(0, inputs - 10);
-      output = output + 5;
+<script>
+const panels=[
+["Customer Need / Problem","Find a real pain worth solving.","🧑‍💼","Discover","Qualified Need",[["Leads","📣","b"],["Trust","🤝","y"],["Research","📋","b"],["Cash","💵","g"]]],
+["Front-End Sales","Turn attention into a serious buyer.","📞","Sell","Closed Deal",[["Qualified Need","🎯","b"],["Marketing","📣","y"],["Labor","👷","b"],["Cash","💵","g"]]],
+["Design / Specification","Convert the sale into a buildable promise.","🧑‍💻","Specify","Approved Spec",[["Closed Deal","🧾","b"],["Design Hours","📐","b"],["Customer Info","🗂️","y"],["Cash","💵","g"]]],
+["Supply / Factory / Delivery","Convert the spec into delivered value.","🛠️","Build","Delivered Value",[["Approved Spec","✅","b"],["Materials","📦","o"],["Labor","👷","b"],["Energy","⚡","y"]]],
+["Payment / Collection","Convert delivered value into real cash.","💳","Collect","Paid Order",[["Delivered Value","🚚","b"],["Invoice Work","🧾","b"],["Trust","🤝","y"],["Cash Buffer","💵","g"]]],
+["Customer Satisfaction / Referral","Convert paid work into future demand.","⭐","Satisfy","Referral / Repeat",[["Paid Order","💰","g"],["Support","🎧","b"],["Quality","✅","y"],["Follow-Up","📣","y"]]]
+];
 
-      document.getElementById("count").textContent = count;
-      document.getElementById("inputs").textContent = inputs;
-      document.getElementById("output").textContent = output;
-    }
-  </script>
+let s={run:false,t:null,cycle:0,panel:0,cash:25000,paid:0,vals:[],outs:[]};
+const $=id=>document.getElementById(id);
+const money=v=>"$"+Math.round(v).toLocaleString();
+const num=id=>Number($(id).value);
+
+function labels(){
+ $("cashLab").textContent=money(num("startCash"));
+ $("strLab").textContent=num("strength")+"%";
+ $("ohLab").textContent=money(num("overhead"));
+ $("revLab").textContent=money(num("revenue"));
+}
+
+function blocks(v,c){
+ let n=Math.round(Math.max(0,Math.min(100,v))/10),h='<div class="bar">';
+ for(let i=0;i<10;i++)h+=`<div class="blk ${i<n?'on '+c:''}"></div>`;
+ return h+"</div>";
+}
+
+function cubes(v){
+ let n=Math.min(20,Math.round(v/5)),h="";
+ for(let i=0;i<n;i++)h+='<div class="cube"></div>';
+ return h;
+}
+
+function render(){
+ let h="";
+ panels.forEach((p,i)=>{
+  let rem=s.vals[i].reduce((a,b)=>a+b,0),out=s.outs[i];
+  h+=`<div class="panel ${i==s.panel?'active':''}">
+  <div class="title">PANEL ${i+1}: ${p[0]}</div><div class="sub">${p[1]}</div>
+  <div class="grid"><div class="inputs">`;
+  p[5].forEach((r,k)=>{
+   let v=s.vals[i][k];
+   h+=`<div class="row"><div>${r[1]}</div><div><div class="name">${r[0]}</div>${blocks(v,r[2])}</div><div class="val">${Math.round(v)}</div></div>`;
+  });
+  h+=`</div><div class="arrow"></div>
+  <div class="box"><h3>CONVERSION</h3><div class="worker">${p[2]}</div><div class="note">${p[3]}</div></div>
+  <div class="arrow g"></div>
+  <div class="out"><h3>OUTPUT</h3><div class="stack">${cubes(out)}</div><div>${p[4]}</div><div class="outnum">${Math.round(out)}</div></div>
+  </div><p><b>Inputs Remaining:</b> ${Math.round(rem)} / 400 &nbsp; <b>Output:</b> ${Math.round(out)}</p></div>`;
+ });
+ $("seq").innerHTML=h;
+ $("cycle").textContent=s.cycle;
+ $("panelNo").textContent=(s.panel+1)+" / "+panels.length;
+ $("cash").textContent=money(s.cash);
+ $("paid").textContent=s.paid;
+}
+
+function log(x){$("log").innerHTML+=x+"<br>";$("log").scrollTop=$("log").scrollHeight}
+function status(x){$("status").textContent="JavaScript: RUNNING — "+x}
+
+function reset(){
+ clearInterval(s.t);s.run=false;$("start").textContent="Start";
+ s.cycle=0;s.panel=0;s.cash=num("startCash");s.paid=0;s.vals=[];s.outs=[];
+ for(let i=0;i<panels.length;i++){s.vals.push([100,100,100,100]);s.outs.push(0)}
+ $("log").innerHTML="";log("Reset. Ready.");status("tap Step or Start.");render();
+}
+
+function step(){
+ if(s.cash<=0){status("cash is zero");return}
+ let i=s.panel,st=num("strength")/100;
+ s.cycle++;s.cash-=num("overhead");
+ let avg=s.vals[i].reduce((a,b)=>a+b,0)/4;
+ let proc=Math.min(avg,(8+Math.random()*8)*st);
+ for(let k=0;k<4;k++)s.vals[i][k]=Math.max(0,s.vals[i][k]-proc*(.75+Math.random()*.55));
+ s.outs[i]+=proc*(.85+st*.9);
+ if(i==4){let paid=Math.max(1,Math.round(proc/10));s.paid+=paid;s.cash+=paid*num("revenue")}
+ let rem=s.vals[i].reduce((a,b)=>a+b,0);
+ if(s.outs[i]>=80||rem<=80){
+  log("Panel "+(i+1)+" complete: "+panels[i][4]);
+  s.panel=(i+1)%panels.length;
+ }
+ if(s.cash<0)s.cash=0;
+ status("processing panel "+(s.panel+1));
+ render();
+ document.querySelector(".panel.active").scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function toggle(){
+ if(s.run){clearInterval(s.t);s.run=false;$("start").textContent="Start";status("paused")}
+ else{s.run=true;$("start").textContent="Pause";s.t=setInterval(step,900);status("running")}
+}
+
+$("start").onclick=toggle;
+$("step").onclick=step;
+$("reset").onclick=reset;
+["startCash","strength","overhead","revenue"].forEach(id=>$(id).oninput=()=>{labels();if(s.cycle==0){s.cash=num("startCash");render()}});
+labels();reset();
+</script>
 </body>
 </html>
