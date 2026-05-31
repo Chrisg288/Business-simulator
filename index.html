@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V5</title>
+<title>Business Simulator V6</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
 h1{margin:0;font-size:18px}p{margin:5px 0}
-main{padding:8px;max-width:1000px;margin:auto}
+main{padding:8px;max-width:1180px;margin:auto}
 .controls,.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 button,select{min-height:40px;border-radius:12px;border:1px solid #777;background:white;font-size:14px;font-weight:900}
 #start{background:#0b5da6;color:white}
@@ -15,36 +15,46 @@ button,select{min-height:40px;border-radius:12px;border:1px solid #777;backgroun
 #editMode{background:#7557c8;color:white}
 #commitEdits{background:#1f8a2e;color:white}
 .card,.panel,details{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
-.metric b{display:block;font-size:11px;color:#667;text-transform:uppercase}.metric span{font-size:19px;font-weight:900}
+.metric b{display:block;font-size:11px;color:#667;text-transform:uppercase}.metric span{font-size:18px;font-weight:900}
 label{display:flex;justify-content:space-between;font-weight:800;margin-top:10px;font-size:14px}
 input{width:100%;height:30px}
-.panel{border:2px solid #bfd0df}.panel.active{border-color:#1976d2;box-shadow:0 0 10px #9dc8ef}.panel.waiting{border-color:#d5c274}
+.panel{border:2px solid #bfd0df}
+.panel.active{border-color:#1976d2;box-shadow:0 0 10px #9dc8ef}.panel.waiting{border-color:#d5c274}
 body.editing .panel{border-color:#7557c8}
 .head{display:grid;grid-template-columns:1fr 74px;gap:6px;align-items:center}.title{font-size:15px;font-weight:900}.sub{font-size:11px;color:#667}
 .pbtn{min-height:32px;border-radius:10px;font-size:12px;background:#b00020;color:white}.pbtn.run{background:#1f8a2e;color:white}
-.grid{display:grid;grid-template-columns:1fr;gap:4px;margin-top:6px}.inputs{display:grid;gap:4px}
-.row{display:grid;grid-template-columns:26px 1fr 44px;gap:5px;align-items:center;border:1px solid #dce5ee;border-radius:10px;padding:4px}
-.name{font-size:11px;font-weight:900}.val{text-align:right;font-weight:900;font-size:13px}
+.flow{display:grid;grid-template-columns:1fr 1.15fr 1.1fr;gap:8px;margin-top:6px;align-items:stretch}
+.inputs{display:grid;gap:4px}
+.row{display:grid;grid-template-columns:26px 1fr 34px 24px;gap:5px;align-items:center;border:1px solid #dce5ee;border-radius:10px;padding:4px}
+.name{font-size:11px;font-weight:900}.val{text-align:right;font-weight:900;font-size:13px}.inarrow{font-size:18px;color:#1976d2;font-weight:900;text-align:center}
 .bar{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;height:10px}.blk{background:#e7edf4;border:1px solid #ccd;border-radius:3px}
 .on.b{background:#1976d2}.on.g{background:#29972d}.on.y{background:#f0b600}.on.o{background:#b96d22}.on.p{background:#7557c8}.on.r{background:#b00020}
-.editSlider{height:22px;margin-top:2px;accent-color:#7557c8}
-.defaultHint{font-size:10px;color:#555;margin-top:2px}
-.arrow{height:10px;width:24px;background:#1976d2;border-radius:3px;position:relative;transform:rotate(90deg);margin:auto;animation:pulse .9s infinite}
-.arrow:after{content:"";position:absolute;right:-9px;top:-5px;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:10px solid #1976d2}
-.arrow.g{background:#1f8a2e}.arrow.g:after{border-left-color:#1f8a2e}@keyframes pulse{50%{opacity:.45}}
-.box,.out{border:2px solid #123b64;border-radius:12px;overflow:hidden;min-height:58px;text-align:center;background:#f8fbff}.out{border-color:#1f7a2e;background:#fbfffb}
-.box h3,.out h3{margin:0;padding:4px;background:#0b5da6;color:white;font-size:11px}.out h3{background:#1f8a2e}
-.worker{font-size:24px;padding-top:3px;animation:work .7s infinite alternate}@keyframes work{from{transform:rotate(-2deg)}to{transform:rotate(2deg) translateY(-3px)}}
-.stack{display:flex;flex-wrap:wrap;align-content:flex-end;justify-content:center;gap:3px;height:24px;padding:3px}.cube{width:10px;height:10px;background:#57c237;border:1px solid #17651d;border-radius:3px}
-.outnum{font-size:15px;font-weight:900;color:#1f8a2e}.deliv{font-size:10px;color:#333;padding:0 4px 4px 4px;line-height:1.2}.foot{font-size:12px;margin-top:4px}
+.editSlider{height:22px;margin-top:2px;accent-color:#7557c8}.defaultHint{font-size:10px;color:#555;margin-top:2px}
+.process,.out{border:2px solid #123b64;border-radius:12px;overflow:hidden;text-align:center;background:#f8fbff;min-height:135px}
+.out{border-color:#1f7a2e;background:#fbfffb}
+.process h3,.out h3{margin:0;padding:5px;background:#0b5da6;color:white;font-size:12px}.out h3{background:#1f8a2e}
+.worker{font-size:28px;padding-top:5px;animation:work .7s infinite alternate}
+@keyframes work{from{transform:rotate(-2deg)}to{transform:rotate(2deg) translateY(-3px)}}
+.procGrid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;font-size:11px;text-align:left}
+.procGrid div{background:#fff;border:1px solid #dce5ee;border-radius:8px;padding:4px}
+.procGrid b{display:block;font-size:10px;color:#667;text-transform:uppercase}
+.valueMeter{margin:4px 5px;background:#e7edf4;border-radius:10px;height:12px;overflow:hidden}
+.valueFill{height:100%;background:#1f8a2e;width:0%}
+.outGrid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;font-size:11px;text-align:left}
+.outGrid div{background:#fff;border:1px solid #dce5ee;border-radius:8px;padding:4px}
+.outGrid b{display:block;font-size:10px;color:#667;text-transform:uppercase}
+.outnum{font-size:17px;font-weight:900;color:#1f8a2e}.money{color:#116b22;font-weight:900}
+.deliv{font-size:10px;color:#333;padding:0 5px 5px 5px;line-height:1.2;text-align:center}
+.foot{font-size:12px;margin-top:4px}
 .log{background:#111;color:#eee;border-radius:12px;padding:8px;font-family:monospace;font-size:12px;max-height:150px;overflow:auto}
 .editBanner{display:none;background:#fff7e0;border:1px solid #e4c96b;border-radius:12px;padding:8px;margin-bottom:8px;font-size:13px;font-weight:800}
 body.editing .editBanner{display:block}
-@media(min-width:900px){.grid{grid-template-columns:1fr 28px 1fr 28px 1fr}.arrow{transform:none}.box,.out{min-height:96px}.worker{font-size:38px}.stack{height:46px}.cube{width:15px;height:15px}}
+@media(max-width:900px){.flow{grid-template-columns:1fr}.row{grid-template-columns:26px 1fr 34px}.inarrow{display:none}.metrics{grid-template-columns:1fr 1fr}.process,.out{min-height:95px}}
+@media(min-width:1100px){.metrics{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V5</h1><p>Profiles load from JSON files. Edit variable bars directly, commit values, save locally, or export JSON.</p></header>
+<header><h1>Business Simulator V6</h1><p>Shows time, cost, value creation, revenue, tax, and profit. Inputs feed work; work creates value; payment converts value to dollars.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -65,16 +75,23 @@ body.editing .editBanner{display:block}
 <div class="card" id="status">JavaScript: loading...</div>
 
 <div class="metrics">
-<div class="card metric"><b>Ticks</b><span id="cycle">0</span></div><div class="card metric"><b>Cash</b><span id="cash">$0</span></div>
-<div class="card metric"><b id="paidLabel">Paid Orders</b><span id="paid">0</span></div><div class="card metric"><b id="valueLabel">Validated Value</b><span id="systemOut">0</span></div>
+<div class="card metric"><b>Time</b><span id="timeBox">Day 1 Hr 0</span></div>
+<div class="card metric"><b>Cash</b><span id="cash">$0</span></div>
+<div class="card metric"><b>Total Cost</b><span id="totalCost">$0</span></div>
+<div class="card metric"><b>Total Revenue</b><span id="totalRevenue">$0</span></div>
+<div class="card metric"><b>Gross Profit</b><span id="grossProfit">$0</span></div>
+<div class="card metric"><b>Tax</b><span id="taxBox">$0</span></div>
+<div class="card metric"><b>Profit After Tax</b><span id="netProfit">$0</span></div>
+<div class="card metric"><b id="valueLabel">Value Units</b><span id="systemOut">0</span></div>
 </div>
 
 <details open><summary><b>Scenario Controls</b></summary>
 <label>Starting Cash <span id="cashLab"></span></label><input type="range" id="startCash" min="1000" max="100000" step="1000" value="25000">
 <label>Process Strength <span id="strLab"></span></label><input type="range" id="strength" min="10" max="100" step="5" value="60">
-<label>Overhead Per Tick <span id="ohLab"></span></label><input type="range" id="overhead" min="0" max="2000" step="50" value="350">
+<label>Overhead Per Hour <span id="ohLab"></span></label><input type="range" id="overhead" min="0" max="2000" step="25" value="350">
 <label>Revenue Per Paid Unit <span id="revLab"></span></label><input type="range" id="revenue" min="10" max="5000" step="5" value="800">
-<label>Run Speed <span id="speedLab"></span></label><input type="range" id="speed" min="1000" max="5000" step="250" value="2500">
+<label>Tax Rate <span id="taxLab"></span></label><input type="range" id="taxRate" min="0" max="50" step="1" value="20">
+<label>Run Speed <span id="speedLab"></span></label><input type="range" id="speed" min="500" max="5000" step="250" value="2500">
 </details>
 
 <div id="seq"></div><div class="log" id="log"></div>
@@ -82,7 +99,7 @@ body.editing .editBanner{display:block}
 
 <script>
 let profiles={},manifest=[],currentKey="",currentProfile=null,panels=[],editMode=false,editDraft=null;
-let s={run:false,timer:null,tick:0,cash:25000,paid:0,vals:[],outs:[],stock:[],active:[]};
+let s={run:false,timer:null,tick:0,hours:0,cash:25000,paid:0,vals:[],outs:[],stock:[],active:[],stageCost:[],stageValue:[],stageUsed:[],stageOutTick:[],totalCost:0,totalRevenue:0};
 
 const $=id=>document.getElementById(id),money=v=>"$"+Math.round(v).toLocaleString(),num=id=>Number($(id).value);
 function clone(o){return JSON.parse(JSON.stringify(o))}
@@ -94,308 +111,182 @@ async function init(){
   setupProfiles();
   loadProfile(manifest[0].key);
  }catch(e){
-  $("status").textContent="ERROR loading profiles: "+e.message+". Check that manifest.json and profile JSON files are uploaded beside index.html.";
+  $("status").textContent="ERROR loading profiles: "+e.message+". Check that manifest.json and JSON files are uploaded beside index.html.";
  }
 }
 
 function setupProfiles(){
- let sel=$("profileSelect");
- sel.innerHTML="";
- manifest.forEach(item=>{
-  let opt=document.createElement("option");
-  opt.value=item.key;
-  opt.textContent=item.name;
-  sel.appendChild(opt);
- });
+ let sel=$("profileSelect");sel.innerHTML="";
+ manifest.forEach(item=>{let opt=document.createElement("option");opt.value=item.key;opt.textContent=item.name;sel.appendChild(opt)});
  sel.onchange=()=>loadProfile(sel.value);
 }
 
 function loadProfile(k){
- currentKey=k;
- currentProfile=clone(profiles[k]);
- panels=currentProfile.panels;
- editDraft=null;
- editMode=false;
- document.body.classList.remove("editing");
- $("profileSelect").value=k;
- $("revenue").value=currentProfile.revenue;
- $("overhead").value=currentProfile.overhead;
- $("startCash").value=currentProfile.startCash;
- $("strength").value=currentProfile.strength;
- $("paidLabel").textContent=currentProfile.paidLabel;
- $("valueLabel").textContent=currentProfile.valueLabel;
- $("profileNote").textContent=currentProfile.note;
- labels();
- reset();
+ currentKey=k;currentProfile=clone(profiles[k]);panels=currentProfile.panels;editDraft=null;editMode=false;document.body.classList.remove("editing");
+ $("profileSelect").value=k;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.overhead;$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;
+ $("valueLabel").textContent=currentProfile.valueLabel || "Value Units";$("profileNote").textContent=currentProfile.note;
+ labels();reset();
 }
 
 function labels(){
- $("cashLab").textContent=money(num("startCash"));
- $("strLab").textContent=num("strength")+"%";
- $("ohLab").textContent=money(num("overhead"));
- $("revLab").textContent=money(num("revenue"));
- $("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec";
+ $("cashLab").textContent=money(num("startCash"));$("strLab").textContent=num("strength")+"%";$("ohLab").textContent=money(num("overhead"));
+ $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec";
 }
 
 function blocks(v,c){
- let n=Math.round(Math.max(0,Math.min(100,v))/10);
- let h='<div class="bar">';
+ let n=Math.round(Math.max(0,Math.min(100,v))/10),h='<div class="bar">';
  for(let i=0;i<10;i++)h+=`<div class="blk ${i<n?'on '+c:''}"></div>`;
  return h+"</div>";
 }
 
-function cubes(v){
- let n=Math.min(20,Math.round(v/5)),h="";
- for(let i=0;i<n;i++)h+='<div class="cube"></div>';
- return h;
+function stageUnitValue(i){
+ let rev=num("revenue");
+ let n=Math.max(1,panels.length);
+ return Math.max(1,rev*((i+1)/n)*0.55);
 }
 
-function getDefaultValue(i,k){
- let source=editMode&&editDraft?editDraft:panels;
- return source[i].ins[k][3];
+function stageUnitCost(i){
+ let rev=num("revenue");
+ let n=Math.max(1,panels.length);
+ return Math.max(1,rev*(0.08+(i/n)*0.10));
 }
 
 function renderInputRow(p,i,k){
- const r=p.ins[k];
- let displayVal=(k==0)?s.stock[i]:s.vals[i][k];
-
+ const r=p.ins[k];let displayVal=(k==0)?s.stock[i]:s.vals[i][k];
  if(editMode){
-  let def=getDefaultValue(i,k);
-  return `<div class="row">
-   <div>${r[1]}</div>
-   <div>
-    <div class="name">${r[0]}</div>
-    <input class="editSlider" type="range" min="0" max="100" step="1" value="${def}" data-p="${i}" data-i="${k}" oninput="sliderChange(this)">
-    <div class="defaultHint">new default: <span id="draft_${i}_${k}">${def}</span> | current run: ${Math.round(displayVal)}</div>
-   </div>
-   <div class="val">${def}</div>
-  </div>`;
+  let def=(editDraft||panels)[i].ins[k][3];
+  return `<div class="row"><div>${r[1]}</div><div><div class="name">${r[0]}</div><input class="editSlider" type="range" min="0" max="100" step="1" value="${def}" data-p="${i}" data-i="${k}" oninput="sliderChange(this)"><div class="defaultHint">new default: <span id="draft_${i}_${k}">${def}</span> | current: ${Math.round(displayVal)}</div></div><div class="val">${def}</div><div class="inarrow">→</div></div>`;
  }
-
- return `<div class="row">
-  <div>${r[1]}</div>
-  <div><div class="name">${r[0]}</div>${blocks(displayVal,r[2])}</div>
-  <div class="val">${Math.round(displayVal)}</div>
- </div>`;
+ return `<div class="row"><div>${r[1]}</div><div><div class="name">${r[0]}</div>${blocks(displayVal,r[2])}</div><div class="val">${Math.round(displayVal)}</div><div class="inarrow">→</div></div>`;
 }
 
 function render(){
  let h="";
  for(let i=0;i<panels.length;i++){
-  const p=panels[i];
-  let cls="panel";
-  if(s.active[i])cls+=" active";
-  if(!s.active[i]&&s.stock[i]<1&&i>0)cls+=" waiting";
+  const p=panels[i];let cls="panel";if(s.active[i])cls+=" active";if(!s.active[i]&&s.stock[i]<1&&i>0)cls+=" waiting";
   let bt=s.run?"PAUSE":"RUN",bc=s.run?"pbtn":"pbtn run";
+  let unitValue=stageUnitValue(i), unitCost=stageUnitCost(i);
+  let used=s.stageUsed[i]||0, tickOut=s.stageOutTick[i]||0, outVal=s.stageValue[i]||0, stCost=s.stageCost[i]||0;
+  let eff=used>0?(tickOut/used)*100:0;
+  let valuePct=Math.min(100,(outVal/(Math.max(1,s.totalRevenue+s.totalCost+outVal)))*100);
 
   h+=`<div class="${cls}">
-  <div class="head">
-   <div><div class="title">PANEL ${i+1}: ${p.t}</div><div class="sub">Needs: ${p.feed} | Unit: ${p.unit}</div></div>
-   <button class="${bc}" onclick="toggleRunAll()">${bt}</button>
-  </div>
-  <div class="grid"><div class="inputs">`;
+  <div class="head"><div><div class="title">PANEL ${i+1}: ${p.t}</div><div class="sub">Needs: ${p.feed} | Unit: ${p.unit}</div></div><button class="${bc}" onclick="toggleRunAll()">${bt}</button></div>
+  <div class="flow"><div class="inputs">`;
 
   for(let k=0;k<p.ins.length;k++)h+=renderInputRow(p,i,k);
 
-  h+=`</div><div class="arrow"></div>
-  <div class="box"><h3>Conversion - ${p.c}</h3><div class="worker">${p.w}</div></div>
-  <div class="arrow g"></div>
-  <div class="out"><h3>Output - ${p.o}</h3><div class="stack">${cubes(s.outs[i])}</div><div class="outnum">${Math.round(s.outs[i])}</div><div class="deliv">${p.d}</div></div>
+  h+=`</div>
+  <div class="process"><h3>Value Creation - ${p.c}</h3><div class="worker">${p.w}</div>
+   <div class="procGrid">
+    <div><b>Work this hour</b>${used.toFixed(1)} input units</div>
+    <div><b>Output this hour</b>${tickOut.toFixed(1)} units</div>
+    <div><b>Stage cost</b><span class="money">${money(stCost)}</span></div>
+    <div><b>Value added</b><span class="money">${money(outVal)}</span></div>
+    <div><b>Unit cost</b>${money(unitCost)}</div>
+    <div><b>Unit value</b>${money(unitValue)}</div>
+   </div>
+   <div class="valueMeter"><div class="valueFill" style="width:${valuePct}%"></div></div>
   </div>
-  <div class="foot"><b>Input stock:</b> ${Math.round(s.stock[i])} &nbsp; <b>${p.o}:</b> ${Math.round(s.outs[i])}</div>
-  </div>`;
+  <div class="out"><h3>Output - ${p.o}</h3>
+    <div class="outGrid">
+     <div><b>Total output</b><span class="outnum">${Math.round(s.outs[i]||0)}</span></div>
+     <div><b>Stage value</b><span class="money">${money(outVal)}</span></div>
+     <div><b>Used → Made</b>${used.toFixed(1)} → ${tickOut.toFixed(1)}</div>
+     <div><b>Efficiency</b>${eff.toFixed(0)}%</div>
+    </div>
+    <div class="deliv">${p.d}</div>
+  </div></div>
+  <div class="foot"><b>Input stock:</b> ${Math.round(s.stock[i])} &nbsp; <b>${p.o}:</b> ${Math.round(s.outs[i])}</div></div>`;
  }
  $("seq").innerHTML=h;
- $("cycle").textContent=s.tick;
+ $("timeBox").textContent=`Day ${Math.floor(s.hours/8)+1} Hr ${s.hours%8}`;
  $("cash").textContent=money(s.cash);
- $("paid").textContent=s.paid;
+ $("totalCost").textContent=money(s.totalCost);
+ $("totalRevenue").textContent=money(s.totalRevenue);
+ let gp=s.totalRevenue-s.totalCost, tax=Math.max(0,gp*num("taxRate")/100), net=gp-tax;
+ $("grossProfit").textContent=money(gp);$("taxBox").textContent=money(tax);$("netProfit").textContent=money(net);
  $("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
+ $("cycle").textContent=s.tick;
  $("editMode").textContent=editMode?"EXIT EDIT MODE":"EDIT MODE";
 }
 
 function sliderChange(inp){
- if(!editDraft)return;
- let p=Number(inp.dataset.p),i=Number(inp.dataset.i),v=Number(inp.value);
- editDraft[p].ins[i][3]=v;
- let span=$("draft_"+p+"_"+i);
- if(span)span.textContent=v;
- inp.closest(".row").querySelector(".val").textContent=v;
+ if(!editDraft)return;let p=Number(inp.dataset.p),i=Number(inp.dataset.i),v=Number(inp.value);editDraft[p].ins[i][3]=v;
+ let span=$("draft_"+p+"_"+i);if(span)span.textContent=v;inp.closest(".row").querySelector(".val").textContent=v;
 }
 
 function enterEditMode(){
- pauseRun();
- editMode=!editMode;
- if(editMode){
-  editDraft=clone(panels);
-  document.body.classList.add("editing");
-  status("edit mode on. Drag variable sliders, then commit values.");
- }else{
-  editDraft=null;
-  document.body.classList.remove("editing");
-  status("edit mode off. No uncommitted edits kept.");
- }
+ pauseRun();editMode=!editMode;
+ if(editMode){editDraft=clone(panels);document.body.classList.add("editing");status("edit mode on. Drag variable sliders, then commit values.");}
+ else{editDraft=null;document.body.classList.remove("editing");status("edit mode off. No uncommitted edits kept.");}
  render();
 }
 
 function commitEdits(){
- if(!editMode||!editDraft){
-  status("edit mode is not active.");
-  return;
- }
- panels=clone(editDraft);
- currentProfile.panels=clone(editDraft);
- editDraft=null;
- editMode=false;
- document.body.classList.remove("editing");
- status("values committed. Simulation reset with new defaults.");
- reset();
+ if(!editMode||!editDraft){status("edit mode is not active.");return}
+ panels=clone(editDraft);currentProfile.panels=clone(editDraft);editDraft=null;editMode=false;document.body.classList.remove("editing");
+ status("values committed. Simulation reset with new defaults.");reset();
 }
 
 function log(x){$("log").innerHTML+=x+"<br>";$("log").scrollTop=$("log").scrollHeight}
 function status(x){$("status").textContent="JavaScript: RUNNING — "+x}
 
 function reset(){
- clearInterval(s.timer);
- s.run=false;
- $("start").textContent="START ALL";
- s.tick=0;s.cash=num("startCash");s.paid=0;
- s.vals=[];s.outs=[];s.stock=[];s.active=[];
+ clearInterval(s.timer);s.run=false;$("start").textContent="START ALL";
+ s.tick=0;s.hours=0;s.cash=num("startCash");s.paid=0;s.vals=[];s.outs=[];s.stock=[];s.active=[];s.stageCost=[];s.stageValue=[];s.stageUsed=[];s.stageOutTick=[];s.totalCost=0;s.totalRevenue=0;
  for(let i=0;i<panels.length;i++){
   s.vals.push([0,panels[i].ins[1][3],panels[i].ins[2][3],panels[i].ins[3][3]]);
-  s.outs.push(0);
-  s.stock.push(i==0?panels[i].ins[0][3]:0);
-  s.active.push(false);
+  s.outs.push(0);s.stock.push(i==0?panels[i].ins[0][3]:0);s.active.push(false);s.stageCost.push(0);s.stageValue.push(0);s.stageUsed.push(0);s.stageOutTick.push(0);
  }
- $("log").innerHTML="";
- log("Loaded profile: "+currentProfile.name);
- status("profile loaded. Adjust values or run.");
- render();
+ $("log").innerHTML="";log("Loaded profile: "+currentProfile.name);status("profile loaded. Adjust values or run.");render();
 }
 
 function step(){
  if(s.cash<=0){status("cash is zero");pauseRun();return}
- s.tick++;
- s.cash-=num("overhead");
-
- let st=num("strength")/100;
- s.active=panels.map(()=>false);
+ s.tick++;s.hours++;
+ let overhead=num("overhead");s.cash-=overhead;s.totalCost+=overhead;
+ let st=num("strength")/100;s.active=panels.map(()=>false);s.stageUsed=panels.map(()=>0);s.stageOutTick=panels.map(()=>0);
 
  for(let i=0;i<panels.length;i++){
   if(i==0)s.stock[0]=Math.min(100,s.stock[0]+(3+Math.random()*5));
-
-  let available=s.stock[i];
-  let otherAvg=(s.vals[i][1]+s.vals[i][2]+s.vals[i][3])/3;
+  let available=s.stock[i],otherAvg=(s.vals[i][1]+s.vals[i][2]+s.vals[i][3])/3;
   if(available<1||otherAvg<1)continue;
+  let proc=Math.min(available,otherAvg,(5+Math.random()*5)*st);if(proc<=0)continue;
 
-  let proc=Math.min(available,otherAvg,(5+Math.random()*5)*st);
-  if(proc<=0)continue;
-
-  s.active[i]=true;
-  s.stock[i]=Math.max(0,s.stock[i]-proc);
-
+  s.active[i]=true;s.stock[i]=Math.max(0,s.stock[i]-proc);s.stageUsed[i]=proc;
   for(let k=1;k<4;k++)s.vals[i][k]=Math.max(0,s.vals[i][k]-proc*(.20+Math.random()*.25));
 
-  let out=proc*(.80+st*.70);
-  s.outs[i]+=out;
+  let out=proc*(.80+st*.70);s.stageOutTick[i]=out;s.outs[i]+=out;
+  let cost=proc*stageUnitCost(i);let val=out*stageUnitValue(i);
+  s.stageCost[i]+=cost;s.stageValue[i]+=val;s.totalCost+=cost;s.cash-=cost;
 
   if(i<panels.length-1)s.stock[i+1]=Math.min(100,s.stock[i+1]+out);
 
   if(i==panels.length-2){
    let paid=Math.max(0,Math.round(out/8));
-   if(paid>0){s.paid+=paid;s.cash+=paid*num("revenue")}
+   if(paid>0){let rev=paid*num("revenue");s.paid+=paid;s.cash+=rev;s.totalRevenue+=rev;}
   }
-
   if(i==panels.length-1){
-   s.stock[0]=Math.min(100,s.stock[0]+out*.30);
-   s.vals[0][1]=Math.min(100,s.vals[0][1]+out*.12);
+   s.stock[0]=Math.min(100,s.stock[0]+out*.30);s.vals[0][1]=Math.min(100,s.vals[0][1]+out*.12);
   }
  }
-
  if(s.cash<0){s.cash=0;log("FAILURE: cash reached zero.");pauseRun()}
- status("tick "+s.tick+" processed "+currentProfile.name+".");
- render();
+ status("tick "+s.tick+" / hour "+s.hours+" processed value and money.");render();
 }
 
-function startRun(){
- if(s.run)return;
- if(editMode){status("commit or exit edit mode before running.");return}
- s.run=true;$("start").textContent="RUNNING";
- status("running.");
- s.timer=setInterval(step,num("speed"));
- render();
-}
-
-function pauseRun(){
- clearInterval(s.timer);
- s.run=false;
- $("start").textContent="START ALL";
- status("paused");
- render();
-}
-
+function startRun(){if(s.run)return;if(editMode){status("commit or exit edit mode before running.");return}s.run=true;$("start").textContent="RUNNING";status("running.");s.timer=setInterval(step,num("speed"));render()}
+function pauseRun(){clearInterval(s.timer);s.run=false;$("start").textContent="START ALL";status("paused");render()}
 function toggleRunAll(){s.run?pauseRun():startRun()}
 
-function saveLocal(){
- currentProfile.revenue=num("revenue");
- currentProfile.overhead=num("overhead");
- currentProfile.startCash=num("startCash");
- currentProfile.strength=num("strength");
- currentProfile.panels=clone(panels);
- localStorage.setItem("bizsim_"+currentKey,JSON.stringify(currentProfile));
- status("saved current profile/scenario locally in this browser.");
-}
+function saveLocal(){currentProfile.revenue=num("revenue");currentProfile.overhead=num("overhead");currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.panels=clone(panels);localStorage.setItem("bizsim_"+currentKey,JSON.stringify(currentProfile));status("saved locally in this browser.")}
+function loadLocal(){let raw=localStorage.getItem("bizsim_"+currentKey);if(!raw){status("no local save found for this profile.");return}currentProfile=JSON.parse(raw);panels=currentProfile.panels;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.overhead;$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;labels();status("loaded local saved scenario.");reset()}
+function resetDefaults(){loadProfile(currentKey)}
+function exportJson(){currentProfile.revenue=num("revenue");currentProfile.overhead=num("overhead");currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.panels=clone(panels);let blob=new Blob([JSON.stringify(currentProfile,null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=currentKey+"_scenario.json";a.click();URL.revokeObjectURL(a.href)}
 
-function loadLocal(){
- let raw=localStorage.getItem("bizsim_"+currentKey);
- if(!raw){status("no local save found for this profile.");return}
- currentProfile=JSON.parse(raw);
- panels=currentProfile.panels;
- $("revenue").value=currentProfile.revenue;
- $("overhead").value=currentProfile.overhead;
- $("startCash").value=currentProfile.startCash;
- $("strength").value=currentProfile.strength;
- labels();
- status("loaded local saved scenario.");
- reset();
-}
-
-function resetDefaults(){
- loadProfile(currentKey);
-}
-
-function exportJson(){
- currentProfile.revenue=num("revenue");
- currentProfile.overhead=num("overhead");
- currentProfile.startCash=num("startCash");
- currentProfile.strength=num("strength");
- currentProfile.panels=clone(panels);
- let blob=new Blob([JSON.stringify(currentProfile,null,2)],{type:"application/json"});
- let a=document.createElement("a");
- a.href=URL.createObjectURL(blob);
- a.download=currentKey+"_scenario.json";
- a.click();
- URL.revokeObjectURL(a.href);
-}
-
-$("start").onclick=startRun;
-$("pause").onclick=pauseRun;
-$("step").onclick=step;
-$("reset").onclick=reset;
-$("editMode").onclick=enterEditMode;
-$("commitEdits").onclick=commitEdits;
-$("saveLocal").onclick=saveLocal;
-$("loadLocal").onclick=loadLocal;
-$("resetDefaults").onclick=resetDefaults;
-$("exportJson").onclick=exportJson;
-
-["startCash","strength","overhead","revenue","speed"].forEach(id=>{
- $(id).oninput=()=>{
-  labels();
-  if(id=="speed"&&s.run){pauseRun();startRun()}
-  if(s.tick==0){s.cash=num("startCash");render()}
- };
-});
-
+$("start").onclick=startRun;$("pause").onclick=pauseRun;$("step").onclick=step;$("reset").onclick=reset;
+$("editMode").onclick=enterEditMode;$("commitEdits").onclick=commitEdits;$("saveLocal").onclick=saveLocal;$("loadLocal").onclick=loadLocal;$("resetDefaults").onclick=resetDefaults;$("exportJson").onclick=exportJson;
+["startCash","strength","overhead","revenue","taxRate","speed"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
 init();
 </script>
 </body>
