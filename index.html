@@ -2,46 +2,36 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator System V2</title>
+<title>Business Simulator Profiles V3</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
 h1{margin:0;font-size:18px}p{margin:5px 0}
 main{padding:8px;max-width:1000px;margin:auto}
 .controls,.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-button{min-height:40px;border-radius:12px;border:1px solid #777;background:white;font-size:14px;font-weight:900}
-#start{background:#0b5da6;color:white}
-#pause{background:#b00020;color:white}
+button,select{min-height:40px;border-radius:12px;border:1px solid #777;background:white;font-size:14px;font-weight:900}
+#start{background:#0b5da6;color:white}#pause{background:#b00020;color:white}
 .card,.panel,details{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
-.metric b{display:block;font-size:11px;color:#667;text-transform:uppercase}
-.metric span{font-size:19px;font-weight:900}
+.metric b{display:block;font-size:11px;color:#667;text-transform:uppercase}.metric span{font-size:19px;font-weight:900}
 label{display:flex;justify-content:space-between;font-weight:800;margin-top:10px;font-size:14px}
 input{width:100%;height:30px}
 .panel{border:2px solid #bfd0df}
 .panel.active{border-color:#1976d2;box-shadow:0 0 10px #9dc8ef}
 .panel.waiting{border-color:#d5c274}
 .head{display:grid;grid-template-columns:1fr 74px;gap:6px;align-items:center}
-.title{font-size:15px;font-weight:900}
-.sub{font-size:11px;color:#667}
+.title{font-size:15px;font-weight:900}.sub{font-size:11px;color:#667}
 .pbtn{min-height:32px;border-radius:10px;font-size:12px;background:#b00020;color:white}
 .pbtn.run{background:#1f8a2e;color:white}
 .grid{display:grid;grid-template-columns:1fr;gap:4px;margin-top:6px}
 .inputs{display:grid;gap:4px}
 .row{display:grid;grid-template-columns:26px 1fr 42px;gap:5px;align-items:center;border:1px solid #dce5ee;border-radius:10px;padding:4px}
-.name{font-size:11px;font-weight:900}
-.val{text-align:right;font-weight:900;font-size:13px}
+.name{font-size:11px;font-weight:900}.val{text-align:right;font-weight:900;font-size:13px}
 .bar{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;height:10px}
 .blk{background:#e7edf4;border:1px solid #ccd;border-radius:3px}
-.on.b{background:#1976d2}
-.on.g{background:#29972d}
-.on.y{background:#f0b600}
-.on.o{background:#b96d22}
-.on.p{background:#7557c8}
-.on.r{background:#b00020}
+.on.b{background:#1976d2}.on.g{background:#29972d}.on.y{background:#f0b600}.on.o{background:#b96d22}.on.p{background:#7557c8}.on.r{background:#b00020}
 .arrow{height:10px;width:24px;background:#1976d2;border-radius:3px;position:relative;transform:rotate(90deg);margin:auto;animation:pulse .9s infinite}
 .arrow:after{content:"";position:absolute;right:-9px;top:-5px;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:10px solid #1976d2}
-.arrow.g{background:#1f8a2e}
-.arrow.g:after{border-left-color:#1f8a2e}
+.arrow.g{background:#1f8a2e}.arrow.g:after{border-left-color:#1f8a2e}
 @keyframes pulse{50%{opacity:.45}}
 .box,.out{border:2px solid #123b64;border-radius:12px;overflow:hidden;min-height:58px;text-align:center;background:#f8fbff}
 .out{border-color:#1f7a2e;background:#fbfffb}
@@ -55,24 +45,30 @@ input{width:100%;height:30px}
 .deliv{font-size:10px;color:#333;padding:0 4px 4px 4px;line-height:1.2}
 .foot{font-size:12px;margin-top:4px}
 .log{background:#111;color:#eee;border-radius:12px;padding:8px;font-family:monospace;font-size:12px;max-height:150px;overflow:auto}
+.profileBox{display:grid;gap:6px}
+.profileNote{font-size:12px;color:#333;line-height:1.3}
 @media(min-width:900px){
  .grid{grid-template-columns:1fr 28px 1fr 28px 1fr}
  .arrow{transform:none}
  .box,.out{min-height:96px}
  .worker{font-size:38px}
- .stack{height:46px}
- .cube{width:15px;height:15px}
+ .stack{height:46px}.cube{width:15px;height:15px}
 }
 </style>
 </head>
-
 <body>
 <header>
-<h1>Business Simulator System V2</h1>
-<p>Deliverable-based revenue sequence. Each panel creates a measurable unit of value.</p>
+<h1>Business Simulator Profiles V3</h1>
+<p>Select a business type. Each profile loads a different value stream and deliverable chain.</p>
 </header>
 
 <main>
+<div class="card profileBox">
+<label for="profileSelect">Business Profile</label>
+<select id="profileSelect"></select>
+<div class="profileNote" id="profileNote"></div>
+</div>
+
 <div class="controls">
 <button id="start">START ALL</button>
 <button id="pause">PAUSE ALL</button>
@@ -85,8 +81,8 @@ input{width:100%;height:30px}
 <div class="metrics">
 <div class="card metric"><b>Ticks</b><span id="cycle">0</span></div>
 <div class="card metric"><b>Cash</b><span id="cash">$0</span></div>
-<div class="card metric"><b>Paid Orders</b><span id="paid">0</span></div>
-<div class="card metric"><b>Validated Value</b><span id="systemOut">0</span></div>
+<div class="card metric"><b id="paidLabel">Paid Orders</b><span id="paid">0</span></div>
+<div class="card metric"><b id="valueLabel">Validated Value</b><span id="systemOut">0</span></div>
 </div>
 
 <details open>
@@ -102,7 +98,7 @@ input{width:100%;height:30px}
 <input type="range" id="overhead" min="0" max="2000" step="50" value="350">
 
 <label>Revenue Per Paid Unit <span id="revLab"></span></label>
-<input type="range" id="revenue" min="100" max="5000" step="100" value="800">
+<input type="range" id="revenue" min="25" max="5000" step="25" value="800">
 
 <label>Run Speed <span id="speedLab"></span></label>
 <input type="range" id="speed" min="1000" max="5000" step="250" value="2500">
@@ -113,152 +109,133 @@ input{width:100%;height:30px}
 </main>
 
 <script>
-const panels=[
-{
- t:"Market / Customer List",
- s:"Build usable contact inventory.",
- w:"📇",
- c:"Identify",
- o:"Callable Customer List",
- d:"Names, phone numbers, contact records, segment tags, permission/status",
- feed:"Market source",
- unit:"Contact records",
- ins:[
-  ["Raw Market","🌎","b"],
-  ["Research","🔎","b"],
-  ["Data Quality","✅","y"],
-  ["Cash","💵","g"]
- ]
-},
-{
- t:"Sales",
- s:"Convert contacts into contracts.",
- w:"📞",
- c:"Sell",
- o:"Sales Contract",
- d:"Calls made, conversations, qualified prospects, quotes, signed order/deposit",
- feed:"Callable Customer List",
- unit:"Signed contracts",
- ins:[
-  ["Customer List","📇","b"],
-  ["Call Labor","☎️","b"],
-  ["Offer / Quote","🧾","y"],
-  ["Trust","🤝","g"]
- ]
-},
-{
- t:"Design / Engineering",
- s:"Convert contract into build definition.",
- w:"🧑‍💻",
- c:"Engineer",
- o:"Build Package",
- d:"Drawings, BOMs, engineering specs, routings, approvals, revision-controlled instructions",
- feed:"Sales Contract",
- unit:"Approved build packages",
- ins:[
-  ["Sales Contract","🧾","b"],
-  ["Eng Hours","📐","b"],
-  ["Customer Info","🗂️","y"],
-  ["Cash","💵","g"]
- ]
-},
-{
- t:"Supply Chain",
- s:"Make the material kit production-ready.",
- w:"🚚",
- c:"Procure",
- o:"Material Kit",
- d:"Right material, quantity, quality, price, supplier, place, and time",
- feed:"Build Package",
- unit:"Ready material kits",
- ins:[
-  ["Build Package","✅","b"],
-  ["Supplier Capacity","🏭","p"],
-  ["Purchasing Work","🛒","b"],
-  ["Cash","💵","g"]
- ]
-},
-{
- t:"Factory",
- s:"Convert package and kit into product.",
- w:"🛠️",
- c:"Build",
- o:"Conforming Product",
- d:"Finished product made to drawings, specs, quality checks, and standards",
- feed:"Material Kit",
- unit:"Conforming units",
- ins:[
-  ["Material Kit","📦","o"],
-  ["Build Package","📐","b"],
-  ["Shop Labor","👷","b"],
-  ["Quality Standard","✅","y"]
- ]
-},
-{
- t:"Transaction / Turnover",
- s:"Deliver value to customer.",
- w:"🤝",
- c:"Turnover",
- o:"Accepted Delivery",
- d:"Delivered unit, handoff, training, documents, acceptance signature, punch list",
- feed:"Conforming Product",
- unit:"Accepted deliveries",
- ins:[
-  ["Product","🚚","b"],
-  ["Handoff Work","📋","b"],
-  ["Customer Ready","🤝","y"],
-  ["Docs / Training","📘","p"]
- ]
-},
-{
- t:"Payment / Collection",
- s:"Convert acceptance into cash.",
- w:"💳",
- c:"Collect",
- o:"Paid Order",
- d:"Invoice issued, payment collected, margin captured, receivable closed",
- feed:"Accepted Delivery",
- unit:"Paid invoices",
- ins:[
-  ["Accepted Delivery","✅","b"],
-  ["Invoice Work","🧾","b"],
-  ["Payment Trust","🤝","y"],
-  ["Cash Buffer","💵","g"]
- ]
-},
-{
- t:"Customer Satisfaction",
- s:"Validate delivered value.",
- w:"⭐",
- c:"Validate",
- o:"Validated Customer Value",
- d:"CSAT, issue closure, support record, testimonial, referral, repeat lead, improvement signal",
- feed:"Paid Order",
- unit:"Validated value records",
- ins:[
-  ["Paid Order","💰","g"],
-  ["Support","🎧","b"],
-  ["Quality Experience","✅","y"],
-  ["Follow-Up","📣","y"]
- ]
-}
-];
-
-let s={
- run:false,
- timer:null,
- tick:0,
- cash:25000,
- paid:0,
- vals:[],
- outs:[],
- stock:[],
- active:[]
+const profiles={
+"food_truck":{
+ name:"Food Service / Food Truck",
+ note:"Value stream: attract hungry customers, prepare safe meals, transact quickly, and earn repeat demand.",
+ paidLabel:"Paid Meals",
+ valueLabel:"Happy Customers",
+ revenue:25,
+ overhead:250,
+ panels:[
+ {t:"Menu / Demand",s:"Match food offer to hungry customers.",w:"🍔",c:"Attract",o:"Ready Customer",d:"Visible menu, location, appetite, offer clarity",feed:"Foot traffic / online attention",unit:"Ready customers",ins:[["Foot Traffic","🚶","b"],["Menu Appeal","🍽️","y"],["Location","📍","p"],["Cash","💵","g"]]},
+ {t:"Order Taking",s:"Convert ready customer to order.",w:"🧾",c:"Take Order",o:"Paid Order Ticket",d:"Order entered, payment intent, service queue position",feed:"Ready Customer",unit:"Order tickets",ins:[["Ready Customer","🙋","b"],["POS Time","💳","b"],["Menu Clarity","📋","y"],["Trust","🤝","g"]]},
+ {t:"Food Prep",s:"Prepare food to standard.",w:"👨‍🍳",c:"Cook",o:"Prepared Meal",d:"Correct recipe, safe food, portion, packaging",feed:"Paid Order Ticket",unit:"Prepared meals",ins:[["Order Ticket","🧾","b"],["Ingredients","🥬","o"],["Kitchen Labor","👨‍🍳","b"],["Food Safety","✅","y"]]},
+ {t:"Handoff",s:"Deliver meal to customer.",w:"🤝",c:"Serve",o:"Served Meal",d:"Meal handed off, correct customer, napkins/condiments",feed:"Prepared Meal",unit:"Served meals",ins:[["Prepared Meal","🍱","b"],["Service Labor","🙋","b"],["Accuracy","✅","y"],["Speed","⚡","p"]]},
+ {t:"Payment Close",s:"Complete payment and margin.",w:"💳",c:"Collect",o:"Paid Meal",d:"Payment captured, tip, receipt, food cost covered",feed:"Served Meal",unit:"Paid meals",ins:[["Served Meal","🍱","b"],["POS","💳","b"],["Trust","🤝","y"],["Cash Drawer","💵","g"]]},
+ {t:"Satisfaction",s:"Create repeat demand.",w:"⭐",c:"Delight",o:"Repeat Customer",d:"Good taste, clean service, review, return visit",feed:"Paid Meal",unit:"Happy customers",ins:[["Paid Meal","💰","g"],["Taste","😋","y"],["Service","🙋","b"],["Follow-Up","📣","p"]]}
+ ]},
+"manufacturing":{
+ name:"Custom Manufacturing",
+ note:"Value stream: sell a product, define it, buy materials, build to spec, deliver, get paid, improve.",
+ paidLabel:"Paid Jobs",
+ valueLabel:"Validated Products",
+ revenue:1800,
+ overhead:500,
+ panels:[
+ {t:"Customer List",s:"Find possible buyers.",w:"📇",c:"Identify",o:"Qualified Lead",d:"Prospect list, decision makers, needs, contact info",feed:"Market source",unit:"Qualified leads",ins:[["Market","🌎","b"],["Research","🔎","b"],["Data Quality","✅","y"],["Cash","💵","g"]]},
+ {t:"Sales",s:"Convert lead to order.",w:"📞",c:"Sell",o:"Sales Contract",d:"Quote, accepted scope, price, deposit/order",feed:"Qualified Lead",unit:"Signed contracts",ins:[["Qualified Lead","🎯","b"],["Sales Labor","☎️","b"],["Quote","🧾","y"],["Trust","🤝","g"]]},
+ {t:"Design / Engineering",s:"Define buildable product.",w:"🧑‍💻",c:"Engineer",o:"Build Package",d:"Drawings, BOMs, specs, routings, approvals",feed:"Sales Contract",unit:"Build packages",ins:[["Contract","🧾","b"],["Eng Hours","📐","b"],["Customer Info","🗂️","y"],["Cash","💵","g"]]},
+ {t:"Supply Chain",s:"Prepare materials.",w:"🚚",c:"Procure",o:"Material Kit",d:"Right material, quantity, quality, price, place, time",feed:"Build Package",unit:"Material kits",ins:[["Build Package","✅","b"],["Suppliers","🏭","p"],["Purchasing","🛒","b"],["Cash","💵","g"]]},
+ {t:"Factory",s:"Build to spec.",w:"🛠️",c:"Build",o:"Conforming Product",d:"Finished product, inspection, test, quality record",feed:"Material Kit",unit:"Conforming units",ins:[["Material Kit","📦","o"],["Build Package","📐","b"],["Shop Labor","👷","b"],["Quality","✅","y"]]},
+ {t:"Turnover",s:"Deliver and accept.",w:"🤝",c:"Turnover",o:"Accepted Delivery",d:"Handoff, training, documents, acceptance signature",feed:"Conforming Product",unit:"Accepted deliveries",ins:[["Product","🚚","b"],["Handoff","📋","b"],["Customer Ready","🤝","y"],["Docs","📘","p"]]},
+ {t:"Payment",s:"Collect cash.",w:"💳",c:"Collect",o:"Paid Job",d:"Invoice, payment, margin, receivable closed",feed:"Accepted Delivery",unit:"Paid jobs",ins:[["Accepted Delivery","✅","b"],["Invoice Work","🧾","b"],["Payment Trust","🤝","y"],["Cash Buffer","💵","g"]]},
+ {t:"Satisfaction",s:"Validate delivered value.",w:"⭐",c:"Validate",o:"Validated Product",d:"CSAT, issue closure, referral, repeat demand",feed:"Paid Job",unit:"Validated products",ins:[["Paid Job","💰","g"],["Support","🎧","b"],["Quality Experience","✅","y"],["Follow-Up","📣","y"]]}
+ ]},
+"tire_sales":{
+ name:"Tire Sales / Tire Shop",
+ note:"Value stream: identify vehicle need, sell tires, source inventory, install safely, collect payment, retain customer.",
+ paidLabel:"Paid Tire Jobs",
+ valueLabel:"Safe Vehicles",
+ revenue:950,
+ overhead:350,
+ panels:[
+ {t:"Customer / Vehicle Need",s:"Identify tire requirement.",w:"🚗",c:"Diagnose",o:"Tire Need",d:"Vehicle info, size, season, wear, urgency",feed:"Drivers / appointments",unit:"Tire needs",ins:[["Drivers","🚗","b"],["Inspection","🔎","b"],["Fitment Data","📋","y"],["Trust","🤝","g"]]},
+ {t:"Sales Quote",s:"Convert need to approved tire sale.",w:"📞",c:"Quote",o:"Approved Tire Order",d:"Tire selection, quote, approval, appointment",feed:"Tire Need",unit:"Approved orders",ins:[["Tire Need","🎯","b"],["Sales Labor","☎️","b"],["Price / Offer","🧾","y"],["Trust","🤝","g"]]},
+ {t:"Inventory / Supply",s:"Get correct tires ready.",w:"📦",c:"Source",o:"Ready Tire Set",d:"Right tire size, rating, quantity, location, time",feed:"Approved Tire Order",unit:"Ready tire sets",ins:[["Approved Order","✅","b"],["Supplier Stock","🏭","p"],["Purchasing","🛒","b"],["Cash","💵","g"]]},
+ {t:"Install",s:"Mount, balance, torque.",w:"🔧",c:"Install",o:"Installed Tire Set",d:"Mounted tires, balanced wheels, torque record",feed:"Ready Tire Set",unit:"Install jobs",ins:[["Tire Set","🛞","o"],["Technician","👷","b"],["Equipment","⚙️","p"],["Safety Standard","✅","y"]]},
+ {t:"Payment / Invoice",s:"Collect and close.",w:"💳",c:"Collect",o:"Paid Tire Job",d:"Invoice, payment, warranty registration",feed:"Installed Tire Set",unit:"Paid jobs",ins:[["Installed Set","🛞","b"],["Invoice Work","🧾","b"],["Payment Trust","🤝","y"],["Cash Drawer","💵","g"]]},
+ {t:"Retention",s:"Bring customer back.",w:"⭐",c:"Retain",o:"Return Customer",d:"Rotation reminder, review, seasonal changeover lead",feed:"Paid Tire Job",unit:"Return customers",ins:[["Paid Job","💰","g"],["Service Quality","✅","y"],["Follow-Up","📣","b"],["Customer Record","📋","p"]]}
+ ]},
+"auto_repair":{
+ name:"Auto Repair Shop",
+ note:"Value stream: diagnose vehicle, approve repair, source parts, repair/test, collect, retain trust.",
+ paidLabel:"Paid Repairs",
+ valueLabel:"Fixed Vehicles",
+ revenue:700,
+ overhead:400,
+ panels:[
+ {t:"Intake",s:"Capture complaint and vehicle data.",w:"📝",c:"Intake",o:"Repair Order",d:"Customer complaint, VIN, symptoms, authorization",feed:"Customer vehicles",unit:"Repair orders",ins:[["Vehicle","🚗","b"],["Advisor Time","🙋","b"],["Customer Info","📋","y"],["Trust","🤝","g"]]},
+ {t:"Diagnosis",s:"Find root cause.",w:"🔎",c:"Diagnose",o:"Approved Estimate",d:"Diagnostic result, estimate, customer approval",feed:"Repair Order",unit:"Approved estimates",ins:[["Repair Order","🧾","b"],["Tech Time","👷","b"],["Scan / Tools","⚙️","p"],["Knowledge","🧠","y"]]},
+ {t:"Parts Supply",s:"Get correct parts.",w:"📦",c:"Source",o:"Ready Parts",d:"Right part, quality, price, delivery time",feed:"Approved Estimate",unit:"Parts kits",ins:[["Estimate","✅","b"],["Supplier","🏭","p"],["Parts Work","🛒","b"],["Cash","💵","g"]]},
+ {t:"Repair",s:"Fix the vehicle.",w:"🔧",c:"Repair",o:"Repaired Vehicle",d:"Repair work completed to standard",feed:"Ready Parts",unit:"Repaired vehicles",ins:[["Parts Kit","📦","o"],["Tech Labor","👷","b"],["Tools","⚙️","p"],["Procedure","📋","y"]]},
+ {t:"QC / Road Test",s:"Verify repair.",w:"✅",c:"Verify",o:"Released Vehicle",d:"Inspection, road test, codes cleared, customer ready",feed:"Repaired Vehicle",unit:"Released vehicles",ins:[["Repaired Vehicle","🚗","b"],["QC Time","✅","b"],["Test Route","🛣️","p"],["Standards","📋","y"]]},
+ {t:"Payment",s:"Collect and close.",w:"💳",c:"Collect",o:"Paid Repair",d:"Invoice, payment, warranty note, repair order closed",feed:"Released Vehicle",unit:"Paid repairs",ins:[["Released Vehicle","✅","b"],["Invoice Work","🧾","b"],["Payment Trust","🤝","y"],["Cash Drawer","💵","g"]]},
+ {t:"Satisfaction",s:"Maintain trust.",w:"⭐",c:"Retain",o:"Trusted Customer",d:"Review, follow-up, maintenance reminder, repeat visit",feed:"Paid Repair",unit:"Fixed vehicles",ins:[["Paid Repair","💰","g"],["Outcome Quality","✅","y"],["Follow-Up","📣","b"],["Customer Trust","🤝","g"]]}
+ ]},
+"hair_salon":{
+ name:"Hair Salon",
+ note:"Value stream: book customer, consult, perform service, checkout, rebook, earn referral.",
+ paidLabel:"Paid Appointments",
+ valueLabel:"Satisfied Clients",
+ revenue:95,
+ overhead:175,
+ panels:[
+ {t:"Booking",s:"Fill appointment calendar.",w:"📅",c:"Book",o:"Booked Appointment",d:"Client, service type, time slot, stylist assigned",feed:"Client demand",unit:"Booked appointments",ins:[["Demand","🙋","b"],["Availability","📅","p"],["Reception Time","☎️","b"],["Trust","🤝","g"]]},
+ {t:"Consultation",s:"Clarify desired look.",w:"💬",c:"Consult",o:"Service Plan",d:"Style goal, color/cut plan, risk agreement",feed:"Booked Appointment",unit:"Service plans",ins:[["Appointment","📅","b"],["Stylist Skill","✂️","y"],["Client Info","📋","b"],["Trust","🤝","g"]]},
+ {t:"Service Delivery",s:"Perform salon service.",w:"✂️",c:"Style",o:"Completed Service",d:"Cut, color, wash, style completed to expectation",feed:"Service Plan",unit:"Completed services",ins:[["Service Plan","🧾","b"],["Stylist Labor","✂️","b"],["Products","🧴","o"],["Quality","✅","y"]]},
+ {t:"Checkout",s:"Collect payment.",w:"💳",c:"Collect",o:"Paid Appointment",d:"Payment, product upsell, receipt, tip",feed:"Completed Service",unit:"Paid appointments",ins:[["Completed Service","✅","b"],["POS Time","💳","b"],["Client Trust","🤝","y"],["Cash Drawer","💵","g"]]},
+ {t:"Rebook / Satisfaction",s:"Create repeat client.",w:"⭐",c:"Rebook",o:"Satisfied Client",d:"Rebooked appointment, review, referral, product recommendation",feed:"Paid Appointment",unit:"Satisfied clients",ins:[["Paid Appointment","💰","g"],["Result Quality","✅","y"],["Follow-Up","📣","b"],["Relationship","🤝","g"]]}
+ ]},
+"hotel":{
+ name:"Hotel / Lodging",
+ note:"Value stream: attract guest, reserve room, prepare room, host stay, collect payment, earn review/repeat.",
+ paidLabel:"Paid Stays",
+ valueLabel:"Satisfied Guests",
+ revenue:220,
+ overhead:600,
+ panels:[
+ {t:"Demand / Listing",s:"Attract potential guest.",w:"🏨",c:"Attract",o:"Booking Lead",d:"Listing visibility, rate, availability, guest interest",feed:"Travel demand",unit:"Booking leads",ins:[["Travel Demand","🌎","b"],["Listing Quality","📸","y"],["Rate Offer","💲","g"],["Reputation","⭐","p"]]},
+ {t:"Reservation",s:"Convert lead to booking.",w:"📅",c:"Reserve",o:"Confirmed Reservation",d:"Guest info, dates, room type, deposit/guarantee",feed:"Booking Lead",unit:"Reservations",ins:[["Booking Lead","🎯","b"],["Front Desk","☎️","b"],["Room Availability","🛏️","p"],["Trust","🤝","g"]]},
+ {t:"Room Prep",s:"Make room guest-ready.",w:"🧹",c:"Prepare",o:"Ready Room",d:"Clean room, stocked supplies, inspection, key/code ready",feed:"Confirmed Reservation",unit:"Ready rooms",ins:[["Reservation","📅","b"],["Housekeeping","🧹","b"],["Supplies","🧴","o"],["Clean Standard","✅","y"]]},
+ {t:"Guest Stay",s:"Deliver lodging service.",w:"🛏️",c:"Host",o:"Completed Stay",d:"Check-in, room nights, service requests, check-out",feed:"Ready Room",unit:"Completed stays",ins:[["Ready Room","🛏️","b"],["Guest Service","🙋","b"],["Facilities","🏨","p"],["Comfort","✅","y"]]},
+ {t:"Payment",s:"Collect charges.",w:"💳",c:"Collect",o:"Paid Stay",d:"Room charge, taxes, fees, incidentals, folio closed",feed:"Completed Stay",unit:"Paid stays",ins:[["Completed Stay","✅","b"],["Billing Work","🧾","b"],["Payment Trust","🤝","y"],["Cash / Card","💵","g"]]},
+ {t:"Review / Loyalty",s:"Create future demand.",w:"⭐",c:"Retain",o:"Satisfied Guest",d:"Review, loyalty record, referral, repeat booking",feed:"Paid Stay",unit:"Satisfied guests",ins:[["Paid Stay","💰","g"],["Service Quality","✅","y"],["Follow-Up","📣","b"],["Reputation","⭐","p"]]}
+ ]}
 };
+
+let currentKey="manufacturing";
+let panels=profiles[currentKey].panels;
+let s={run:false,timer:null,tick:0,cash:25000,paid:0,vals:[],outs:[],stock:[],active:[]};
 
 const $=id=>document.getElementById(id);
 const money=v=>"$"+Math.round(v).toLocaleString();
 const num=id=>Number($(id).value);
+
+function setupProfiles(){
+ const sel=$("profileSelect");
+ sel.innerHTML="";
+ Object.keys(profiles).forEach(k=>{
+  const opt=document.createElement("option");
+  opt.value=k;
+  opt.textContent=profiles[k].name;
+  sel.appendChild(opt);
+ });
+ sel.value=currentKey;
+ sel.onchange=()=>loadProfile(sel.value);
+}
+
+function loadProfile(k){
+ currentKey=k;
+ panels=profiles[k].panels;
+ $("revenue").value=profiles[k].revenue;
+ $("overhead").value=profiles[k].overhead;
+ $("paidLabel").textContent=profiles[k].paidLabel;
+ $("valueLabel").textContent=profiles[k].valueLabel;
+ $("profileNote").textContent=profiles[k].note;
+ labels();
+ reset();
+}
 
 function labels(){
  $("cashLab").textContent=money(num("startCash"));
@@ -271,125 +248,77 @@ function labels(){
 function blocks(v,c){
  let n=Math.round(Math.max(0,Math.min(100,v))/10);
  let h='<div class="bar">';
- for(let i=0;i<10;i++){
-  h+=`<div class="blk ${i<n?'on '+c:''}"></div>`;
- }
+ for(let i=0;i<10;i++)h+=`<div class="blk ${i<n?'on '+c:''}"></div>`;
  return h+"</div>";
 }
 
 function cubes(v){
- let n=Math.min(20,Math.round(v/5));
- let h="";
- for(let i=0;i<n;i++){
-  h+='<div class="cube"></div>';
- }
+ let n=Math.min(20,Math.round(v/5)),h="";
+ for(let i=0;i<n;i++)h+='<div class="cube"></div>';
  return h;
 }
 
 function render(){
  let h="";
-
  for(let i=0;i<panels.length;i++){
   const p=panels[i];
-
   let cls="panel";
   if(s.active[i])cls+=" active";
   if(!s.active[i] && s.stock[i] < 1 && i>0)cls+=" waiting";
-
   let btnText=s.run?"PAUSE":"RUN";
   let btnClass=s.run?"pbtn":"pbtn run";
 
   h+=`<div class="${cls}">
   <div class="head">
-   <div>
-    <div class="title">PANEL ${i+1}: ${p.t}</div>
-    <div class="sub">Needs: ${p.feed} | Unit: ${p.unit}</div>
-   </div>
+   <div><div class="title">PANEL ${i+1}: ${p.t}</div><div class="sub">Needs: ${p.feed} | Unit: ${p.unit}</div></div>
    <button class="${btnClass}" onclick="toggleRunAll()">${btnText}</button>
   </div>
-
-  <div class="grid">
-  <div class="inputs">`;
+  <div class="grid"><div class="inputs">`;
 
   for(let k=0;k<p.ins.length;k++){
    const r=p.ins[k];
    let v=(k==0)?s.stock[i]:s.vals[i][k];
-
-   h+=`<div class="row">
-   <div>${r[1]}</div>
-   <div><div class="name">${r[0]}</div>${blocks(v,r[2])}</div>
-   <div class="val">${Math.round(v)}</div>
-   </div>`;
+   h+=`<div class="row"><div>${r[1]}</div><div><div class="name">${r[0]}</div>${blocks(v,r[2])}</div><div class="val">${Math.round(v)}</div></div>`;
   }
 
-  h+=`</div>
-  <div class="arrow"></div>
+  h+=`</div><div class="arrow"></div>
   <div class="box"><h3>Conversion - ${p.c}</h3><div class="worker">${p.w}</div></div>
   <div class="arrow g"></div>
-  <div class="out">
-   <h3>Output - ${p.o}</h3>
-   <div class="stack">${cubes(s.outs[i])}</div>
-   <div class="outnum">${Math.round(s.outs[i])}</div>
-   <div class="deliv">${p.d}</div>
+  <div class="out"><h3>Output - ${p.o}</h3><div class="stack">${cubes(s.outs[i])}</div><div class="outnum">${Math.round(s.outs[i])}</div><div class="deliv">${p.d}</div></div>
   </div>
-  </div>
-
-  <div class="foot">
-   <b>Input stock:</b> ${Math.round(s.stock[i])}
-   &nbsp; <b>${p.o}:</b> ${Math.round(s.outs[i])}
-  </div>
+  <div class="foot"><b>Input stock:</b> ${Math.round(s.stock[i])} &nbsp; <b>${p.o}:</b> ${Math.round(s.outs[i])}</div>
   </div>`;
  }
-
  $("seq").innerHTML=h;
  $("cycle").textContent=s.tick;
  $("cash").textContent=money(s.cash);
  $("paid").textContent=s.paid;
- $("systemOut").textContent=Math.round(s.outs[7]);
+ $("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
 }
 
-function log(x){
- $("log").innerHTML+=x+"<br>";
- $("log").scrollTop=$("log").scrollHeight;
-}
-
-function status(x){
- $("status").textContent="JavaScript: RUNNING — "+x;
-}
+function log(x){$("log").innerHTML+=x+"<br>";$("log").scrollTop=$("log").scrollHeight}
+function status(x){$("status").textContent="JavaScript: RUNNING — "+x}
 
 function reset(){
  clearInterval(s.timer);
  s.run=false;
  $("start").textContent="START ALL";
-
- s.tick=0;
- s.cash=num("startCash");
- s.paid=0;
- s.vals=[];
- s.outs=[];
- s.stock=[];
- s.active=[];
-
+ s.tick=0;s.cash=num("startCash");s.paid=0;
+ s.vals=[];s.outs=[];s.stock=[];s.active=[];
  for(let i=0;i<panels.length;i++){
   s.vals.push([100,100,100,100]);
   s.outs.push(0);
   s.stock.push(i==0?100:0);
   s.active.push(false);
  }
-
  $("log").innerHTML="";
- log("Reset. System file loaded: deliverable-based sequence.");
- status("each panel creates a measurable deliverable.");
+ log("Loaded profile: "+profiles[currentKey].name);
+ status("profile loaded with "+panels.length+" value-stream panels.");
  render();
 }
 
 function step(){
- if(s.cash<=0){
-  status("cash is zero");
-  pauseRun();
-  return;
- }
-
+ if(s.cash<=0){status("cash is zero");pauseRun();return}
  s.tick++;
  s.cash-=num("overhead");
 
@@ -397,63 +326,46 @@ function step(){
  s.active=panels.map(()=>false);
 
  for(let i=0;i<panels.length;i++){
-  if(i==0){
-   s.stock[0]=Math.min(100,s.stock[0]+(4+Math.random()*5));
-  }
+  if(i==0)s.stock[0]=Math.min(100,s.stock[0]+(4+Math.random()*5));
 
   let available=s.stock[i];
   let otherAvg=(s.vals[i][1]+s.vals[i][2]+s.vals[i][3])/3;
-
   if(available<1 || otherAvg<1)continue;
 
   let proc=Math.min(available,otherAvg,(5+Math.random()*5)*st);
-
   if(proc<=0)continue;
 
   s.active[i]=true;
   s.stock[i]=Math.max(0,s.stock[i]-proc);
 
-  for(let k=1;k<4;k++){
-   s.vals[i][k]=Math.max(0,s.vals[i][k]-proc*(.25+Math.random()*.25));
-  }
+  for(let k=1;k<4;k++)s.vals[i][k]=Math.max(0,s.vals[i][k]-proc*(.25+Math.random()*.25));
 
   let out=proc*(.80+st*.70);
   s.outs[i]+=out;
 
-  if(i<panels.length-1){
-   s.stock[i+1]=Math.min(100,s.stock[i+1]+out);
-  }
+  if(i<panels.length-1)s.stock[i+1]=Math.min(100,s.stock[i+1]+out);
 
-  if(i==6){
+  if(i==panels.length-2){
    let paid=Math.max(0,Math.round(out/8));
-   if(paid>0){
-    s.paid+=paid;
-    s.cash+=paid*num("revenue");
-   }
+   if(paid>0){s.paid+=paid;s.cash+=paid*num("revenue");}
   }
 
-  if(i==7){
+  if(i==panels.length-1){
    s.stock[0]=Math.min(100,s.stock[0]+out*.35);
    s.vals[0][1]=Math.min(100,s.vals[0][1]+out*.15);
   }
  }
 
- if(s.cash<0){
-  s.cash=0;
-  log("FAILURE: cash reached zero.");
-  pauseRun();
- }
-
- status("tick "+s.tick+" processed deliverable flow.");
+ if(s.cash<0){s.cash=0;log("FAILURE: cash reached zero.");pauseRun();}
+ status("tick "+s.tick+" processed "+profiles[currentKey].name+".");
  render();
 }
 
 function startRun(){
  if(s.run)return;
-
  s.run=true;
  $("start").textContent="RUNNING";
- status("running system flow.");
+ status("running profile.");
  s.timer=setInterval(step,num("speed"));
  render();
 }
@@ -466,13 +378,7 @@ function pauseRun(){
  render();
 }
 
-function toggleRunAll(){
- if(s.run){
-  pauseRun();
- }else{
-  startRun();
- }
-}
+function toggleRunAll(){s.run?pauseRun():startRun();}
 
 $("start").onclick=startRun;
 $("pause").onclick=pauseRun;
@@ -482,21 +388,13 @@ $("reset").onclick=reset;
 ["startCash","strength","overhead","revenue","speed"].forEach(id=>{
  $(id).oninput=()=>{
   labels();
-
-  if(id=="speed"&&s.run){
-   pauseRun();
-   startRun();
-  }
-
-  if(s.tick==0){
-   s.cash=num("startCash");
-   render();
-  }
+  if(id=="speed"&&s.run){pauseRun();startRun();}
+  if(s.tick==0){s.cash=num("startCash");render();}
  };
 });
 
-labels();
-reset();
+setupProfiles();
+loadProfile(currentKey);
 </script>
 </body>
 </html>
