@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Business Simulator Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #eef3f8;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      min-height: 55px;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 12px;
+      background: #222;
+      color: white;
+    }
+    .box {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 12px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Business Simulator Test</h1>
+    <p>This proves JavaScript works from GitHub Pages.</p>
+
+    <button onclick="step()">Step Conversion</button>
+
+    <div class="box">JavaScript Status: <span id="status">Not running</span></div>
+    <div class="box">Step Count: <span id="count">0</span></div>
+    <div class="box">Inputs Remaining: <span id="inputs">100</span></div>
+    <div class="box">Output Created: <span id="output">0</span></div>
+  </div>
+
+  <script>
+    let count = 0;
+    let inputs = 100;
+    let output = 0;
+
+    document.getElementById("status").textContent = "RUNNING";
+
+    function step() {
+      count = count + 1;
+      inputs = Math.max(0, inputs - 10);
+      output = output + 5;
+
+      document.getElementById("count").textContent = count;
+      document.getElementById("inputs").textContent = inputs;
+      document.getElementById("output").textContent = output;
+    }
+  </script>
+</body>
+</html>
