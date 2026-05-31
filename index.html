@@ -10,34 +10,39 @@ h1{margin:0;font-size:18px}p{margin:5px 0}
 main{padding:8px;max-width:950px;margin:auto}
 .controls,.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 button{min-height:40px;border-radius:12px;border:1px solid #777;background:white;font-size:14px;font-weight:900}
-#start{background:#0b5da6;color:white}#pause{background:#b00020;color:white}
+#start{background:#0b5da6;color:white}
+#pause{background:#b00020;color:white}
 .card,.panel,details{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
-.metric b{display:block;font-size:11px;color:#667;text-transform:uppercase}.metric span{font-size:19px;font-weight:900}
+.metric b{display:block;font-size:11px;color:#667;text-transform:uppercase}
+.metric span{font-size:19px;font-weight:900}
 label{display:flex;justify-content:space-between;font-weight:800;margin-top:10px;font-size:14px}
 input{width:100%;height:30px}
 .panel{border:2px solid #bfd0df}
 .panel.active{border-color:#1976d2;box-shadow:0 0 10px #9dc8ef}
 .panel.waiting{border-color:#d5c274}
 .head{display:grid;grid-template-columns:1fr 74px;gap:6px;align-items:center}
-.title{font-size:15px;font-weight:900}.sub{font-size:11px;color:#667}
+.title{font-size:15px;font-weight:900}
+.sub{font-size:11px;color:#667}
 .pbtn{min-height:32px;border-radius:10px;font-size:12px;background:#b00020;color:white}
 .pbtn.run{background:#1f8a2e;color:white}
 .grid{display:grid;grid-template-columns:1fr;gap:4px;margin-top:6px}
 .inputs{display:grid;gap:4px}
 .row{display:grid;grid-template-columns:26px 1fr 38px;gap:5px;align-items:center;border:1px solid #dce5ee;border-radius:10px;padding:4px}
-.name{font-size:11px;font-weight:900}.val{text-align:right;font-weight:900;font-size:13px}
+.name{font-size:11px;font-weight:900}
+.val{text-align:right;font-weight:900;font-size:13px}
 .bar{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;height:10px}
 .blk{background:#e7edf4;border:1px solid #ccd;border-radius:3px}
 .on.b{background:#1976d2}.on.g{background:#29972d}.on.y{background:#f0b600}.on.o{background:#b96d22}
 .arrow{height:10px;width:24px;background:#1976d2;border-radius:3px;position:relative;transform:rotate(90deg);margin:auto;animation:pulse .9s infinite}
 .arrow:after{content:"";position:absolute;right:-9px;top:-5px;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:10px solid #1976d2}
-.arrow.g{background:#1f8a2e}.arrow.g:after{border-left-color:#1f8a2e}
+.arrow.g{background:#1f8a2e}
+.arrow.g:after{border-left-color:#1f8a2e}
 @keyframes pulse{50%{opacity:.45}}
 .box,.out{border:2px solid #123b64;border-radius:12px;overflow:hidden;min-height:56px;text-align:center;background:#f8fbff}
 .out{border-color:#1f7a2e;background:#fbfffb}
 .box h3,.out h3{margin:0;padding:4px;background:#0b5da6;color:white;font-size:11px}
 .out h3{background:#1f8a2e}
-.worker{font-size:24px;padding-top:3px;animation:work .7s infinite alternate}.note{font-size:10px;font-weight:800;color:#667}
+.worker{font-size:24px;padding-top:3px;animation:work .7s infinite alternate}
 @keyframes work{from{transform:rotate(-2deg)}to{transform:rotate(2deg) translateY(-3px)}}
 .stack{display:flex;flex-wrap:wrap;align-content:flex-end;justify-content:center;gap:3px;height:24px;padding:3px}
 .cube{width:10px;height:10px;background:#57c237;border:1px solid #17651d;border-radius:3px}
@@ -49,7 +54,8 @@ input{width:100%;height:30px}
  .arrow{transform:none}
  .box,.out{min-height:90px}
  .worker{font-size:38px}
- .stack{height:46px}.cube{width:15px;height:15px}
+ .stack{height:46px}
+ .cube{width:15px;height:15px}
 }
 </style>
 </head>
@@ -57,7 +63,7 @@ input{width:100%;height:30px}
 <body>
 <header>
 <h1>Business Revenue Sequence Simulator</h1>
-<p>Dependency-based flow: each stage runs when upstream work is available.</p>
+<p>Dependency-based flow: all panels stay visible below.</p>
 </header>
 
 <main>
@@ -145,7 +151,9 @@ function cubes(v){
 function render(){
  let h="";
 
- panels.forEach((p,i)=>{
+ for(let i=0;i<panels.length;i++){
+  const p=panels[i];
+
   let cls="panel";
   if(s.active[i])cls+=" active";
   if(!s.active[i] && s.stock[i] < 1 && i>0)cls+=" waiting";
@@ -165,14 +173,16 @@ function render(){
   <div class="grid">
   <div class="inputs">`;
 
-  p.ins.forEach((r,k)=>{
+  for(let k=0;k<p.ins.length;k++){
+   const r=p.ins[k];
    let v=(k==0)?s.stock[i]:s.vals[i][k];
+
    h+=`<div class="row">
    <div>${r[1]}</div>
    <div><div class="name">${r[0]}</div>${blocks(v,r[2])}</div>
    <div class="val">${Math.round(v)}</div>
    </div>`;
-  });
+  }
 
   h+=`</div>
   <div class="arrow"></div>
@@ -186,7 +196,7 @@ function render(){
    &nbsp; <b>Stage output:</b> ${Math.round(s.outs[i])}
   </div>
   </div>`;
- });
+ }
 
  $("seq").innerHTML=h;
  $("cycle").textContent=s.tick;
@@ -205,7 +215,9 @@ function status(x){
 }
 
 function reset(){
- pauseRun();
+ clearInterval(s.timer);
+ s.run=false;
+ $("start").textContent="START ALL";
 
  s.tick=0;
  s.cash=num("startCash");
@@ -224,7 +236,7 @@ function reset(){
 
  $("log").innerHTML="";
  log("Reset. Dependency map loaded.");
- status("all stages run when upstream stock exists.");
+ status("all panels loaded below.");
  render();
 }
 
@@ -292,11 +304,6 @@ function step(){
 
  status("tick "+s.tick+" processed dependencies.");
  render();
-
- if(s.run){
-  let first=document.querySelector(".panel.active");
-  if(first)first.scrollIntoView({behavior:"smooth",block:"nearest"});
- }
 }
 
 function startRun(){
