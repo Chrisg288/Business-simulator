@@ -17,12 +17,11 @@ label{display:flex;justify-content:space-between;font-weight:800;margin-top:10px
 input{width:100%;height:30px}
 .panel{border:2px solid #bfd0df}
 .panel.active{border-color:#1976d2;box-shadow:0 0 10px #9dc8ef}
-.panel.paused{opacity:.55;border-color:#999}
 .panel.waiting{border-color:#d5c274}
 .head{display:grid;grid-template-columns:1fr 74px;gap:6px;align-items:center}
 .title{font-size:15px;font-weight:900}.sub{font-size:11px;color:#667}
 .pbtn{min-height:32px;border-radius:10px;font-size:12px;background:#b00020;color:white}
-.pbtn.on{background:#1f8a2e}
+.pbtn.run{background:#1f8a2e;color:white}
 .grid{display:grid;grid-template-columns:1fr;gap:4px;margin-top:6px}
 .inputs{display:grid;gap:4px}
 .row{display:grid;grid-template-columns:26px 1fr 38px;gap:5px;align-items:center;border:1px solid #dce5ee;border-radius:10px;padding:4px}
@@ -54,11 +53,19 @@ input{width:100%;height:30px}
 }
 </style>
 </head>
+
 <body>
-<header><h1>Business Revenue Sequence Simulator</h1><p>Dependency-based flow: each stage runs when upstream work is available.</p></header>
+<header>
+<h1>Business Revenue Sequence Simulator</h1>
+<p>Dependency-based flow: each stage runs when upstream work is available.</p>
+</header>
+
 <main>
 <div class="controls">
-<button id="start">START</button><button id="pause">PAUSE</button><button id="step">STEP</button><button id="reset">RESET</button>
+<button id="start">START ALL</button>
+<button id="pause">PAUSE ALL</button>
+<button id="step">STEP</button>
+<button id="reset">RESET</button>
 </div>
 
 <div class="card" id="status">JavaScript: loading...</div>
@@ -72,11 +79,21 @@ input{width:100%;height:30px}
 
 <details open>
 <summary><b>Scenario Controls</b></summary>
-<label>Starting Cash <span id="cashLab"></span></label><input type="range" id="startCash" min="1000" max="100000" step="1000" value="25000">
-<label>Process Strength <span id="strLab"></span></label><input type="range" id="strength" min="10" max="100" step="5" value="60">
-<label>Overhead Per Tick <span id="ohLab"></span></label><input type="range" id="overhead" min="0" max="2000" step="50" value="350">
-<label>Revenue Per Paid Unit <span id="revLab"></span></label><input type="range" id="revenue" min="100" max="5000" step="100" value="800">
-<label>Run Speed <span id="speedLab"></span></label><input type="range" id="speed" min="1000" max="5000" step="250" value="2500">
+
+<label>Starting Cash <span id="cashLab"></span></label>
+<input type="range" id="startCash" min="1000" max="100000" step="1000" value="25000">
+
+<label>Process Strength <span id="strLab"></span></label>
+<input type="range" id="strength" min="10" max="100" step="5" value="60">
+
+<label>Overhead Per Tick <span id="ohLab"></span></label>
+<input type="range" id="overhead" min="0" max="2000" step="50" value="350">
+
+<label>Revenue Per Paid Unit <span id="revLab"></span></label>
+<input type="range" id="revenue" min="100" max="5000" step="100" value="800">
+
+<label>Run Speed <span id="speedLab"></span></label>
+<input type="range" id="speed" min="1000" max="5000" step="250" value="2500">
 </details>
 
 <div id="seq"></div>
@@ -93,7 +110,8 @@ const panels=[
 {t:"Satisfaction",s:"Create repeat demand.",w:"⭐",c:"Satisfy",o:"Referral / Repeat",feed:"Paid Order",ins:[["Paid Order","💰","g"],["Support","🎧","b"],["Quality","✅","y"],["Follow-Up","📣","y"]]}
 ];
 
-let s={run:false,timer:null,tick:0,cash:25000,paid:0,vals:[],outs:[],stock:[],paused:[],active:[]};
+let s={run:false,timer:null,tick:0,cash:25000,paid:0,vals:[],outs:[],stock:[],active:[]};
+
 const $=id=>document.getElementById(id);
 const money=v=>"$"+Math.round(v).toLocaleString();
 const num=id=>Number($(id).value);
@@ -107,46 +125,69 @@ function labels(){
 }
 
 function blocks(v,c){
- let n=Math.round(Math.max(0,Math.min(100,v))/10),h='<div class="bar">';
- for(let i=0;i<10;i++)h+=`<div class="blk ${i<n?'on '+c:''}"></div>`;
+ let n=Math.round(Math.max(0,Math.min(100,v))/10);
+ let h='<div class="bar">';
+ for(let i=0;i<10;i++){
+  h+=`<div class="blk ${i<n?'on '+c:''}"></div>`;
+ }
  return h+"</div>";
 }
 
 function cubes(v){
- let n=Math.min(20,Math.round(v/5)),h="";
- for(let i=0;i<n;i++)h+='<div class="cube"></div>';
+ let n=Math.min(20,Math.round(v/5));
+ let h="";
+ for(let i=0;i<n;i++){
+  h+='<div class="cube"></div>';
+ }
  return h;
 }
 
 function render(){
  let h="";
+
  panels.forEach((p,i)=>{
   let cls="panel";
   if(s.active[i])cls+=" active";
-  if(s.paused[i])cls+=" paused";
   if(!s.active[i] && s.stock[i] < 1 && i>0)cls+=" waiting";
+
+  let globalBtnText=s.run?"PAUSE":"RUN";
+  let globalBtnClass=s.run?"pbtn":"pbtn run";
 
   h+=`<div class="${cls}">
   <div class="head">
-   <div><div class="title">PANEL ${i+1}: ${p.t}</div><div class="sub">Needs: ${p.feed} | ${p.s}</div></div>
-   <button class="pbtn ${s.paused[i]?'on':''}" onclick="togglePanel(${i})">${s.paused[i]?'RUN':'PAUSE'}</button>
+   <div>
+    <div class="title">PANEL ${i+1}: ${p.t}</div>
+    <div class="sub">Needs: ${p.feed} | ${p.s}</div>
+   </div>
+   <button class="${globalBtnClass}" onclick="toggleRunAll()">${globalBtnText}</button>
   </div>
 
-  <div class="grid"><div class="inputs">`;
+  <div class="grid">
+  <div class="inputs">`;
 
   p.ins.forEach((r,k)=>{
    let v=(k==0)?s.stock[i]:s.vals[i][k];
-   h+=`<div class="row"><div>${r[1]}</div><div><div class="name">${r[0]}</div>${blocks(v,r[2])}</div><div class="val">${Math.round(v)}</div></div>`;
+   h+=`<div class="row">
+   <div>${r[1]}</div>
+   <div><div class="name">${r[0]}</div>${blocks(v,r[2])}</div>
+   <div class="val">${Math.round(v)}</div>
+   </div>`;
   });
 
-  h+=`</div><div class="arrow"></div>
+  h+=`</div>
+  <div class="arrow"></div>
   <div class="box"><h3>Conversion - ${p.c}</h3><div class="worker">${p.w}</div></div>
   <div class="arrow g"></div>
   <div class="out"><h3>Output - ${p.o}</h3><div class="stack">${cubes(s.outs[i])}</div><div class="outnum">${Math.round(s.outs[i])}</div></div>
   </div>
-  <div class="foot"><b>Input stock:</b> ${Math.round(s.stock[i])} &nbsp; <b>Stage output:</b> ${Math.round(s.outs[i])}</div>
+
+  <div class="foot">
+   <b>Input stock:</b> ${Math.round(s.stock[i])}
+   &nbsp; <b>Stage output:</b> ${Math.round(s.outs[i])}
+  </div>
   </div>`;
  });
+
  $("seq").innerHTML=h;
  $("cycle").textContent=s.tick;
  $("cash").textContent=money(s.cash);
@@ -154,28 +195,46 @@ function render(){
  $("systemOut").textContent=Math.round(s.outs[5]);
 }
 
-function log(x){$("log").innerHTML+=x+"<br>";$("log").scrollTop=$("log").scrollHeight}
-function status(x){$("status").textContent="JavaScript: RUNNING — "+x}
+function log(x){
+ $("log").innerHTML+=x+"<br>";
+ $("log").scrollTop=$("log").scrollHeight;
+}
+
+function status(x){
+ $("status").textContent="JavaScript: RUNNING — "+x;
+}
 
 function reset(){
  pauseRun();
- s.tick=0;s.cash=num("startCash");s.paid=0;
- s.vals=[];s.outs=[];s.stock=[];s.paused=[];s.active=[];
+
+ s.tick=0;
+ s.cash=num("startCash");
+ s.paid=0;
+ s.vals=[];
+ s.outs=[];
+ s.stock=[];
+ s.active=[];
+
  for(let i=0;i<panels.length;i++){
   s.vals.push([100,100,100,100]);
   s.outs.push(0);
   s.stock.push(i==0?100:0);
-  s.paused.push(false);
   s.active.push(false);
  }
+
  $("log").innerHTML="";
  log("Reset. Dependency map loaded.");
- status("all stages can run when upstream stock exists.");
+ status("all stages run when upstream stock exists.");
  render();
 }
 
 function step(){
- if(s.cash<=0){status("cash is zero");pauseRun();return}
+ if(s.cash<=0){
+  status("cash is zero");
+  pauseRun();
+  return;
+ }
+
  s.tick++;
  s.cash-=num("overhead");
 
@@ -183,7 +242,6 @@ function step(){
  s.active=[false,false,false,false,false,false];
 
  for(let i=0;i<panels.length;i++){
-  if(s.paused[i])continue;
 
   if(i==0){
    s.stock[0]=Math.min(100,s.stock[0]+(4+Math.random()*5));
@@ -191,9 +249,11 @@ function step(){
 
   let available=s.stock[i];
   let otherAvg=(s.vals[i][1]+s.vals[i][2]+s.vals[i][3])/3;
+
   if(available<1 || otherAvg<1)continue;
 
   let proc=Math.min(available,otherAvg,(5+Math.random()*5)*st);
+
   if(proc<=0)continue;
 
   s.active[i]=true;
@@ -224,9 +284,15 @@ function step(){
   }
  }
 
- if(s.cash<0){s.cash=0;log("FAILURE: cash reached zero.");pauseRun();}
+ if(s.cash<0){
+  s.cash=0;
+  log("FAILURE: cash reached zero.");
+  pauseRun();
+ }
+
  status("tick "+s.tick+" processed dependencies.");
  render();
+
  if(s.run){
   let first=document.querySelector(".panel.active");
   if(first)first.scrollIntoView({behavior:"smooth",block:"nearest"});
@@ -235,22 +301,28 @@ function step(){
 
 function startRun(){
  if(s.run)return;
- s.run=true;$("start").textContent="RUNNING";
+
+ s.run=true;
+ $("start").textContent="RUNNING";
  status("running dependency flow.");
  s.timer=setInterval(step,num("speed"));
+ render();
 }
 
 function pauseRun(){
  clearInterval(s.timer);
  s.run=false;
- $("start").textContent="START";
+ $("start").textContent="START ALL";
  status("paused");
+ render();
 }
 
-function togglePanel(i){
- s.paused[i]=!s.paused[i];
- status((s.paused[i]?"paused ":"running ")+panels[i].t);
- render();
+function toggleRunAll(){
+ if(s.run){
+  pauseRun();
+ }else{
+  startRun();
+ }
 }
 
 $("start").onclick=startRun;
@@ -261,8 +333,16 @@ $("reset").onclick=reset;
 ["startCash","strength","overhead","revenue","speed"].forEach(id=>{
  $(id).oninput=()=>{
   labels();
-  if(id=="speed"&&s.run){pauseRun();startRun();}
-  if(s.tick==0){s.cash=num("startCash");render();}
+
+  if(id=="speed"&&s.run){
+   pauseRun();
+   startRun();
+  }
+
+  if(s.tick==0){
+   s.cash=num("startCash");
+   render();
+  }
  };
 });
 
