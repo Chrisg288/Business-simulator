@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V6.9</title>
+<title>Business Simulator V7.0</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -55,6 +55,16 @@ body.editing .panel{border-color:#7557c8}
 .graphTitle{font-weight:900;font-size:13px;margin-bottom:4px}
 #breakEvenSvg{width:100%;height:230px;background:#fbfdff;border:1px solid #dce5ee;border-radius:10px}
 .legend{display:flex;gap:14px;font-size:12px;margin-top:4px;flex-wrap:wrap}
+
+.diagBox{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
+.diagTitle{font-weight:900;font-size:14px;margin-bottom:6px}
+.diagGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.diagItem{border:1px solid #dce5ee;border-radius:10px;padding:6px;background:#fbfdff;font-size:12px}
+.diagItem b{display:block;color:#667;text-transform:uppercase;font-size:10px}
+.bad{color:#b00020;font-weight:900}.good{color:#1f8a2e;font-weight:900}.warn{color:#b96d22;font-weight:900}
+.fixList{margin:6px 0 0 18px;padding:0;font-size:12px;line-height:1.35}
+@media(max-width:800px){.diagGrid{grid-template-columns:1fr}}
+
 .sw{display:inline-block;width:14px;height:4px;border-radius:4px;margin-right:4px;vertical-align:middle}
 .revSw{background:#1f8a2e}.costSw{background:#b00020}.beSw{background:#333}
 
@@ -65,7 +75,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V6.9</h1><p>V6.9: standard break-even graph with units, dollar scale, crossing point, and break-even date.</p></header>
+<header><h1>Business Simulator V7.0</h1><p>V7.0: adds business diagnosis, cash runway, unit economics, and recommended fixes.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -93,6 +103,7 @@ body.editing .editBanner{display:block}
 <div class="card metric"><b>Gross Profit</b><span id="grossProfit">$0</span></div>
 <div class="card metric"><b>Tax</b><span id="taxBox">$0</span></div>
 <div class="card metric"><b>Profit After Tax</b><span id="netProfit">$0</span></div>
+<div class="card metric"><b>Paid Units</b><span id="paidUnitsBox">0</span></div>
 <div class="card metric"><b id="valueLabel">Value Units</b><span id="systemOut">0</span></div>
 </div>
 
@@ -105,6 +116,17 @@ body.editing .editBanner{display:block}
   <span><span class="sw costSw"></span>Total Costs</span>
   <span><span class="sw beSw"></span>Break-even point</span>
  </div>
+</div>
+
+<div class="diagBox">
+ <div class="diagTitle">Business Diagnosis</div>
+ <div class="diagGrid">
+  <div class="diagItem"><b>Status</b><span id="diagStatus">waiting</span></div>
+  <div class="diagItem"><b>Cash Runway</b><span id="diagRunway">waiting</span></div>
+  <div class="diagItem"><b>Unit Economics</b><span id="diagUnit">waiting</span></div>
+  <div class="diagItem"><b>Break-even Need</b><span id="diagBE">waiting</span></div>
+ </div>
+ <div class="diagItem" style="margin-top:6px"><b>Recommended Fixes</b><ol class="fixList" id="diagFixes"><li>Run the simulation to generate diagnostics.</li></ol></div>
 </div>
 
 <details open><summary><b>Scenario Controls</b></summary>
@@ -284,6 +306,91 @@ function renderInputRow(p,i,k){
 }
 
 
+
+function currentDayHourFromHours(hours){
+ let wh=getWorkingHours();
+ let d=Math.floor((hours||0)/wh)+1;
+ let hr=Number(((hours||0)%wh).toFixed(1));
+ return "Day "+d+", Hr "+hr;
+}
+
+function getFinancialDiagnosis(){
+ let paidUnits=s.paidUnits||0;
+ let revenue=s.totalRevenue||0;
+ let cost=s.totalCost||0;
+ let cash=s.cash||0;
+ let price=num("revenue");
+ let gm=getGrossMargin?getGrossMargin():35;
+ let varCostPerUnit=price*(1-(gm/100));
+ let fixedToDate=Math.max(0,cost-(paidUnits*varCostPerUnit));
+ let contribution=Math.max(0.01,price-varCostPerUnit);
+ let breakEvenUnits=fixedToDate/contribution;
+ let unitsShort=Math.max(0,breakEvenUnits-paidUnits);
+ let avgCostPerPaidUnit=paidUnits>0?cost/paidUnits:0;
+ let avgRevenuePerPaidUnit=paidUnits>0?revenue/paidUnits:price;
+ let profit=revenue-cost;
+ let burnPerTick=0;
+ if((s.history||[]).length>=2){
+  let a=s.history[s.history.length-2],b=s.history[s.history.length-1];
+  let deltaCash=(b.cash!==undefined?b.cash:cash)-(a.cash!==undefined?a.cash:cash);
+  burnPerTick=deltaCash<0?Math.abs(deltaCash):0;
+ }
+ let overheadPerTick=num("overhead")*getStepHours();
+ let estimatedBurn=Math.max(0,overheadPerTick - Math.max(0,unitProfit())*Math.max(1,paidUnits/Math.max(1,s.tick)));
+ let effectiveBurn=burnPerTick>0?burnPerTick:estimatedBurn;
+ let runwayTicks=effectiveBurn>0?cash/effectiveBurn:9999;
+ return {paidUnits,revenue,cost,cash,price,gm,varCostPerUnit,fixedToDate,contribution,breakEvenUnits,unitsShort,avgCostPerPaidUnit,avgRevenuePerPaidUnit,profit,effectiveBurn,runwayTicks};
+}
+
+function renderDiagnosis(){
+ let d=getFinancialDiagnosis();
+ let status=$("diagStatus"),runway=$("diagRunway"),unit=$("diagUnit"),be=$("diagBE"),fixes=$("diagFixes");
+ if(!status)return;
+
+ if(s.tick<1){
+  status.innerHTML="Waiting for simulation run.";
+  runway.innerHTML="Run at least one tick.";
+  unit.innerHTML="Revenue/unit: "+money(num("revenue"))+" | target unit profit: "+money(unitProfit());
+  be.innerHTML="Not enough data yet.";
+  fixes.innerHTML="<li>Run the simulation for a few ticks.</li>";
+  return;
+ }
+
+ if(d.profit>=0 && d.cash>0){
+  status.innerHTML='<span class="good">Viable so far</span> — profit before tax '+money(d.profit)+'.';
+ }else if(d.cash<=0){
+  status.innerHTML='<span class="bad">Cash failure</span> — business has run out of cash.';
+ }else{
+  status.innerHTML='<span class="warn">Not yet viable</span> — short by '+money(Math.abs(d.profit))+'.';
+ }
+
+ if(d.effectiveBurn<=0){
+  runway.innerHTML='<span class="good">Not burning cash</span> at current pace.';
+ }else{
+  runway.innerHTML=money(d.effectiveBurn)+" burn/tick. About "+Math.floor(d.runwayTicks)+" ticks runway.";
+ }
+
+ unit.innerHTML="Avg revenue/unit "+money(d.avgRevenuePerPaidUnit)+" | avg cost/unit "+money(d.avgCostPerPaidUnit)+" | contribution "+money(d.contribution)+"/unit.";
+
+ if(d.unitsShort<=0){
+  be.innerHTML='<span class="good">Break-even reached</span> at about '+Math.ceil(d.breakEvenUnits)+" paid units.";
+ }else{
+  be.innerHTML="Need about <b>"+Math.ceil(d.unitsShort)+"</b> more paid units. Break-even around "+Math.ceil(d.breakEvenUnits)+" paid units.";
+ }
+
+ let suggestions=[];
+ if(d.cash<=0 || d.runwayTicks<3)suggestions.push("Increase starting cash or reduce overhead. Current runway is too short for the model to reach break-even.");
+ if(d.avgCostPerPaidUnit>d.avgRevenuePerPaidUnit && d.paidUnits>0)suggestions.push("Average cost per paid unit is higher than average revenue. Raise price, improve margin, or reduce cost per unit.");
+ if(d.unitsShort>0 && d.unitsShort>d.paidUnits)suggestions.push("The business needs much more volume before break-even. Increase demand, process strength, availability, or working hours.");
+ if(num("overhead")*getStepHours()>d.revenue && d.paidUnits<10)suggestions.push("Fixed overhead per tick is high compared with early revenue. Try smaller premises, fewer staff hours, or slower scaling.");
+ if(getGrossMargin()>60)suggestions.push("Gross margin target is aggressive. It may create a quality penalty. Test a lower margin with better service quality.");
+ if(getGrossMargin()<25)suggestions.push("Gross margin is low. You may be underpricing or absorbing too much variable cost.");
+ if(num("revenue")<d.avgCostPerPaidUnit && d.paidUnits>0)suggestions.push("Revenue per paid unit is too low for the current cost structure. Increase price or change the offer.");
+ if(suggestions.length===0)suggestions.push("No obvious fatal issue. Continue running longer and test sensitivity: price, margin, overhead, and demand.");
+
+ fixes.innerHTML=suggestions.slice(0,5).map(x=>"<li>"+x+"</li>").join("");
+}
+
 function renderBreakEvenGraph(){
  let svg=$("breakEvenSvg");
  let summary=$("breakEvenSummary");
@@ -435,8 +542,8 @@ function render(){
  $("totalRevenue").textContent=money(s.totalRevenue);
  let gp=s.totalRevenue-s.totalCost, tax=Math.max(0,gp*num("taxRate")/100), net=gp-tax;
  $("grossProfit").textContent=money(gp);$("taxBox").textContent=money(tax);$("netProfit").textContent=money(net);
- $("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
- $("editMode").textContent=editMode?"EXIT EDIT MODE":"EDIT MODE";renderBreakEvenGraph();
+ $("paidUnitsBox").textContent=Math.round(s.paidUnits||0);$("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
+ $("editMode").textContent=editMode?"EXIT EDIT MODE":"EDIT MODE";renderBreakEvenGraph();renderDiagnosis();
 }
 
 
@@ -528,7 +635,7 @@ function step(){
   }
  }
  if(s.cash<0){s.cash=0;log("FAILURE: cash reached zero.");pauseRun()}
- s.history.push({t:s.tick,h:s.hours,units:s.paidUnits,cost:s.totalCost,rev:s.totalRevenue});if(s.history.length>80)s.history.shift();status("tick "+s.tick+" / "+timeStepLabel()+" processed value and money.");render();
+ s.history.push({t:s.tick,h:s.hours,units:s.paidUnits,cost:s.totalCost,rev:s.totalRevenue,cash:s.cash});if(s.history.length>80)s.history.shift();status("tick "+s.tick+" / "+timeStepLabel()+" processed value and money.");render();
 }
 
 function startRun(){if(s.run)return;if(editMode){status("commit or exit edit mode before running.");return}s.run=true;$("start").textContent="RUNNING";status("running.");s.timer=setInterval(step,num("speed"));render()}
