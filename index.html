@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V7.0</title>
+<title>Business Simulator V7.2</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -62,6 +62,10 @@ body.editing .panel{border-color:#7557c8}
 .diagItem{border:1px solid #dce5ee;border-radius:10px;padding:6px;background:#fbfdff;font-size:12px}
 .diagItem b{display:block;color:#667;text-transform:uppercase;font-size:10px}
 .bad{color:#b00020;font-weight:900}.good{color:#1f8a2e;font-weight:900}.warn{color:#b96d22;font-weight:900}
+
+.fundingBad{color:#b00020;font-weight:900}
+.fundingGood{color:#1f8a2e;font-weight:900}
+
 .fixList{margin:6px 0 0 18px;padding:0;font-size:12px;line-height:1.35}
 @media(max-width:800px){.diagGrid{grid-template-columns:1fr}}
 
@@ -75,7 +79,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V7.0</h1><p>V7.0: adds business diagnosis, cash runway, unit economics, and recommended fixes.</p></header>
+<header><h1>Business Simulator V7.2</h1><p>V7.2: adds long-term simulation horizon and funding-gap mode. Cash below zero no longer forces the simulation to stop.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -104,6 +108,8 @@ body.editing .editBanner{display:block}
 <div class="card metric"><b>Tax</b><span id="taxBox">$0</span></div>
 <div class="card metric"><b>Profit After Tax</b><span id="netProfit">$0</span></div>
 <div class="card metric"><b>Paid Units</b><span id="paidUnitsBox">0</span></div>
+<div class="card metric"><b>Years Simulated</b><span id="yearsBox">0.00</span></div>
+<div class="card metric"><b>Funding Gap / Debt</b><span id="fundingGapBox">$0</span></div>
 <div class="card metric"><b id="valueLabel">Value Units</b><span id="systemOut">0</span></div>
 </div>
 
@@ -132,7 +138,7 @@ body.editing .editBanner{display:block}
 <details open><summary><b>Scenario Controls</b></summary>
 <label>Starting Cash <span id="cashLab"></span></label><input type="range" id="startCash" min="1000" max="100000" step="1000" value="25000">
 <label>Process Strength <span id="strLab"></span></label><input type="range" id="strength" min="10" max="100" step="5" value="60">
-<label>Overhead Per Hour <span id="ohLab"></span></label><input type="range" id="overhead" min="0" max="2000" step="25" value="350">
+<label>Fixed Overhead Per Business Day <span id="ohLab"></span></label><input type="range" id="overhead" min="0" max="25000" step="50" value="350">
 <label>Revenue Per Paid Unit <span id="revLab"></span></label><input type="range" id="revenue" min="10" max="5000" step="5" value="800">
 <label>Target Gross Margin <span id="marginLab"></span></label><input type="range" id="grossMargin" min="5" max="85" step="1" value="35">
 <label>Estimated Profit Per Paid Unit <span id="unitProfitLab"></span></label>
@@ -147,6 +153,21 @@ body.editing .editBanner{display:block}
 </select>
 <label>Working Hours Per Day <span id="workHoursLab"></span></label><input type="range" id="workingHours" min="0.5" max="24" step="0.5" value="8">
 <label>Animation Speed <span id="speedLab"></span></label><input type="range" id="speed" min="500" max="4000" step="250" value="2000">
+<label>Simulation Horizon <span id="horizonLab"></span></label>
+<select id="horizonYears">
+<option value="0.25">3 months</option>
+<option value="0.5">6 months</option>
+<option value="1">1 year</option>
+<option value="2" selected>2 years</option>
+<option value="5">5 years</option>
+<option value="10">10 years</option>
+<option value="999">Unlimited / manual stop</option>
+</select>
+<label>Cash Failure Handling <span id="cashModeLab"></span></label>
+<select id="cashMode">
+<option value="funding_gap" selected>Track funding gap / keep running</option>
+<option value="stop">Stop when cash reaches zero</option>
+</select>
 </details>
 
 <div id="seq"></div><div class="log" id="log"></div>
@@ -154,7 +175,7 @@ body.editing .editBanner{display:block}
 
 <script>
 let profiles={},manifest=[],currentKey="",currentProfile=null,panels=[],editMode=false,editDraft=null;
-let s={run:false,timer:null,tick:0,hours:0,cash:25000,paid:0,vals:[],outs:[],stock:[],active:[],stageCost:[],stageValue:[],stageUsed:[],stageOutTick:[],totalCost:0,totalRevenue:0,paidUnits:0,history:[]};
+let s={run:false,timer:null,tick:0,hours:0,cash:25000,paid:0,vals:[],outs:[],stock:[],active:[],stageCost:[],stageValue:[],stageUsed:[],stageOutTick:[],totalCost:0,totalRevenue:0,paidUnits:0,fundingGap:0,minCash:0,history:[]};
 
 const $=id=>document.getElementById(id),money=v=>"$"+Math.round(v).toLocaleString(),num=id=>Number($(id).value);
 function clone(o){return JSON.parse(JSON.stringify(o))}
@@ -184,6 +205,26 @@ function qualityPenalty(){
  // Keep no penalty up to 55%. Above that, each point of margin reduces execution slightly.
  let gm=getGrossMargin();
  return gm<=55?1:Math.max(0.60,1-((gm-55)*0.012));
+}
+
+
+function defaultDailyOverhead(k){
+ if(k==="food_truck")return 350;
+ if(k==="hotel")return 1800;
+ if(k==="hair_salon")return 450;
+ if(k==="auto_repair")return 700;
+ if(k==="tire_shop")return 650;
+ if(k==="manufacturing")return 1200;
+ return 500;
+}
+
+function getDailyOverhead(){
+ return num("overhead");
+}
+
+function overheadThisTick(){
+ let wh=Math.max(0.5,getWorkingHours());
+ return getDailyOverhead()*(getStepHours()/wh);
 }
 
 function defaultWorkingHours(k){
@@ -246,7 +287,7 @@ function normalizeProfileDefaults(k){
 
 function loadProfile(k){
  currentKey=k;currentProfile=clone(profiles[k]);normalizeProfileDefaults(k);panels=currentProfile.panels;editDraft=null;editMode=false;document.body.classList.remove("editing");
- $("profileSelect").value=k;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.overhead;$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;
+ $("profileSelect").value=k;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.dailyOverhead||defaultDailyOverhead(k);$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;
  $("valueLabel").textContent=currentProfile.valueLabel || "Value Units";$("profileNote").textContent=currentProfile.note;if($("workingHours"))$("workingHours").value=currentProfile.workingHours||defaultWorkingHours(k);
  if($("grossMargin"))$("grossMargin").value=currentProfile.grossMargin||defaultGrossMargin(k);
  labels();reset();
@@ -260,9 +301,32 @@ function timeStepLabel(){
  return h+" hours / tick";
 }
 
+
+function getHorizonYears(){
+ let el=$("horizonYears");
+ return el?Number(el.value):2;
+}
+
+function maxSimulationHours(){
+ let y=getHorizonYears();
+ if(y>=999)return 999999999;
+ return y*365*getWorkingHours();
+}
+
+function yearsSimulated(){
+ return (s.hours||0)/(365*getWorkingHours());
+}
+
+function getCashMode(){
+ let el=$("cashMode");
+ return el?el.value:"funding_gap";
+}
+
 function labels(){
- $("cashLab").textContent=money(num("startCash"));$("strLab").textContent=num("strength")+"%";$("ohLab").textContent=money(num("overhead"));
+ $("cashLab").textContent=money(num("startCash"));$("strLab").textContent=num("strength")+"%";$("ohLab").textContent=money(getDailyOverhead())+" / business day";
  $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("timeStepLab").textContent=timeStepLabel();$("workHoursLab").textContent=getWorkingHours()+" hr/day";$("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec/tick";
+ $("horizonLab").textContent=getHorizonYears()>=999?"unlimited":getHorizonYears()+" yr";
+ $("cashModeLab").textContent=getCashMode()==="stop"?"stop at zero cash":"track gap";
  $("marginLab").textContent=getGrossMargin()+"%";
  $("unitProfitLab").textContent=money(unitProfit())+" / paid unit";
 }
@@ -335,7 +399,7 @@ function getFinancialDiagnosis(){
   let deltaCash=(b.cash!==undefined?b.cash:cash)-(a.cash!==undefined?a.cash:cash);
   burnPerTick=deltaCash<0?Math.abs(deltaCash):0;
  }
- let overheadPerTick=num("overhead")*getStepHours();
+ let overheadPerTick=overheadThisTick();
  let estimatedBurn=Math.max(0,overheadPerTick - Math.max(0,unitProfit())*Math.max(1,paidUnits/Math.max(1,s.tick)));
  let effectiveBurn=burnPerTick>0?burnPerTick:estimatedBurn;
  let runwayTicks=effectiveBurn>0?cash/effectiveBurn:9999;
@@ -356,10 +420,10 @@ function renderDiagnosis(){
   return;
  }
 
- if(d.profit>=0 && d.cash>0){
+ if(d.profit>=0 && (s.fundingGap||0)<=0){
   status.innerHTML='<span class="good">Viable so far</span> — profit before tax '+money(d.profit)+'.';
- }else if(d.cash<=0){
-  status.innerHTML='<span class="bad">Cash failure</span> — business has run out of cash.';
+ }else if((s.fundingGap||0)>0){
+  status.innerHTML='<span class="warn">Financing required</span> — peak funding gap '+money(s.fundingGap)+'.';
  }else{
   status.innerHTML='<span class="warn">Not yet viable</span> — short by '+money(Math.abs(d.profit))+'.';
  }
@@ -382,7 +446,7 @@ function renderDiagnosis(){
  if(d.cash<=0 || d.runwayTicks<3)suggestions.push("Increase starting cash or reduce overhead. Current runway is too short for the model to reach break-even.");
  if(d.avgCostPerPaidUnit>d.avgRevenuePerPaidUnit && d.paidUnits>0)suggestions.push("Average cost per paid unit is higher than average revenue. Raise price, improve margin, or reduce cost per unit.");
  if(d.unitsShort>0 && d.unitsShort>d.paidUnits)suggestions.push("The business needs much more volume before break-even. Increase demand, process strength, availability, or working hours.");
- if(num("overhead")*getStepHours()>d.revenue && d.paidUnits<10)suggestions.push("Fixed overhead per tick is high compared with early revenue. Try smaller premises, fewer staff hours, or slower scaling.");
+ if(overheadThisTick()>d.revenue && d.paidUnits<10)suggestions.push("Fixed overhead per tick is high compared with early revenue. Try smaller premises, fewer staff hours, or slower scaling.");
  if(getGrossMargin()>60)suggestions.push("Gross margin target is aggressive. It may create a quality penalty. Test a lower margin with better service quality.");
  if(getGrossMargin()<25)suggestions.push("Gross margin is low. You may be underpricing or absorbing too much variable cost.");
  if(num("revenue")<d.avgCostPerPaidUnit && d.paidUnits>0)suggestions.push("Revenue per paid unit is too low for the current cost structure. Increase price or change the offer.");
@@ -542,7 +606,11 @@ function render(){
  $("totalRevenue").textContent=money(s.totalRevenue);
  let gp=s.totalRevenue-s.totalCost, tax=Math.max(0,gp*num("taxRate")/100), net=gp-tax;
  $("grossProfit").textContent=money(gp);$("taxBox").textContent=money(tax);$("netProfit").textContent=money(net);
- $("paidUnitsBox").textContent=Math.round(s.paidUnits||0);$("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
+ $("paidUnitsBox").textContent=Math.round(s.paidUnits||0);
+ $("yearsBox").textContent=yearsSimulated().toFixed(2);
+ $("fundingGapBox").textContent=money(s.fundingGap||0);
+ $("fundingGapBox").className=(s.fundingGap||0)>0?"fundingBad":"fundingGood";
+ $("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
  $("editMode").textContent=editMode?"EXIT EDIT MODE":"EDIT MODE";renderBreakEvenGraph();renderDiagnosis();
 }
 
@@ -577,7 +645,7 @@ function commitEdits(){
   document.body.classList.remove("editing");
  }
  currentProfile.revenue=num("revenue");
- currentProfile.overhead=num("overhead");
+ currentProfile.dailyOverhead=getDailyOverhead();currentProfile.overhead=getDailyOverhead();
  currentProfile.startCash=num("startCash");
  currentProfile.strength=num("strength");
  currentProfile.panels=clone(panels);
@@ -590,18 +658,18 @@ function status(x){$("status").textContent="JavaScript: RUNNING — "+x}
 
 function reset(){
  clearInterval(s.timer);s.run=false;$("start").textContent="START ALL";
- s.tick=0;s.hours=0;s.cash=num("startCash");s.paid=0;s.vals=[];s.outs=[];s.stock=[];s.active=[];s.stageCost=[];s.stageValue=[];s.stageUsed=[];s.stageOutTick=[];s.totalCost=0;s.totalRevenue=0;s.paidUnits=0;s.history=[];
+ s.tick=0;s.hours=0;s.cash=num("startCash");s.paid=0;s.vals=[];s.outs=[];s.stock=[];s.active=[];s.stageCost=[];s.stageValue=[];s.stageUsed=[];s.stageOutTick=[];s.totalCost=0;s.totalRevenue=0;s.paidUnits=0;s.fundingGap=0;s.minCash=s.cash;s.history=[];
  for(let i=0;i<panels.length;i++){
   s.vals.push([0,panels[i].ins[1][3],panels[i].ins[2][3],panels[i].ins[3][3]]);
   s.outs.push(0);s.stock.push(i==0?panels[i].ins[0][3]:0);s.active.push(false);s.stageCost.push(0);s.stageValue.push(0);s.stageUsed.push(0);s.stageOutTick.push(0);
  }
- $("log").innerHTML="";log("Loaded profile: "+currentProfile.name);status("profile loaded. Adjust values or run.");render();
+ $("log").innerHTML="";log("Loaded profile: "+currentProfile.name);status("profile loaded. Fixed overhead is per business day, prorated by tick length. Adjust values or run.");render();
 }
 
 function step(){
  if(s.cash<=0){status("cash is zero");pauseRun();return}
  s.tick++;let stepHours=getStepHours();s.hours+=stepHours;
- let overhead=num("overhead")*stepHours;s.cash-=overhead;s.totalCost+=overhead;
+ let overhead=overheadThisTick();s.cash-=overhead;s.totalCost+=overhead;
  let st=(num("strength")/100)*qualityPenalty();s.active=panels.map(()=>false);s.stageUsed=panels.map(()=>0);s.stageOutTick=panels.map(()=>0);
 
  for(let i=0;i<panels.length;i++){
@@ -634,22 +702,39 @@ function step(){
    s.stock[0]=Math.min(100,s.stock[0]+out*.30);s.vals[0][1]=Math.min(100,s.vals[0][1]+out*.12);
   }
  }
- if(s.cash<0){s.cash=0;log("FAILURE: cash reached zero.");pauseRun()}
- s.history.push({t:s.tick,h:s.hours,units:s.paidUnits,cost:s.totalCost,rev:s.totalRevenue,cash:s.cash});if(s.history.length>80)s.history.shift();status("tick "+s.tick+" / "+timeStepLabel()+" processed value and money.");render();
+ if(s.cash<0){
+  s.minCash=Math.min(s.minCash,s.cash);
+  s.fundingGap=Math.max(s.fundingGap,Math.abs(s.minCash));
+  if(getCashMode()==="stop"){
+   s.cash=0;
+   log("STOPPED: cash reached zero.");
+   pauseRun();
+  }else{
+   log("FUNDING GAP: cash below zero. Tracking required financing instead of stopping.");
+  }
+ }
+ s.history.push({t:s.tick,h:s.hours,units:s.paidUnits,cost:s.totalCost,rev:s.totalRevenue,cash:s.cash});if(s.history.length>120)s.history.shift();
+ if(s.hours>=maxSimulationHours()){
+  status("simulation horizon reached: "+(getHorizonYears()>=999?"unlimited":getHorizonYears()+" years")+".");
+  pauseRun();
+ }else{
+  status("tick "+s.tick+" / "+timeStepLabel()+" processed value and money.");
+ }
+ render();
 }
 
 function startRun(){if(s.run)return;if(editMode){status("commit or exit edit mode before running.");return}s.run=true;$("start").textContent="RUNNING";status("running.");s.timer=setInterval(step,num("speed"));render()}
 function pauseRun(){clearInterval(s.timer);s.run=false;$("start").textContent="START ALL";status("paused");render()}
 function toggleRunAll(){s.run?pauseRun():startRun()}
 
-function saveLocal(){currentProfile.revenue=num("revenue");currentProfile.overhead=num("overhead");currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.workingHours=getWorkingHours();currentProfile.grossMargin=getGrossMargin();currentProfile.panels=clone(panels);localStorage.setItem("bizsim_"+currentKey,JSON.stringify(currentProfile));status("saved locally in this browser.")}
-function loadLocal(){let raw=localStorage.getItem("bizsim_"+currentKey);if(!raw){status("no local save found for this profile.");return}currentProfile=JSON.parse(raw);panels=currentProfile.panels;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.overhead;$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;if($("workingHours"))$("workingHours").value=currentProfile.workingHours||defaultWorkingHours(currentKey);if($("grossMargin"))$("grossMargin").value=currentProfile.grossMargin||defaultGrossMargin(currentKey);labels();status("loaded local saved scenario.");reset()}
+function saveLocal(){currentProfile.revenue=num("revenue");currentProfile.dailyOverhead=getDailyOverhead();currentProfile.overhead=getDailyOverhead();currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.workingHours=getWorkingHours();currentProfile.grossMargin=getGrossMargin();currentProfile.panels=clone(panels);localStorage.setItem("bizsim_"+currentKey,JSON.stringify(currentProfile));status("saved locally in this browser.")}
+function loadLocal(){let raw=localStorage.getItem("bizsim_"+currentKey);if(!raw){status("no local save found for this profile.");return}currentProfile=JSON.parse(raw);panels=currentProfile.panels;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.dailyOverhead||defaultDailyOverhead(k);$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;if($("workingHours"))$("workingHours").value=currentProfile.workingHours||defaultWorkingHours(currentKey);if($("grossMargin"))$("grossMargin").value=currentProfile.grossMargin||defaultGrossMargin(currentKey);labels();status("loaded local saved scenario.");reset()}
 function resetDefaults(){loadProfile(currentKey)}
-function exportJson(){currentProfile.revenue=num("revenue");currentProfile.overhead=num("overhead");currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.workingHours=getWorkingHours();currentProfile.grossMargin=getGrossMargin();currentProfile.panels=clone(panels);let blob=new Blob([JSON.stringify(currentProfile,null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=currentKey+"_scenario.json";a.click();URL.revokeObjectURL(a.href)}
+function exportJson(){currentProfile.revenue=num("revenue");currentProfile.dailyOverhead=getDailyOverhead();currentProfile.overhead=getDailyOverhead();currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.workingHours=getWorkingHours();currentProfile.grossMargin=getGrossMargin();currentProfile.panels=clone(panels);let blob=new Blob([JSON.stringify(currentProfile,null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=currentKey+"_scenario.json";a.click();URL.revokeObjectURL(a.href)}
 
 $("start").onclick=startRun;$("pause").onclick=pauseRun;$("step").onclick=step;$("reset").onclick=reset;
 $("editMode").onclick=enterEditMode;$("commitEdits").onclick=commitEdits;$("saveLocal").onclick=saveLocal;$("loadLocal").onclick=loadLocal;$("resetDefaults").onclick=resetDefaults;$("exportJson").onclick=exportJson;
-["startCash","strength","overhead","revenue","grossMargin","taxRate","speed","timeStep","workingHours"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
+["startCash","strength","overhead","revenue","grossMargin","taxRate","speed","timeStep","workingHours","horizonYears","cashMode"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
 init();
 </script>
 </body>
