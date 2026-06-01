@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V6.5</title>
+<title>Business Simulator V6.6</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -57,7 +57,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V6.5</h1><p>V6.5: time-step control. One tick can represent 0.5 hour up to 1 business day. Default is 1 day per tick.</p></header>
+<header><h1>Business Simulator V6.6</h1><p>V6.6: adds working-hours-per-day by business type. A business day now scales to each profile.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -100,8 +100,9 @@ body.editing .editBanner{display:block}
 <option value="1">1 hour per tick</option>
 <option value="2">2 hours per tick</option>
 <option value="4">4 hours per tick</option>
-<option value="8" selected>1 business day per tick</option>
+<option value="day" selected>1 business day per tick</option>
 </select>
+<label>Working Hours Per Day <span id="workHoursLab"></span></label><input type="range" id="workingHours" min="0.5" max="24" step="0.5" value="8">
 <label>Animation Speed <span id="speedLab"></span></label><input type="range" id="speed" min="500" max="4000" step="250" value="2000">
 </details>
 
@@ -114,6 +115,31 @@ let s={run:false,timer:null,tick:0,hours:0,cash:25000,paid:0,vals:[],outs:[],sto
 
 const $=id=>document.getElementById(id),money=v=>"$"+Math.round(v).toLocaleString(),num=id=>Number($(id).value);
 function clone(o){return JSON.parse(JSON.stringify(o))}
+
+function defaultWorkingHours(k){
+ if(k==="food_truck")return 6;
+ if(k==="hair_salon")return 8;
+ if(k==="hotel")return 24;
+ if(k==="auto_repair")return 8;
+ if(k==="tire_shop")return 8;
+ if(k==="manufacturing")return 8;
+ return 8;
+}
+
+function getWorkingHours(){
+ let el=$("workingHours");
+ if(!el)return defaultWorkingHours(currentKey);
+ return Math.max(0.5,Number(el.value));
+}
+
+function getStepHours(){
+ let el=$("timeStep");
+ if(!el)return 8;
+ let v=el.value;
+ if(v==="day")return getWorkingHours();
+ return Number(v);
+}
+
 
 async function init(){
  try{
@@ -151,20 +177,21 @@ function normalizeProfileDefaults(k){
 function loadProfile(k){
  currentKey=k;currentProfile=clone(profiles[k]);normalizeProfileDefaults(k);panels=currentProfile.panels;editDraft=null;editMode=false;document.body.classList.remove("editing");
  $("profileSelect").value=k;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.overhead;$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;
- $("valueLabel").textContent=currentProfile.valueLabel || "Value Units";$("profileNote").textContent=currentProfile.note;
+ $("valueLabel").textContent=currentProfile.valueLabel || "Value Units";$("profileNote").textContent=currentProfile.note;if($("workingHours"))$("workingHours").value=currentProfile.workingHours||defaultWorkingHours(k);
  labels();reset();
 }
 
 function timeStepLabel(){
- let h=Number($("timeStep").value);
- if(h===8)return "1 business day / tick";
+ let v=$("timeStep").value;
+ if(v==="day")return "1 business day / tick ("+getWorkingHours()+" hr)";
+ let h=Number(v);
  if(h===0.5)return "0.5 hour / tick";
  return h+" hours / tick";
 }
 
 function labels(){
  $("cashLab").textContent=money(num("startCash"));$("strLab").textContent=num("strength")+"%";$("ohLab").textContent=money(num("overhead"));
- $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("timeStepLab").textContent=timeStepLabel();$("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec/tick";
+ $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("timeStepLab").textContent=timeStepLabel();$("workHoursLab").textContent=getWorkingHours()+" hr/day";$("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec/tick";
 }
 
 function blocks(v,c){
@@ -245,9 +272,10 @@ function render(){
   <div class="foot"><b>Input stock:</b> ${Math.round(s.stock[i])} &nbsp; <b>${p.o}:</b> ${Math.round(s.outs[i])}</div></div>`;
  }
  $("seq").innerHTML=h;
- let wholeDays=Math.floor(s.hours/8)+1;
- let remHours=s.hours%8;
- $("timeBox").textContent=`Day ${wholeDays} Hr ${remHours}`;
+ let wh=getWorkingHours();
+ let wholeDays=Math.floor(s.hours/wh)+1;
+ let remHours=s.hours%wh;
+ $("timeBox").textContent=`Day ${wholeDays} Hr ${Number(remHours.toFixed(1))}`;
  $("cash").textContent=money(s.cash);
  $("totalCost").textContent=money(s.totalCost);
  $("totalRevenue").textContent=money(s.totalRevenue);
@@ -311,8 +339,8 @@ function reset(){
 
 function step(){
  if(s.cash<=0){status("cash is zero");pauseRun();return}
- s.tick++;s.hours+=Number($("timeStep").value);
- let stepHours=Number($("timeStep").value);let overhead=num("overhead")*stepHours;s.cash-=overhead;s.totalCost+=overhead;
+ s.tick++;let stepHours=getStepHours();s.hours+=stepHours;
+ let overhead=num("overhead")*stepHours;s.cash-=overhead;s.totalCost+=overhead;
  let st=num("strength")/100;s.active=panels.map(()=>false);s.stageUsed=panels.map(()=>0);s.stageOutTick=panels.map(()=>0);
 
  for(let i=0;i<panels.length;i++){
@@ -352,14 +380,14 @@ function startRun(){if(s.run)return;if(editMode){status("commit or exit edit mod
 function pauseRun(){clearInterval(s.timer);s.run=false;$("start").textContent="START ALL";status("paused");render()}
 function toggleRunAll(){s.run?pauseRun():startRun()}
 
-function saveLocal(){currentProfile.revenue=num("revenue");currentProfile.overhead=num("overhead");currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.panels=clone(panels);localStorage.setItem("bizsim_"+currentKey,JSON.stringify(currentProfile));status("saved locally in this browser.")}
-function loadLocal(){let raw=localStorage.getItem("bizsim_"+currentKey);if(!raw){status("no local save found for this profile.");return}currentProfile=JSON.parse(raw);panels=currentProfile.panels;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.overhead;$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;labels();status("loaded local saved scenario.");reset()}
+function saveLocal(){currentProfile.revenue=num("revenue");currentProfile.overhead=num("overhead");currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.workingHours=getWorkingHours();currentProfile.panels=clone(panels);localStorage.setItem("bizsim_"+currentKey,JSON.stringify(currentProfile));status("saved locally in this browser.")}
+function loadLocal(){let raw=localStorage.getItem("bizsim_"+currentKey);if(!raw){status("no local save found for this profile.");return}currentProfile=JSON.parse(raw);panels=currentProfile.panels;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.overhead;$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;if($("workingHours"))$("workingHours").value=currentProfile.workingHours||defaultWorkingHours(currentKey);labels();status("loaded local saved scenario.");reset()}
 function resetDefaults(){loadProfile(currentKey)}
-function exportJson(){currentProfile.revenue=num("revenue");currentProfile.overhead=num("overhead");currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.panels=clone(panels);let blob=new Blob([JSON.stringify(currentProfile,null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=currentKey+"_scenario.json";a.click();URL.revokeObjectURL(a.href)}
+function exportJson(){currentProfile.revenue=num("revenue");currentProfile.overhead=num("overhead");currentProfile.startCash=num("startCash");currentProfile.strength=num("strength");currentProfile.workingHours=getWorkingHours();currentProfile.panels=clone(panels);let blob=new Blob([JSON.stringify(currentProfile,null,2)],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=currentKey+"_scenario.json";a.click();URL.revokeObjectURL(a.href)}
 
 $("start").onclick=startRun;$("pause").onclick=pauseRun;$("step").onclick=step;$("reset").onclick=reset;
 $("editMode").onclick=enterEditMode;$("commitEdits").onclick=commitEdits;$("saveLocal").onclick=saveLocal;$("loadLocal").onclick=loadLocal;$("resetDefaults").onclick=resetDefaults;$("exportJson").onclick=exportJson;
-["startCash","strength","overhead","revenue","taxRate","speed","timeStep"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
+["startCash","strength","overhead","revenue","taxRate","speed","timeStep","workingHours"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
 init();
 </script>
 </body>
