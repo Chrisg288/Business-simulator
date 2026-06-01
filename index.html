@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V7.7</title>
+<title>Business Simulator V7.8</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -99,10 +99,22 @@ body.editing .editBanner{display:block}
 .fixButton{display:inline-block;margin-top:6px;padding:6px 10px;border-radius:8px;background:#0b5da6;color:#fff;font-weight:900;font-size:12px}
 @media(max-width:900px){.fixGrid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.fixCard{grid-template-columns:34px 1fr}.fixNum{font-size:20px}}
 
+
+.fixControls{margin-top:8px;border-top:1px solid #ead0d0;padding-top:8px}
+.fixControlRow{display:grid;grid-template-columns:150px 1fr 76px;gap:8px;align-items:center;margin:5px 0}
+.fixControlRow label{font-size:12px;font-weight:900;margin:0}
+.fixControlRow input{width:100%;height:22px}
+.fixControlRow span{font-size:12px;font-weight:900;text-align:right}
+.fixCardActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.fixMiniBtn{border:0;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:900;cursor:pointer;background:#0b5da6;color:#fff}
+.fixMiniBtn.resume{background:#1f8a2e}
+.fixMiniBtn.resetbtn{background:#555}
+@media(max-width:900px){.fixControlRow{grid-template-columns:1fr}.fixControlRow span{text-align:left}}
+
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V7.7</h1><p>V7.7: stability fix. Long runs continue through negative cash, track funding gap, and reduce graph load.</p></header>
+<header><h1>Business Simulator V7.8</h1><p>V7.8: adds Pause & Fix, Resume, and targeted adjustment sliders inside each prescription.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -138,7 +150,7 @@ body.editing .editBanner{display:block}
 </div>
 
 <div class="fixAdvisor">
- <h3>Real-Time Prescriptions: What to Fix First</h3>
+ <h3>Real-Time Prescriptions: Pause, Fix, Resume</h3>
  <div class="fixGrid" id="fixAdvisorGrid">
   <div class="fixCard">Run the simulation to generate live corrective actions.</div>
  </div>
@@ -554,6 +566,78 @@ function getCurrentPaidPerDay(){
  return units/(hdiff/getWorkingHours());
 }
 
+
+function getFixControls(f){
+ let title=(f.title||"").toLowerCase();
+ let action=(f.action||"").toLowerCase();
+ let controls=[];
+
+ function ctl(id,label,min,max,step){
+  let el=$(id);
+  if(el)controls.push({id,label,min,max,step,value:Number(el.value)});
+ }
+
+ if(title.includes("funding gap")){
+  ctl("startCash","Starting Cash",0,200000,1000);
+  ctl("overhead","Daily Overhead",0,25000,100);
+ }
+ if(title.includes("loss is getting worse")){
+  ctl("revenue","Revenue / Paid Unit",10,5000,5);
+  ctl("overhead","Daily Overhead",0,25000,100);
+  ctl("strength","Process Strength",0,100,5);
+ }
+ if(title.includes("unit economics") || action.includes("raise revenue")){
+  ctl("revenue","Revenue / Paid Unit",10,5000,5);
+  if($("grossMargin"))ctl("grossMargin","Target Gross Margin",5,85,1);
+ }
+ if(title.includes("not enough paid volume") || action.includes("paid volume") || action.includes("paid units/day")){
+  ctl("strength","Process Strength",0,100,5);
+  ctl("workingHours","Working Hours / Day",0.5,24,0.5);
+ }
+ if(title.includes("overhead")){
+  ctl("overhead","Daily Overhead",0,25000,100);
+ }
+ if(title.includes("margin")){
+  if($("grossMargin"))ctl("grossMargin","Target Gross Margin",5,85,1);
+ }
+ if(controls.length===0){
+  ctl("revenue","Revenue / Paid Unit",10,5000,5);
+  ctl("overhead","Daily Overhead",0,25000,100);
+  ctl("strength","Process Strength",0,100,5);
+ }
+ // de-dupe controls by id
+ let seen={};
+ controls=controls.filter(c=>{if(seen[c.id])return false;seen[c.id]=true;return true;});
+ return controls.slice(0,3);
+}
+
+function fixControlLabel(id,val){
+ if(id==="startCash"||id==="overhead"||id==="revenue")return money(Number(val));
+ if(id==="grossMargin"||id==="strength")return Number(val)+"%";
+ if(id==="workingHours")return Number(val)+" hr";
+ return String(val);
+}
+
+function fixPause(){
+ pauseRun();
+ status("paused for fix. Adjust sliders inside the prescription, then Resume.");
+}
+
+function fixResume(){
+ startRun();
+ status("resumed after fix.");
+}
+
+function fixSet(id,val){
+ let el=$(id);
+ if(!el)return;
+ el.value=val;
+ labels();
+ // Do not reset the whole simulation. These changes affect the future path from this point forward.
+ status("live fix applied: "+id+" = "+fixControlLabel(id,val)+". Resume to test the change.");
+ render();
+}
+
 function getLiveFixes(){
  let fixes=[];
  let paidUnits=s.paidUnits||0;
@@ -645,6 +729,15 @@ function renderFixAdvisor(){
  grid.innerHTML=fixes.slice(0,3).map((f,idx)=>{
   let cls=f.sev==="critical"?"fixCritical":(f.sev==="warning"?"fixWarning":"fixGood");
   let label=f.sev==="critical"?"Critical":(f.sev==="warning"?"Warning":"Good");
+  let controls=getFixControls(f);
+  let controlHtml=controls.map(c=>{
+    let v=Number(c.value);
+    return `<div class="fixControlRow">
+      <label>${c.label}</label>
+      <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${v}" oninput="fixSet('${c.id}',this.value)">
+      <span>${fixControlLabel(c.id,v)}</span>
+    </div>`;
+  }).join("");
   return `<div class="fixCard ${cls}">
     <div class="fixNum">${idx+1}</div>
     <div class="fixBody">
@@ -652,6 +745,13 @@ function renderFixAdvisor(){
       <div class="fixAction">${f.action}</div>
       <div class="fixSmall">${f.detail}</div>
       <div class="fixButton">${f.target}</div>
+      <div class="fixControls">
+        ${controlHtml}
+        <div class="fixCardActions">
+          <button class="fixMiniBtn" onclick="fixPause()">Pause & Fix</button>
+          <button class="fixMiniBtn resume" onclick="fixResume()">Resume</button>
+        </div>
+      </div>
     </div>
    </div>`;
  }).join("");
