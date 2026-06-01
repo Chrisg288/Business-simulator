@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V7.8</title>
+<title>Business Simulator V7.9</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -111,10 +111,21 @@ body.editing .editBanner{display:block}
 .fixMiniBtn.resetbtn{background:#555}
 @media(max-width:900px){.fixControlRow{grid-template-columns:1fr}.fixControlRow span{text-align:left}}
 
+
+.repairBox{margin-top:8px;border:1px solid #d7e4ef;background:#fff;border-radius:10px;padding:8px;font-size:12px}
+.repairBox b{font-size:11px;text-transform:uppercase;color:#555}
+.repairGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px}
+.repairItem{border:1px solid #e1e8f0;border-radius:8px;padding:6px;background:#fbfdff}
+.repairItem strong{display:block;font-size:14px}
+.repairBad{color:#b00020;font-weight:900}
+.repairGood{color:#1f8a2e;font-weight:900}
+.repairWarn{color:#b96d22;font-weight:900}
+@media(max-width:900px){.repairGrid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V7.8</h1><p>V7.8: adds Pause & Fix, Resume, and targeted adjustment sliders inside each prescription.</p></header>
+<header><h1>Business Simulator V7.9</h1><p>V7.9: adds constrained Fix Mode with market price ceiling, feasible cost floor, and required repair targets.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -183,9 +194,11 @@ body.editing .editBanner{display:block}
 
 <details open><summary><b>Scenario Controls</b></summary>
 <label>Starting Cash <span id="cashLab"></span></label><input type="range" id="startCash" min="1000" max="100000" step="1000" value="25000">
-<label>Process Strength <span id="strLab"></span></label><input type="range" id="strength" min="10" max="100" step="5" value="60">
+<label>Operating Efficiency <span id="strLab"></span></label><input type="range" id="strength" min="10" max="100" step="5" value="60">
 <label>Fixed Overhead Per Business Day <span id="ohLab"></span></label><input type="range" id="overhead" min="0" max="25000" step="50" value="350">
 <label>Revenue Per Paid Unit <span id="revLab"></span></label><input type="range" id="revenue" min="10" max="5000" step="5" value="800">
+<label>Market Price Ceiling <span id="priceCeilingLab"></span></label><input type="range" id="priceCeiling" min="10" max="5000" step="5" value="260">
+<label>Minimum Feasible Daily Overhead <span id="minOverheadLab"></span></label><input type="range" id="minOverhead" min="0" max="25000" step="50" value="900">
 <label>Target Gross Margin <span id="marginLab"></span></label><input type="range" id="grossMargin" min="5" max="85" step="1" value="35">
 <label>Estimated Profit Per Paid Unit <span id="unitProfitLab"></span></label>
 <label>Tax Rate <span id="taxLab"></span></label><input type="range" id="taxRate" min="0" max="50" step="1" value="20">
@@ -324,6 +337,8 @@ function loadProfile(k){
  currentKey=k;currentProfile=clone(profiles[k]);normalizeProfileDefaults(k);panels=currentProfile.panels;editDraft=null;editMode=false;document.body.classList.remove("editing");
  $("profileSelect").value=k;$("revenue").value=currentProfile.revenue;$("overhead").value=currentProfile.dailyOverhead||defaultDailyOverhead(k);$("startCash").value=currentProfile.startCash;$("strength").value=currentProfile.strength;
  $("valueLabel").textContent=currentProfile.valueLabel || "Value Units";$("profileNote").textContent=currentProfile.note;if($("workingHours"))$("workingHours").value=currentProfile.workingHours||defaultWorkingHours(k);
+ if($("priceCeiling"))$("priceCeiling").value=currentProfile.priceCeiling||defaultPriceCeiling(k);
+ if($("minOverhead"))$("minOverhead").value=currentProfile.minOverhead||defaultMinOverhead(k);
  if($("grossMargin"))$("grossMargin").value=currentProfile.grossMargin||defaultGrossMargin(k);
  labels();reset();
 }
@@ -404,6 +419,8 @@ function labels(){
  $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("timeStepLab").textContent=timeStepLabel();
  $("workHoursLab").textContent=getWorkingHours()+" hr/day";
  $("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec/tick";
+ if($("priceCeilingLab"))$("priceCeilingLab").textContent=money(getPriceCeiling());
+ if($("minOverheadLab"))$("minOverheadLab").textContent=money(getMinOverhead())+" / day";
  if($("durationLab"))$("durationLab").textContent=getDurationDays()+" days";
  if($("cashModeLab"))$("cashModeLab").textContent="track gap / keep running";
  $("marginLab").textContent=getGrossMargin()+"%";
@@ -524,7 +541,7 @@ function renderDiagnosis(){
  let suggestions=[];
  if(d.cash<=0 || d.runwayTicks<3)suggestions.push("Increase starting cash or reduce overhead. Current runway is too short for the model to reach break-even.");
  if(d.avgCostPerPaidUnit>d.avgRevenuePerPaidUnit && d.paidUnits>0)suggestions.push("Average cost per paid unit is higher than average revenue. Raise price, improve margin, or reduce cost per unit.");
- if(d.unitsShort>0 && d.unitsShort>d.paidUnits)suggestions.push("The business needs much more volume before break-even. Increase demand, process strength, availability, or working hours.");
+ if(d.unitsShort>0 && d.unitsShort>d.paidUnits)suggestions.push("The business needs much more volume before break-even. Increase demand, operating efficiency, availability, or working hours.");
  if(overheadThisTick()>d.revenue && d.paidUnits<10)suggestions.push("Fixed overhead per tick is high compared with early revenue. Try smaller premises, fewer staff hours, or slower scaling.");
  if(getGrossMargin()>60)suggestions.push("Gross margin target is aggressive. It may create a quality penalty. Test a lower margin with better service quality.");
  if(getGrossMargin()<25)suggestions.push("Gross margin is low. You may be underpricing or absorbing too much variable cost.");
@@ -567,6 +584,104 @@ function getCurrentPaidPerDay(){
 }
 
 
+
+function defaultPriceCeiling(k){
+ if(k==="hotel")return 260;
+ if(k==="food_truck")return 28;
+ if(k==="hair_salon")return 120;
+ if(k==="auto_repair")return 180;
+ if(k==="tire_shop")return 420;
+ if(k==="manufacturing")return 5000;
+ return Math.max(num("revenue")*1.25, num("revenue")+50);
+}
+
+function defaultMinOverhead(k){
+ if(k==="hotel")return 900;
+ if(k==="food_truck")return 150;
+ if(k==="hair_salon")return 225;
+ if(k==="auto_repair")return 350;
+ if(k==="tire_shop")return 325;
+ if(k==="manufacturing")return 600;
+ return Math.max(0, num("overhead")*0.5);
+}
+
+function getPriceCeiling(){
+ let el=$("priceCeiling");
+ return el?Number(el.value):defaultPriceCeiling(currentKey);
+}
+
+function getMinOverhead(){
+ let el=$("minOverhead");
+ return el?Number(el.value):defaultMinOverhead(currentKey);
+}
+
+function repairMath(){
+ let paid=s.paidUnits||0;
+ let rev=s.totalRevenue||0;
+ let cost=s.totalCost||0;
+ let profit=rev-cost;
+ let price=num("revenue");
+ let dailyOverhead=(typeof getDailyOverhead==="function")?getDailyOverhead():num("overhead");
+ let paidPerDay=getCurrentPaidPerDay?getCurrentPaidPerDay():0;
+ let gm=(typeof getGrossMargin==="function")?getGrossMargin():35;
+ let varCost=price*(1-(gm/100));
+ let contribution=Math.max(0.01,price-varCost);
+ let requiredPaidPerDay=dailyOverhead/contribution;
+ let requiredPrice=(paidPerDay>0)?(dailyOverhead/paidPerDay + varCost):Infinity;
+ let requiredOverhead=paidPerDay*contribution;
+ let avgCostPerUnit=paid>0?cost/paid:0;
+ let ratio=price>0?avgCostPerUnit/price:0;
+ let priceCeiling=getPriceCeiling();
+ let minOverhead=getMinOverhead();
+ let priceGap=isFinite(requiredPrice)?requiredPrice-price:Infinity;
+ let overheadGap=dailyOverhead-requiredOverhead;
+ return {paid,rev,cost,profit,price,dailyOverhead,paidPerDay,gm,varCost,contribution,requiredPaidPerDay,requiredPrice,requiredOverhead,avgCostPerUnit,ratio,priceCeiling,minOverhead,priceGap,overheadGap};
+}
+
+function repairStatusText(){
+ let r=repairMath();
+ let parts=[];
+ if(isFinite(r.requiredPrice)){
+  if(r.requiredPrice>r.priceCeiling){
+   parts.push("Required price is above market ceiling.");
+  }else if(r.requiredPrice>r.price){
+   parts.push("Price increase can help within market ceiling.");
+  }
+ }
+ if(r.requiredOverhead<r.minOverhead){
+  parts.push("Required overhead is below feasible floor.");
+ }else if(r.requiredOverhead<r.dailyOverhead){
+  parts.push("Overhead reduction can help within feasible floor.");
+ }
+ if(r.paidPerDay<r.requiredPaidPerDay){
+  parts.push("Paid units/day must increase.");
+ }
+ if(r.ratio>1)parts.push("Cost per unit is higher than average rate.");
+ else if(r.ratio>0.8)parts.push("Cost-to-rate ratio is too tight.");
+ if(parts.length===0)parts.push("Current assumptions look repairable; test sensitivity.");
+ return parts.join(" ");
+}
+
+function renderRepairBox(){
+ let r=repairMath();
+ let ratioClass=r.ratio>1?"repairBad":(r.ratio>0.8?"repairWarn":"repairGood");
+ let priceClass=(isFinite(r.requiredPrice)&&r.requiredPrice>r.priceCeiling)?"repairBad":"repairGood";
+ let overheadClass=(r.requiredOverhead<r.minOverhead)?"repairBad":"repairGood";
+ let paidNeed=isFinite(r.requiredPaidPerDay)?r.requiredPaidPerDay:0;
+ return `<div class="repairBox">
+   <b>Repair Targets / Reasonable Limits</b>
+   <div class="fixSmall">${repairStatusText()}</div>
+   <div class="repairGrid">
+    <div class="repairItem"><span>Cost-to-rate ratio</span><strong class="${ratioClass}">${Math.round(r.ratio*100)}%</strong><small>avg cost/unit ÷ rate</small></div>
+    <div class="repairItem"><span>Required price</span><strong class="${priceClass}">${isFinite(r.requiredPrice)?money(r.requiredPrice):"n/a"}</strong><small>market ceiling ${money(r.priceCeiling)}</small></div>
+    <div class="repairItem"><span>Required overhead</span><strong class="${overheadClass}">${money(Math.max(0,r.requiredOverhead))}/day</strong><small>floor ${money(r.minOverhead)}/day</small></div>
+    <div class="repairItem"><span>Required volume</span><strong>${paidNeed.toFixed(1)}/day</strong><small>current ${r.paidPerDay.toFixed(1)}/day</small></div>
+    <div class="repairItem"><span>Contribution/unit</span><strong>${money(r.contribution)}</strong><small>after variable cost</small></div>
+    <div class="repairItem"><span>Current loss/profit</span><strong class="${r.profit<0?"repairBad":"repairGood"}">${money(r.profit)}</strong><small>cumulative</small></div>
+   </div>
+  </div>`;
+}
+
 function getFixControls(f){
  let title=(f.title||"").toLowerCase();
  let action=(f.action||"").toLowerCase();
@@ -580,18 +695,21 @@ function getFixControls(f){
  if(title.includes("funding gap")){
   ctl("startCash","Starting Cash",0,200000,1000);
   ctl("overhead","Daily Overhead",0,25000,100);
+  ctl("minOverhead","Min Feasible Overhead",0,25000,50);
  }
  if(title.includes("loss is getting worse")){
   ctl("revenue","Revenue / Paid Unit",10,5000,5);
+  ctl("priceCeiling","Market Price Ceiling",10,5000,5);
   ctl("overhead","Daily Overhead",0,25000,100);
-  ctl("strength","Process Strength",0,100,5);
+  ctl("strength","Operating Efficiency",0,100,5);
  }
  if(title.includes("unit economics") || action.includes("raise revenue")){
   ctl("revenue","Revenue / Paid Unit",10,5000,5);
+  ctl("priceCeiling","Market Price Ceiling",10,5000,5);
   if($("grossMargin"))ctl("grossMargin","Target Gross Margin",5,85,1);
  }
  if(title.includes("not enough paid volume") || action.includes("paid volume") || action.includes("paid units/day")){
-  ctl("strength","Process Strength",0,100,5);
+  ctl("strength","Operating Efficiency",0,100,5);
   ctl("workingHours","Working Hours / Day",0.5,24,0.5);
  }
  if(title.includes("overhead")){
@@ -603,7 +721,7 @@ function getFixControls(f){
  if(controls.length===0){
   ctl("revenue","Revenue / Paid Unit",10,5000,5);
   ctl("overhead","Daily Overhead",0,25000,100);
-  ctl("strength","Process Strength",0,100,5);
+  ctl("strength","Operating Efficiency",0,100,5);
  }
  // de-dupe controls by id
  let seen={};
@@ -612,7 +730,7 @@ function getFixControls(f){
 }
 
 function fixControlLabel(id,val){
- if(id==="startCash"||id==="overhead"||id==="revenue")return money(Number(val));
+ if(id==="startCash"||id==="overhead"||id==="revenue"||id==="priceCeiling"||id==="minOverhead")return money(Number(val));
  if(id==="grossMargin"||id==="strength")return Number(val)+"%";
  if(id==="workingHours")return Number(val)+" hr";
  return String(val);
@@ -673,7 +791,7 @@ function getLiveFixes(){
  }
 
  if(profit<0 && trend<0){
-  add("critical","Loss is getting worse","Raise price, reduce fixed overhead, or increase paid units/day before continuing scale-up.","Cumulative profit/loss is negative and the recent trend is still falling.","Current trend: "+money(trend)+"/day");
+  add("critical","Loss is getting worse","Repair the unit economics: check market price ceiling, lower feasible overhead, or increase paid units/day.","Cumulative profit/loss is negative and the recent trend is still falling.","Current trend: "+money(trend)+"/day");
  }
 
  if(paidPerDay < neededUnitsPerDay){
@@ -681,7 +799,7 @@ function getLiveFixes(){
  }
 
  if(avgCostPerUnit>avgRevenuePerUnit && paidUnits>5){
-  add("critical","Unit economics broken","Raise Revenue Per Paid Unit or increase Target Gross Margin; otherwise each unit loses money.","Average cost per paid unit is higher than average revenue per paid unit.","Avg cost "+money(avgCostPerUnit)+" vs revenue "+money(avgRevenuePerUnit));
+  add("critical","Unit economics broken","Raise Revenue Per Paid Unit within market limits, increase margin, or lower cost per unit.","Average cost per paid unit is higher than average revenue per paid unit.","Avg cost "+money(avgCostPerUnit)+" vs revenue "+money(avgRevenuePerUnit));
  }
 
  if(dailyOverhead > revenue && s.tick>3){
@@ -697,7 +815,7 @@ function getLiveFixes(){
  }
 
  if(price < avgCostPerUnit && paidUnits>5){
-  add("critical","Price too low","Increase price or redesign the offer to lower cost per sale.","Revenue per paid unit is below actual average cost per unit.","Try price above "+money(avgCostPerUnit));
+  add("critical","Price too low","Increase price only if market allows, or redesign the offer to lower cost per sale.","Revenue per paid unit is below actual average cost per unit.","Try price above "+money(avgCostPerUnit));
  }
 
  if(paidPerDay>neededUnitsPerDay && trend>0 && profit<0){
@@ -745,6 +863,7 @@ function renderFixAdvisor(){
       <div class="fixAction">${f.action}</div>
       <div class="fixSmall">${f.detail}</div>
       <div class="fixButton">${f.target}</div>
+      ${idx===0?renderRepairBox():""}
       <div class="fixControls">
         ${controlHtml}
         <div class="fixCardActions">
@@ -1106,7 +1225,7 @@ function exportJson(){currentProfile.revenue=num("revenue");currentProfile.daily
 
 $("start").onclick=startRun;$("pause").onclick=pauseRun;$("step").onclick=step;$("reset").onclick=reset;
 $("editMode").onclick=enterEditMode;$("commitEdits").onclick=commitEdits;$("saveLocal").onclick=saveLocal;$("loadLocal").onclick=loadLocal;$("resetDefaults").onclick=resetDefaults;$("exportJson").onclick=exportJson;
-["startCash","strength","overhead","revenue","grossMargin","taxRate","speed","timeStep","workingHours","durationDays"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
+["startCash","strength","overhead","revenue","grossMargin","taxRate","speed","timeStep","workingHours","durationDays","priceCeiling","minOverhead"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
 init();
 </script>
 </body>
