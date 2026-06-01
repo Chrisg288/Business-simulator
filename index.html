@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V7.2</title>
+<title>Business Simulator V7.3</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -51,25 +51,18 @@ body.editing .panel{border-color:#7557c8}
 .foot{font-size:12px;margin-top:4px}
 .log{background:#111;color:#eee;border-radius:12px;padding:8px;font-family:monospace;font-size:12px;max-height:150px;overflow:auto}
 
-.graphBox{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
+.graphsRow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.graphCard{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px}
 .graphTitle{font-weight:900;font-size:13px;margin-bottom:4px}
-#breakEvenSvg{width:100%;height:230px;background:#fbfdff;border:1px solid #dce5ee;border-radius:10px}
-.legend{display:flex;gap:14px;font-size:12px;margin-top:4px;flex-wrap:wrap}
-
-.diagBox{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
-.diagTitle{font-weight:900;font-size:14px;margin-bottom:6px}
-.diagGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-.diagItem{border:1px solid #dce5ee;border-radius:10px;padding:6px;background:#fbfdff;font-size:12px}
-.diagItem b{display:block;color:#667;text-transform:uppercase;font-size:10px}
-.bad{color:#b00020;font-weight:900}.good{color:#1f8a2e;font-weight:900}.warn{color:#b96d22;font-weight:900}
-
-.fundingBad{color:#b00020;font-weight:900}
-.fundingGood{color:#1f8a2e;font-weight:900}
-
-.fixList{margin:6px 0 0 18px;padding:0;font-size:12px;line-height:1.35}
-@media(max-width:800px){.diagGrid{grid-template-columns:1fr}}
-
+.graphCard svg{width:100%;height:230px;background:#fbfdff;border:1px solid #dce5ee;border-radius:10px}
+.graphSummary{font-size:12px;font-weight:800;margin-top:5px;line-height:1.35}
+.legend{display:flex;gap:10px;font-size:11px;margin-top:4px;flex-wrap:wrap}
 .sw{display:inline-block;width:14px;height:4px;border-radius:4px;margin-right:4px;vertical-align:middle}
+.revSw{background:#1f4ab8}.costSw{background:#f28c00}.profitSw{background:#1f8a2e}.lossSw{background:#b00020}.beSw{background:#333}
+@media(max-width:1000px){.graphsRow{grid-template-columns:1fr}.graphCard svg{height:220px}}
+
+
+
 .revSw{background:#1f8a2e}.costSw{background:#b00020}.beSw{background:#333}
 
 .editBanner{display:none;background:#fff7e0;border:1px solid #e4c96b;border-radius:12px;padding:8px;margin-bottom:8px;font-size:13px;font-weight:800}
@@ -79,7 +72,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V7.2</h1><p>V7.2: adds long-term simulation horizon and funding-gap mode. Cash below zero no longer forces the simulation to stop.</p></header>
+<header><h1>Business Simulator V7.3</h1><p>V7.3: adds side-by-side unit break-even and time break-even forecast graphs.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -113,26 +106,27 @@ body.editing .editBanner{display:block}
 <div class="card metric"><b id="valueLabel">Value Units</b><span id="systemOut">0</span></div>
 </div>
 
-<div class="graphBox">
- <div class="graphTitle">Break-Even Chart</div>
- <svg id="breakEvenSvg" viewBox="0 0 720 240" preserveAspectRatio="none"></svg>
- <div id="breakEvenSummary" style="font-size:12px;font-weight:800;margin-top:5px"></div>
- <div class="legend">
-  <span><span class="sw revSw"></span>Revenue</span>
-  <span><span class="sw costSw"></span>Total Costs</span>
-  <span><span class="sw beSw"></span>Break-even point</span>
+<div class="graphsRow">
+ <div class="graphCard">
+  <div class="graphTitle">Break-Even by Units</div>
+  <svg id="breakEvenUnitsSvg" viewBox="0 0 720 240" preserveAspectRatio="none"></svg>
+  <div id="breakEvenUnitsSummary" class="graphSummary">Run the simulation to build the unit break-even graph.</div>
+  <div class="legend">
+   <span><span class="sw revSw"></span>Revenue</span>
+   <span><span class="sw costSw"></span>Total Costs</span>
+   <span><span class="sw beSw"></span>Break-even point</span>
+  </div>
  </div>
-</div>
-
-<div class="diagBox">
- <div class="diagTitle">Business Diagnosis</div>
- <div class="diagGrid">
-  <div class="diagItem"><b>Status</b><span id="diagStatus">waiting</span></div>
-  <div class="diagItem"><b>Cash Runway</b><span id="diagRunway">waiting</span></div>
-  <div class="diagItem"><b>Unit Economics</b><span id="diagUnit">waiting</span></div>
-  <div class="diagItem"><b>Break-even Need</b><span id="diagBE">waiting</span></div>
+ <div class="graphCard">
+  <div class="graphTitle">Break-Even Forecast by Time</div>
+  <svg id="breakEvenTimeSvg" viewBox="0 0 720 240" preserveAspectRatio="none"></svg>
+  <div id="breakEvenTimeSummary" class="graphSummary">Run the simulation to build the time forecast.</div>
+  <div class="legend">
+   <span><span class="sw profitSw"></span>Profit/Loss</span>
+   <span><span class="sw lossSw"></span>$0 Break-even line</span>
+   <span><span class="sw beSw"></span>Predicted crossing</span>
+  </div>
  </div>
- <div class="diagItem" style="margin-top:6px"><b>Recommended Fixes</b><ol class="fixList" id="diagFixes"><li>Run the simulation to generate diagnostics.</li></ol></div>
 </div>
 
 <details open><summary><b>Scenario Controls</b></summary>
@@ -455,107 +449,191 @@ function renderDiagnosis(){
  fixes.innerHTML=suggestions.slice(0,5).map(x=>"<li>"+x+"</li>").join("");
 }
 
-function renderBreakEvenGraph(){
- let svg=$("breakEvenSvg");
- let summary=$("breakEvenSummary");
- if(!svg)return;
 
- let data=s.history||[];
- let w=720,h=240,padL=62,padR=26,padT=18,padB=42;
+function fmtTickTime(hours){
+ let wh=getWorkingHours();
+ let d=Math.floor((hours||0)/wh)+1;
+ let hr=Number(((hours||0)%wh).toFixed(1));
+ return "Day "+d+", Hr "+hr;
+}
+
+function renderBreakEvenGraph(){
+ renderBreakEvenUnitsGraph();
+ renderBreakEvenTimeGraph();
+}
+
+function renderBreakEvenUnitsGraph(){
+ let svg=$("breakEvenUnitsSvg");
+ let summary=$("breakEvenUnitsSummary");
+ if(!svg)return;
 
  let paidUnits=s.paidUnits||0;
  let price=num("revenue");
- let grossMargin=getGrossMargin?getGrossMargin():35;
- let varCostPerUnit=price*(1-(grossMargin/100));
- let fixedToDate=Math.max(0,s.totalCost-(paidUnits*varCostPerUnit));
+ let gm=getGrossMargin?getGrossMargin():35;
+ let varCostPerUnit=price*(1-(gm/100));
+ let fixedToDate=Math.max(0,(s.totalCost||0)-(paidUnits*varCostPerUnit));
  let contribution=Math.max(0.01,price-varCostPerUnit);
  let breakEvenUnits=fixedToDate/contribution;
  let currentRevenue=paidUnits*price;
  let currentTotalCost=fixedToDate+(paidUnits*varCostPerUnit);
 
+ let w=720,h=240,padL=62,padR=28,padT=18,padB=42;
  let xMax=Math.max(10,Math.ceil(Math.max(paidUnits,breakEvenUnits,10)*1.25));
  let yMax=Math.max(100,Math.ceil(Math.max(currentRevenue,currentTotalCost,(breakEvenUnits*price))*1.20/100)*100);
 
  let x=(units)=>padL+(units/xMax)*(w-padL-padR);
  let y=(dollars)=>padT+(1-(dollars/yMax))*(h-padT-padB);
 
- let unitsNowX=x(paidUnits);
- let revNowY=y(currentRevenue);
- let costNowY=y(currentTotalCost);
- let beX=x(breakEvenUnits);
- let beY=y(breakEvenUnits*price);
-
  let grid="";
  for(let g=0;g<=4;g++){
-  let val=yMax*(g/4);
-  let yy=y(val);
+  let val=yMax*(g/4), yy=y(val);
   grid+=`<line x1="${padL}" y1="${yy}" x2="${w-padR}" y2="${yy}" stroke="#e1e8f0"/>
          <text x="8" y="${yy+4}" font-size="11" fill="#667">${money(val)}</text>`;
  }
  for(let g=0;g<=4;g++){
-  let val=xMax*(g/4);
-  let xx=x(val);
+  let val=xMax*(g/4), xx=x(val);
   grid+=`<line x1="${xx}" y1="${padT}" x2="${xx}" y2="${h-padB}" stroke="#f0f3f7"/>
-         <text x="${xx-12}" y="${h-padB+16}" font-size="11" fill="#667">${Math.round(val)}</text>`;
+         <text x="${xx-10}" y="${h-padB+16}" font-size="11" fill="#667">${Math.round(val)}</text>`;
  }
 
  let revenueLine=`${x(0)},${y(0)} ${x(xMax)},${y(xMax*price)}`;
  let costLine=`${x(0)},${y(fixedToDate)} ${x(xMax)},${y(fixedToDate+(xMax*varCostPerUnit))}`;
  let fixedLine=`${x(0)},${y(fixedToDate)} ${x(xMax)},${y(fixedToDate)}`;
 
- let beLabel="not reached yet";
- let breakHistory=null;
- for(let i=0;i<data.length;i++){
-  if(data[i].rev>=data[i].cost){breakHistory=data[i];break;}
+ svg.innerHTML=`
+  ${grid}
+  <line x1="${padL}" y1="${h-padB}" x2="${w-padR}" y2="${h-padB}" stroke="#333" stroke-width="1.5"/>
+  <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}" stroke="#333" stroke-width="1.5"/>
+
+  <polyline points="${fixedLine}" fill="none" stroke="#b00020" stroke-width="2" stroke-dasharray="5,4"/>
+  <polyline points="${costLine}" fill="none" stroke="#f28c00" stroke-width="3"/>
+  <polyline points="${revenueLine}" fill="none" stroke="#1f4ab8" stroke-width="3"/>
+
+  <line x1="${x(breakEvenUnits)}" y1="${y(breakEvenUnits*price)}" x2="${x(breakEvenUnits)}" y2="${h-padB}" stroke="#333" stroke-dasharray="5,5"/>
+  <line x1="${padL}" y1="${y(breakEvenUnits*price)}" x2="${x(breakEvenUnits)}" y2="${y(breakEvenUnits*price)}" stroke="#333" stroke-dasharray="5,5"/>
+  <circle cx="${x(breakEvenUnits)}" cy="${y(breakEvenUnits*price)}" r="5" fill="#333"/>
+  <text x="${x(breakEvenUnits)+8}" y="${y(breakEvenUnits*price)-8}" font-size="12" font-weight="700" fill="#333">Break-even</text>
+
+  <circle cx="${x(paidUnits)}" cy="${y(currentRevenue)}" r="4" fill="#1f4ab8"/>
+  <circle cx="${x(paidUnits)}" cy="${y(currentTotalCost)}" r="4" fill="#f28c00"/>
+
+  <text x="${padL}" y="${h-8}" font-size="12" fill="#333">Paid units</text>
+  <text x="8" y="14" font-size="12" fill="#333">Dollars</text>
+  <text x="${w-178}" y="24" font-size="12" fill="#1f4ab8">Revenue ${money(currentRevenue)}</text>
+  <text x="${w-178}" y="42" font-size="12" fill="#f28c00">Cost ${money(currentTotalCost)}</text>
+  <text x="${w-178}" y="60" font-size="12" fill="#333">Units ${Math.round(paidUnits)}</text>
+ `;
+
+ if(summary){
+  if(paidUnits>=breakEvenUnits){
+   summary.textContent=`Unit break-even reached. Current ${Math.round(paidUnits)} paid units; break-even about ${Math.ceil(breakEvenUnits)} paid units.`;
+  }else{
+   summary.textContent=`Unit break-even not reached. Need about ${Math.ceil(breakEvenUnits-paidUnits)} more paid units. Current ${Math.round(paidUnits)}; break-even about ${Math.ceil(breakEvenUnits)}.`;
+  }
  }
- if(breakHistory){
-  let d=Math.floor((breakHistory.h||0)/getWorkingHours())+1;
-  let hr=Number(((breakHistory.h||0)%getWorkingHours()).toFixed(1));
-  beLabel=`reached on Day ${d}, Hr ${hr}`;
+}
+
+function renderBreakEvenTimeGraph(){
+ let svg=$("breakEvenTimeSvg");
+ let summary=$("breakEvenTimeSummary");
+ if(!svg)return;
+
+ let data=(s.history||[]).map(d=>({t:d.t,h:d.h||0,profit:(d.rev||0)-(d.cost||0)}));
+ let w=720,h=240,padL=62,padR=28,padT=18,padB=42;
+
+ if(data.length<2){
+  svg.innerHTML=`<text x="25" y="105" font-size="14" fill="#667">Run at least two ticks to forecast break-even by time.</text>`;
+  if(summary)summary.textContent="Forecast status: waiting for trend data.";
+  return;
  }
 
- if(data.length<1){
-  svg.innerHTML=`<text x="25" y="105" font-size="14" fill="#667">Run the simulation to build the break-even graph.</text>`;
-  if(summary)summary.textContent="Break-even status: waiting for simulation data.";
-  return;
+ let last=data[data.length-1];
+ let n=Math.min(6,data.length);
+ let recent=data.slice(data.length-n);
+ let first=recent[0];
+ let deltaProfit=last.profit-first.profit;
+ let deltaHours=Math.max(0.01,last.h-first.h);
+ let profitPerHour=deltaProfit/deltaHours;
+
+ let forecastHours=0, predicted=null;
+ if(last.profit<0 && profitPerHour>0){
+  forecastHours=Math.abs(last.profit)/profitPerHour;
+  predicted={h:last.h+forecastHours,profit:0};
+ }else if(last.profit>=0){
+  predicted={h:last.h,profit:0};
+ }
+
+ let future=[];
+ if(predicted && last.profit<0){
+  future.push(last);
+  future.push(predicted);
+ }else if(last.profit<0 && profitPerHour<=0){
+  future.push(last);
+  future.push({h:last.h+getStepHours()*10,profit:last.profit+(profitPerHour*getStepHours()*10)});
+ }
+
+ let all=[...data,...future];
+ let minH=Math.min(...all.map(d=>d.h));
+ let maxH=Math.max(...all.map(d=>d.h), last.h+getStepHours()*2);
+ let minY=Math.min(...all.map(d=>d.profit),0);
+ let maxY=Math.max(...all.map(d=>d.profit),0);
+ if(maxY-minY<100){maxY+=50;minY-=50;}
+ let yPad=(maxY-minY)*0.15; maxY+=yPad; minY-=yPad;
+
+ let x=(hours)=>padL+((hours-minH)/(Math.max(0.01,maxH-minH)))*(w-padL-padR);
+ let y=(profit)=>padT+(1-((profit-minY)/(maxY-minY)))*(h-padT-padB);
+
+ let grid="";
+ for(let g=0;g<=4;g++){
+  let val=minY+(maxY-minY)*(g/4), yy=y(val);
+  grid+=`<line x1="${padL}" y1="${yy}" x2="${w-padR}" y2="${yy}" stroke="#e1e8f0"/>
+         <text x="8" y="${yy+4}" font-size="11" fill="#667">${money(val)}</text>`;
+ }
+ for(let g=0;g<=4;g++){
+  let hh=minH+(maxH-minH)*(g/4), xx=x(hh);
+  let day=Math.floor(hh/getWorkingHours())+1;
+  grid+=`<line x1="${xx}" y1="${padT}" x2="${xx}" y2="${h-padB}" stroke="#f0f3f7"/>
+         <text x="${xx-16}" y="${h-padB+16}" font-size="11" fill="#667">D${day}</text>`;
+ }
+
+ let actualPts=data.map(d=>x(d.h)+","+y(d.profit)).join(" ");
+ let forecastPts=future.map(d=>x(d.h)+","+y(d.profit)).join(" ");
+ let zeroY=y(0);
+
+ let marker="";
+ if(predicted){
+  marker=`<line x1="${x(predicted.h)}" y1="${padT}" x2="${x(predicted.h)}" y2="${h-padB}" stroke="#333" stroke-dasharray="5,5"/>
+          <circle cx="${x(predicted.h)}" cy="${zeroY}" r="5" fill="#333"/>
+          <text x="${x(predicted.h)+8}" y="${zeroY-8}" font-size="12" font-weight="700" fill="#333">Break-even</text>`;
  }
 
  svg.innerHTML=`
   ${grid}
   <line x1="${padL}" y1="${h-padB}" x2="${w-padR}" y2="${h-padB}" stroke="#333" stroke-width="1.5"/>
   <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}" stroke="#333" stroke-width="1.5"/>
+  <line x1="${padL}" y1="${zeroY}" x2="${w-padR}" y2="${zeroY}" stroke="#b00020" stroke-width="2" stroke-dasharray="5,4"/>
 
-  <polyline points="${fixedLine}" fill="none" stroke="#d44" stroke-width="2" stroke-dasharray="5,4"/>
-  <polyline points="${costLine}" fill="none" stroke="#f28c00" stroke-width="3"/>
-  <polyline points="${revenueLine}" fill="none" stroke="#1f4ab8" stroke-width="3"/>
+  <polyline points="${actualPts}" fill="none" stroke="${last.profit>=0?'#1f8a2e':'#b00020'}" stroke-width="3"/>
+  ${forecastPts?`<polyline points="${forecastPts}" fill="none" stroke="#333" stroke-width="3" stroke-dasharray="6,5"/>`:''}
+  ${marker}
 
-  <line x1="${beX}" y1="${beY}" x2="${beX}" y2="${h-padB}" stroke="#333" stroke-dasharray="5,5"/>
-  <line x1="${padL}" y1="${beY}" x2="${beX}" y2="${beY}" stroke="#333" stroke-dasharray="5,5"/>
-  <circle cx="${beX}" cy="${beY}" r="5" fill="#333"/>
-  <text x="${beX+8}" y="${beY-8}" font-size="12" font-weight="700" fill="#333">Break-even</text>
-
-  <circle cx="${unitsNowX}" cy="${revNowY}" r="4" fill="#1f4ab8"/>
-  <circle cx="${unitsNowX}" cy="${costNowY}" r="4" fill="#f28c00"/>
-
-  <text x="${w-155}" y="25" font-size="12" fill="#1f4ab8">Revenue ${money(currentRevenue)}</text>
-  <text x="${w-155}" y="42" font-size="12" fill="#f28c00">Cost ${money(currentTotalCost)}</text>
-  <text x="${w-155}" y="59" font-size="12" fill="#333">Units ${Math.round(paidUnits)}</text>
-
-  <text x="${padL}" y="${h-8}" font-size="12" fill="#333">Number of paid units</text>
-  <text x="8" y="14" font-size="12" fill="#333">Dollars</text>
-  <text x="${w-180}" y="${h-8}" font-size="11" fill="#667">Break-even units: ${Math.ceil(breakEvenUnits)}</text>
+  <text x="${padL}" y="${h-8}" font-size="12" fill="#333">Time</text>
+  <text x="8" y="14" font-size="12" fill="#333">Profit/Loss</text>
+  <text x="${w-190}" y="24" font-size="12" fill="#333">Current ${money(last.profit)}</text>
+  <text x="${w-190}" y="42" font-size="12" fill="#333">Trend ${money(profitPerHour*getWorkingHours())}/day</text>
  `;
 
  if(summary){
-  let profit=currentRevenue-currentTotalCost;
-  if(paidUnits>=breakEvenUnits){
-   summary.textContent=`Break-even status: ${beLabel}. Current ${Math.round(paidUnits)} units. Break-even at about ${Math.ceil(breakEvenUnits)} paid units. Profit before tax: ${money(profit)}.`;
+  if(last.profit>=0){
+   summary.textContent=`Time break-even already reached by ${fmtTickTime(last.h)}. Current cumulative profit/loss: ${money(last.profit)}.`;
+  }else if(profitPerHour>0 && predicted){
+   summary.textContent=`Predicted break-even: ${fmtTickTime(predicted.h)}. Current cumulative loss: ${money(last.profit)}. Current trend: ${money(profitPerHour*getWorkingHours())} per business day.`;
   }else{
-   let unitsShort=Math.max(0,Math.ceil(breakEvenUnits-paidUnits));
-   summary.textContent=`Break-even status: not reached. Need about ${unitsShort} more paid units. Current ${Math.round(paidUnits)} units; break-even about ${Math.ceil(breakEvenUnits)} units.`;
+   summary.textContent=`Break-even is not predicted on the current trend. Current cumulative loss: ${money(last.profit)} and trend is ${money(profitPerHour*getWorkingHours())} per business day.`;
   }
  }
 }
+
 
 function render(){
  let h="";
