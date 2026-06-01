@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V7.3</title>
+<title>Business Simulator V7.4</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -72,7 +72,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V7.3</h1><p>V7.3: adds side-by-side unit break-even and time break-even forecast graphs.</p></header>
+<header><h1>Business Simulator V7.4</h1><p>V7.4: adds day-based duration, larger time steps, and safer long-run simulation.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -101,7 +101,7 @@ body.editing .editBanner{display:block}
 <div class="card metric"><b>Tax</b><span id="taxBox">$0</span></div>
 <div class="card metric"><b>Profit After Tax</b><span id="netProfit">$0</span></div>
 <div class="card metric"><b>Paid Units</b><span id="paidUnitsBox">0</span></div>
-<div class="card metric"><b>Years Simulated</b><span id="yearsBox">0.00</span></div>
+<div class="card metric"><b>Days Simulated</b><span id="daysBox">0</span></div>
 <div class="card metric"><b>Funding Gap / Debt</b><span id="fundingGapBox">$0</span></div>
 <div class="card metric"><b id="valueLabel">Value Units</b><span id="systemOut">0</span></div>
 </div>
@@ -139,24 +139,19 @@ body.editing .editBanner{display:block}
 <label>Tax Rate <span id="taxLab"></span></label><input type="range" id="taxRate" min="0" max="50" step="1" value="20">
 <label>Simulation Time Step <span id="timeStepLab"></span></label>
 <select id="timeStep">
-<option value="0.5">0.5 hour per tick</option>
-<option value="1">1 hour per tick</option>
-<option value="2">2 hours per tick</option>
-<option value="4">4 hours per tick</option>
-<option value="day" selected>1 business day per tick</option>
+<option value="0.5h">0.5 hour per tick</option>
+<option value="1h">1 hour per tick</option>
+<option value="4h">4 hours per tick</option>
+<option value="1d" selected>1 day per tick</option>
+<option value="7d">7 days per tick</option>
+<option value="14d">14 days per tick</option>
+<option value="30d">30 days per tick</option>
+<option value="90d">90 days per tick</option>
 </select>
 <label>Working Hours Per Day <span id="workHoursLab"></span></label><input type="range" id="workingHours" min="0.5" max="24" step="0.5" value="8">
-<label>Animation Speed <span id="speedLab"></span></label><input type="range" id="speed" min="500" max="4000" step="250" value="2000">
-<label>Simulation Horizon <span id="horizonLab"></span></label>
-<select id="horizonYears">
-<option value="0.25">3 months</option>
-<option value="0.5">6 months</option>
-<option value="1">1 year</option>
-<option value="2" selected>2 years</option>
-<option value="5">5 years</option>
-<option value="10">10 years</option>
-<option value="999">Unlimited / manual stop</option>
-</select>
+<label>Animation Speed <span id="speedLab"></span></label><input type="range" id="speed" min="250" max="4000" step="250" value="1000">
+<label>Simulation Duration <span id="durationLab"></span></label>
+<input type="range" id="durationDays" min="30" max="3650" step="30" value="730">
 <label>Cash Failure Handling <span id="cashModeLab"></span></label>
 <select id="cashMode">
 <option value="funding_gap" selected>Track funding gap / keep running</option>
@@ -237,13 +232,7 @@ function getWorkingHours(){
  return Math.max(0.5,Number(el.value));
 }
 
-function getStepHours(){
- let el=$("timeStep");
- if(!el)return 8;
- let v=el.value;
- if(v==="day")return getWorkingHours();
- return Number(v);
-}
+
 
 
 async function init(){
@@ -287,28 +276,53 @@ function loadProfile(k){
  labels();reset();
 }
 
-function timeStepLabel(){
+
+
+
+
+
+
+
+
+
+
+
+
+function getStepHours(){
  let v=$("timeStep").value;
- if(v==="day")return "1 business day / tick ("+getWorkingHours()+" hr)";
- let h=Number(v);
- if(h===0.5)return "0.5 hour / tick";
- return h+" hours / tick";
+ if(v.endsWith("h"))return Number(v.replace("h",""));
+ if(v.endsWith("d"))return Number(v.replace("d",""))*getWorkingHours();
+ return getWorkingHours();
 }
 
+function getStepDays(){
+ return getStepHours()/getWorkingHours();
+}
 
-function getHorizonYears(){
- let el=$("horizonYears");
- return el?Number(el.value):2;
+function timeStepLabel(){
+ let v=$("timeStep").value;
+ if(v==="0.5h")return "0.5 hour / tick";
+ if(v==="1h")return "1 hour / tick";
+ if(v==="4h")return "4 hours / tick";
+ if(v==="1d")return "1 day / tick";
+ if(v==="7d")return "7 days / tick";
+ if(v==="14d")return "14 days / tick";
+ if(v==="30d")return "30 days / tick";
+ if(v==="90d")return "90 days / tick";
+ return v+" / tick";
+}
+
+function getDurationDays(){
+ let el=$("durationDays");
+ return el?Number(el.value):730;
 }
 
 function maxSimulationHours(){
- let y=getHorizonYears();
- if(y>=999)return 999999999;
- return y*365*getWorkingHours();
+ return getDurationDays()*getWorkingHours();
 }
 
-function yearsSimulated(){
- return (s.hours||0)/(365*getWorkingHours());
+function daysSimulated(){
+ return (s.hours||0)/getWorkingHours();
 }
 
 function getCashMode(){
@@ -318,8 +332,10 @@ function getCashMode(){
 
 function labels(){
  $("cashLab").textContent=money(num("startCash"));$("strLab").textContent=num("strength")+"%";$("ohLab").textContent=money(getDailyOverhead())+" / business day";
- $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("timeStepLab").textContent=timeStepLabel();$("workHoursLab").textContent=getWorkingHours()+" hr/day";$("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec/tick";
- $("horizonLab").textContent=getHorizonYears()>=999?"unlimited":getHorizonYears()+" yr";
+ $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("timeStepLab").textContent=timeStepLabel();
+ $("workHoursLab").textContent=getWorkingHours()+" hr/day";
+ $("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec/tick";
+ $("durationLab").textContent=getDurationDays()+" days";
  $("cashModeLab").textContent=getCashMode()==="stop"?"stop at zero cash":"track gap";
  $("marginLab").textContent=getGrossMargin()+"%";
  $("unitProfitLab").textContent=money(unitProfit())+" / paid unit";
@@ -685,7 +701,7 @@ function render(){
  let gp=s.totalRevenue-s.totalCost, tax=Math.max(0,gp*num("taxRate")/100), net=gp-tax;
  $("grossProfit").textContent=money(gp);$("taxBox").textContent=money(tax);$("netProfit").textContent=money(net);
  $("paidUnitsBox").textContent=Math.round(s.paidUnits||0);
- $("yearsBox").textContent=yearsSimulated().toFixed(2);
+ $("daysBox").textContent=Math.round(daysSimulated());
  $("fundingGapBox").textContent=money(s.fundingGap||0);
  $("fundingGapBox").className=(s.fundingGap||0)>0?"fundingBad":"fundingGood";
  $("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
@@ -741,7 +757,7 @@ function reset(){
   s.vals.push([0,panels[i].ins[1][3],panels[i].ins[2][3],panels[i].ins[3][3]]);
   s.outs.push(0);s.stock.push(i==0?panels[i].ins[0][3]:0);s.active.push(false);s.stageCost.push(0);s.stageValue.push(0);s.stageUsed.push(0);s.stageOutTick.push(0);
  }
- $("log").innerHTML="";log("Loaded profile: "+currentProfile.name);status("profile loaded. Fixed overhead is per business day, prorated by tick length. Adjust values or run.");render();
+ $("log").innerHTML="";log("Loaded profile: "+currentProfile.name);status("profile loaded. Use larger time steps such as 30 days/tick for multi-year runs.");render();
 }
 
 function step(){
@@ -788,12 +804,12 @@ function step(){
    log("STOPPED: cash reached zero.");
    pauseRun();
   }else{
-   log("FUNDING GAP: cash below zero. Tracking required financing instead of stopping.");
+   if(s.tick%10===0)log("FUNDING GAP: cash below zero. Tracking required financing instead of stopping.");
   }
  }
- s.history.push({t:s.tick,h:s.hours,units:s.paidUnits,cost:s.totalCost,rev:s.totalRevenue,cash:s.cash});if(s.history.length>120)s.history.shift();
+ s.history.push({t:s.tick,h:s.hours,units:s.paidUnits,cost:s.totalCost,rev:s.totalRevenue,cash:s.cash});if(s.history.length>90)s.history.shift();
  if(s.hours>=maxSimulationHours()){
-  status("simulation horizon reached: "+(getHorizonYears()>=999?"unlimited":getHorizonYears()+" years")+".");
+  status("simulation duration reached: "+getDurationDays()+" days.");
   pauseRun();
  }else{
   status("tick "+s.tick+" / "+timeStepLabel()+" processed value and money.");
@@ -812,7 +828,7 @@ function exportJson(){currentProfile.revenue=num("revenue");currentProfile.daily
 
 $("start").onclick=startRun;$("pause").onclick=pauseRun;$("step").onclick=step;$("reset").onclick=reset;
 $("editMode").onclick=enterEditMode;$("commitEdits").onclick=commitEdits;$("saveLocal").onclick=saveLocal;$("loadLocal").onclick=loadLocal;$("resetDefaults").onclick=resetDefaults;$("exportJson").onclick=exportJson;
-["startCash","strength","overhead","revenue","grossMargin","taxRate","speed","timeStep","workingHours","horizonYears","cashMode"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
+["startCash","strength","overhead","revenue","grossMargin","taxRate","speed","timeStep","workingHours","durationDays","cashMode"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
 init();
 </script>
 </body>
