@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V7.4</title>
+<title>Business Simulator V7.5</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
@@ -51,6 +51,20 @@ body.editing .panel{border-color:#7557c8}
 .foot{font-size:12px;margin-top:4px}
 .log{background:#111;color:#eee;border-radius:12px;padding:8px;font-family:monospace;font-size:12px;max-height:150px;overflow:auto}
 
+.fixAdvisor{background:white;border:2px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
+.fixAdvisor h3{margin:0 0 6px 0;font-size:15px}
+.fixGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fixCard{border:1px solid #dce5ee;border-radius:12px;background:#fbfdff;padding:8px;font-size:12px;line-height:1.35}
+.fixCard b{display:block;font-size:11px;text-transform:uppercase;color:#667;margin-bottom:3px}
+.fixCritical{border-color:#b00020;background:#fff6f6}
+.fixWarning{border-color:#b96d22;background:#fffaf0}
+.fixGood{border-color:#1f8a2e;background:#f5fff7}
+.fixAction{font-weight:900;font-size:13px}
+.fixSmall{font-size:11px;color:#444;margin-top:4px}
+.fixButton{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:8px;background:#0b5da6;color:#fff;font-weight:900;font-size:11px}
+@media(max-width:900px){.fixGrid{grid-template-columns:1fr}}
+
+
 .graphsRow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
 .graphCard{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px}
 .graphTitle{font-weight:900;font-size:13px;margin-bottom:4px}
@@ -72,7 +86,7 @@ body.editing .editBanner{display:block}
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V7.4</h1><p>V7.4: adds day-based duration, larger time steps, and safer long-run simulation.</p></header>
+<header><h1>Business Simulator V7.5</h1><p>V7.5: adds real-time Fix Advisor with prioritized corrective actions.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -103,6 +117,7 @@ body.editing .editBanner{display:block}
 <div class="card metric"><b>Paid Units</b><span id="paidUnitsBox">0</span></div>
 <div class="card metric"><b>Days Simulated</b><span id="daysBox">0</span></div>
 <div class="card metric"><b>Funding Gap / Debt</b><span id="fundingGapBox">$0</span></div>
+<div class="card metric"><b>Top Fix</b><span id="topFixBox">Waiting</span></div>
 <div class="card metric"><b id="valueLabel">Value Units</b><span id="systemOut">0</span></div>
 </div>
 
@@ -126,6 +141,13 @@ body.editing .editBanner{display:block}
    <span><span class="sw lossSw"></span>$0 Break-even line</span>
    <span><span class="sw beSw"></span>Predicted crossing</span>
   </div>
+ </div>
+</div>
+
+<div class="fixAdvisor">
+ <h3>Real-Time Fix Advisor</h3>
+ <div class="fixGrid" id="fixAdvisorGrid">
+  <div class="fixCard">Run the simulation to generate live corrective actions.</div>
  </div>
 </div>
 
@@ -473,6 +495,128 @@ function fmtTickTime(hours){
  return "Day "+d+", Hr "+hr;
 }
 
+
+function recentTrendPerDay(){
+ let hist=s.history||[];
+ if(hist.length<2)return 0;
+ let n=Math.min(6,hist.length);
+ let recent=hist.slice(hist.length-n);
+ let first=recent[0], last=recent[recent.length-1];
+ let p1=(first.rev||0)-(first.cost||0);
+ let p2=(last.rev||0)-(last.cost||0);
+ let hdiff=Math.max(0.01,(last.h||0)-(first.h||0));
+ return ((p2-p1)/hdiff)*getWorkingHours();
+}
+
+function getCurrentPaidPerDay(){
+ let hist=s.history||[];
+ if(hist.length<2)return 0;
+ let n=Math.min(6,hist.length);
+ let recent=hist.slice(hist.length-n);
+ let first=recent[0], last=recent[recent.length-1];
+ let units=(last.units||0)-(first.units||0);
+ let hdiff=Math.max(0.01,(last.h||0)-(first.h||0));
+ return units/(hdiff/getWorkingHours());
+}
+
+function getLiveFixes(){
+ let fixes=[];
+ let paidUnits=s.paidUnits||0;
+ let revenue=s.totalRevenue||0;
+ let cost=s.totalCost||0;
+ let profit=revenue-cost;
+ let price=num("revenue");
+ let gm=getGrossMargin?getGrossMargin():35;
+ let unitProfitVal=unitProfit?unitProfit():price*(gm/100);
+ let dailyOverhead=(typeof getDailyOverhead==="function")?getDailyOverhead():num("overhead");
+ let paidPerDay=getCurrentPaidPerDay();
+ let trend=recentTrendPerDay();
+ let cash=s.cash||0;
+ let fundingGap=s.fundingGap||0;
+ let variableCostPerUnit=price*(1-(gm/100));
+ let contribution=Math.max(0.01,price-variableCostPerUnit);
+ let neededUnitsPerDay=dailyOverhead/Math.max(0.01,contribution);
+ let unitShort=Math.max(0,neededUnitsPerDay-paidPerDay);
+ let avgCostPerUnit=paidUnits>0?cost/paidUnits:0;
+ let avgRevenuePerUnit=paidUnits>0?revenue/paidUnits:price;
+
+ function add(sev,title,action,detail,target){
+  fixes.push({sev,title,action,detail,target});
+ }
+
+ if(s.tick<2){
+  add("good","Need more data","Run at least 2–3 ticks before trusting the fix advisor.","The advisor needs a trend before it can compare paid units/day, overhead, price, and profit movement.","Run simulation");
+  return fixes;
+ }
+
+ if(cash<=0 || fundingGap>0){
+  add("critical","Funding gap detected","Increase starting cash, reduce daily overhead, or shorten time to revenue.","The model has required external financing. This is not automatically fatal, but it means the current plan needs runway money.","Required financing: "+money(Math.max(fundingGap,Math.abs(Math.min(0,cash)))));
+ }
+
+ if(profit<0 && trend<0){
+  add("critical","Loss is getting worse","Raise price, reduce fixed overhead, or increase paid units/day before continuing scale-up.","Cumulative profit/loss is negative and the recent trend is still falling.","Current trend: "+money(trend)+"/day");
+ }
+
+ if(paidPerDay < neededUnitsPerDay){
+  add("warning","Not enough paid volume","Increase demand/conversion or reduce overhead until paid units/day exceeds the break-even rate.","The current flow is not producing enough paid units per day to cover fixed daily overhead and unit cost.","Need "+neededUnitsPerDay.toFixed(1)+" paid units/day; current "+paidPerDay.toFixed(1));
+ }
+
+ if(avgCostPerUnit>avgRevenuePerUnit && paidUnits>5){
+  add("critical","Unit economics broken","Raise Revenue Per Paid Unit or increase Target Gross Margin; otherwise each unit loses money.","Average cost per paid unit is higher than average revenue per paid unit.","Avg cost "+money(avgCostPerUnit)+" vs revenue "+money(avgRevenuePerUnit));
+ }
+
+ if(dailyOverhead > revenue && s.tick>3){
+  add("warning","Overhead is too heavy","Lower fixed overhead per business day or increase working utilization.","Fixed cost is absorbing revenue faster than the operation can refill cash.","Daily overhead: "+money(dailyOverhead));
+ }
+
+ if(gm<30){
+  add("warning","Margin too low","Increase target gross margin or reduce variable cost per unit.","Low margin means too many units are required to cover fixed cost.","Current margin: "+gm+"%");
+ }
+
+ if(gm>60){
+  add("warning","Margin may be too aggressive","Check service quality. High margin can reduce quality, satisfaction, and repeat demand.","The model applies a quality/execution penalty when margin is pushed too high.","Current margin: "+gm+"%");
+ }
+
+ if(price < avgCostPerUnit && paidUnits>5){
+  add("critical","Price too low","Increase price or redesign the offer to lower cost per sale.","Revenue per paid unit is below actual average cost per unit.","Try price above "+money(avgCostPerUnit));
+ }
+
+ if(paidPerDay>neededUnitsPerDay && trend>0 && profit<0){
+  add("good","On path to recovery","Keep running or add financing runway; the trend suggests the model can recover.","The business is still negative, but paid volume and profit trend are moving in the right direction.","Trend: "+money(trend)+"/day");
+ }
+
+ if(profit>=0 && fundingGap<=0){
+  add("good","Currently viable","Protect the assumptions that are working: price, margin, demand, and overhead.","The business is profitable so far. Now test sensitivity by lowering demand or raising costs.","Profit: "+money(profit));
+ }
+
+ if(fixes.length===0){
+  add("good","No obvious single failure","Run longer or stress-test the variables: lower demand, higher overhead, lower price, and lower margin.","The current result does not show a simple failure cause yet.","Continue testing");
+ }
+
+ return fixes.sort((a,b)=>{
+  const rank={critical:0,warning:1,good:2};
+  return rank[a.sev]-rank[b.sev];
+ });
+}
+
+function renderFixAdvisor(){
+ let grid=$("fixAdvisorGrid");
+ let top=$("topFixBox");
+ if(!grid)return;
+ let fixes=getLiveFixes();
+ if(top)top.textContent=fixes[0]?fixes[0].action.substring(0,32)+(fixes[0].action.length>32?"...":""):"Waiting";
+ grid.innerHTML=fixes.slice(0,4).map(f=>{
+  let cls=f.sev==="critical"?"fixCritical":(f.sev==="warning"?"fixWarning":"fixGood");
+  let label=f.sev==="critical"?"Critical":(f.sev==="warning"?"Warning":"Good");
+  return `<div class="fixCard ${cls}">
+    <b>${label}: ${f.title}</b>
+    <div class="fixAction">${f.action}</div>
+    <div class="fixSmall">${f.detail}</div>
+    <div class="fixButton">${f.target}</div>
+   </div>`;
+ }).join("");
+}
+
 function renderBreakEvenGraph(){
  renderBreakEvenUnitsGraph();
  renderBreakEvenTimeGraph();
@@ -705,7 +849,7 @@ function render(){
  $("fundingGapBox").textContent=money(s.fundingGap||0);
  $("fundingGapBox").className=(s.fundingGap||0)>0?"fundingBad":"fundingGood";
  $("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
- $("editMode").textContent=editMode?"EXIT EDIT MODE":"EDIT MODE";renderBreakEvenGraph();renderDiagnosis();
+ $("editMode").textContent=editMode?"EXIT EDIT MODE":"EDIT MODE";renderBreakEvenGraph();renderDiagnosis();renderFixAdvisor();
 }
 
 
