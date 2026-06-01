@@ -2,20 +2,20 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V7.5</title>
+<title>Business Simulator V7.7</title>
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#eef3f8;color:#17202a}
 header{background:#111;color:white;padding:12px;position:sticky;top:0;z-index:10}
 h1{margin:0;font-size:18px}p{margin:5px 0}
 main{padding:8px;max-width:1180px;margin:auto}
-.controls,.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
 button,select{min-height:40px;border-radius:12px;border:1px solid #777;background:white;font-size:14px;font-weight:900}
 #start{background:#0b5da6;color:white}
 #pause{background:#b00020;color:white}
 #editMode{background:#7557c8;color:white}
 #commitEdits{background:#1f8a2e;color:white}
 .card,.panel,details{background:white;border:1px solid #bfd0df;border-radius:14px;padding:8px;margin-bottom:8px}
-.metric b{display:block;font-size:11px;color:#667;text-transform:uppercase}.metric span{font-size:18px;font-weight:900}
+.metric b{display:block;font-size:10px;color:#667;text-transform:uppercase}.metric span{font-size:15px;font-weight:900;line-height:1.05;display:block;word-break:break-word}
 label{display:flex;justify-content:space-between;font-weight:800;margin-top:10px;font-size:14px}
 input{width:100%;height:30px}
 .panel{border:2px solid #bfd0df}
@@ -62,7 +62,7 @@ body.editing .panel{border-color:#7557c8}
 .fixAction{font-weight:900;font-size:13px}
 .fixSmall{font-size:11px;color:#444;margin-top:4px}
 .fixButton{display:inline-block;margin-top:6px;padding:5px 8px;border-radius:8px;background:#0b5da6;color:#fff;font-weight:900;font-size:11px}
-@media(max-width:900px){.fixGrid{grid-template-columns:1fr}}
+@media(max-width:900px){.fixGrid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}}
 
 
 .graphsRow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
@@ -83,10 +83,26 @@ body.editing .panel{border-color:#7557c8}
 body.editing .editBanner{display:block}
 @media(max-width:900px){.flow{grid-template-columns:1fr}.row{grid-template-columns:26px 1fr 34px}.inarrow{display:none}.metrics{grid-template-columns:1fr 1fr}.process,.out{min-height:95px}}
 @media(min-width:1100px){.metrics{grid-template-columns:repeat(4,1fr)}}
+
+.fixAdvisor{background:white;border:3px solid #1f76d2;border-radius:16px;padding:10px;margin-bottom:10px;box-shadow:0 3px 12px #cfe2f7}
+.fixAdvisor h3{margin:0 0 8px 0;font-size:18px}
+.fixGrid{display:grid;grid-template-columns:1fr;gap:8px}
+.fixCard{border:2px solid #dce5ee;border-radius:14px;background:#fbfdff;padding:10px;font-size:14px;line-height:1.38;display:grid;grid-template-columns:42px 1fr;gap:10px;align-items:start}
+.fixNum{font-size:26px;font-weight:900;text-align:center;border-radius:12px;background:#111;color:white;padding:8px 0}
+.fixBody b{display:block;font-size:12px;text-transform:uppercase;color:#667;margin-bottom:4px}
+.fixCritical{border-color:#b00020;background:#fff6f6}
+.fixWarning{border-color:#b96d22;background:#fffaf0}
+.fixGood{border-color:#1f8a2e;background:#f5fff7}
+.fixCritical .fixNum{background:#b00020}.fixWarning .fixNum{background:#b96d22}.fixGood .fixNum{background:#1f8a2e}
+.fixAction{font-weight:900;font-size:17px;margin-bottom:4px}
+.fixSmall{font-size:13px;color:#333;margin-top:4px}
+.fixButton{display:inline-block;margin-top:6px;padding:6px 10px;border-radius:8px;background:#0b5da6;color:#fff;font-weight:900;font-size:12px}
+@media(max-width:900px){.fixGrid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.fixCard{grid-template-columns:34px 1fr}.fixNum{font-size:20px}}
+
 </style>
 </head>
 <body>
-<header><h1>Business Simulator V7.5</h1><p>V7.5: adds real-time Fix Advisor with prioritized corrective actions.</p></header>
+<header><h1>Business Simulator V7.7</h1><p>V7.7: stability fix. Long runs continue through negative cash, track funding gap, and reduce graph load.</p></header>
 <main>
 <div class="card"><label for="profileSelect">Business Profile</label><select id="profileSelect"></select><p id="profileNote"></p></div>
 
@@ -121,6 +137,13 @@ body.editing .editBanner{display:block}
 <div class="card metric"><b id="valueLabel">Value Units</b><span id="systemOut">0</span></div>
 </div>
 
+<div class="fixAdvisor">
+ <h3>Real-Time Prescriptions: What to Fix First</h3>
+ <div class="fixGrid" id="fixAdvisorGrid">
+  <div class="fixCard">Run the simulation to generate live corrective actions.</div>
+ </div>
+</div>
+
 <div class="graphsRow">
  <div class="graphCard">
   <div class="graphTitle">Break-Even by Units</div>
@@ -144,12 +167,7 @@ body.editing .editBanner{display:block}
  </div>
 </div>
 
-<div class="fixAdvisor">
- <h3>Real-Time Fix Advisor</h3>
- <div class="fixGrid" id="fixAdvisorGrid">
-  <div class="fixCard">Run the simulation to generate live corrective actions.</div>
- </div>
-</div>
+
 
 <details open><summary><b>Scenario Controls</b></summary>
 <label>Starting Cash <span id="cashLab"></span></label><input type="range" id="startCash" min="1000" max="100000" step="1000" value="25000">
@@ -310,15 +328,33 @@ function loadProfile(k){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getStepHours(){
- let v=$("timeStep").value;
- if(v.endsWith("h"))return Number(v.replace("h",""));
- if(v.endsWith("d"))return Number(v.replace("d",""))*getWorkingHours();
+ let el=$("timeStep");
+ let v=el?el.value:"1d";
+ if(String(v).endsWith("h"))return Number(String(v).replace("h",""));
+ if(String(v).endsWith("d"))return Number(String(v).replace("d",""))*getWorkingHours();
+ let n=Number(v);
+ if(!isNaN(n))return n;
  return getWorkingHours();
 }
 
 function getStepDays(){
- return getStepHours()/getWorkingHours();
+ return getStepHours()/Math.max(0.5,getWorkingHours());
 }
 
 function timeStepLabel(){
@@ -344,12 +380,11 @@ function maxSimulationHours(){
 }
 
 function daysSimulated(){
- return (s.hours||0)/getWorkingHours();
+ return (s.hours||0)/Math.max(0.5,getWorkingHours());
 }
 
 function getCashMode(){
- let el=$("cashMode");
- return el?el.value:"funding_gap";
+ return "funding_gap";
 }
 
 function labels(){
@@ -357,8 +392,8 @@ function labels(){
  $("revLab").textContent=money(num("revenue"));$("taxLab").textContent=num("taxRate")+"%";$("timeStepLab").textContent=timeStepLabel();
  $("workHoursLab").textContent=getWorkingHours()+" hr/day";
  $("speedLab").textContent=(num("speed")/1000).toFixed(2)+" sec/tick";
- $("durationLab").textContent=getDurationDays()+" days";
- $("cashModeLab").textContent=getCashMode()==="stop"?"stop at zero cash":"track gap";
+ if($("durationLab"))$("durationLab").textContent=getDurationDays()+" days";
+ if($("cashModeLab"))$("cashModeLab").textContent="track gap / keep running";
  $("marginLab").textContent=getGrossMargin()+"%";
  $("unitProfitLab").textContent=money(unitProfit())+" / paid unit";
 }
@@ -558,7 +593,7 @@ function getLiveFixes(){
  }
 
  if(paidPerDay < neededUnitsPerDay){
-  add("warning","Not enough paid volume","Increase demand/conversion or reduce overhead until paid units/day exceeds the break-even rate.","The current flow is not producing enough paid units per day to cover fixed daily overhead and unit cost.","Need "+neededUnitsPerDay.toFixed(1)+" paid units/day; current "+paidPerDay.toFixed(1));
+  add("warning","Not enough paid volume","Increase paid volume or reduce daily overhead.","Current paid units/day is below the break-even requirement.","Need "+neededUnitsPerDay.toFixed(1)+" paid units/day; current "+paidPerDay.toFixed(1));
  }
 
  if(avgCostPerUnit>avgRevenuePerUnit && paidUnits>5){
@@ -586,7 +621,7 @@ function getLiveFixes(){
  }
 
  if(profit>=0 && fundingGap<=0){
-  add("good","Currently viable","Protect the assumptions that are working: price, margin, demand, and overhead.","The business is profitable so far. Now test sensitivity by lowering demand or raising costs.","Profit: "+money(profit));
+  add("good","Currently viable","Protect the working assumptions: price, margin, demand, and overhead.","The business is profitable so far. Now test sensitivity by lowering demand or raising costs.","Profit: "+money(profit));
  }
 
  if(fixes.length===0){
@@ -604,15 +639,20 @@ function renderFixAdvisor(){
  let top=$("topFixBox");
  if(!grid)return;
  let fixes=getLiveFixes();
- if(top)top.textContent=fixes[0]?fixes[0].action.substring(0,32)+(fixes[0].action.length>32?"...":""):"Waiting";
- grid.innerHTML=fixes.slice(0,4).map(f=>{
+ if(top){
+  top.textContent=fixes[0]?("Fix #1: "+fixes[0].title):"Waiting";
+ }
+ grid.innerHTML=fixes.slice(0,3).map((f,idx)=>{
   let cls=f.sev==="critical"?"fixCritical":(f.sev==="warning"?"fixWarning":"fixGood");
   let label=f.sev==="critical"?"Critical":(f.sev==="warning"?"Warning":"Good");
   return `<div class="fixCard ${cls}">
-    <b>${label}: ${f.title}</b>
-    <div class="fixAction">${f.action}</div>
-    <div class="fixSmall">${f.detail}</div>
-    <div class="fixButton">${f.target}</div>
+    <div class="fixNum">${idx+1}</div>
+    <div class="fixBody">
+      <b>${label}: ${f.title}</b>
+      <div class="fixAction">${f.action}</div>
+      <div class="fixSmall">${f.detail}</div>
+      <div class="fixButton">${f.target}</div>
+    </div>
    </div>`;
  }).join("");
 }
@@ -845,7 +885,7 @@ function render(){
  let gp=s.totalRevenue-s.totalCost, tax=Math.max(0,gp*num("taxRate")/100), net=gp-tax;
  $("grossProfit").textContent=money(gp);$("taxBox").textContent=money(tax);$("netProfit").textContent=money(net);
  $("paidUnitsBox").textContent=Math.round(s.paidUnits||0);
- $("daysBox").textContent=Math.round(daysSimulated());
+ if($("daysBox"))$("daysBox").textContent=Math.round(daysSimulated());
  $("fundingGapBox").textContent=money(s.fundingGap||0);
  $("fundingGapBox").className=(s.fundingGap||0)>0?"fundingBad":"fundingGood";
  $("systemOut").textContent=Math.round(s.outs[panels.length-1]||0);
@@ -941,17 +981,11 @@ function step(){
   }
  }
  if(s.cash<0){
-  s.minCash=Math.min(s.minCash,s.cash);
-  s.fundingGap=Math.max(s.fundingGap,Math.abs(s.minCash));
-  if(getCashMode()==="stop"){
-   s.cash=0;
-   log("STOPPED: cash reached zero.");
-   pauseRun();
-  }else{
-   if(s.tick%10===0)log("FUNDING GAP: cash below zero. Tracking required financing instead of stopping.");
-  }
+  s.minCash=Math.min(s.minCash||0,s.cash);
+  s.fundingGap=Math.max(s.fundingGap||0,Math.abs(s.minCash));
+  if(s.tick%25===0)log("FUNDING GAP: cash below zero; continuing and tracking required financing.");
  }
- s.history.push({t:s.tick,h:s.hours,units:s.paidUnits,cost:s.totalCost,rev:s.totalRevenue,cash:s.cash});if(s.history.length>90)s.history.shift();
+ s.history.push({t:s.tick,h:s.hours,units:s.paidUnits,cost:s.totalCost,rev:s.totalRevenue,cash:s.cash});if(s.history.length>80)s.history.shift();
  if(s.hours>=maxSimulationHours()){
   status("simulation duration reached: "+getDurationDays()+" days.");
   pauseRun();
@@ -972,7 +1006,7 @@ function exportJson(){currentProfile.revenue=num("revenue");currentProfile.daily
 
 $("start").onclick=startRun;$("pause").onclick=pauseRun;$("step").onclick=step;$("reset").onclick=reset;
 $("editMode").onclick=enterEditMode;$("commitEdits").onclick=commitEdits;$("saveLocal").onclick=saveLocal;$("loadLocal").onclick=loadLocal;$("resetDefaults").onclick=resetDefaults;$("exportJson").onclick=exportJson;
-["startCash","strength","overhead","revenue","grossMargin","taxRate","speed","timeStep","workingHours","durationDays","cashMode"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
+["startCash","strength","overhead","revenue","grossMargin","taxRate","speed","timeStep","workingHours","durationDays"].forEach(id=>{$(id).oninput=()=>{labels();if(id=="speed"&&s.run){pauseRun();startRun()}if(s.tick==0){s.cash=num("startCash")}render()}});
 init();
 </script>
 </body>
