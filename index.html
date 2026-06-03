@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V9.1</title>
+<title>Business Simulator V9.2</title>
 <style>
 :root{
  --face:#d4d0c8;--dark:#404040;--shadow:#808080;--light:#ffffff;--mid:#c0c0c0;
@@ -78,7 +78,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 .rightPropGrid{display:grid;grid-template-columns:120px 1fr;gap:4px;align-items:center}
 .rightPropGrid label{text-align:right}
 
-/* V9.1 safe layout rebuild from V8.8.
+/* V9.2 safe layout rebuild from V8.8.
    This pass intentionally preserves the V8.8 calculation engine. */
 .topGrid{
   grid-template-columns:300px minmax(650px,1fr) 330px;
@@ -125,7 +125,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 }
 
 
-/* V9.1 layout and observation controls */
+/* V9.2 layout and observation controls */
 .topGrid{
   grid-template-columns:300px minmax(650px,1fr) 360px;
 }
@@ -163,6 +163,19 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   width:58px;
 }
 
+
+/* V9.2 stream history retention */
+.ledgerNote{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  align-items:center;
+}
+#ledgerCount{
+  font-weight:bold;
+  color:#0a246a;
+}
+
 </style>
 </head>
 <body>
@@ -193,7 +206,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 
 <div class="desktop">
  <div class="titlebar">
-  <div id="titleText">Business Simulator V9.1 - Buckos_Barn_Style_Hotel_Run_01.bzsm</div>
+  <div id="titleText">Business Simulator V9.2 - Buckos_Barn_Style_Hotel_Run_01.bzsm</div>
   <div class="windowBtns"><div class="winBtn">_</div><div class="winBtn">□</div><div class="winBtn">×</div></div>
  </div>
  <div class="menubar">
@@ -251,7 +264,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
  </div>
  <div class="menuItem">Help
   <div class="menuDrop">
-   <div class="menuCmd" onclick="menuAction('Business Simulator V9.1 mock desktop app')">About Business Simulator</div>
+   <div class="menuCmd" onclick="menuAction('Business Simulator V9.2 mock desktop app')">About Business Simulator</div>
   </div>
  </div>
 </div>
@@ -302,7 +315,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   </div>
 
   <div class="split">
-   <div class="group"><div class="panelTitle">VALUE STREAM ACCOUNTING</div><div class="ledgerNote">Room rentals and scheduled cash events share this ledger in V9.1.</div>
+   <div class="group"><div class="panelTitle">VALUE STREAM ACCOUNTING</div><div class="ledgerNote">Room rentals and scheduled cash events share this ledger in V9.2. <span id="ledgerCount">0 rows retained</span></div>
     <div class="ledgerScroll"><table><thead><tr><th>DAY</th><th>ROOM #</th><th>TYPE</th><th>REVENUE</th><th>FIXED COST</th><th>VAR COST</th><th>TAXES</th><th>PROFIT</th></tr></thead><tbody id="ledgerBody"></tbody></table></div>
    </div>
    <div class="group"><div class="panelTitle">OVERSIGHT</div>
@@ -330,7 +343,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   <div id="tabCosts" class="tabPage"><div class="cardGrid" id="costPanel"></div></div>
   <div id="tabNotes" class="tabPage"><div class="grid2"><textarea id="marketingNotes" placeholder="Marketing notes..."></textarea><textarea id="qualityNotes" placeholder="Quality / labour / safety notes..."></textarea></div></div>
  </div>
- <div class="statusbar"><div class="statusCell" id="status">Ready.</div><div class="statusCell" id="runClock">Stopped</div><div class="statusCell">File menu mockup and cash-balance graph enabled</div></div>
+ <div class="statusbar"><div class="statusCell" id="status">Ready.</div><div class="statusCell" id="runClock">Stopped</div><div class="statusCell">Quarterly-depth stream history retained</div></div>
 </div>
 
 <script>
@@ -478,7 +491,7 @@ function stepOne(){
  sim.cash-=0; // explicit no-op for clarity
  sim.minCash=Math.min(sim.minCash,sim.cash);
  sim.fundingGap=Math.max(sim.fundingGap,Math.max(0,-sim.minCash));
- if(sim.ledger.length>900)sim.ledger=sim.ledger.slice(-900);
+ if(sim.ledger.length>6000)sim.ledger=sim.ledger.slice(-6000);
  sim.cashAfterDebt=sim.cash;
  sim.history.push({day:sim.day,...m,cash:sim.cash,cumRevenue:sim.revenue,cumCost:sim.varCost+sim.fixedCost+sim.payrollExpense+sim.interestExpense,cumProfit:sim.profit,cumUnits:sim.units,debtBalance:sim.debtBalance,accountsPayable:sim.accountsPayable});
  if(sim.history.length>1200)sim.history.shift();
@@ -489,7 +502,7 @@ function pause(){if(timer){clearInterval(timer);timer=null}$("runClock").textCon
 function fast(){for(let i=0;i<30;i++)runStep()}
 function statusObj(){let m=daily(),c=m.revPer-m.varPer,req=c>0?m.fixedCost/c:Infinity,per=sim.day?sim.units/sim.day:m.units;if(c<=0)return["Not viable","bad"];if(sim.cash<0)return["Funding needed","warn"];if(sim.profit>0||per>=req)return["Viable","ok"];return["Needs fix","warn"]}
 function render(){capture();$("ownerEquity").value=n("totalAssets")-n("totalLiabilities");let total=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.interestExpense||0),st=statusObj();$("dayBox").textContent=sim.day;$("cashBox").textContent=money(sim.cash);$("revBox").textContent=money(sim.revenue);$("costBox").textContent=money(total);$("opBox").textContent=money(sim.operatingProfit);$("taxBox").textContent=money(sim.taxes);$("netBox").textContent=money(sim.profit);$("statusBox").textContent=st[0];$("statusBox").className=st[1];updateTitle();renderProps();renderLedger();renderOversight();renderGraphs();renderPanels();renderAudit();renderFixes();renderCustomer();renderCosts()}
-function updateTitle(){if($("titleText"))$("titleText").textContent="Business Simulator V9.1 - "+(($("scenarioName")?.value)||"Scenario")+".bzsm"}
+function updateTitle(){if($("titleText"))$("titleText").textContent="Business Simulator V9.2 - "+(($("scenarioName")?.value)||"Scenario")+".bzsm"}
 function renderProps(){
  $("scenarioProps").innerHTML=`<b>${profile.name}</b><br>Engine: ${profile.type}<br>Scenario: ${$("scenarioName").value}<br>${isHotel()?`Total rooms: ${totalRooms()}<br>Singles: ${profile.singles}<br>Doubles: ${profile.doubles}<br>Bridal: ${profile.bridal}<br>Presidential: ${profile.presidential}<br>Occupancy target: ${pct(profile.occupancyRate)}`:`Demand/day: ${profile.demandPerDay}<br>Capacity/day: ${profile.capacityPerDay}`}<hr>
  <b>Finance / Schedule</b><br>
@@ -497,13 +510,18 @@ function renderProps(){
  Payroll: ${money(profile.payrollPerPeriod||0)} every ${profile.payrollFrequencyDays||0} days<br>
  Supplier pay every: ${profile.supplierPayEveryDays||0} days<br>
  Monthly debt pmt: ${money(profile.monthlyDebtPayment||0)}<br>
- Last day: ${sim.day}<br><hr><b>V9.1 note:</b><br>Layout rebuild only. Accounting engine remains V8.8 working base.`;
+ Last day: ${sim.day}<br><hr><b>V9.2 note:</b><br>Layout rebuild only. Accounting engine remains V8.8 working base.`;
 }
 function renderLedger(){
- $("ledgerBody").innerHTML=sim.ledger.slice(-18).reverse().map(x=>{
-  let rowStyle=x.roomNo==='PAYROLL'?' class="payRow"':(x.roomNo==='DEBT SERVICE'?' class="debtRow"':(x.roomNo==='SUPPLIER PAY'?' class="supplierRow"':''));
+ let rows=(sim.ledger||[]);
+ let showRows=rows.slice(-6000); // roughly quarterly+ transaction depth for a 50-room hotel.
+ $("ledgerBody").innerHTML=showRows.map(x=>{
+  let rowStyle=x.summary?' style="font-weight:bold;background:#eef6ff"':(x.roomNo==="PAYROLL"?' class="payRow"':(x.roomNo==="DEBT SERVICE"?' class="debtRow"':(x.roomNo==="SUPPLIER PAY"?' class="supplierRow"':'')));
   return `<tr${rowStyle}><td>${x.day}</td><td>${x.roomNo}</td><td>${x.type}</td><td>${typeof x.revenue==="number"?money(x.revenue):x.revenue}</td><td>${typeof x.fixedCost==="number"?money(x.fixedCost):x.fixedCost}</td><td>${typeof x.varCost==="number"?money(x.varCost):x.varCost}</td><td>${typeof x.taxes==="number"?money(x.taxes):x.taxes}</td><td>${typeof x.profit==="number"?money(x.profit):x.profit}</td></tr>`
- }).join("")||"<tr><td colspan='8'>No entries yet.</td></tr>"
+ }).join("")||"<tr><td colspan='8'>No entries yet.</td></tr>";
+ if($("ledgerCount")) $("ledgerCount").textContent=rows.length.toLocaleString()+" rows retained";
+ let scroller=document.querySelector(".ledgerScroll");
+ if(scroller && timer) scroller.scrollTop=scroller.scrollHeight;
 }
 function oversight(){
  let m=daily();
