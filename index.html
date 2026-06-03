@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V9.0</title>
+<title>Business Simulator V9.1</title>
 <style>
 :root{
  --face:#d4d0c8;--dark:#404040;--shadow:#808080;--light:#ffffff;--mid:#c0c0c0;
@@ -78,7 +78,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 .rightPropGrid{display:grid;grid-template-columns:120px 1fr;gap:4px;align-items:center}
 .rightPropGrid label{text-align:right}
 
-/* V9.0 safe layout rebuild from V8.8.
+/* V9.1 safe layout rebuild from V8.8.
    This pass intentionally preserves the V8.8 calculation engine. */
 .topGrid{
   grid-template-columns:300px minmax(650px,1fr) 330px;
@@ -124,6 +124,45 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   margin-bottom:3px;
 }
 
+
+/* V9.1 layout and observation controls */
+.topGrid{
+  grid-template-columns:300px minmax(650px,1fr) 360px;
+}
+.topGrid > .group{
+  min-height:310px;
+}
+#scenarioProps{
+  height:284px !important;
+  max-height:284px !important;
+  overflow-y:auto !important;
+}
+.ledgerScroll{
+  height:255px;
+  overflow-y:auto;
+  border:2px inset #d4d0c8;
+  background:white;
+}
+.ledgerScroll table{
+  margin:0;
+}
+.ledgerScroll thead th{
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+.speedBox{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  margin-left:8px;
+  border-left:1px solid #808080;
+  padding-left:8px;
+}
+.speedBox input{
+  width:58px;
+}
+
 </style>
 </head>
 <body>
@@ -154,7 +193,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 
 <div class="desktop">
  <div class="titlebar">
-  <div id="titleText">Business Simulator V9.0 - Buckos_Barn_Style_Hotel_Run_01.bzsm</div>
+  <div id="titleText">Business Simulator V9.1 - Buckos_Barn_Style_Hotel_Run_01.bzsm</div>
   <div class="windowBtns"><div class="winBtn">_</div><div class="winBtn">□</div><div class="winBtn">×</div></div>
  </div>
  <div class="menubar">
@@ -212,7 +251,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
  </div>
  <div class="menuItem">Help
   <div class="menuDrop">
-   <div class="menuCmd" onclick="menuAction('Business Simulator V9.0 mock desktop app')">About Business Simulator</div>
+   <div class="menuCmd" onclick="menuAction('Business Simulator V9.1 mock desktop app')">About Business Simulator</div>
   </div>
  </div>
 </div>
@@ -220,7 +259,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   <button class="toolBtn" id="start">▶</button><button class="toolBtn" id="stop">■</button><button class="toolBtn" id="reset">●</button><button class="toolBtn" id="pause">Ⅱ</button><button class="toolBtn" id="step">▶|</button><button class="toolBtn" id="fast">▶▶</button>
   <span style="margin-left:12px">Business Model:</span><select id="profile" style="width:230px"></select>
   <span>Scenario:</span><input id="scenarioName" style="width:270px">
-  <button id="saveRun">Save Run</button><button id="loadRun">Load</button><button id="exportJson">Export JSON</button>
+  <button id="saveRun">Save Run</button><button id="loadRun">Load</button><button id="exportJson">Export JSON</button><span class="speedBox">Speed <input id="simSpeedMs" type="number" value="700" min="100" step="100"> ms/tick</span>
  </div>
  <div class="main">
   <div class="topGrid">
@@ -263,8 +302,8 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   </div>
 
   <div class="split">
-   <div class="group"><div class="panelTitle">VALUE STREAM ACCOUNTING</div><div class="ledgerNote">Room rentals and scheduled cash events share this ledger in V9.0.</div>
-    <table><thead><tr><th>DAY</th><th>ROOM #</th><th>TYPE</th><th>REVENUE</th><th>FIXED COST</th><th>VAR COST</th><th>TAXES</th><th>PROFIT</th></tr></thead><tbody id="ledgerBody"></tbody></table>
+   <div class="group"><div class="panelTitle">VALUE STREAM ACCOUNTING</div><div class="ledgerNote">Room rentals and scheduled cash events share this ledger in V9.1.</div>
+    <div class="ledgerScroll"><table><thead><tr><th>DAY</th><th>ROOM #</th><th>TYPE</th><th>REVENUE</th><th>FIXED COST</th><th>VAR COST</th><th>TAXES</th><th>PROFIT</th></tr></thead><tbody id="ledgerBody"></tbody></table></div>
    </div>
    <div class="group"><div class="panelTitle">OVERSIGHT</div>
     <table><thead><tr><th>CHECK</th><th>STATUS</th><th>VALUE</th></tr></thead><tbody id="oversightBody"></tbody></table>
@@ -445,12 +484,12 @@ function stepOne(){
  if(sim.history.length>1200)sim.history.shift();
 }
 function runStep(){for(let i=0;i<Math.max(1,n("stepDays"));i++){if(sim.day>=n("durationDays")){pause();status("Duration reached.");return}stepOne()}render();status("Tick processed.")}
-function start(){if(timer)return;$("runClock").textContent="Running";timer=setInterval(runStep,700);status("Running.")}
+function start(){if(timer)return;let ms=Math.max(100,Number($("simSpeedMs")?.value)||700);$("runClock").textContent="Running @ "+ms+" ms/tick";timer=setInterval(runStep,ms);status("Running at "+ms+" ms/tick.")}
 function pause(){if(timer){clearInterval(timer);timer=null}$("runClock").textContent="Stopped";status("Paused.")}
 function fast(){for(let i=0;i<30;i++)runStep()}
 function statusObj(){let m=daily(),c=m.revPer-m.varPer,req=c>0?m.fixedCost/c:Infinity,per=sim.day?sim.units/sim.day:m.units;if(c<=0)return["Not viable","bad"];if(sim.cash<0)return["Funding needed","warn"];if(sim.profit>0||per>=req)return["Viable","ok"];return["Needs fix","warn"]}
 function render(){capture();$("ownerEquity").value=n("totalAssets")-n("totalLiabilities");let total=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.interestExpense||0),st=statusObj();$("dayBox").textContent=sim.day;$("cashBox").textContent=money(sim.cash);$("revBox").textContent=money(sim.revenue);$("costBox").textContent=money(total);$("opBox").textContent=money(sim.operatingProfit);$("taxBox").textContent=money(sim.taxes);$("netBox").textContent=money(sim.profit);$("statusBox").textContent=st[0];$("statusBox").className=st[1];updateTitle();renderProps();renderLedger();renderOversight();renderGraphs();renderPanels();renderAudit();renderFixes();renderCustomer();renderCosts()}
-function updateTitle(){if($("titleText"))$("titleText").textContent="Business Simulator V9.0 - "+(($("scenarioName")?.value)||"Scenario")+".bzsm"}
+function updateTitle(){if($("titleText"))$("titleText").textContent="Business Simulator V9.1 - "+(($("scenarioName")?.value)||"Scenario")+".bzsm"}
 function renderProps(){
  $("scenarioProps").innerHTML=`<b>${profile.name}</b><br>Engine: ${profile.type}<br>Scenario: ${$("scenarioName").value}<br>${isHotel()?`Total rooms: ${totalRooms()}<br>Singles: ${profile.singles}<br>Doubles: ${profile.doubles}<br>Bridal: ${profile.bridal}<br>Presidential: ${profile.presidential}<br>Occupancy target: ${pct(profile.occupancyRate)}`:`Demand/day: ${profile.demandPerDay}<br>Capacity/day: ${profile.capacityPerDay}`}<hr>
  <b>Finance / Schedule</b><br>
@@ -458,7 +497,7 @@ function renderProps(){
  Payroll: ${money(profile.payrollPerPeriod||0)} every ${profile.payrollFrequencyDays||0} days<br>
  Supplier pay every: ${profile.supplierPayEveryDays||0} days<br>
  Monthly debt pmt: ${money(profile.monthlyDebtPayment||0)}<br>
- Last day: ${sim.day}<br><hr><b>V9.0 note:</b><br>Layout rebuild only. Accounting engine remains V8.8 working base.`;
+ Last day: ${sim.day}<br><hr><b>V9.1 note:</b><br>Layout rebuild only. Accounting engine remains V8.8 working base.`;
 }
 function renderLedger(){
  $("ledgerBody").innerHTML=sim.ledger.slice(-18).reverse().map(x=>{
@@ -587,7 +626,17 @@ function activateTab(id){
  if(btn)btn.classList.add("active");
  if($(id))$(id).classList.add("active");
 }
-function init(){let opts=Object.keys(PROFILES).map(k=>`<option value="${k}">${PROFILES[k].name}</option>`).join("");$("profile").innerHTML=opts;$("profile").onchange=e=>loadProfile(e.target.value);$("start").onclick=start;$("pause").onclick=pause;$("stop").onclick=pause;$("reset").onclick=()=>{pause();resetSim()};$("step").onclick=runStep;$("fast").onclick=fast;$("saveRun").onclick=saveRun;$("loadRun").onclick=loadRun;$("exportJson").onclick=exportJson;$("projectionScroll").oninput=drawProjection;document.querySelectorAll(".tabBtn").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabBtn,.tabPage").forEach(x=>x.classList.remove("active"));b.classList.add("active");$(b.dataset.tab).classList.add("active")});document.addEventListener("input",e=>{if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")render()});loadProfile(currentKey)}
+
+function applySpeed(){
+ let ms=Math.max(100,Number($("simSpeedMs")?.value)||700);
+ if(timer){
+   clearInterval(timer);
+   timer=setInterval(runStep,ms);
+   $("runClock").textContent="Running @ "+ms+" ms/tick";
+   status("Speed changed to "+ms+" ms/tick.");
+ }
+}
+function init(){let opts=Object.keys(PROFILES).map(k=>`<option value="${k}">${PROFILES[k].name}</option>`).join("");$("profile").innerHTML=opts;$("profile").onchange=e=>loadProfile(e.target.value);$("start").onclick=start;$("pause").onclick=pause;$("stop").onclick=pause;$("reset").onclick=()=>{pause();resetSim()};$("step").onclick=runStep;$("fast").onclick=fast;$("saveRun").onclick=saveRun;$("loadRun").onclick=loadRun;$("exportJson").onclick=exportJson;if($("simSpeedMs"))$("simSpeedMs").onchange=applySpeed;$("projectionScroll").oninput=drawProjection;document.querySelectorAll(".tabBtn").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabBtn,.tabPage").forEach(x=>x.classList.remove("active"));b.classList.add("active");$(b.dataset.tab).classList.add("active")});document.addEventListener("input",e=>{if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")render()});loadProfile(currentKey)}
 init();
 </script>
 </body>
