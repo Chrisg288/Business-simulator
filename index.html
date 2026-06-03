@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V8.9</title>
+<title>Business Simulator V9.0</title>
 <style>
 :root{
  --face:#d4d0c8;--dark:#404040;--shadow:#808080;--light:#ffffff;--mid:#c0c0c0;
@@ -78,19 +78,52 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 .rightPropGrid{display:grid;grid-template-columns:120px 1fr;gap:4px;align-items:center}
 .rightPropGrid label{text-align:right}
 
-/* V8.9 layout cleanup */
-.topgrid{grid-template-columns: 300px 1fr 300px}
-.modelArea{min-height:260px}
-.modelFieldsWrap{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;align-items:start}
-.fieldRow{display:grid;grid-template-columns:145px 1fr;gap:4px;align-items:center}
-.fieldRow label{text-align:right}
-.scenarioPanel{min-height:260px}
-#scenarioProps{height:220px;overflow:auto;background:white;border:1px inset #fff;padding:5px;line-height:1.25}
-.cashEvent{font-weight:bold}
-.payRow{background:#fff8dc;font-weight:bold}
-.debtRow{background:#ffecec;font-weight:bold}
-.supplierRow{background:#eef6ff;font-weight:bold}
-.remitRow{background:#f5ecff;font-weight:bold}
+/* V9.0 safe layout rebuild from V8.8.
+   This pass intentionally preserves the V8.8 calculation engine. */
+.topGrid{
+  grid-template-columns:300px minmax(650px,1fr) 330px;
+  align-items:stretch;
+}
+.topGrid > .group{
+  min-height:270px;
+}
+.modelGrid{
+  grid-template-columns:260px 1fr;
+  gap:10px;
+  align-items:start;
+}
+.appTitle{
+  margin:2px 0 8px;
+}
+#modelInputs.formGrid{
+  grid-template-columns:112px minmax(72px,1fr) 112px minmax(72px,1fr);
+  gap:4px 7px;
+  align-items:center;
+}
+#modelInputs label{
+  white-space:nowrap;
+  font-size:11px;
+}
+#modelInputs input{
+  min-width:0;
+  width:100%;
+}
+#scenarioProps{
+  height:244px !important;
+  line-height:1.25;
+}
+.kpis{
+  margin-top:8px;
+}
+.ledgerNote{
+  font-size:11px;
+  font-weight:normal;
+  text-align:center;
+  color:#333;
+  margin-top:-2px;
+  margin-bottom:3px;
+}
+
 </style>
 </head>
 <body>
@@ -121,7 +154,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 
 <div class="desktop">
  <div class="titlebar">
-  <div id="titleText">Business Simulator V8.9 - Buckos_Barn_Style_Hotel_Run_01.bzsm</div>
+  <div id="titleText">Business Simulator V9.0 - Buckos_Barn_Style_Hotel_Run_01.bzsm</div>
   <div class="windowBtns"><div class="winBtn">_</div><div class="winBtn">□</div><div class="winBtn">×</div></div>
  </div>
  <div class="menubar">
@@ -179,7 +212,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
  </div>
  <div class="menuItem">Help
   <div class="menuDrop">
-   <div class="menuCmd" onclick="menuAction('Business Simulator V8.9 mock desktop app')">About Business Simulator</div>
+   <div class="menuCmd" onclick="menuAction('Business Simulator V9.0 mock desktop app')">About Business Simulator</div>
   </div>
  </div>
 </div>
@@ -230,7 +263,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   </div>
 
   <div class="split">
-   <div class="group"><div class="panelTitle">VALUE STREAM ACCOUNTING</div>
+   <div class="group"><div class="panelTitle">VALUE STREAM ACCOUNTING</div><div class="ledgerNote">Room rentals and scheduled cash events share this ledger in V9.0.</div>
     <table><thead><tr><th>DAY</th><th>ROOM #</th><th>TYPE</th><th>REVENUE</th><th>FIXED COST</th><th>VAR COST</th><th>TAXES</th><th>PROFIT</th></tr></thead><tbody id="ledgerBody"></tbody></table>
    </div>
    <div class="group"><div class="panelTitle">OVERSIGHT</div>
@@ -258,16 +291,16 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   <div id="tabCosts" class="tabPage"><div class="cardGrid" id="costPanel"></div></div>
   <div id="tabNotes" class="tabPage"><div class="grid2"><textarea id="marketingNotes" placeholder="Marketing notes..."></textarea><textarea id="qualityNotes" placeholder="Quality / labour / safety notes..."></textarea></div></div>
  </div>
- <div class="statusbar"><div class="statusCell" id="status">Ready.</div><div class="statusCell" id="runClock">Stopped</div><div class="statusCell">Ledger debit/credit columns, payroll remittance, and improved top layout enabled</div></div>
+ <div class="statusbar"><div class="statusCell" id="status">Ready.</div><div class="statusCell" id="runClock">Stopped</div><div class="statusCell">File menu mockup and cash-balance graph enabled</div></div>
 </div>
 
 <script>
 const PROFILES={
- hotel50:{name:"Hotel — 50 units",type:"hotel",businessName:"Buckos Barn Style Hotel",operatingCapital:20000,totalAssets:95000,totalLiabilities:340000,startCash:20000,accountsReceivable:0,accountsPayable:0,durationDays:730,stepDays:1,taxRate:.20,singles:25,doubles:23,bridal:1,presidential:1,singleRate:150,doubleRate:210,bridalRate:300,presidentialRate:500,occupancyRate:.75,varSingle:40,varDouble:55,varBridal:85,varPresidential:120,fixedCostPerDay:850,serviceQuality:.85,payrollPerPeriod:4200,payrollFrequencyDays:14,debtBalance:340000,annualInterestRate:.07,monthlyDebtPayment:2650,supplierPayEveryDays:14,payrollWithholdingRate:.25,employerPayrollTaxRate:.08,payrollRemitEveryDays:30},
- hotel100:{name:"Hotel — 100 units",type:"hotel",businessName:"100 Unit Hotel",operatingCapital:40000,totalAssets:500000,totalLiabilities:300000,startCash:40000,accountsReceivable:0,accountsPayable:0,durationDays:730,stepDays:1,taxRate:.20,singles:50,doubles:46,bridal:2,presidential:2,singleRate:165,doubleRate:220,bridalRate:330,presidentialRate:575,occupancyRate:.65,varSingle:48,varDouble:62,varBridal:95,varPresidential:145,fixedCostPerDay:4200,serviceQuality:.85,payrollPerPeriod:10500,payrollFrequencyDays:14,debtBalance:900000,annualInterestRate:.07,monthlyDebtPayment:6975,supplierPayEveryDays:14,payrollWithholdingRate:.25,employerPayrollTaxRate:.08,payrollRemitEveryDays:30},
- motel24:{name:"Motel — 24 units",type:"hotel",businessName:"Town Motel",operatingCapital:15000,totalAssets:65000,totalLiabilities:150000,startCash:15000,accountsReceivable:0,accountsPayable:0,durationDays:730,stepDays:1,taxRate:.20,singles:10,doubles:13,bridal:1,presidential:0,singleRate:120,doubleRate:155,bridalRate:190,presidentialRate:0,occupancyRate:.62,varSingle:35,varDouble:45,varBridal:65,varPresidential:0,fixedCostPerDay:525,serviceQuality:.80,payrollPerPeriod:2800,payrollFrequencyDays:14,debtBalance:150000,annualInterestRate:.07,monthlyDebtPayment:1165,supplierPayEveryDays:14,payrollWithholdingRate:.25,employerPayrollTaxRate:.08,payrollRemitEveryDays:30},
- restaurant50:{name:"Restaurant — Town — 50 Seats",type:"generic",businessName:"Town Restaurant",operatingCapital:12000,totalAssets:45000,totalLiabilities:80000,startCash:12000,accountsReceivable:0,accountsPayable:0,durationDays:365,stepDays:1,taxRate:.20,demandPerDay:80,capacityPerDay:65,revenuePerUnit:28,variableCostPerUnit:11,fixedCostPerDay:420,serviceQuality:.75,payrollPerPeriod:3200,payrollFrequencyDays:14,debtBalance:80000,annualInterestRate:.09,monthlyDebtPayment:720,supplierPayEveryDays:7,payrollWithholdingRate:.22,employerPayrollTaxRate:.08,payrollRemitEveryDays:30},
- foodtruck:{name:"Food Truck — Burgers & Fries",type:"generic",businessName:"Burger Food Truck",operatingCapital:8000,totalAssets:25000,totalLiabilities:30000,startCash:8000,accountsReceivable:0,accountsPayable:0,durationDays:365,stepDays:1,taxRate:.20,demandPerDay:90,capacityPerDay:70,revenuePerUnit:22,variableCostPerUnit:8,fixedCostPerDay:165,serviceQuality:.72,payrollPerPeriod:1200,payrollFrequencyDays:7,debtBalance:30000,annualInterestRate:.09,monthlyDebtPayment:270,supplierPayEveryDays:7,payrollWithholdingRate:.22,employerPayrollTaxRate:.08,payrollRemitEveryDays:30}
+ hotel50:{name:"Hotel — 50 units",type:"hotel",businessName:"Buckos Barn Style Hotel",operatingCapital:20000,totalAssets:95000,totalLiabilities:340000,startCash:20000,accountsReceivable:0,accountsPayable:0,durationDays:730,stepDays:1,taxRate:.20,singles:25,doubles:23,bridal:1,presidential:1,singleRate:150,doubleRate:210,bridalRate:300,presidentialRate:500,occupancyRate:.75,varSingle:40,varDouble:55,varBridal:85,varPresidential:120,fixedCostPerDay:850,serviceQuality:.85,payrollPerPeriod:4200,payrollFrequencyDays:14,debtBalance:340000,annualInterestRate:.07,monthlyDebtPayment:2650,supplierPayEveryDays:14},
+ hotel100:{name:"Hotel — 100 units",type:"hotel",businessName:"100 Unit Hotel",operatingCapital:40000,totalAssets:500000,totalLiabilities:300000,startCash:40000,accountsReceivable:0,accountsPayable:0,durationDays:730,stepDays:1,taxRate:.20,singles:50,doubles:46,bridal:2,presidential:2,singleRate:165,doubleRate:220,bridalRate:330,presidentialRate:575,occupancyRate:.65,varSingle:48,varDouble:62,varBridal:95,varPresidential:145,fixedCostPerDay:4200,serviceQuality:.85,payrollPerPeriod:10500,payrollFrequencyDays:14,debtBalance:900000,annualInterestRate:.07,monthlyDebtPayment:6975,supplierPayEveryDays:14},
+ motel24:{name:"Motel — 24 units",type:"hotel",businessName:"Town Motel",operatingCapital:15000,totalAssets:65000,totalLiabilities:150000,startCash:15000,accountsReceivable:0,accountsPayable:0,durationDays:730,stepDays:1,taxRate:.20,singles:10,doubles:13,bridal:1,presidential:0,singleRate:120,doubleRate:155,bridalRate:190,presidentialRate:0,occupancyRate:.62,varSingle:35,varDouble:45,varBridal:65,varPresidential:0,fixedCostPerDay:525,serviceQuality:.80,payrollPerPeriod:2800,payrollFrequencyDays:14,debtBalance:150000,annualInterestRate:.07,monthlyDebtPayment:1165,supplierPayEveryDays:14},
+ restaurant50:{name:"Restaurant — Town — 50 Seats",type:"generic",businessName:"Town Restaurant",operatingCapital:12000,totalAssets:45000,totalLiabilities:80000,startCash:12000,accountsReceivable:0,accountsPayable:0,durationDays:365,stepDays:1,taxRate:.20,demandPerDay:80,capacityPerDay:65,revenuePerUnit:28,variableCostPerUnit:11,fixedCostPerDay:420,serviceQuality:.75,payrollPerPeriod:3200,payrollFrequencyDays:14,debtBalance:80000,annualInterestRate:.09,monthlyDebtPayment:720,supplierPayEveryDays:7},
+ foodtruck:{name:"Food Truck — Burgers & Fries",type:"generic",businessName:"Burger Food Truck",operatingCapital:8000,totalAssets:25000,totalLiabilities:30000,startCash:8000,accountsReceivable:0,accountsPayable:0,durationDays:365,stepDays:1,taxRate:.20,demandPerDay:90,capacityPerDay:70,revenuePerUnit:22,variableCostPerUnit:8,fixedCostPerDay:165,serviceQuality:.72,payrollPerPeriod:1200,payrollFrequencyDays:7,debtBalance:30000,annualInterestRate:.09,monthlyDebtPayment:270,supplierPayEveryDays:7}
 };
 let currentKey="hotel50", profile={}, timer=null, sim={};
 const $=id=>document.getElementById(id);
@@ -279,16 +312,14 @@ function isHotel(){return profile.type==="hotel"}
 function status(t){$("status").textContent=t}
 function totalRooms(){return isHotel()?profile.singles+profile.doubles+profile.bridal+profile.presidential:0}
 function fields(){return isHotel()
-?[["Singles","singles"],["Doubles","doubles"],["Bridal","bridal"],["Presidential","presidential"],["Single Rate","singleRate"],["Double Rate","doubleRate"],["Bridal Rate","bridalRate"],["Pres Rate","presidentialRate"],["Occ Rate","occupancyRate"],["Var Single","varSingle"],["Var Double","varDouble"],["Var Bridal","varBridal"],["Var Pres","varPresidential"],["Fixed Cost / Day","fixedCostPerDay"],["Service Quality","serviceQuality"],["Payroll / Period","payrollPerPeriod"],["Payroll Freq Days","payrollFrequencyDays"],["Payroll Withhold","payrollWithholdingRate"],["Employer Payroll Tax","employerPayrollTaxRate"],["Payroll Remit Days","payrollRemitEveryDays"],["Debt Balance","debtBalance"],["Annual Interest","annualInterestRate"],["Monthly Debt Pmt","monthlyDebtPayment"],["Supplier Pay Days","supplierPayEveryDays"]]
-:[["Demand / Day","demandPerDay"],["Capacity / Day","capacityPerDay"],["Revenue / Unit","revenuePerUnit"],["Var Cost / Unit","variableCostPerUnit"],["Fixed Cost / Day","fixedCostPerDay"],["Service Quality","serviceQuality"],["Payroll / Period","payrollPerPeriod"],["Payroll Freq Days","payrollFrequencyDays"],["Payroll Withhold","payrollWithholdingRate"],["Employer Payroll Tax","employerPayrollTaxRate"],["Payroll Remit Days","payrollRemitEveryDays"],["Debt Balance","debtBalance"],["Annual Interest","annualInterestRate"],["Monthly Debt Pmt","monthlyDebtPayment"],["Supplier Pay Days","supplierPayEveryDays"]];}
+?[["Singles","singles"],["Doubles","doubles"],["Bridal","bridal"],["Presidential","presidential"],["Single Rate","singleRate"],["Double Rate","doubleRate"],["Bridal Rate","bridalRate"],["Pres Rate","presidentialRate"],["Occ Rate","occupancyRate"],["Var Single","varSingle"],["Var Double","varDouble"],["Var Bridal","varBridal"],["Var Pres","varPresidential"],["Fixed Cost / Day","fixedCostPerDay"],["Service Quality","serviceQuality"],["Payroll / Period","payrollPerPeriod"],["Payroll Freq Days","payrollFrequencyDays"],["Debt Balance","debtBalance"],["Annual Interest","annualInterestRate"],["Monthly Debt Pmt","monthlyDebtPayment"],["Supplier Pay Days","supplierPayEveryDays"]]
+:[["Demand / Day","demandPerDay"],["Capacity / Day","capacityPerDay"],["Revenue / Unit","revenuePerUnit"],["Var Cost / Unit","variableCostPerUnit"],["Fixed Cost / Day","fixedCostPerDay"],["Service Quality","serviceQuality"],["Payroll / Period","payrollPerPeriod"],["Payroll Freq Days","payrollFrequencyDays"],["Debt Balance","debtBalance"],["Annual Interest","annualInterestRate"],["Monthly Debt Pmt","monthlyDebtPayment"],["Supplier Pay Days","supplierPayEveryDays"]];}
 function fillInputs(){
- let out=`<div class="modelFieldsWrap">`;
- fields().forEach(([lab,key])=>{
-   let val=profile[key]??0;
-   out+=`<div class="fieldRow"><label>${lab}</label><input data-key="${key}" value="${val}"></div>`;
- });
- out+=`</div>`;
- $("modelInputs").innerHTML=out;
+ ["businessName","operatingCapital","totalAssets","totalLiabilities","startCash","accountsReceivable","accountsPayable","durationDays","stepDays","taxRate"].forEach(id=>set(id,profile[id]??0));
+ $("scenarioName").value=(profile.businessName||profile.name).replaceAll(" ","_")+"_Run_01";
+ $("ownerEquity").value=n("totalAssets")-n("totalLiabilities");
+ $("modelInputs").innerHTML=fields().map(([lab,id])=>`<label>${lab}</label><input id="${id}" type="number" step="0.01" value="${profile[id]??0}">`).join("");
+ updateTitle();
 }
 function capture(){
  ["businessName","operatingCapital","totalAssets","totalLiabilities","startCash","accountsReceivable","accountsPayable","durationDays","stepDays","taxRate"].forEach(id=>profile[id]=($(id).type==="number"?n(id):$(id).value));
@@ -339,39 +370,31 @@ function scheduledPaymentsForDay(day, dailyVarCost){
  sim.accountsPayable=(sim.accountsPayable||0)+dailyVarCost;
 
  if(profile.payrollFrequencyDays>0 && day % profile.payrollFrequencyDays===0){
-   let gross=profile.payrollPerPeriod||0;
-   let withheld=gross*(profile.payrollWithholdingRate||0);
-   let employerTax=gross*(profile.employerPayrollTaxRate||0);
-   let netPay=Math.max(0,gross-withheld);
-   payments.push({kind:"PAYROLL",cashOut:netPay,expense:gross+employerTax,gross,withheld,employerTax,interest:0,principal:0,apPaid:0,desc:"Payroll: net pay now, withholding remitted later"});
- }
-
- if(profile.payrollRemitEveryDays>0 && day % profile.payrollRemitEveryDays===0){
-   let remit=sim.payrollTaxPayable||0;
-   if(remit>0)payments.push({kind:"PAYROLL REMIT",cashOut:remit,expense:0,gross:0,withheld:0,employerTax:0,interest:0,principal:0,apPaid:0,desc:"Payroll tax / deduction remittance"});
+   let amt=profile.payrollPerPeriod||0;
+   payments.push({kind:"PAYROLL",cashOut:amt,expense:amt,interest:0,principal:0,apPaid:0,desc:"Payroll payment"});
  }
 
  if(day % 30===0){
    let pmt=profile.monthlyDebtPayment||0;
    let interest=Math.min(monthlyInterest(),pmt);
    let principal=Math.max(0,Math.min((sim.debtBalance||0),pmt-interest));
-   payments.push({kind:"DEBT SERVICE",cashOut:interest+principal,expense:interest,interest,principal,apPaid:0,gross:0,withheld:0,employerTax:0,desc:"Monthly debt payment"});
+   payments.push({kind:"DEBT SERVICE",cashOut:interest+principal,expense:interest,interest,principal,apPaid:0,desc:"Monthly debt payment"});
  }
 
  if(profile.supplierPayEveryDays>0 && day % profile.supplierPayEveryDays===0){
    let apPaid=sim.accountsPayable||0;
-   payments.push({kind:"SUPPLIER PAY",cashOut:apPaid,expense:0,interest:0,principal:0,apPaid,gross:0,withheld:0,employerTax:0,desc:"Accounts payable / supplier settlement"});
+   payments.push({kind:"SUPPLIER PAY",cashOut:apPaid,expense:0,interest:0,principal:0,apPaid,desc:"Accounts payable / supplier settlement"});
  }
  return payments;
 }
-function resetSim(){capture();sim={day:0,cash:profile.startCash,revenue:0,varCost:0,fixedCost:0,payrollExpense:0,employerPayrollTaxExpense:0,payrollTaxPayable:0,payrollTaxRemitted:0,interestExpense:0,principalPaid:0,debtBalance:profile.debtBalance||0,accountsPayable:0,supplierCashPaid:0,taxes:0,profit:0,operatingProfit:0,cashAfterDebt:0,units:0,satisfied:0,minCash:profile.startCash,fundingGap:0,history:[],ledger:[]};render()}
+function resetSim(){capture();sim={day:0,cash:profile.startCash,revenue:0,varCost:0,fixedCost:0,payrollExpense:0,interestExpense:0,principalPaid:0,debtBalance:profile.debtBalance||0,accountsPayable:0,supplierCashPaid:0,taxes:0,profit:0,operatingProfit:0,cashAfterDebt:0,units:0,satisfied:0,minCash:profile.startCash,fundingGap:0,history:[],ledger:[]};render()}
 function stepOne(){
  let m=daily();
  let nextDay=sim.day+1;
  sim.day=nextDay;
 
  let fixedShare=m.units>0?m.fixedCost/m.units:0;
-
+ let grossPerRental=[];
  if(isHotel()){
    let preTaxProfit=m.rentals.map(r=>r.rate-r.varc-fixedShare);
    let positiveProfit=preTaxProfit.reduce((a,v)=>a+Math.max(0,v),0);
@@ -379,15 +402,17 @@ function stepOne(){
      let gross=preTaxProfit[i];
      let tax=(gross>0 && positiveProfit>0)?m.taxes*(gross/positiveProfit):0;
      let profit=gross-tax;
-     let debit=r.varc+fixedShare+tax;
-     sim.ledger.push({day:sim.day,event:"ROOM RENTAL",unit:r.roomNo,type:r.type,desc:"Room-night sale",debit,credit:r.rate,taxRemit:tax,cash:r.rate,profit,transaction:true});
+     grossPerRental.push({room:r,gross,tax,profit,fixedShare});
+     sim.ledger.push({day:sim.day,roomNo:r.roomNo,type:r.type,revenue:r.rate,fixedCost:fixedShare,varCost:r.varc,taxes:tax,profit:profit,transaction:true});
    });
  }else{
-   let debit=m.varCost+m.fixedCost+m.taxes;
-   sim.ledger.push({day:sim.day,event:"SALE BATCH",unit:"BATCH",type:m.units.toFixed(2)+" units",desc:"Daily sales batch",debit,credit:m.revenue,taxRemit:m.taxes,cash:m.revenue,profit:m.profit,transaction:true});
+   let fixedShare=m.units>0?m.fixedCost/m.units:0;
+   let gross=m.revPer-m.varPer-fixedShare;
+   let tax=gross>0?gross*profile.taxRate:0;
+   sim.ledger.push({day:sim.day,roomNo:"BATCH",type:m.units.toFixed(2)+" units",revenue:m.revenue,fixedCost:m.fixedCost,varCost:m.varCost,taxes:m.taxes,profit:m.profit,transaction:true});
  }
 
- // Accrual operating totals.
+ // Accrual accounting totals for the operating day.
  sim.revenue+=m.revenue;
  sim.varCost+=m.varCost;
  sim.fixedCost+=m.fixedCost;
@@ -397,7 +422,7 @@ function stepOne(){
  sim.units+=m.units;
  sim.satisfied+=m.satisfied;
 
- // Basic cash timing: room/sales revenue received immediately; fixed cost and sales/income tax paid daily for now; variable cost goes to AP.
+ // Cash receives revenue immediately, but supplier AP, payroll, and debt service follow schedules.
  sim.cash+=m.revenue;
  sim.cash-=m.fixedCost;
  sim.cash-=m.taxes;
@@ -405,52 +430,27 @@ function stepOne(){
  let payments=scheduledPaymentsForDay(sim.day,m.varCost);
  payments.forEach(p=>{
    sim.cash-=p.cashOut;
-
-   if(p.kind==="PAYROLL"){
-     sim.payrollExpense+=(p.gross||0);
-     sim.employerPayrollTaxExpense+=(p.employerTax||0);
-     sim.payrollTaxPayable+=(p.withheld||0)+(p.employerTax||0);
-     sim.profit-=p.expense;
-     sim.operatingProfit-=p.expense;
-     sim.ledger.push({day:sim.day,event:"PAYROLL",unit:"PAYROLL",type:"Scheduled payroll",desc:"Gross payroll; net cash paid now",debit:p.gross+p.employerTax,credit:0,taxRemit:p.withheld+p.employerTax,cash:-p.cashOut,profit:-p.expense,transaction:false});
-   }
-
-   if(p.kind==="PAYROLL REMIT"){
-     sim.payrollTaxRemitted+=p.cashOut;
-     sim.payrollTaxPayable=Math.max(0,(sim.payrollTaxPayable||0)-p.cashOut);
-     sim.ledger.push({day:sim.day,event:"PAYROLL REMIT",unit:"REMIT",type:"Payroll remittance",desc:"Withholding/employer payroll tax paid",debit:p.cashOut,credit:0,taxRemit:-p.cashOut,cash:-p.cashOut,profit:0,transaction:false});
-   }
-
-   if(p.kind==="DEBT SERVICE"){
-     sim.interestExpense+=p.interest;
-     sim.principalPaid+=p.principal;
-     sim.debtBalance=Math.max(0,(sim.debtBalance||0)-p.principal);
-     sim.profit-=p.interest;
-     sim.operatingProfit-=p.interest;
-     sim.ledger.push({day:sim.day,event:"DEBT SERVICE",unit:"DEBT",type:"Monthly debt payment",desc:`Interest ${money(p.interest)}, principal ${money(p.principal)}`,debit:p.interest+p.principal,credit:0,taxRemit:0,cash:-p.cashOut,profit:-p.interest,transaction:false});
-   }
-
-   if(p.kind==="SUPPLIER PAY"){
-     sim.supplierCashPaid+=p.apPaid;
-     sim.accountsPayable=Math.max(0,(sim.accountsPayable||0)-p.apPaid);
-     sim.ledger.push({day:sim.day,event:"SUPPLIER PAY",unit:"AP",type:"Supplier settlement",desc:"Accounts payable paid; expense already accrued",debit:p.apPaid,credit:0,taxRemit:0,cash:-p.apPaid,profit:0,transaction:false});
-   }
+   if(p.kind==="PAYROLL"){sim.payrollExpense+=p.expense;sim.profit-=p.expense;sim.operatingProfit-=p.expense;}
+   if(p.kind==="DEBT SERVICE"){sim.interestExpense+=p.interest;sim.principalPaid+=p.principal;sim.debtBalance=Math.max(0,(sim.debtBalance||0)-p.principal);sim.profit-=p.interest;sim.operatingProfit-=p.interest;}
+   if(p.kind==="SUPPLIER PAY"){sim.supplierCashPaid+=p.apPaid;sim.accountsPayable=Math.max(0,(sim.accountsPayable||0)-p.apPaid);}
+   sim.ledger.push({day:sim.day,roomNo:p.kind,type:p.desc,revenue:"",fixedCost:p.kind==="PAYROLL"?p.cashOut:"",varCost:p.kind==="SUPPLIER PAY"?p.cashOut:"",taxes:p.kind==="DEBT SERVICE"?("Interest "+money(p.interest)):"",profit:-p.cashOut,transaction:false});
  });
 
+ sim.cash-=0; // explicit no-op for clarity
  sim.minCash=Math.min(sim.minCash,sim.cash);
  sim.fundingGap=Math.max(sim.fundingGap,Math.max(0,-sim.minCash));
- if(sim.ledger.length>1200)sim.ledger=sim.ledger.slice(-1200);
+ if(sim.ledger.length>900)sim.ledger=sim.ledger.slice(-900);
  sim.cashAfterDebt=sim.cash;
- sim.history.push({day:sim.day,...m,cash:sim.cash,cumRevenue:sim.revenue,cumCost:sim.varCost+sim.fixedCost+sim.payrollExpense+sim.employerPayrollTaxExpense+sim.interestExpense,cumProfit:sim.profit,cumUnits:sim.units,debtBalance:sim.debtBalance,accountsPayable:sim.accountsPayable,payrollTaxPayable:sim.payrollTaxPayable});
- if(sim.history.length>1500)sim.history.shift();
+ sim.history.push({day:sim.day,...m,cash:sim.cash,cumRevenue:sim.revenue,cumCost:sim.varCost+sim.fixedCost+sim.payrollExpense+sim.interestExpense,cumProfit:sim.profit,cumUnits:sim.units,debtBalance:sim.debtBalance,accountsPayable:sim.accountsPayable});
+ if(sim.history.length>1200)sim.history.shift();
 }
 function runStep(){for(let i=0;i<Math.max(1,n("stepDays"));i++){if(sim.day>=n("durationDays")){pause();status("Duration reached.");return}stepOne()}render();status("Tick processed.")}
 function start(){if(timer)return;$("runClock").textContent="Running";timer=setInterval(runStep,700);status("Running.")}
 function pause(){if(timer){clearInterval(timer);timer=null}$("runClock").textContent="Stopped";status("Paused.")}
 function fast(){for(let i=0;i<30;i++)runStep()}
 function statusObj(){let m=daily(),c=m.revPer-m.varPer,req=c>0?m.fixedCost/c:Infinity,per=sim.day?sim.units/sim.day:m.units;if(c<=0)return["Not viable","bad"];if(sim.cash<0)return["Funding needed","warn"];if(sim.profit>0||per>=req)return["Viable","ok"];return["Needs fix","warn"]}
-function render(){capture();$("ownerEquity").value=n("totalAssets")-n("totalLiabilities");let total=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.employerPayrollTaxExpense||0)+(sim.interestExpense||0),st=statusObj();$("dayBox").textContent=sim.day;$("cashBox").textContent=money(sim.cash);$("revBox").textContent=money(sim.revenue);$("costBox").textContent=money(total);$("opBox").textContent=money(sim.operatingProfit);$("taxBox").textContent=money(sim.taxes);$("netBox").textContent=money(sim.profit);$("statusBox").textContent=st[0];$("statusBox").className=st[1];updateTitle();renderProps();renderLedger();renderOversight();renderGraphs();renderPanels();renderAudit();renderFixes();renderCustomer();renderCosts()}
-function updateTitle(){if($("titleText"))$("titleText").textContent="Business Simulator V8.9 - "+(($("scenarioName")?.value)||"Scenario")+".bzsm"}
+function render(){capture();$("ownerEquity").value=n("totalAssets")-n("totalLiabilities");let total=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.interestExpense||0),st=statusObj();$("dayBox").textContent=sim.day;$("cashBox").textContent=money(sim.cash);$("revBox").textContent=money(sim.revenue);$("costBox").textContent=money(total);$("opBox").textContent=money(sim.operatingProfit);$("taxBox").textContent=money(sim.taxes);$("netBox").textContent=money(sim.profit);$("statusBox").textContent=st[0];$("statusBox").className=st[1];updateTitle();renderProps();renderLedger();renderOversight();renderGraphs();renderPanels();renderAudit();renderFixes();renderCustomer();renderCosts()}
+function updateTitle(){if($("titleText"))$("titleText").textContent="Business Simulator V9.0 - "+(($("scenarioName")?.value)||"Scenario")+".bzsm"}
 function renderProps(){
  $("scenarioProps").innerHTML=`<b>${profile.name}</b><br>Engine: ${profile.type}<br>Scenario: ${$("scenarioName").value}<br>${isHotel()?`Total rooms: ${totalRooms()}<br>Singles: ${profile.singles}<br>Doubles: ${profile.doubles}<br>Bridal: ${profile.bridal}<br>Presidential: ${profile.presidential}<br>Occupancy target: ${pct(profile.occupancyRate)}`:`Demand/day: ${profile.demandPerDay}<br>Capacity/day: ${profile.capacityPerDay}`}<hr>
  <b>Finance / Schedule</b><br>
@@ -458,7 +458,7 @@ function renderProps(){
  Payroll: ${money(profile.payrollPerPeriod||0)} every ${profile.payrollFrequencyDays||0} days<br>
  Supplier pay every: ${profile.supplierPayEveryDays||0} days<br>
  Monthly debt pmt: ${money(profile.monthlyDebtPayment||0)}<br>
- Last day: ${sim.day}`;
+ Last day: ${sim.day}<br><hr><b>V9.0 note:</b><br>Layout rebuild only. Accounting engine remains V8.8 working base.`;
 }
 function renderLedger(){
  $("ledgerBody").innerHTML=sim.ledger.slice(-18).reverse().map(x=>{
@@ -468,13 +468,13 @@ function renderLedger(){
 }
 function oversight(){
  let m=daily();
- let total=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.employerPayrollTaxExpense||0)+(sim.interestExpense||0);
+ let total=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.interestExpense||0);
  let profitCheck=sim.revenue-total-sim.taxes;
  let c=m.revPer-m.varPer;
  let req=c>0?m.fixedCost/c:Infinity;
  let noDup="OK";
  if(isHotel()&&sim.ledger.length){
-   let last=sim.ledger.filter(x=>x.day===sim.day&&x.transaction).map(x=>x.unit);
+   let last=sim.ledger.filter(x=>x.day===sim.day&&x.transaction).map(x=>x.roomNo);
    noDup=(new Set(last).size===last.length)?"OK":"DUPLICATE";
  }
  let avgMonthlyOperatingCash=(sim.day?((sim.revenue-sim.varCost-sim.fixedCost-sim.taxes)/sim.day)*30:0);
@@ -484,7 +484,6 @@ function oversight(){
    ["REVENUE CHK",true,money(sim.revenue)],
    ["PROFIT CHK",Math.abs(profitCheck-sim.profit)<1,money(profitCheck)+" vs "+money(sim.profit)],
    ["AP BALANCE",true,money(sim.accountsPayable||0)],
-   ["PAYROLL REMIT",true,money(sim.payrollTaxPayable||0)+" payable"],
    ["DEBT BALANCE",true,money(sim.debtBalance||0)],
    ["DSCR",dscr>=1.25,(isFinite(dscr)?dscr.toFixed(2):"n/a")+" monthly coverage"],
    ["BREAKEVEN",m.units>=req,(isFinite(req)?req.toFixed(2):"n/a")+" rentals/day required"],
@@ -532,29 +531,29 @@ function drawProjection(){
  let forecast=pts.filter(p=>!p.actual);
  if(forecast.length>1){ctx.strokeStyle="#333";ctx.setLineDash([6,4]);ctx.lineWidth=2;ctx.beginPath();forecast.forEach((p,i)=>i?ctx.lineTo(X(p.x),Y(p.y)):ctx.moveTo(X(p.x),Y(p.y)));ctx.stroke();ctx.setLineDash([]);}
  // event markers for scheduled payments in visible range
- let events=(sim.ledger||[]).filter(x=>x.day>=start&&x.day<=end&&(x.event==="PAYROLL"||x.event==="DEBT SERVICE"||x.event==="SUPPLIER PAY"||x.event==="PAYROLL REMIT"));
+ let events=(sim.ledger||[]).filter(x=>x.day>=start&&x.day<=end&&(x.roomNo==="PAYROLL"||x.roomNo==="DEBT SERVICE"||x.roomNo==="SUPPLIER PAY"));
  events.slice(-80).forEach(ev=>{
    let h=sim.history.find(x=>x.day===ev.day); if(!h)return;
-   ctx.strokeStyle=ev.event==="PAYROLL"?"#9a6500":(ev.event==="DEBT SERVICE"?"#a00000":(ev.event==="PAYROLL REMIT"?"#7a2ca0":"#0a246a"));
+   ctx.strokeStyle=ev.roomNo==="PAYROLL"?"#9a6500":(ev.roomNo==="DEBT SERVICE"?"#a00000":"#0a246a");
    ctx.beginPath();ctx.moveTo(X(ev.day),Y(h.cash)-5);ctx.lineTo(X(ev.day),Y(h.cash)+5);ctx.stroke();
  });
  ctx.fillStyle="#16802c";ctx.fillText("Actual cash",w-140,T+12);
- ctx.fillStyle="#333";ctx.fillText("Dashed = rough forecast",w-190,T+26);
- $("projectionCaption").textContent=`Showing cash balance days ${Math.round(start)} to ${Math.round(end)} of ${duration}. Payroll, payroll remittance, supplier, and debt-service events are marked with short ticks.`;
+ ctx.fillStyle="#333";ctx.fillText("Dashed = simple continuation",w-190,T+26);
+ $("projectionCaption").textContent=`Showing cash balance days ${Math.round(start)} to ${Math.round(end)} of ${duration}. Payroll, supplier, and debt-service events are marked with short ticks.`;
 }
 function renderGraphs(){drawBE();drawProjection()}
 function renderPanels(){let m=daily(),panels=isHotel()?[["Room Inventory",`Total rooms: ${totalRooms()}<br>Singles: ${profile.singles}<br>Doubles: ${profile.doubles}<br>Bridal: ${profile.bridal}<br>Presidential: ${profile.presidential}`,"roomInventory = singles + doubles + bridal + presidential"],["Daily Rental Draw",`Occupancy target: ${pct(profile.occupancyRate)}<br>Rentals/day: ${m.units}<br>No same-room duplicate per day.`,"dailyRentals = randomUniqueRooms(roomInventory, occupancyRate)"],["Room Revenue",`Average realized rate/day: ${money(m.revPer)}<br>Daily revenue: ${money(m.revenue)}`,"dailyRevenue = sum(rentedRoom.rate)"],["Profit",`Variable cost: ${money(m.varCost)}<br>Fixed cost: ${money(m.fixedCost)}<br>Net profit/day: ${money(m.profit)}`,"netProfit = revenue - variableCost - fixedCost - tax"]]:[["Demand",`Demand/day: ${profile.demandPerDay}<br>Quality: ${pct(profile.serviceQuality)}`,"qualifiedDemand = demandPerDay × serviceQuality"],["Capacity",`Capacity/day: ${profile.capacityPerDay}<br>Paid units/day: ${m.units.toFixed(2)}`,"paidUnits = min(capacity, qualifiedDemand)"],["Cost",`Variable/unit: ${money(m.varPer)}<br>Fixed/day: ${money(m.fixedCost)}`,"dailyCost = units × variableCostPerUnit + fixedCostPerDay"],["Profit",`Revenue/unit: ${money(m.revPer)}<br>Daily net: ${money(m.profit)}`,"netProfit = revenue - variableCost - fixedCost - tax"]];$("processPanels").innerHTML=panels.map(p=>`<div class="card"><h3>${p[0]}</h3><div>${p[1]}</div><div class="eq">${p[2]}</div></div>`).join("")}
 function renderAudit(){
  let m=daily(),c=m.revPer-m.varPer,req=c>0?m.fixedCost/c:Infinity,per=sim.day?sim.units/sim.day:m.units;
- let totalCost=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.employerPayrollTaxExpense||0)+(sim.interestExpense||0);
- let cashExpected=profile.startCash+sim.revenue-sim.fixedCost-sim.taxes-(sim.supplierCashPaid||0)-((sim.payrollExpense||0)-(sim.payrollTaxPayable||0)-(sim.payrollTaxRemitted||0))-(sim.payrollTaxRemitted||0)-(sim.principalPaid||0)-(sim.interestExpense||0);
+ let totalCost=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.interestExpense||0);
+ let cashExpected=profile.startCash+sim.revenue-sim.fixedCost-sim.taxes-(sim.supplierCashPaid||0)-(sim.payrollExpense||0)-(sim.interestExpense||0)-(sim.principalPaid||0);
  let avgMonthlyOperatingCash=(sim.day?((sim.revenue-sim.varCost-sim.fixedCost-sim.taxes)/sim.day)*30:0);
  let dscr=(profile.monthlyDebtPayment>0)?avgMonthlyOperatingCash/profile.monthlyDebtPayment:Infinity;
  let cards=[
-   ["Revenue formula","good","Traceable",`${sim.units.toFixed(1)} units × avg realized rate ${money(sim.units?sim.revenue/sim.units:0)} = ${money(sim.revenue)}.`],
-   ["Cash equation","good","Tracked",`Cash is now event-based: sales in; fixed, tax, payroll, supplier, debt, and remittance cash out.`],
+   ["Revenue formula","good","Traceable",`${sim.units.toFixed(1)} rentals × avg realized rate ${money(sim.units?sim.revenue/sim.units:0)} = ${money(sim.revenue)}.`],
+   ["Cash equation",Math.abs(cashExpected-sim.cash)<1?"good":"bad",Math.abs(cashExpected-sim.cash)<1?"OK":"Mismatch",`Start cash + revenue - fixed - tax - scheduled payments = ${money(cashExpected)}.`],
    ["Volume / day",per>=req?"good":"warn",per>=req?"Enough":"Too low",`${per.toFixed(2)} rentals/day. Required ${isFinite(req)?req.toFixed(2):"n/a"}.`],
-   ["Payroll liability",(sim.payrollTaxPayable||0)<(profile.payrollPerPeriod||1)?"good":"warn",money(sim.payrollTaxPayable||0),`Withholding and employer payroll tax payable until remittance day.`],
+   ["Debt service",dscr>=1.25?"good":(dscr>=1?"warn":"bad"),isFinite(dscr)?dscr.toFixed(2):"n/a",`DSCR = monthly operating cash ÷ monthly debt payment.`],
    ["AP / Suppliers","good",money(sim.accountsPayable||0),`Supplier bills accrue daily and are paid every ${profile.supplierPayEveryDays||0} days.`],
    ["Debt balance","good",money(sim.debtBalance||0),`Principal paid to date: ${money(sim.principalPaid||0)}.`]
  ];
@@ -568,12 +567,10 @@ function renderCustomer(){$("customerPanel").innerHTML=`Satisfied rental-nights:
 function renderCosts(){
  let m=daily();
  $("costPanel").innerHTML=`<div class="card"><h3>Fixed Cost</h3>${money(profile.fixedCostPerDay)} per day<div class="eq">fixedCost = fixedCostPerDay × days</div></div>
- <div class="card"><h3>Variable Cost / AP</h3>${money(m.varPer)} average per unit<br>AP balance: ${money(sim.accountsPayable||0)}<div class="eq">accountsPayable += dailyVariableCost
+ <div class="card"><h3>Variable Cost / AP</h3>${money(m.varPer)} average per rental<br>AP balance: ${money(sim.accountsPayable||0)}<div class="eq">accountsPayable += dailyVariableCost
 supplierCashPayment occurs every supplierPayEveryDays</div></div>
- <div class="card"><h3>Payroll</h3>${money(profile.payrollPerPeriod||0)} gross every ${profile.payrollFrequencyDays||0} days<br>Payroll remittance payable: ${money(sim.payrollTaxPayable||0)}<div class="eq">withheld = grossPayroll × payrollWithholdingRate
-employerTax = grossPayroll × employerPayrollTaxRate
-cashNow = grossPayroll - withheld
-payrollTaxPayable += withheld + employerTax</div></div>
+ <div class="card"><h3>Payroll</h3>${money(profile.payrollPerPeriod||0)} every ${profile.payrollFrequencyDays||0} days<div class="eq">cash -= payrollPerPeriod on payroll schedule
+payrollExpense is recognized when paid</div></div>
  <div class="card"><h3>Debt Service</h3>Debt balance: ${money(sim.debtBalance||0)}<br>Monthly payment: ${money(profile.monthlyDebtPayment||0)}<div class="eq">interest = debtBalance × annualInterestRate / 12
 principal = payment - interest
 debtBalance -= principal</div></div>`;
