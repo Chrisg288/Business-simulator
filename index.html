@@ -2,51 +2,154 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V8.3</title>
+<title>Business Simulator V8.5</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#9b9bae;font-family:Arial,sans-serif;color:#111}
-main{max-width:1360px;margin:0 auto;background:white;min-height:100vh}.shell{border:4px solid #111;border-radius:14px;overflow:hidden;background:white}
-.top{display:grid;grid-template-columns:350px 1fr 350px;border-bottom:4px solid #111}.box{padding:8px;border-right:3px solid #111}.box:last-child{border-right:0}
-.title{text-align:center;font-family:"Courier New",monospace;font-size:34px;font-weight:900;color:#0b79bd;text-shadow:2px 2px #111;padding:14px}
-h2{font-size:18px;margin:0 0 6px;text-align:center}.control h2{font-style:italic}.inputGrid{display:grid;grid-template-columns:145px 1fr;gap:4px;align-items:center}
-label{font-size:13px;text-align:right;padding-right:5px}input,select,button{font:inherit;border:1px solid #8aa8c2;background:#fff;min-height:25px;padding:2px 5px}
-input[type=number]{text-align:right}input[readonly]{background:#edf3f8}button{border-radius:5px;font-weight:900;cursor:pointer;min-height:30px}.btnRow{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:5px}
-.blueBtn{background:#e7f4ff}.redBtn{background:#ffdada}.yellowBtn{background:#fff2c7}.toolbar{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:5px}
-.status{border:1px solid #8aa8c2;background:#f8fbff;padding:4px;margin:5px;font-size:12px}.metrics{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;padding:5px;border-bottom:3px solid #111}
-.metric{border:1px solid #9db7cc;border-radius:6px;padding:5px;background:#fbfdff}.metric b{font-size:10px;display:block;color:#556;text-transform:uppercase}.metric span{font-weight:900;font-size:16px}
-.mid{display:grid;grid-template-columns:2fr 1fr;border-bottom:4px solid #111}.tableBox{padding:6px;border-right:4px solid #111}.tableBox:last-child{border-right:0}.tableTitle{font-size:22px;text-align:center;font-weight:900;margin-bottom:4px}
-table{border-collapse:collapse;width:100%;font-size:12px}th{background:#b7ddeb;border:1px solid #111;padding:4px}td{border:1px solid #111;padding:4px;text-align:right}td:first-child,th:first-child{text-align:left}
-.ok{color:#16802c;font-weight:900}.warn{color:#b96d22;font-weight:900}.bad{color:#b00020;font-weight:900}.graphs{display:grid;grid-template-columns:1fr 1fr;border-bottom:4px solid #111}.graph{padding:6px;border-right:4px solid #111}.graph:last-child{border-right:0}.graphTitle{text-align:center;font-size:20px}canvas{width:100%;height:245px;background:white;border:1px solid #aaa}.caption{font-size:12px}
-.module{border-bottom:4px solid #111}.module summary{list-style:none;text-align:center;font-weight:900;font-size:16px;padding:7px;cursor:pointer;background:white}.moduleBody{border-top:1px solid #111;padding:8px}
-.panelGrid,.fixGrid,.auditGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.fixGrid,.auditGrid{grid-template-columns:repeat(3,1fr)}
-.panel,.card{border:2px solid #111;border-radius:10px;overflow:hidden;background:white}.panelHead{background:#b7ddeb;text-align:center;font-weight:900;padding:5px}.panelBody{padding:7px;font-size:12px;min-height:125px}
-.eq{font-family:"Courier New",monospace;background:#f7f7f7;border:1px dashed #999;padding:6px;white-space:pre-wrap;margin-top:5px}.card{border-color:#999;padding:8px;background:#fbfdff;font-size:12px}.card.good{border-color:#16802c;background:#f4fff5}.card.warn{border-color:#b96d22;background:#fffaf0}.card.bad{border-color:#b00020;background:#fff4f4}.card h3{margin:0 0 4px;font-size:15px}.card strong{display:block;font-size:18px}textarea{width:100%;min-height:90px}
-@media(max-width:1000px){.top,.mid,.graphs,.panelGrid,.fixGrid,.auditGrid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.box,.tableBox,.graph{border-right:0;border-bottom:3px solid #111}.title{border-bottom:3px solid #111}}
-</style></head>
-<body><main><div class="shell">
-<div class="top">
-<div class="box"><h2>Inputs 1 — Balance Sheet</h2><div class="inputGrid">
-<label>Operating Capital</label><input id="operatingCapital" type="number"><label>Total Assets</label><input id="totalAssets" type="number"><label>Total Liabilities</label><input id="totalLiabilities" type="number"><label>Owner Equity</label><input id="ownerEquity" type="number" readonly><label>Cash</label><input id="startCash" type="number"><label>Accounts Rec</label><input id="accountsReceivable" type="number"><label>Accounts Pay</label><input id="accountsPayable" type="number"></div></div>
-<div><div class="title">BUSINESS SIMULATOR</div><div class="box" style="border-right:0"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<div><h2>Inputs 2 — Operations</h2><div class="inputGrid"><label>Business Name</label><input id="businessName"><label>Scenario Name</label><input id="scenarioName"><label>Duration Days</label><input id="durationDays" type="number"><label>Step Days</label><input id="stepDays" type="number"><label>Tax Rate</label><input id="taxRate" type="number" step="0.01"></div></div>
-<div><h2>Inputs 3 — Model Values</h2><div class="inputGrid" id="modelInputs"></div></div></div></div></div>
-<div class="box control"><h2>CONTROL PANEL</h2><div class="btnRow"><button class="blueBtn" id="start">▶</button><button id="stop">■</button><button class="redBtn" id="reset">●</button><button class="yellowBtn" id="pause">Ⅱ</button><button id="step">▶|</button><button id="fast">▶▶</button></div>
-<div class="inputGrid"><label>Business Model</label><select id="profile"></select><label>Saved Run</label><select id="savedRuns"></select></div><div class="toolbar"><button id="saveRun">Save</button><button id="loadRun">Load</button><button id="exportJson">Export</button><button id="newVariation">New Var</button></div><select id="modelList" size="7" style="width:100%;margin-top:5px"></select></div>
+:root{
+ --face:#d4d0c8;--dark:#404040;--shadow:#808080;--light:#ffffff;--mid:#c0c0c0;
+ --blue:#0a246a;--winblue:#316ac5;--green:#008000;--red:#a00000;--amber:#9a6500;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Tahoma,Arial,sans-serif;font-size:12px;background:#8b8da3;color:#000}
+.desktop{max-width:1420px;min-width:1120px;margin:8px auto;border:2px solid #000;background:var(--face);box-shadow:6px 6px 0 rgba(0,0,0,.35)}
+.titlebar{height:28px;background:linear-gradient(90deg,#0a246a,#3a6ea5);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:3px 6px;font-weight:bold}
+.windowBtns{display:flex;gap:3px}.winBtn{width:22px;height:18px;background:var(--face);border:2px outset var(--face);color:#000;text-align:center;line-height:14px;font-weight:bold}
+.menubar{height:24px;background:var(--face);border-bottom:1px solid var(--shadow);display:flex;align-items:center;gap:18px;padding:0 8px}
+.toolbar{height:42px;background:var(--face);border-top:1px solid var(--light);border-bottom:2px groove var(--face);display:flex;align-items:center;gap:5px;padding:4px 8px}
+button{font-family:Tahoma,Arial,sans-serif;font-size:12px;background:var(--face);border:2px outset var(--face);min-height:26px;padding:3px 8px;cursor:pointer}
+button:active{border:2px inset var(--face)}
+.toolBtn{width:34px;height:30px;font-size:16px;padding:0}
+select,input{font-family:Tahoma,Arial,sans-serif;font-size:12px;height:22px;border:2px inset var(--face);background:#fff;padding:1px 4px}
+input[type=number]{text-align:right}
+input[readonly]{background:#eee}
+.main{padding:6px}
+.topGrid{display:grid;grid-template-columns:310px 1fr 310px;gap:6px}
+.group{border:2px groove var(--face);background:var(--face);padding:8px 6px 6px;margin-bottom:6px;position:relative}
+.legend{position:absolute;top:-9px;left:8px;background:var(--face);padding:0 4px;font-weight:bold}
+.formGrid{display:grid;grid-template-columns:125px 1fr;gap:4px;align-items:center}
+label{text-align:right}
+.appTitle{text-align:center;font-family:"Courier New",monospace;font-weight:bold;font-size:31px;color:#0070c0;text-shadow:2px 2px #fff;margin:4px 0 8px}
+.modelGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.controlBtns{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:6px}
+.actionBtns{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:6px 0}
+.kpis{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:6px 0}
+.kpi{border:2px inset var(--face);background:#fff;padding:4px;min-height:42px}
+.kpi b{display:block;font-size:10px;color:#333;text-transform:uppercase}.kpi span{font-weight:bold;font-size:15px}
+.ok{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}
+.split{display:grid;grid-template-columns:2fr 1fr;gap:6px}
+.panelTitle{font-weight:bold;text-align:center;font-size:16px;margin-bottom:3px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:12px}
+th{background:#9cc8d6;border:1px solid #000;padding:3px;text-align:center}
+td{border:1px solid #000;padding:3px;text-align:right;height:20px}td:first-child,th:first-child{text-align:left}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.graphBox{border:2px inset var(--face);background:#fff;padding:4px}
+.graphTitle{text-align:center;font-size:16px}
+canvas{width:100%;height:260px;background:#fff}
+.tabs{display:flex;margin-top:6px;border-bottom:2px solid #000}
+.tabBtn{border:2px outset var(--face);border-bottom:0;border-radius:0;background:#c0c0c0;margin-right:2px;min-height:28px}
+.tabBtn.active{background:#fff;position:relative;top:2px}
+.tabPage{display:none;border:2px solid #000;border-top:0;background:#fff;padding:8px;min-height:230px}
+.tabPage.active{display:block}
+.cardGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.card{border:2px groove var(--face);background:var(--face);padding:6px}
+.card h3{margin:0 0 5px;background:#9cc8d6;text-align:center;padding:3px;border:1px solid #000;font-size:13px}
+.eq{font-family:"Courier New",monospace;border:1px dashed #777;background:#fff;padding:5px;margin-top:5px;white-space:pre-wrap}
+.auditGrid,.fixGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.audit,.fix{border:2px solid #777;background:#fff;padding:6px;min-height:80px}
+.audit.good,.fix.good{border-color:var(--green);background:#f3fff3}.audit.warn,.fix.warn{border-color:var(--amber);background:#fff8df}.audit.bad,.fix.bad{border-color:var(--red);background:#fff0f0}
+.audit b,.fix b{display:block}.audit strong,.fix strong{font-size:16px}
+textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Tahoma,Arial,sans-serif}
+.statusbar{height:24px;border-top:2px groove var(--face);display:grid;grid-template-columns:1fr 180px 160px;padding:2px 4px;gap:4px}
+.statusCell{border:1px inset var(--face);background:#eee;padding:2px 5px;overflow:hidden;white-space:nowrap}
+@media(max-width:1150px){.desktop{min-width:1000px}.topGrid{grid-template-columns:290px 1fr 280px}.kpis{grid-template-columns:repeat(4,1fr)}.cardGrid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="desktop">
+ <div class="titlebar">
+  <div>Business Simulator V8.5 - Scenario Workspace</div>
+  <div class="windowBtns"><div class="winBtn">_</div><div class="winBtn">□</div><div class="winBtn">×</div></div>
+ </div>
+ <div class="menubar"><span>File</span><span>Edit</span><span>Model</span><span>Run</span><span>View</span><span>Reports</span><span>Help</span></div>
+ <div class="toolbar">
+  <button class="toolBtn" id="start">▶</button><button class="toolBtn" id="stop">■</button><button class="toolBtn" id="reset">●</button><button class="toolBtn" id="pause">Ⅱ</button><button class="toolBtn" id="step">▶|</button><button class="toolBtn" id="fast">▶▶</button>
+  <span style="margin-left:12px">Business Model:</span><select id="profile" style="width:230px"></select>
+  <span>Scenario:</span><input id="scenarioName" style="width:250px">
+  <button id="saveRun">Save Run</button><button id="loadRun">Load</button><button id="exportJson">Export JSON</button>
+ </div>
+ <div class="main">
+  <div class="topGrid">
+   <div class="group"><div class="legend">Inputs 1 — Balance Sheet</div>
+    <div class="formGrid">
+     <label>Operating Capital</label><input id="operatingCapital" type="number">
+     <label>Total Assets</label><input id="totalAssets" type="number">
+     <label>Total Liabilities</label><input id="totalLiabilities" type="number">
+     <label>Owner Equity</label><input id="ownerEquity" type="number" readonly>
+     <label>Cash</label><input id="startCash" type="number">
+     <label>Accounts Rec</label><input id="accountsReceivable" type="number">
+     <label>Accounts Pay</label><input id="accountsPayable" type="number">
+    </div>
+   </div>
+   <div class="group"><div class="appTitle">BUSINESS SIMULATOR</div>
+    <div class="modelGrid">
+     <div><div class="legend">Inputs 2 — Operations</div><div class="formGrid">
+      <label>Business Name</label><input id="businessName">
+      <label>Duration Days</label><input id="durationDays" type="number">
+      <label>Step Days</label><input id="stepDays" type="number">
+      <label>Tax Rate</label><input id="taxRate" type="number" step="0.01">
+     </div></div>
+     <div><div class="legend">Inputs 3 — Model Values</div><div class="formGrid" id="modelInputs"></div></div>
+    </div>
+   </div>
+   <div class="group"><div class="legend">Current Model</div>
+    <select id="modelList" size="9" style="width:100%;height:188px"></select>
+   </div>
+  </div>
+
+  <div class="kpis">
+   <div class="kpi"><b>Day</b><span id="dayBox">0</span></div>
+   <div class="kpi"><b>Cash</b><span id="cashBox">$0</span></div>
+   <div class="kpi"><b>Revenue</b><span id="revBox">$0</span></div>
+   <div class="kpi"><b>Total Cost</b><span id="costBox">$0</span></div>
+   <div class="kpi"><b>Operating Profit</b><span id="opBox">$0</span></div>
+   <div class="kpi"><b>Tax</b><span id="taxBox">$0</span></div>
+   <div class="kpi"><b>Net Profit</b><span id="netBox">$0</span></div>
+   <div class="kpi"><b>Status</b><span id="statusBox">Ready</span></div>
+  </div>
+
+  <div class="split">
+   <div class="group"><div class="panelTitle">VALUE STREAM ACCOUNTING</div>
+    <table><thead><tr><th>DAY</th><th>UNIT #</th><th>REVENUE</th><th>FIXED COST</th><th>VAR COST</th><th>TAXES</th><th>PROFIT</th></tr></thead><tbody id="ledgerBody"></tbody></table>
+   </div>
+   <div class="group"><div class="panelTitle">OVERSIGHT</div>
+    <table><thead><tr><th>CHECK</th><th>STATUS</th><th>VALUE</th></tr></thead><tbody id="oversightBody"></tbody></table>
+   </div>
+  </div>
+
+  <div class="grid2">
+   <div class="graphBox"><div class="graphTitle">Breakeven Graph</div><canvas id="breakEvenCanvas" width="660" height="260"></canvas><div class="caption" id="breakEvenCaption"></div></div>
+   <div class="graphBox"><div class="graphTitle">Financial Projection Graph</div><canvas id="projectionCanvas" width="660" height="260"></canvas><div class="caption" id="projectionCaption"></div></div>
+  </div>
+
+  <div class="tabs">
+   <button class="tabBtn active" data-tab="tabProcess">Process</button>
+   <button class="tabBtn" data-tab="tabAudit">Accounting Watchdog</button>
+   <button class="tabBtn" data-tab="tabFix">Fix Advisor</button>
+   <button class="tabBtn" data-tab="tabCustomer">Customer Satisfaction</button>
+   <button class="tabBtn" data-tab="tabCosts">Costs</button>
+   <button class="tabBtn" data-tab="tabNotes">Notes</button>
+  </div>
+  <div id="tabProcess" class="tabPage active"><div class="cardGrid" id="processPanels"></div></div>
+  <div id="tabAudit" class="tabPage"><div class="auditGrid" id="auditGrid"></div></div>
+  <div id="tabFix" class="tabPage"><div class="fixGrid" id="fixGrid"></div></div>
+  <div id="tabCustomer" class="tabPage"><div id="customerPanel"></div></div>
+  <div id="tabCosts" class="tabPage"><div class="cardGrid" id="costPanel"></div></div>
+  <div id="tabNotes" class="tabPage">
+   <div class="grid2"><textarea id="marketingNotes" placeholder="Marketing notes..."></textarea><textarea id="qualityNotes" placeholder="Quality / labour / safety notes..."></textarea></div>
+  </div>
+ </div>
+ <div class="statusbar"><div class="statusCell" id="status">Ready.</div><div class="statusCell" id="runClock">Stopped</div><div class="statusCell">Local browser storage</div></div>
 </div>
-<div class="status" id="status">Ready.</div>
-<div class="metrics"><div class="metric"><b>Day</b><span id="dayBox">0</span></div><div class="metric"><b>Cash</b><span id="cashBox">$0</span></div><div class="metric"><b>Revenue</b><span id="revBox">$0</span></div><div class="metric"><b>Total Cost</b><span id="costBox">$0</span></div><div class="metric"><b>Profit</b><span id="profitBox">$0</span></div><div class="metric"><b>Tax</b><span id="taxBox">$0</span></div><div class="metric"><b>Net Profit</b><span id="netBox">$0</span></div><div class="metric"><b>Status</b><span id="statusBox">Ready</span></div></div>
-<div class="mid"><div class="tableBox"><div class="tableTitle">VALUE STREAM ACCOUNTING</div><table><thead><tr><th>DAY</th><th>UNIT #</th><th>REVENUE</th><th>FIXED COST</th><th>VAR COST</th><th>TAXES</th><th>PROFIT</th></tr></thead><tbody id="ledgerBody"></tbody></table></div><div class="tableBox"><div class="tableTitle">OVERSIGHT</div><table><thead><tr><th>CHECK</th><th>STATUS</th><th>VALUE</th></tr></thead><tbody id="oversightBody"></tbody></table></div></div>
-<div class="graphs"><div class="graph"><div class="graphTitle">Breakeven Graph</div><canvas id="breakEvenCanvas" width="650" height="250"></canvas><div class="caption" id="breakEvenCaption"></div></div><div class="graph"><div class="graphTitle">Financial Projection Graph</div><canvas id="projectionCanvas" width="650" height="250"></canvas><div class="caption" id="projectionCaption"></div></div></div>
-<details class="module" open><summary>BUSINESS PROCESS PANELS</summary><div class="moduleBody"><div class="panelGrid" id="processPanels"></div></div></details>
-<details class="module" open><summary>ACCOUNTING WATCHDOG — INDEPENDENT VERIFICATION</summary><div class="moduleBody"><div class="auditGrid" id="auditGrid"></div></div></details>
-<details class="module" open><summary>FIX ADVISOR</summary><div class="moduleBody"><div class="fixGrid" id="fixGrid"></div></div></details>
-<details class="module"><summary>CUSTOMER SATISFACTION</summary><div class="moduleBody"><div id="customerPanel"></div></div></details>
-<details class="module"><summary>MARKETING</summary><div class="moduleBody"><textarea id="marketingNotes" placeholder="Marketing assumptions, customer segments, channels, promotions, demand evidence..."></textarea></div></details>
-<details class="module"><summary>FIXED COSTS, VARIABLE COSTS, TOTAL OVERHEAD COSTS</summary><div class="moduleBody" id="costPanel"></div></details>
-<details class="module"><summary>LABOUR</summary><div class="moduleBody"><textarea id="labourNotes" placeholder="Labour assumptions, staffing, hours, skills, bottlenecks..."></textarea></div></details>
-<details class="module"><summary>SAFETY</summary><div class="moduleBody"><textarea id="safetyNotes" placeholder="Safety, legal, insurance, licensing, compliance risks..."></textarea></div></details>
-<details class="module"><summary>QUALITY</summary><div class="moduleBody"><textarea id="qualityNotes" placeholder="Quality assumptions, inspection, rework, defects, service failures..."></textarea></div></details>
-</div></main>
+
 <script>
 const PROFILES={
  hotel100:{name:"Hotel — 100 units",type:"hotel",businessName:"100 Unit Hotel",operatingCapital:40000,totalAssets:500000,totalLiabilities:300000,startCash:40000,accountsReceivable:0,accountsPayable:0,durationDays:730,stepDays:1,taxRate:.20,roomsTotal:100,roomsAvailable:85,occupancyRate:.65,avgDailyRate:185,variableCostPerRoomNight:55,fixedCostPerDay:4200,serviceQuality:.85},
@@ -56,35 +159,59 @@ const PROFILES={
  restaurant50:{name:"Restaurant — Town — 50 Seats",type:"generic",businessName:"Town Restaurant",operatingCapital:12000,totalAssets:45000,totalLiabilities:80000,startCash:12000,accountsReceivable:0,accountsPayable:0,durationDays:365,stepDays:1,taxRate:.20,demandPerDay:80,capacityPerDay:65,revenuePerUnit:28,variableCostPerUnit:11,fixedCostPerDay:420,serviceQuality:.75},
  foodtruck:{name:"Food Truck — Burgers & Fries",type:"generic",businessName:"Burger Food Truck",operatingCapital:8000,totalAssets:25000,totalLiabilities:30000,startCash:8000,accountsReceivable:0,accountsPayable:0,durationDays:365,stepDays:1,taxRate:.20,demandPerDay:90,capacityPerDay:70,revenuePerUnit:22,variableCostPerUnit:8,fixedCostPerDay:165,serviceQuality:.72}
 };
-let currentKey="hotel50", profile={}, timer=null, sim={}; const $=id=>document.getElementById(id);
+let currentKey="hotel50", profile={}, timer=null, sim={};
+const $=id=>document.getElementById(id);
 function money(n){n=Number(n)||0;return (n<0?"-$":"$")+Math.abs(n).toLocaleString(undefined,{maximumFractionDigits:0});}
-function n(id){return Number($(id)?.value)||0} function set(id,v){if($(id))$(id).value=v} function pct(v){return Math.round((Number(v)||0)*100)+"%"} function status(t){$("status").textContent=t} function isHotel(){return profile.type==="hotel"}
-function modelFields(){return isHotel()? [["Rooms Total","roomsTotal"],["Rooms Available","roomsAvailable"],["Occupancy Rate","occupancyRate"],["Avg Daily Rate","avgDailyRate"],["Var Cost / Room-Night","variableCostPerRoomNight"],["Fixed Cost / Day","fixedCostPerDay"],["Service Quality","serviceQuality"]] : [["Demand / Day","demandPerDay"],["Capacity / Day","capacityPerDay"],["Revenue / Unit","revenuePerUnit"],["Var Cost / Unit","variableCostPerUnit"],["Fixed Cost / Day","fixedCostPerDay"],["Service Quality","serviceQuality"]];}
-function fillInputs(){["businessName","operatingCapital","totalAssets","totalLiabilities","startCash","accountsReceivable","accountsPayable","durationDays","stepDays","taxRate"].forEach(id=>set(id,profile[id]??0));$("scenarioName").value=(profile.businessName||profile.name).replaceAll(" ","_")+"_Run_01";$("ownerEquity").value=n("totalAssets")-n("totalLiabilities");$("modelInputs").innerHTML=modelFields().map(([lab,id])=>`<label>${lab}</label><input id="${id}" type="number" step="0.01" value="${profile[id]??0}">`).join("");}
-function loadProfile(key){currentKey=key;profile=JSON.parse(JSON.stringify(PROFILES[key]));fillInputs();resetSim();status("Loaded "+profile.name)}
-function captureInputs(){["businessName","operatingCapital","totalAssets","totalLiabilities","startCash","accountsReceivable","accountsPayable","durationDays","stepDays","taxRate"].forEach(id=>profile[id]=($(id).type==="number"?n(id):$(id).value)); modelFields().forEach(([lab,id])=>profile[id]=n(id));}
-function dailyMath(){captureInputs(); let units, revPer, varPer;if(isHotel()){units=Math.min(profile.roomsAvailable,profile.roomsAvailable*profile.occupancyRate);revPer=profile.avgDailyRate;varPer=profile.variableCostPerRoomNight;}else{units=Math.min(profile.capacityPerDay,profile.demandPerDay*profile.serviceQuality);revPer=profile.revenuePerUnit;varPer=profile.variableCostPerUnit;}let revenue=units*revPer,varCost=units*varPer,fixedCost=profile.fixedCostPerDay,operatingProfit=revenue-varCost-fixedCost,taxes=operatingProfit>0?operatingProfit*profile.taxRate:0,profit=operatingProfit-taxes,satisfied=units*profile.serviceQuality;return {units,revPer,varPer,revenue,varCost,fixedCost,operatingProfit,taxes,profit,satisfied};}
-function resetSim(){captureInputs();sim={day:0,cash:profile.startCash,revenue:0,varCost:0,fixedCost:0,taxes:0,profit:0,operatingProfit:0,units:0,satisfied:0,minCash:profile.startCash,fundingGap:0,history:[]};render();}
-function stepOnce(){let m=dailyMath();sim.day++;sim.cash+=m.profit;sim.revenue+=m.revenue;sim.varCost+=m.varCost;sim.fixedCost+=m.fixedCost;sim.taxes+=m.taxes;sim.profit+=m.profit;sim.operatingProfit+=m.operatingProfit;sim.units+=m.units;sim.satisfied+=m.satisfied;sim.minCash=Math.min(sim.minCash,sim.cash);sim.fundingGap=Math.max(sim.fundingGap,Math.max(0,-sim.minCash));sim.history.push({day:sim.day,...m,cash:sim.cash,cumRevenue:sim.revenue,cumCost:sim.varCost+sim.fixedCost,cumProfit:sim.profit,cumUnits:sim.units});if(sim.history.length>500)sim.history.shift();}
-function runStep(){let steps=Math.max(1,n("stepDays"));for(let i=0;i<steps;i++){if(sim.day>=n("durationDays")){pause();status("Duration reached.");return}stepOnce()}render();status("Tick processed: "+steps+" day(s).")}
-function start(){if(timer)return;timer=setInterval(runStep,700);status("Running.")} function pause(){if(timer){clearInterval(timer);timer=null}status("Paused.")} function fast(){for(let i=0;i<30;i++)runStep()}
-function getStatus(){let m=dailyMath(),contribution=m.revPer-m.varPer;if(contribution<=0)return {text:"Not viable",cls:"bad"};if(sim.cash<0)return {text:"Funding needed",cls:"warn"};if(sim.profit>0)return {text:"Viable",cls:"ok"};let req=profile.fixedCostPerDay/contribution;return m.units>=req?{text:"Viable",cls:"ok"}:{text:"Needs fix",cls:"warn"}}
-function render(){captureInputs();$("ownerEquity").value=n("totalAssets")-n("totalLiabilities");let totalCost=sim.varCost+sim.fixedCost;$("dayBox").textContent=sim.day;$("cashBox").textContent=money(sim.cash);$("revBox").textContent=money(sim.revenue);$("costBox").textContent=money(totalCost);$("profitBox").textContent=money(sim.operatingProfit);$("taxBox").textContent=money(sim.taxes);$("netBox").textContent=money(sim.profit);let st=getStatus();$("statusBox").textContent=st.text;$("statusBox").className=st.cls;renderLedger();renderOversight();renderGraphs();renderPanels();renderAudit();renderFixes();renderCostPanel();renderCustomerPanel();updateSavedList();}
-function renderLedger(){let rows=sim.history.slice(-10).reverse().map(x=>`<tr><td>${x.day}</td><td>${x.units.toFixed(2)}</td><td>${money(x.revenue)}</td><td>${money(x.fixedCost)}</td><td>${money(x.varCost)}</td><td>${money(x.taxes)}</td><td>${money(x.profit)}</td></tr>`).join("");$("ledgerBody").innerHTML=rows||"<tr><td colspan='7'>No entries yet.</td></tr>"}
-function oversightRows(){let m=dailyMath(),totalCost=sim.varCost+sim.fixedCost,cashExpected=profile.startCash+sim.profit,revenueCheck=sim.units*(sim.units?sim.revenue/sim.units:0),profitCheck=sim.revenue-totalCost-sim.taxes,contribution=m.revPer-m.varPer,breakEvenUnits=contribution>0?profile.fixedCostPerDay/contribution:Infinity;return [["TOT COSTS",Math.abs(totalCost-(sim.varCost+sim.fixedCost))<.01,money(totalCost)],["REVENUE CHK",Math.abs(revenueCheck-sim.revenue)<.01,money(revenueCheck)+" vs "+money(sim.revenue)],["PROFIT CHK",Math.abs(profitCheck-sim.profit)<.01,money(profitCheck)+" vs "+money(sim.profit)],["CASH CHK",Math.abs(cashExpected-sim.cash)<.01,money(cashExpected)+" vs "+money(sim.cash)],["BREAKEVEN",m.units>=breakEvenUnits,(isFinite(breakEvenUnits)?breakEvenUnits.toFixed(2):"n/a")+" units/day required"],["UNIT ECON",contribution>0,money(contribution)+" contribution/unit"]]}
-function renderOversight(){$("oversightBody").innerHTML=oversightRows().map(r=>`<tr><td>${r[0]}</td><td class="${r[1]?"ok":"bad"}">${r[1]?"OK":"CHECK"}</td><td>${r[2]}</td></tr>`).join("")}
-function renderAudit(){let m=dailyMath(),contribution=m.revPer-m.varPer,req=contribution>0?profile.fixedCostPerDay/contribution:Infinity,perDay=sim.day?sim.units/sim.day:0,cp=sim.units?(sim.varCost+sim.fixedCost)/sim.units:0;let cards=[["Revenue formula","good","Traceable",`${sim.units.toFixed(1)} units × avg rate ${money(sim.units?sim.revenue/sim.units:0)} = ${money(sim.revenue)}.`],["Cash equation",Math.abs(profile.startCash+sim.profit-sim.cash)<.01?"good":"bad",Math.abs(profile.startCash+sim.profit-sim.cash)<.01?"OK":"Mismatch",`Start cash ${money(profile.startCash)} + net profit ${money(sim.profit)} = ${money(profile.startCash+sim.profit)}.`],["Volume / day",perDay>=req?"good":"warn",perDay>=req?"Enough":"Too low",`${perDay.toFixed(2)} units/day. Required ${isFinite(req)?req.toFixed(2):"n/a"}.`],["Contribution margin",contribution>0?"good":"bad",money(contribution),`Revenue/unit ${money(m.revPer)} - variable/unit ${money(m.varPer)}.`],["Cost per unit",sim.units?(cp<=m.revPer?"good":"warn"):"warn",sim.units?money(cp):"$0","Average all-in cost per paid unit."],["Balance sheet equity","good",money(n("totalAssets")-n("totalLiabilities")),"Owner equity = total assets - total liabilities."]];$("auditGrid").innerHTML=cards.map(c=>`<div class="card ${c[1]}"><h3>${c[0]}</h3><strong>${c[2]}</strong><div>${c[3]}</div></div>`).join("")}
-function renderFixes(){let m=dailyMath(),contribution=m.revPer-m.varPer,req=contribution>0?profile.fixedCostPerDay/contribution:Infinity,perDay=sim.day?sim.units/sim.day:m.units,fixes=[];if(contribution<=0)fixes.push(["bad","Negative contribution","Raise price or lower variable cost. Volume cannot fix negative contribution."]);if(perDay<req)fixes.push(["warn","Not enough volume","Increase occupancy/demand/capacity or reduce fixed cost. Required: "+(isFinite(req)?req.toFixed(2):"n/a")+" units/day."]);if(sim.cash<0)fixes.push(["warn","Funding gap","Cash went below zero. Funding gap: "+money(sim.fundingGap)+"."]);if(!fixes.length)fixes.push(["good","Currently viable","The business is profitable under these assumptions. Continue sensitivity testing."]);$("fixGrid").innerHTML=fixes.slice(0,3).map((f,i)=>`<div class="card ${f[0]}"><h3>${i+1}. ${f[1]}</h3><div>${f[2]}</div></div>`).join("")}
-function renderPanels(){let m=dailyMath(),panels=[];if(isHotel()){panels=[["Demand / Booking",`Available rooms: ${profile.roomsAvailable}<br>Occupancy rate: ${pct(profile.occupancyRate)}<br>Occupied room-nights/day: ${m.units.toFixed(2)}`,"occupiedRoomNights = roomsAvailable × occupancyRate"],["Room-Night Revenue",`Avg daily rate: ${money(m.revPer)}<br>Daily revenue: ${money(m.revenue)}`,"dailyRevenue = occupiedRoomNights × averageDailyRate"],["Room-Night Cost",`Variable cost/unit: ${money(m.varPer)}<br>Fixed cost/day: ${money(m.fixedCost)}<br>Daily cost: ${money(m.varCost+m.fixedCost)}`,"dailyCost = units × variableCostPerRoomNight + fixedCostPerDay"],["Payment / Profit",`Daily operating profit: ${money(m.operatingProfit)}<br>Daily tax: ${money(m.taxes)}<br>Daily net profit: ${money(m.profit)}`,"netProfit = revenue - variableCost - fixedCost - tax"]]}else{panels=[["Demand",`Demand/day: ${profile.demandPerDay}<br>Service quality: ${pct(profile.serviceQuality)}<br>Qualified demand: ${(profile.demandPerDay*profile.serviceQuality).toFixed(2)}`,"qualifiedDemand = demandPerDay × serviceQuality"],["Capacity",`Capacity/day: ${profile.capacityPerDay}<br>Paid units/day: ${m.units.toFixed(2)}`,"paidUnits = min(capacity, qualifiedDemand)"],["Cost",`Variable/unit: ${money(m.varPer)}<br>Fixed/day: ${money(m.fixedCost)}<br>Daily cost: ${money(m.varCost+m.fixedCost)}`,"dailyCost = units × variableCostPerUnit + fixedCostPerDay"],["Profit",`Revenue/unit: ${money(m.revPer)}<br>Daily revenue: ${money(m.revenue)}<br>Daily net profit: ${money(m.profit)}`,"netProfit = revenue - variableCost - fixedCost - tax"]]}$("processPanels").innerHTML=panels.map(p=>`<div class="panel"><div class="panelHead">${p[0]}</div><div class="panelBody">${p[1]}<div class="eq">${p[2]}</div></div></div>`).join("")}
-function renderCustomerPanel(){let rate=sim.units?sim.satisfied/sim.units:profile.serviceQuality;$("customerPanel").innerHTML=`Satisfied units: <b>${sim.satisfied.toFixed(1)}</b><br>Satisfaction rate: <b>${pct(rate)}</b><div class="eq">satisfiedUnits = paidUnits × serviceQuality</div>`}
-function renderCostPanel(){let m=dailyMath(),be=(m.revPer-m.varPer)>0?profile.fixedCostPerDay/(m.revPer-m.varPer):0;$("costPanel").innerHTML=`<div class="panelGrid"><div class="panel"><div class="panelHead">Fixed Cost</div><div class="panelBody">${money(profile.fixedCostPerDay)} per day<div class="eq">fixedCost = fixedCostPerDay × days</div></div></div><div class="panel"><div class="panelHead">Variable Cost</div><div class="panelBody">${money(m.varPer)} per paid unit<div class="eq">variableCost = paidUnits × variableCostPerUnit</div></div></div><div class="panel"><div class="panelHead">Total Cost</div><div class="panelBody">${money(sim.varCost+sim.fixedCost)} cumulative<div class="eq">totalCost = fixedCost + variableCost</div></div></div><div class="panel"><div class="panelHead">Break-Even</div><div class="panelBody">${be.toFixed(2)} units/day<div class="eq">breakEvenUnits = fixedCostPerDay ÷ contributionPerUnit</div></div></div></div>`}
-function draw(canvasId,series,xLabel){let c=$(canvasId),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);let L=60,R=20,T=20,B=35;if(!series.length||series[0].pts.length<2){ctx.fillText("Run at least two days.",20,40);return}let vals=[];series.forEach(s=>s.pts.forEach(p=>vals.push(p.y)));let min=Math.min(0,...vals),max=Math.max(10,...vals),pad=(max-min)*.08;max+=pad;min-=pad;if(min>0)min=0;let maxX=Math.max(...series[0].pts.map(p=>p.x),1),X=x=>L+(w-L-R)*(x/maxX),Y=y=>h-B-(h-B-T)*((y-min)/(max-min||1));ctx.strokeStyle="#222";ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();ctx.font="11px Arial";ctx.fillText("$",18,T+10);ctx.fillText(xLabel,L,h-8);for(let i=0;i<=4;i++){let v=min+(max-min)*i/4,yy=Y(v);ctx.strokeStyle="#ddd";ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(w-R,yy);ctx.stroke();ctx.fillStyle="#555";ctx.fillText(money(v),3,yy+4)}for(let i=0;i<=4;i++){let v=maxX*i/4,xx=X(v);ctx.fillStyle="#555";ctx.fillText(Math.round(v),xx-8,h-B+14)}series.forEach((s,i)=>{ctx.strokeStyle=s.color;ctx.lineWidth=3;ctx.beginPath();s.pts.forEach((p,j)=>j?ctx.lineTo(X(p.x),Y(p.y)):ctx.moveTo(X(p.x),Y(p.y)));ctx.stroke();ctx.fillStyle=s.color;ctx.fillText(s.name,w-130,T+12+i*14)})}
-function renderGraphs(){let hist=sim.history.filter((_,i)=>i%Math.max(1,Math.floor(sim.history.length/80))===0);if(hist.length<2){draw("breakEvenCanvas",[],"Rentals");draw("projectionCanvas",[],"Days");return}draw("breakEvenCanvas",[{name:"Revenue",color:"#1f5bd6",pts:hist.map(x=>({x:x.cumUnits,y:x.cumRevenue}))},{name:"Cost",color:"#ff0000",pts:hist.map(x=>({x:x.cumUnits,y:x.cumCost}))}],"Rentals");$("breakEvenCaption").textContent=`Current ${Math.round(sim.units)} units. Revenue ${money(sim.revenue)} vs total cost ${money(sim.varCost+sim.fixedCost)}.`;draw("projectionCanvas",[{name:"Net profit/loss",color:sim.profit>=0?"#16802c":"#b00020",pts:hist.map(x=>({x:x.day,y:x.cumProfit}))}],"Days");$("projectionCaption").textContent=`Day ${sim.day}. Cumulative net profit ${money(sim.profit)}.`}
-function saveRun(){captureInputs();let name=$("scenarioName").value||"run",data={profile,currentKey,sim,notes:{marketing:$("marketingNotes").value,labour:$("labourNotes").value,safety:$("safetyNotes").value,quality:$("qualityNotes").value}};localStorage.setItem("bizsim_run_"+name,JSON.stringify(data));updateSavedList();status("Saved run: "+name)}
-function loadRun(){let key=$("savedRuns").value;if(!key)return;let data=JSON.parse(localStorage.getItem(key));profile=data.profile;currentKey=data.currentKey||currentKey;fillInputs();sim=data.sim;$("marketingNotes").value=data.notes?.marketing||"";$("labourNotes").value=data.notes?.labour||"";$("safetyNotes").value=data.notes?.safety||"";$("qualityNotes").value=data.notes?.quality||"";render();status("Loaded saved run.")}
-function updateSavedList(){let keys=Object.keys(localStorage).filter(k=>k.startsWith("bizsim_run_"));$("savedRuns").innerHTML=keys.map(k=>`<option value="${k}">${k.replace("bizsim_run_","")}</option>`).join("")}
-function exportJson(){captureInputs();let data={schema:"business-simulator-v8.3",profile,currentKey,sim,notes:{marketing:$("marketingNotes").value,labour:$("labourNotes").value,safety:$("safetyNotes").value,quality:$("qualityNotes").value}};let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));a.download=($("scenarioName").value||"scenario")+".json";a.click()}
-function newVariation(){$("scenarioName").value=($("scenarioName").value||"scenario")+"_VAR_"+Date.now().toString().slice(-4);resetSim()}
-function init(){$("profile").innerHTML=Object.keys(PROFILES).map(k=>`<option value="${k}">${PROFILES[k].name}</option>`).join("");$("modelList").innerHTML=$("profile").innerHTML;$("profile").value=currentKey;$("modelList").value=currentKey;$("profile").onchange=e=>loadProfile(e.target.value);$("modelList").onchange=e=>loadProfile(e.target.value);$("start").onclick=start;$("pause").onclick=pause;$("stop").onclick=pause;$("reset").onclick=()=>{pause();resetSim();status("Reset.")};$("step").onclick=runStep;$("fast").onclick=fast;$("saveRun").onclick=saveRun;$("loadRun").onclick=loadRun;$("exportJson").onclick=exportJson;$("newVariation").onclick=newVariation;document.addEventListener("input",e=>{if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT"){if(e.target.id!=="savedRuns")render()}});loadProfile(currentKey);updateSavedList()}
+function n(id){return Number($(id)?.value)||0}
+function set(id,v){if($(id))$(id).value=v}
+function pct(v){return Math.round((Number(v)||0)*100)+"%"}
+function status(t){$("status").textContent=t}
+function isHotel(){return profile.type==="hotel"}
+function fields(){return isHotel()
+?[["Rooms Total","roomsTotal"],["Rooms Available","roomsAvailable"],["Occupancy Rate","occupancyRate"],["Avg Daily Rate","avgDailyRate"],["Var Cost / Room-Night","variableCostPerRoomNight"],["Fixed Cost / Day","fixedCostPerDay"],["Service Quality","serviceQuality"]]
+:[["Demand / Day","demandPerDay"],["Capacity / Day","capacityPerDay"],["Revenue / Unit","revenuePerUnit"],["Var Cost / Unit","variableCostPerUnit"],["Fixed Cost / Day","fixedCostPerDay"],["Service Quality","serviceQuality"]];}
+function fillInputs(){
+ ["businessName","operatingCapital","totalAssets","totalLiabilities","startCash","accountsReceivable","accountsPayable","durationDays","stepDays","taxRate"].forEach(id=>set(id,profile[id]??0));
+ $("scenarioName").value=(profile.businessName||profile.name).replaceAll(" ","_")+"_Run_01";
+ $("ownerEquity").value=n("totalAssets")-n("totalLiabilities");
+ $("modelInputs").innerHTML=fields().map(([lab,id])=>`<label>${lab}</label><input id="${id}" type="number" step="0.01" value="${profile[id]??0}">`).join("");
+}
+function capture(){
+ ["businessName","operatingCapital","totalAssets","totalLiabilities","startCash","accountsReceivable","accountsPayable","durationDays","stepDays","taxRate"].forEach(id=>profile[id]=($(id).type==="number"?n(id):$(id).value));
+ fields().forEach(([lab,id])=>profile[id]=n(id));
+}
+function loadProfile(k){currentKey=k;profile=JSON.parse(JSON.stringify(PROFILES[k]));fillInputs();resetSim();status("Loaded "+profile.name)}
+function daily(){
+ capture();let units,revPer,varPer;
+ if(isHotel()){units=Math.min(profile.roomsAvailable,profile.roomsAvailable*profile.occupancyRate);revPer=profile.avgDailyRate;varPer=profile.variableCostPerRoomNight;}
+ else{units=Math.min(profile.capacityPerDay,profile.demandPerDay*profile.serviceQuality);revPer=profile.revenuePerUnit;varPer=profile.variableCostPerUnit;}
+ let revenue=units*revPer,varCost=units*varPer,fixedCost=profile.fixedCostPerDay,operatingProfit=revenue-varCost-fixedCost,taxes=operatingProfit>0?operatingProfit*profile.taxRate:0,profit=operatingProfit-taxes,satisfied=units*profile.serviceQuality;
+ return {units,revPer,varPer,revenue,varCost,fixedCost,operatingProfit,taxes,profit,satisfied};
+}
+function resetSim(){capture();sim={day:0,cash:profile.startCash,revenue:0,varCost:0,fixedCost:0,taxes:0,profit:0,operatingProfit:0,units:0,satisfied:0,minCash:profile.startCash,fundingGap:0,history:[]};render()}
+function stepOne(){let m=daily();sim.day++;sim.cash+=m.profit;sim.revenue+=m.revenue;sim.varCost+=m.varCost;sim.fixedCost+=m.fixedCost;sim.taxes+=m.taxes;sim.profit+=m.profit;sim.operatingProfit+=m.operatingProfit;sim.units+=m.units;sim.satisfied+=m.satisfied;sim.minCash=Math.min(sim.minCash,sim.cash);sim.fundingGap=Math.max(sim.fundingGap,Math.max(0,-sim.minCash));sim.history.push({day:sim.day,...m,cash:sim.cash,cumRevenue:sim.revenue,cumCost:sim.varCost+sim.fixedCost,cumProfit:sim.profit,cumUnits:sim.units});if(sim.history.length>800)sim.history.shift()}
+function runStep(){for(let i=0;i<Math.max(1,n("stepDays"));i++){if(sim.day>=n("durationDays")){pause();status("Duration reached.");return}stepOne()}render();status("Tick processed.")}
+function start(){if(timer)return;$("runClock").textContent="Running";timer=setInterval(runStep,700);status("Running.")}
+function pause(){if(timer){clearInterval(timer);timer=null}$("runClock").textContent="Stopped";status("Paused.")}
+function fast(){for(let i=0;i<30;i++)runStep()}
+function statusObj(){let m=daily(),c=m.revPer-m.varPer,req=c>0?m.fixedCost/c:Infinity,per=sim.day?sim.units/sim.day:m.units;if(c<=0)return["Not viable","bad"];if(sim.cash<0)return["Funding needed","warn"];if(sim.profit>0||per>=req)return["Viable","ok"];return["Needs fix","warn"]}
+function render(){capture();$("ownerEquity").value=n("totalAssets")-n("totalLiabilities");let total=sim.varCost+sim.fixedCost,st=statusObj();$("dayBox").textContent=sim.day;$("cashBox").textContent=money(sim.cash);$("revBox").textContent=money(sim.revenue);$("costBox").textContent=money(total);$("opBox").textContent=money(sim.operatingProfit);$("taxBox").textContent=money(sim.taxes);$("netBox").textContent=money(sim.profit);$("statusBox").textContent=st[0];$("statusBox").className=st[1];renderLedger();renderOversight();renderGraphs();renderPanels();renderAudit();renderFixes();renderCustomer();renderCosts()}
+function renderLedger(){$("ledgerBody").innerHTML=sim.history.slice(-10).reverse().map(x=>`<tr><td>${x.day}</td><td>${x.units.toFixed(2)}</td><td>${money(x.revenue)}</td><td>${money(x.fixedCost)}</td><td>${money(x.varCost)}</td><td>${money(x.taxes)}</td><td>${money(x.profit)}</td></tr>`).join("")||"<tr><td colspan='7'>No entries yet.</td></tr>"}
+function oversight(){let m=daily(),total=sim.varCost+sim.fixedCost,cashExpected=profile.startCash+sim.profit,profitCheck=sim.revenue-total-sim.taxes,c=m.revPer-m.varPer,req=c>0?profile.fixedCostPerDay/c:Infinity;return [["TOT COSTS",true,money(total)],["REVENUE CHK",true,money(sim.revenue)],["PROFIT CHK",Math.abs(profitCheck-sim.profit)<.01,money(profitCheck)+" vs "+money(sim.profit)],["CASH CHK",Math.abs(cashExpected-sim.cash)<.01,money(cashExpected)+" vs "+money(sim.cash)],["BREAKEVEN",m.units>=req,(isFinite(req)?req.toFixed(2):"n/a")+" units/day required"],["UNIT ECON",c>0,money(c)+" contribution/unit"]]}
+function renderOversight(){$("oversightBody").innerHTML=oversight().map(r=>`<tr><td>${r[0]}</td><td class="${r[1]?"ok":"bad"}">${r[1]?"OK":"CHECK"}</td><td>${r[2]}</td></tr>`).join("")}
+function drawBE(){let c=$("breakEvenCanvas"),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);let m=daily(),price=m.revPer,varc=m.varPer,fixed=m.fixedCost,contribution=price-varc,be=contribution>0?fixed/contribution:Infinity,maxU=Math.max(10,sim.units*1.2,isFinite(be)?be*1.7:10),maxY=Math.max(maxU*price,fixed+maxU*varc,fixed)*1.12,L=60,R=25,T=18,B=35;let X=u=>L+(w-L-R)*(u/maxU),Y=v=>h-B-(h-B-T)*(v/maxY);ctx.font="11px Tahoma";ctx.strokeStyle="#222";ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();for(let i=0;i<=4;i++){let v=maxY*i/4,yy=Y(v);ctx.strokeStyle="#ddd";ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(w-R,yy);ctx.stroke();ctx.fillStyle="#555";ctx.fillText(money(v),3,yy+4);let u=maxU*i/4,xx=X(u);ctx.fillText(Math.round(u),xx-8,h-B+14)}function line(y1,y2,color,name){ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(0),Y(y1));ctx.lineTo(X(maxU),Y(y2));ctx.stroke();ctx.fillStyle=color;ctx.fillText(name,w-125,Y(y2)+4)}line(0,maxU*price,"#1f5bd6","Revenue");line(fixed,fixed+maxU*varc,"#ff8a00","Total cost");line(fixed,fixed,"#b00020","Fixed cost");if(isFinite(be)){ctx.setLineDash([5,5]);ctx.strokeStyle="#444";ctx.beginPath();ctx.moveTo(X(be),Y(0));ctx.lineTo(X(be),Y(fixed+be*varc));ctx.lineTo(L,Y(fixed+be*varc));ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#111";ctx.fillText("Break-even: "+be.toFixed(1)+" units",X(be)+5,Y(fixed+be*varc)-6)}$("breakEvenCaption").textContent=`Break-even = fixed cost ${money(fixed)} ÷ contribution ${money(contribution)} = ${isFinite(be)?be.toFixed(2):"n/a"} units/day.`}
+function drawProjection(){let c=$("projectionCanvas"),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);let m=daily(),days=Math.max(365,n("durationDays")),pts=[];for(let d=0;d<=days;d+=Math.max(1,Math.round(days/80)))pts.push({x:d,y:m.profit*d});pts.push({x:days,y:m.profit*days});let maxY=Math.max(10,...pts.map(p=>p.y),0),minY=Math.min(0,...pts.map(p=>p.y)),pad=(maxY-minY)*.1;maxY+=pad;minY-=pad;let L=60,R=25,T=18,B=35,X=x=>L+(w-L-R)*(x/days),Y=y=>h-B-(h-B-T)*((y-minY)/(maxY-minY||1));ctx.font="11px Tahoma";ctx.strokeStyle="#222";ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();for(let i=0;i<=4;i++){let v=minY+(maxY-minY)*i/4,yy=Y(v);ctx.strokeStyle="#ddd";ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(w-R,yy);ctx.stroke();ctx.fillStyle="#555";ctx.fillText(money(v),3,yy+4);let d=days*i/4,xx=X(d);ctx.fillText(Math.round(d),xx-8,h-B+14)}ctx.strokeStyle=m.profit>=0?"#16802c":"#b00020";ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(X(p.x),Y(p.y)):ctx.moveTo(X(p.x),Y(p.y)));ctx.stroke();ctx.fillStyle=m.profit>=0?"#16802c":"#b00020";ctx.fillText("Projected net profit/loss",w-155,T+12);$("projectionCaption").textContent=`Projection uses current daily net profit ${money(m.profit)} over ${days} days.`}
+function renderGraphs(){drawBE();drawProjection()}
+function renderPanels(){let m=daily(),panels=isHotel()?[["Demand / Booking",`Available rooms: ${profile.roomsAvailable}<br>Occupancy rate: ${pct(profile.occupancyRate)}<br>Occupied room-nights/day: ${m.units.toFixed(2)}`,"occupiedRoomNights = roomsAvailable × occupancyRate"],["Room-Night Revenue",`Average daily rate: ${money(m.revPer)}<br>Daily revenue: ${money(m.revenue)}`,"dailyRevenue = occupiedRoomNights × averageDailyRate"],["Room-Night Cost",`Variable cost/unit: ${money(m.varPer)}<br>Fixed cost/day: ${money(m.fixedCost)}<br>Daily cost: ${money(m.varCost+m.fixedCost)}`,"dailyCost = units × variableCostPerRoomNight + fixedCostPerDay"],["Payment / Profit",`Daily operating profit: ${money(m.operatingProfit)}<br>Tax: ${money(m.taxes)}<br>Daily net: ${money(m.profit)}`,"netProfit = revenue - variableCost - fixedCost - tax"]]:[["Demand",`Demand/day: ${profile.demandPerDay}<br>Quality: ${pct(profile.serviceQuality)}<br>Qualified: ${(profile.demandPerDay*profile.serviceQuality).toFixed(2)}`,"qualifiedDemand = demandPerDay × serviceQuality"],["Capacity",`Capacity/day: ${profile.capacityPerDay}<br>Paid units/day: ${m.units.toFixed(2)}`,"paidUnits = min(capacity, qualifiedDemand)"],["Cost",`Variable/unit: ${money(m.varPer)}<br>Fixed/day: ${money(m.fixedCost)}`,"dailyCost = units × variableCostPerUnit + fixedCostPerDay"],["Profit",`Revenue/unit: ${money(m.revPer)}<br>Daily net: ${money(m.profit)}`,"netProfit = revenue - variableCost - fixedCost - tax"]];$("processPanels").innerHTML=panels.map(p=>`<div class="card"><h3>${p[0]}</h3><div>${p[1]}</div><div class="eq">${p[2]}</div></div>`).join("")}
+function renderAudit(){let m=daily(),c=m.revPer-m.varPer,req=c>0?m.fixedCost/c:Infinity,per=sim.day?sim.units/sim.day:m.units;let cards=[["Revenue formula","good","Traceable",`${sim.units.toFixed(1)} units × avg rate ${money(sim.units?sim.revenue/sim.units:0)} = ${money(sim.revenue)}.`],["Cash equation",Math.abs(profile.startCash+sim.profit-sim.cash)<.01?"good":"bad",Math.abs(profile.startCash+sim.profit-sim.cash)<.01?"OK":"Mismatch",`Start cash ${money(profile.startCash)} + net profit ${money(sim.profit)} = ${money(profile.startCash+sim.profit)}.`],["Volume / day",per>=req?"good":"warn",per>=req?"Enough":"Too low",`${per.toFixed(2)} units/day. Required ${isFinite(req)?req.toFixed(2):"n/a"}.`],["Contribution",c>0?"good":"bad",money(c),`Price ${money(m.revPer)} - variable ${money(m.varPer)}.`],["Cost per unit",sim.units?(((sim.varCost+sim.fixedCost)/sim.units<=m.revPer)?"good":"warn"):"warn",sim.units?money((sim.varCost+sim.fixedCost)/sim.units):"$0","Average all-in cost per unit."],["Balance sheet equity","good",money(n("totalAssets")-n("totalLiabilities")),"Owner equity = assets - liabilities."]];$("auditGrid").innerHTML=cards.map(c=>`<div class="audit ${c[1]}"><b>${c[0]}</b><strong>${c[2]}</strong><div>${c[3]}</div></div>`).join("")}
+function renderFixes(){let m=daily(),c=m.revPer-m.varPer,req=c>0?m.fixedCost/c:Infinity,per=sim.day?sim.units/sim.day:m.units,fixes=[];if(c<=0)fixes.push(["bad","Negative contribution","Raise price or lower variable cost."]);if(per<req)fixes.push(["warn","Not enough volume",`Current ${per.toFixed(2)} units/day; required ${isFinite(req)?req.toFixed(2):"n/a"}.`]);if(sim.cash<0)fixes.push(["warn","Funding gap","Cash went below zero. Funding gap: "+money(sim.fundingGap)]);if(!fixes.length)fixes.push(["good","Currently viable","Profitable under current assumptions. Continue sensitivity testing."]);$("fixGrid").innerHTML=fixes.map((f,i)=>`<div class="fix ${f[0]}"><h3><span class="num">${i+1}</span>${f[1]}</h3><div>${f[2]}</div></div>`).join("")}
+function renderCustomer(){$("customerPanel").innerHTML=`Satisfied units: <b>${sim.satisfied.toFixed(1)}</b><br>Satisfaction rate: <b>${pct(profile.serviceQuality)}</b><div class="eq">satisfiedUnits = paidUnits × serviceQuality</div>`}
+function renderCosts(){let m=daily();$("costPanel").innerHTML=`<div class="card"><h3>Fixed Cost</h3>${money(profile.fixedCostPerDay)} per day<div class="eq">fixedCost = fixedCostPerDay × days</div></div><div class="card"><h3>Variable Cost</h3>${money(m.varPer)} per unit<div class="eq">variableCost = paidUnits × variableCostPerUnit</div></div><div class="card"><h3>Total Cost</h3>${money(sim.varCost+sim.fixedCost)} cumulative<div class="eq">totalCost = fixedCost + variableCost</div></div><div class="card"><h3>Break-Even</h3>${((m.revPer-m.varPer)>0?m.fixedCost/(m.revPer-m.varPer):0).toFixed(2)} units/day<div class="eq">breakEvenUnits = fixedCostPerDay ÷ contributionPerUnit</div></div>`}
+function saveRun(){capture();localStorage.setItem("bizsim85_"+$("scenarioName").value,JSON.stringify({profile,currentKey,sim}));status("Saved run.")}
+function loadRun(){let key=prompt("Run name?");let raw=localStorage.getItem("bizsim85_"+key);if(raw){let d=JSON.parse(raw);profile=d.profile;sim=d.sim;fillInputs();render();status("Loaded run.")}}
+function exportJson(){capture();let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({profile,currentKey,sim},null,2)],{type:"application/json"}));a.download=($("scenarioName").value||"scenario")+".json";a.click()}
+function init(){let opts=Object.keys(PROFILES).map(k=>`<option value="${k}">${PROFILES[k].name}</option>`).join("");$("profile").innerHTML=opts;$("modelList").innerHTML=opts;$("profile").onchange=e=>loadProfile(e.target.value);$("modelList").onchange=e=>loadProfile(e.target.value);$("start").onclick=start;$("pause").onclick=pause;$("stop").onclick=pause;$("reset").onclick=()=>{pause();resetSim()};$("step").onclick=runStep;$("fast").onclick=fast;$("saveRun").onclick=saveRun;$("loadRun").onclick=loadRun;$("exportJson").onclick=exportJson;document.querySelectorAll(".tabBtn").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabBtn,.tabPage").forEach(x=>x.classList.remove("active"));b.classList.add("active");$(b.dataset.tab).classList.add("active")});document.addEventListener("input",e=>{if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")render()});loadProfile(currentKey)}
 init();
-</script></body></html>
+</script>
+</body>
+</html>
