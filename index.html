@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Business Simulator V8.7</title>
+<title>Business Simulator V8.8</title>
 <style>
 :root{
  --face:#d4d0c8;--dark:#404040;--shadow:#808080;--light:#ffffff;--mid:#c0c0c0;
@@ -65,15 +65,110 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 .payRow{background:#fff8dc;font-weight:bold}
 .debtRow{background:#ffecec;font-weight:bold}
 .supplierRow{background:#eef6ff;font-weight:bold}
+
+.menuItem{position:relative;padding:4px 8px;cursor:default}
+.menuItem:hover{background:#0a246a;color:white}
+.menuDrop{display:none;position:absolute;top:22px;left:0;background:#d4d0c8;border:2px outset #d4d0c8;min-width:210px;z-index:50;color:#000;box-shadow:3px 3px 0 rgba(0,0,0,.35)}
+.menuItem:hover .menuDrop,.menuItem.open .menuDrop{display:block}
+.menuCmd{padding:5px 24px 5px 22px;white-space:nowrap;color:#000;background:#d4d0c8}
+.menuCmd:hover{background:#0a246a;color:white}
+.menuSep{height:1px;background:#808080;border-bottom:1px solid white;margin:3px 2px}
+.disabled{color:#777}
+.menuCmd.disabled:hover{background:#d4d0c8;color:#777}
+.rightPropGrid{display:grid;grid-template-columns:120px 1fr;gap:4px;align-items:center}
+.rightPropGrid label{text-align:right}
 </style>
 </head>
 <body>
+
+<div id="openDialog" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:520px;background:#d4d0c8;border:2px outset #d4d0c8;z-index:100;box-shadow:6px 6px 0 rgba(0,0,0,.45);font-family:Tahoma,Arial,sans-serif">
+ <div style="background:#0a246a;color:white;padding:4px 6px;font-weight:bold;display:flex;justify-content:space-between">
+  <span>Open Saved Scenario</span><button style="min-height:18px;padding:0 5px" onclick="hideOpenDialog()">×</button>
+ </div>
+ <div style="padding:10px">
+  <div style="margin-bottom:5px">Look in: <select style="width:360px"><option>Local Browser Storage</option><option disabled>Server Scenarios (future)</option><option disabled>Business Type Library (future)</option></select></div>
+  <select id="fakeFileList" size="8" style="width:100%;height:150px">
+   <option>Buckos_Barn_Style_Hotel_Run_01.bzsm</option>
+   <option>Hotel_50_Units_Conservative_Test.bzsm</option>
+   <option>Motel_24_Units_Low_Occupancy.bzsm</option>
+   <option>Food_Truck_Burgers_Base_Run.bzsm</option>
+   <option>Restaurant_Town_50_Seats_Run_01.bzsm</option>
+  </select>
+  <div style="display:grid;grid-template-columns:90px 1fr;gap:5px;margin-top:8px">
+   <label>File name:</label><input id="fakeFileName" value="Buckos_Barn_Style_Hotel_Run_01.bzsm">
+   <label>Files of type:</label><select><option>Business Simulator Files (*.bzsm)</option><option>JSON Scenario Files (*.json)</option></select>
+  </div>
+  <div style="text-align:right;margin-top:10px">
+   <button onclick="menuAction('Simulated file selected: '+document.getElementById('fakeFileName').value);hideOpenDialog()">Open</button>
+   <button onclick="hideOpenDialog()">Cancel</button>
+  </div>
+ </div>
+</div>
+
 <div class="desktop">
  <div class="titlebar">
-  <div id="titleText">Business Simulator V8.7 - Buckos_Barn_Style_Hotel_Run_01.bzsm</div>
+  <div id="titleText">Business Simulator V8.8 - Buckos_Barn_Style_Hotel_Run_01.bzsm</div>
   <div class="windowBtns"><div class="winBtn">_</div><div class="winBtn">□</div><div class="winBtn">×</div></div>
  </div>
- <div class="menubar"><span>File</span><span>Edit</span><span>Model</span><span>Run</span><span>View</span><span>Reports</span><span>Help</span></div>
+ <div class="menubar">
+ <div class="menuItem" id="fileMenu">File
+  <div class="menuDrop">
+   <div class="menuCmd" onclick="menuAction('New Scenario')">New Scenario...</div>
+   <div class="menuCmd" onclick="showOpenDialog()">Open Saved Scenario...</div>
+   <div class="menuCmd" onclick="saveRun()">Save</div>
+   <div class="menuCmd" onclick="saveRun()">Save As...</div>
+   <div class="menuSep"></div>
+   <div class="menuCmd" onclick="exportJson()">Export JSON...</div>
+   <div class="menuCmd disabled">Print Report...</div>
+   <div class="menuSep"></div>
+   <div class="menuCmd" onclick="menuAction('Exit disabled in browser')">Exit</div>
+  </div>
+ </div>
+ <div class="menuItem">Edit
+  <div class="menuDrop">
+   <div class="menuCmd disabled">Undo</div>
+   <div class="menuCmd disabled">Redo</div>
+   <div class="menuSep"></div>
+   <div class="menuCmd" onclick="menuAction('Copy table placeholder')">Copy Ledger</div>
+  </div>
+ </div>
+ <div class="menuItem">Model
+  <div class="menuDrop">
+   <div class="menuCmd" onclick="menuAction('Model validation requested')">Validate Model Math</div>
+   <div class="menuCmd" onclick="menuAction('Duplicate business model placeholder')">Duplicate Business Type</div>
+   <div class="menuCmd disabled">Edit Business Type File...</div>
+  </div>
+ </div>
+ <div class="menuItem">Run
+  <div class="menuDrop">
+   <div class="menuCmd" onclick="start()">Start</div>
+   <div class="menuCmd" onclick="pause()">Pause</div>
+   <div class="menuCmd" onclick="runStep()">Step</div>
+   <div class="menuCmd" onclick="fast()">Run 30 Ticks</div>
+   <div class="menuCmd" onclick="resetSim()">Reset</div>
+  </div>
+ </div>
+ <div class="menuItem">View
+  <div class="menuDrop">
+   <div class="menuCmd" onclick="activateTab('tabProcess')">Process Tab</div>
+   <div class="menuCmd" onclick="activateTab('tabAudit')">Accounting Watchdog</div>
+   <div class="menuCmd" onclick="activateTab('tabFix')">Fix Advisor</div>
+   <div class="menuCmd" onclick="activateTab('tabCosts')">Costs</div>
+  </div>
+ </div>
+ <div class="menuItem">Reports
+  <div class="menuDrop">
+   <div class="menuCmd" onclick="menuAction('Break-even report placeholder')">Break-Even Report</div>
+   <div class="menuCmd" onclick="menuAction('Cash-flow report placeholder')">Cash Flow Report</div>
+   <div class="menuCmd" onclick="menuAction('Watchdog audit report placeholder')">Watchdog Audit Report</div>
+  </div>
+ </div>
+ <div class="menuItem">Help
+  <div class="menuDrop">
+   <div class="menuCmd" onclick="menuAction('Business Simulator V8.8 mock desktop app')">About Business Simulator</div>
+  </div>
+ </div>
+</div>
  <div class="toolbar">
   <button class="toolBtn" id="start">▶</button><button class="toolBtn" id="stop">■</button><button class="toolBtn" id="reset">●</button><button class="toolBtn" id="pause">Ⅱ</button><button class="toolBtn" id="step">▶|</button><button class="toolBtn" id="fast">▶▶</button>
   <span style="margin-left:12px">Business Model:</span><select id="profile" style="width:230px"></select>
@@ -131,7 +226,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
 
   <div class="grid2">
    <div class="graphBox"><div class="graphTitle">Breakeven Graph</div><canvas id="breakEvenCanvas" width="660" height="260"></canvas><div class="caption" id="breakEvenCaption"></div></div>
-   <div class="graphBox"><div class="graphTitle">Financial Projection Graph</div><canvas id="projectionCanvas" width="660" height="260"></canvas><input id="projectionScroll" type="range" min="0" max="0" value="0"><div class="caption" id="projectionCaption"></div></div>
+   <div class="graphBox"><div class="graphTitle">Cash Balance Over Time</div><canvas id="projectionCanvas" width="660" height="260"></canvas><input id="projectionScroll" type="range" min="0" max="0" value="0"><div class="caption" id="projectionCaption"></div></div>
   </div>
 
   <div class="tabs">
@@ -149,7 +244,7 @@ textarea{width:100%;min-height:160px;border:2px inset var(--face);font-family:Ta
   <div id="tabCosts" class="tabPage"><div class="cardGrid" id="costPanel"></div></div>
   <div id="tabNotes" class="tabPage"><div class="grid2"><textarea id="marketingNotes" placeholder="Marketing notes..."></textarea><textarea id="qualityNotes" placeholder="Quality / labour / safety notes..."></textarea></div></div>
  </div>
- <div class="statusbar"><div class="statusCell" id="status">Ready.</div><div class="statusCell" id="runClock">Stopped</div><div class="statusCell">Scheduled payroll, debt service, and supplier payments enabled</div></div>
+ <div class="statusbar"><div class="statusCell" id="status">Ready.</div><div class="statusCell" id="runClock">Stopped</div><div class="statusCell">File menu mockup and cash-balance graph enabled</div></div>
 </div>
 
 <script>
@@ -308,8 +403,16 @@ function pause(){if(timer){clearInterval(timer);timer=null}$("runClock").textCon
 function fast(){for(let i=0;i<30;i++)runStep()}
 function statusObj(){let m=daily(),c=m.revPer-m.varPer,req=c>0?m.fixedCost/c:Infinity,per=sim.day?sim.units/sim.day:m.units;if(c<=0)return["Not viable","bad"];if(sim.cash<0)return["Funding needed","warn"];if(sim.profit>0||per>=req)return["Viable","ok"];return["Needs fix","warn"]}
 function render(){capture();$("ownerEquity").value=n("totalAssets")-n("totalLiabilities");let total=sim.varCost+sim.fixedCost+(sim.payrollExpense||0)+(sim.interestExpense||0),st=statusObj();$("dayBox").textContent=sim.day;$("cashBox").textContent=money(sim.cash);$("revBox").textContent=money(sim.revenue);$("costBox").textContent=money(total);$("opBox").textContent=money(sim.operatingProfit);$("taxBox").textContent=money(sim.taxes);$("netBox").textContent=money(sim.profit);$("statusBox").textContent=st[0];$("statusBox").className=st[1];updateTitle();renderProps();renderLedger();renderOversight();renderGraphs();renderPanels();renderAudit();renderFixes();renderCustomer();renderCosts()}
-function updateTitle(){if($("titleText"))$("titleText").textContent="Business Simulator V8.7 - "+(($("scenarioName")?.value)||"Scenario")+".bzsm"}
-function renderProps(){$("scenarioProps").innerHTML=`<b>${profile.name}</b><br>Engine: ${profile.type}<br>Scenario: ${$("scenarioName").value}<br>${isHotel()?`Total rooms: ${totalRooms()}<br>Singles: ${profile.singles}<br>Doubles: ${profile.doubles}<br>Bridal: ${profile.bridal}<br>Presidential: ${profile.presidential}<br>Occupancy target: ${pct(profile.occupancyRate)}`:`Demand/day: ${profile.demandPerDay}<br>Capacity/day: ${profile.capacityPerDay}`}<br>Debt balance: ${money(sim.debtBalance||profile.debtBalance||0)}<br>Payroll: ${money(profile.payrollPerPeriod||0)} every ${profile.payrollFrequencyDays||0} days<br>Supplier pay every: ${profile.supplierPayEveryDays||0} days<br>Monthly debt pmt: ${money(profile.monthlyDebtPayment||0)}<br>Last day: ${sim.day}`;}
+function updateTitle(){if($("titleText"))$("titleText").textContent="Business Simulator V8.8 - "+(($("scenarioName")?.value)||"Scenario")+".bzsm"}
+function renderProps(){
+ $("scenarioProps").innerHTML=`<b>${profile.name}</b><br>Engine: ${profile.type}<br>Scenario: ${$("scenarioName").value}<br>${isHotel()?`Total rooms: ${totalRooms()}<br>Singles: ${profile.singles}<br>Doubles: ${profile.doubles}<br>Bridal: ${profile.bridal}<br>Presidential: ${profile.presidential}<br>Occupancy target: ${pct(profile.occupancyRate)}`:`Demand/day: ${profile.demandPerDay}<br>Capacity/day: ${profile.capacityPerDay}`}<hr>
+ <b>Finance / Schedule</b><br>
+ Debt balance: ${money(sim.debtBalance||profile.debtBalance||0)}<br>
+ Payroll: ${money(profile.payrollPerPeriod||0)} every ${profile.payrollFrequencyDays||0} days<br>
+ Supplier pay every: ${profile.supplierPayEveryDays||0} days<br>
+ Monthly debt pmt: ${money(profile.monthlyDebtPayment||0)}<br>
+ Last day: ${sim.day}`;
+}
 function renderLedger(){
  $("ledgerBody").innerHTML=sim.ledger.slice(-18).reverse().map(x=>{
   let rowStyle=x.roomNo==='PAYROLL'?' class="payRow"':(x.roomNo==='DEBT SERVICE'?' class="debtRow"':(x.roomNo==='SUPPLIER PAY'?' class="supplierRow"':''));
@@ -342,7 +445,55 @@ function oversight(){
 }
 function renderOversight(){$("oversightBody").innerHTML=oversight().map(r=>`<tr><td>${r[0]}</td><td class="${r[1]?"ok":"bad"}">${r[1]?"OK":"CHECK"}</td><td>${r[2]}</td></tr>`).join("")}
 function drawBE(){let c=$("breakEvenCanvas"),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);let m=daily(),price=m.revPer,varc=m.varPer,fixed=m.fixedCost,contribution=price-varc,be=contribution>0?fixed/contribution:Infinity,maxU=Math.max(10,sim.units/(sim.day||1)*1.8,isFinite(be)?be*1.8:10),maxY=Math.max(maxU*price,fixed+maxU*varc,fixed)*1.12,L=60,R=25,T=18,B=35;let X=u=>L+(w-L-R)*(u/maxU),Y=v=>h-B-(h-B-T)*(v/maxY);ctx.font="11px Tahoma";ctx.strokeStyle="#222";ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();for(let i=0;i<=4;i++){let v=maxY*i/4,yy=Y(v);ctx.strokeStyle="#ddd";ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(w-R,yy);ctx.stroke();ctx.fillStyle="#555";ctx.fillText(money(v),3,yy+4);let u=maxU*i/4,xx=X(u);ctx.fillText(u.toFixed(1),xx-8,h-B+14)}function line(y1,y2,color,name){ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(0),Y(y1));ctx.lineTo(X(maxU),Y(y2));ctx.stroke();ctx.fillStyle=color;ctx.fillText(name,w-125,Y(y2)+4)}line(0,maxU*price,"#1f5bd6","Revenue");line(fixed,fixed+maxU*varc,"#ff8a00","Total cost");line(fixed,fixed,"#b00020","Fixed cost");if(isFinite(be)){ctx.setLineDash([5,5]);ctx.strokeStyle="#444";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X(be),Y(0));ctx.lineTo(X(be),Y(fixed+be*varc));ctx.lineTo(L,Y(fixed+be*varc));ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#111";ctx.fillText("Break-even: "+be.toFixed(2)+" rentals/day",Math.min(X(be)+5,w-180),Y(fixed+be*varc)-6)}$("breakEvenCaption").textContent=`Break-even = daily fixed cost ${money(fixed)} ÷ average contribution ${money(contribution)} = ${isFinite(be)?be.toFixed(2):"n/a"} rentals/day.`}
-function drawProjection(){let c=$("projectionCanvas"),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);let m=daily(),duration=Math.max(365,n("durationDays")),windowDays=365,start=Number($("projectionScroll").value)||0,avgDailyProfit=(sim.day?sim.profit/sim.day:m.profit);if(duration<=windowDays){$("projectionScroll").max=0;start=0}else{$("projectionScroll").max=duration-windowDays;if(start>duration-windowDays)start=duration-windowDays}let end=Math.min(duration,start+windowDays),pts=[];for(let d=start;d<=end;d+=Math.max(1,Math.round((end-start)/80)))pts.push({x:d,y:avgDailyProfit*d});pts.push({x:end,y:avgDailyProfit*end});let maxY=Math.max(10,...pts.map(p=>p.y),0),minY=Math.min(0,...pts.map(p=>p.y)),pad=(maxY-minY)*.1;maxY+=pad;minY-=pad;let L=60,R=25,T=18,B=35,X=x=>L+(w-L-R)*((x-start)/(end-start||1)),Y=y=>h-B-(h-B-T)*((y-minY)/(maxY-minY||1));ctx.font="11px Tahoma";ctx.strokeStyle="#222";ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();for(let i=0;i<=4;i++){let v=minY+(maxY-minY)*i/4,yy=Y(v);ctx.strokeStyle="#ddd";ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(w-R,yy);ctx.stroke();ctx.fillStyle="#555";ctx.fillText(money(v),3,yy+4);let d=start+(end-start)*i/4,xx=X(d);ctx.fillText(Math.round(d),xx-8,h-B+14)}ctx.strokeStyle=m.profit>=0?"#16802c":"#b00020";ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(X(p.x),Y(p.y)):ctx.moveTo(X(p.x),Y(p.y)));ctx.stroke();ctx.fillStyle=m.profit>=0?"#16802c":"#b00020";ctx.fillText("Projected net profit/loss",w-155,T+12);$("projectionCaption").textContent=`Showing days ${Math.round(start)} to ${Math.round(end)} of ${duration}. Projection uses average scheduled net profit ${money(avgDailyProfit)}/day.`}
+function drawProjection(){
+ let c=$("projectionCanvas"),ctx=c.getContext("2d"),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);
+ let duration=Math.max(365,n("durationDays"));
+ let windowDays=365;
+ let start=Number($("projectionScroll").value)||0;
+ if(duration<=windowDays){$("projectionScroll").max=0;start=0}else{$("projectionScroll").max=duration-windowDays;if(start>duration-windowDays)start=duration-windowDays}
+ let end=Math.min(duration,start+windowDays);
+
+ // Actual cash history plus a simple forward continuation from latest daily cash trend.
+ let pts=[];
+ let hist=sim.history||[];
+ hist.forEach(x=>{if(x.day>=start&&x.day<=end)pts.push({x:x.day,y:x.cash,actual:true})});
+ if(pts.length===0 && sim.day===0)pts.push({x:0,y:profile.startCash,actual:true});
+ let lastCash=sim.cash;
+ let lastDay=sim.day;
+ let trend=sim.day>0?(sim.cash-profile.startCash)/sim.day:daily().profit;
+ let from=Math.max(start,lastDay);
+ if(lastDay<end){
+   if(lastDay>=start)pts.push({x:lastDay,y:lastCash,actual:true});
+   for(let d=Math.max(lastDay+1,start);d<=end;d+=Math.max(1,Math.round((end-start)/80))){
+     pts.push({x:d,y:lastCash+trend*(d-lastDay),actual:false});
+   }
+   pts.push({x:end,y:lastCash+trend*(end-lastDay),actual:false});
+ }
+ pts=pts.sort((a,b)=>a.x-b.x);
+ let vals=pts.map(p=>p.y);
+ let maxY=Math.max(profile.startCash,10,...vals),minY=Math.min(0,...vals),pad=(maxY-minY)*.1||1000;maxY+=pad;minY-=pad;
+ let L=60,R=25,T=18,B=35,X=x=>L+(w-L-R)*((x-start)/(end-start||1)),Y=y=>h-B-(h-B-T)*((y-minY)/(maxY-minY||1));
+ ctx.font="11px Tahoma";ctx.strokeStyle="#222";ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();
+ for(let i=0;i<=4;i++){let v=minY+(maxY-minY)*i/4,yy=Y(v);ctx.strokeStyle="#ddd";ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(w-R,yy);ctx.stroke();ctx.fillStyle="#555";ctx.fillText(money(v),3,yy+4);let d=start+(end-start)*i/4,xx=X(d);ctx.fillText(Math.round(d),xx-8,h-B+14)}
+ // zero line
+ if(minY<0&&maxY>0){ctx.strokeStyle="#b00020";ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(L,Y(0));ctx.lineTo(w-R,Y(0));ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#b00020";ctx.fillText("$0 cash",w-80,Y(0)-4)}
+ // actual segment
+ let actual=pts.filter(p=>p.actual);
+ if(actual.length>1){ctx.strokeStyle="#16802c";ctx.lineWidth=3;ctx.beginPath();actual.forEach((p,i)=>i?ctx.lineTo(X(p.x),Y(p.y)):ctx.moveTo(X(p.x),Y(p.y)));ctx.stroke();}
+ // forecast segment
+ let forecast=pts.filter(p=>!p.actual);
+ if(forecast.length>1){ctx.strokeStyle="#333";ctx.setLineDash([6,4]);ctx.lineWidth=2;ctx.beginPath();forecast.forEach((p,i)=>i?ctx.lineTo(X(p.x),Y(p.y)):ctx.moveTo(X(p.x),Y(p.y)));ctx.stroke();ctx.setLineDash([]);}
+ // event markers for scheduled payments in visible range
+ let events=(sim.ledger||[]).filter(x=>x.day>=start&&x.day<=end&&(x.roomNo==="PAYROLL"||x.roomNo==="DEBT SERVICE"||x.roomNo==="SUPPLIER PAY"));
+ events.slice(-80).forEach(ev=>{
+   let h=sim.history.find(x=>x.day===ev.day); if(!h)return;
+   ctx.strokeStyle=ev.roomNo==="PAYROLL"?"#9a6500":(ev.roomNo==="DEBT SERVICE"?"#a00000":"#0a246a");
+   ctx.beginPath();ctx.moveTo(X(ev.day),Y(h.cash)-5);ctx.lineTo(X(ev.day),Y(h.cash)+5);ctx.stroke();
+ });
+ ctx.fillStyle="#16802c";ctx.fillText("Actual cash",w-140,T+12);
+ ctx.fillStyle="#333";ctx.fillText("Dashed = simple continuation",w-190,T+26);
+ $("projectionCaption").textContent=`Showing cash balance days ${Math.round(start)} to ${Math.round(end)} of ${duration}. Payroll, supplier, and debt-service events are marked with short ticks.`;
+}
 function renderGraphs(){drawBE();drawProjection()}
 function renderPanels(){let m=daily(),panels=isHotel()?[["Room Inventory",`Total rooms: ${totalRooms()}<br>Singles: ${profile.singles}<br>Doubles: ${profile.doubles}<br>Bridal: ${profile.bridal}<br>Presidential: ${profile.presidential}`,"roomInventory = singles + doubles + bridal + presidential"],["Daily Rental Draw",`Occupancy target: ${pct(profile.occupancyRate)}<br>Rentals/day: ${m.units}<br>No same-room duplicate per day.`,"dailyRentals = randomUniqueRooms(roomInventory, occupancyRate)"],["Room Revenue",`Average realized rate/day: ${money(m.revPer)}<br>Daily revenue: ${money(m.revenue)}`,"dailyRevenue = sum(rentedRoom.rate)"],["Profit",`Variable cost: ${money(m.varCost)}<br>Fixed cost: ${money(m.fixedCost)}<br>Net profit/day: ${money(m.profit)}`,"netProfit = revenue - variableCost - fixedCost - tax"]]:[["Demand",`Demand/day: ${profile.demandPerDay}<br>Quality: ${pct(profile.serviceQuality)}`,"qualifiedDemand = demandPerDay × serviceQuality"],["Capacity",`Capacity/day: ${profile.capacityPerDay}<br>Paid units/day: ${m.units.toFixed(2)}`,"paidUnits = min(capacity, qualifiedDemand)"],["Cost",`Variable/unit: ${money(m.varPer)}<br>Fixed/day: ${money(m.fixedCost)}`,"dailyCost = units × variableCostPerUnit + fixedCostPerDay"],["Profit",`Revenue/unit: ${money(m.revPer)}<br>Daily net: ${money(m.profit)}`,"netProfit = revenue - variableCost - fixedCost - tax"]];$("processPanels").innerHTML=panels.map(p=>`<div class="card"><h3>${p[0]}</h3><div>${p[1]}</div><div class="eq">${p[2]}</div></div>`).join("")}
 function renderAudit(){
@@ -380,6 +531,15 @@ debtBalance -= principal</div></div>`;
 function saveRun(){capture();localStorage.setItem("bizsim86_"+$("scenarioName").value,JSON.stringify({profile,currentKey,sim}));status("Saved run.")}
 function loadRun(){let key=prompt("Run name?");let raw=localStorage.getItem("bizsim86_"+key);if(raw){let d=JSON.parse(raw);profile=d.profile;sim=d.sim;fillInputs();render();status("Loaded run.")}}
 function exportJson(){capture();let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify({profile,currentKey,sim},null,2)],{type:"application/json"}));a.download=($("scenarioName").value||"scenario")+".json";a.click()}
+function menuAction(msg){status(msg);}
+function showOpenDialog(){document.getElementById("openDialog").style.display="block";status("Open Saved Scenario dialog displayed. This is a simulated file menu for now.");}
+function hideOpenDialog(){document.getElementById("openDialog").style.display="none";}
+function activateTab(id){
+ document.querySelectorAll(".tabBtn,.tabPage").forEach(x=>x.classList.remove("active"));
+ let btn=[...document.querySelectorAll(".tabBtn")].find(b=>b.dataset.tab===id);
+ if(btn)btn.classList.add("active");
+ if($(id))$(id).classList.add("active");
+}
 function init(){let opts=Object.keys(PROFILES).map(k=>`<option value="${k}">${PROFILES[k].name}</option>`).join("");$("profile").innerHTML=opts;$("profile").onchange=e=>loadProfile(e.target.value);$("start").onclick=start;$("pause").onclick=pause;$("stop").onclick=pause;$("reset").onclick=()=>{pause();resetSim()};$("step").onclick=runStep;$("fast").onclick=fast;$("saveRun").onclick=saveRun;$("loadRun").onclick=loadRun;$("exportJson").onclick=exportJson;$("projectionScroll").oninput=drawProjection;document.querySelectorAll(".tabBtn").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabBtn,.tabPage").forEach(x=>x.classList.remove("active"));b.classList.add("active");$(b.dataset.tab).classList.add("active")});document.addEventListener("input",e=>{if(e.target.tagName==="INPUT"||e.target.tagName==="SELECT")render()});loadProfile(currentKey)}
 init();
 </script>
