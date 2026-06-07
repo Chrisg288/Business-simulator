@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.3.2</title>
+<title>Economy Master Interface v2.4</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -28,7 +28,7 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.3.2</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>New</strong> persistent Activity Tool</span><span class="badge"><strong>Grid</strong> dense + resizable columns</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
+  <div class="title"><h1>Economy Master Interface v2.4</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>New</strong> persistent Activity Tool</span><span class="badge"><strong>Grid</strong> dense + resizable columns</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
   <div class="principle"><strong>Context hierarchy:</strong> center selection → tree node → sector/scope/overlay → startup. The interface is the workshop; the large library comes later.</div>
 </header>
 <div class="ribbon">
@@ -143,6 +143,353 @@ function raiseVRQ(){const n=contextTitle();app.events.unshift({lvl:'hi',icon:'!'
 function clearSelection(){app.selectedCenterId=null;app.selectedCenterType=null;render()}
 function wireButtons(){document.getElementById('newObjBtn').onclick=()=>openEditor('new');document.getElementById('editObjBtn').onclick=()=>openEditor('edit');document.getElementById('actNew').onclick=()=>openEditor('new');document.getElementById('actEdit').onclick=()=>openEditor('edit');document.getElementById('moreEditor').onclick=()=>openEditor('edit');document.getElementById('saveAllBtn').onclick=saveAll;document.getElementById('actSave').onclick=saveAll;document.getElementById('raiseVRQBtn').onclick=raiseVRQ;document.getElementById('clearBtn').onclick=clearSelection;document.getElementById('exportBtn').onclick=exportJSON;document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();document.getElementById('importFile').onchange=e=>{if(e.target.files[0])importJSONFile(e.target.files[0])};document.getElementById('closeModal').onclick=closeEditor;document.getElementById('saveObj').onclick=saveEditor;document.getElementById('deleteObj').onclick=deleteCustom;document.getElementById('actOpen').onclick=()=>openEditor('edit');document.getElementById('actSim').onclick=()=>switchTool('Simulate');document.getElementById('actAssess').onclick=()=>switchTool('Assess');document.getElementById('actDoc').onclick=()=>{app.evidence.unshift('REC | Document action requested for '+contextTitle()+' | Draft');renderBottom()}}
 function render(){renderBars();renderScopes();renderTree();renderContextBar();renderWorkspace();renderInspector();renderBottom()}
+
+// ---------------- v2.4 Comparator tree + class-specific datagrid override ----------------
+// This block intentionally leaves the approved layout, dense grid styling, resizing, sorting,
+// Activity Tool persistence, VRQ stream, and inspector hierarchy unchanged.
+const v24RecordChildren=[
+  makeNode('bid_records','Bid Records','record-folder',''),
+  makeNode('transaction_records','Transaction Records','record-folder','')
+];
+function objectSetChildren(sec,prefix){
+  const bid=makeNode(prefix+'_bid_records','Bid Records','record-folder',sec,[
+    makeNode(prefix+'_bid_history','Bid History','record-detail',sec,[]),
+    makeNode(prefix+'_bid_evidence','Bid Evidence / Attachments','record-detail',sec,[])
+  ]);
+  const tx=makeNode(prefix+'_transaction_records','Transaction Records','record-folder',sec,[
+    makeNode(prefix+'_transaction_history','Transaction History','record-detail',sec,[]),
+    makeNode(prefix+'_transaction_evidence','Evidence / Attachments','record-detail',sec,[]),
+    makeNode(prefix+'_transaction_invoices','Invoices / Receipts','record-detail',sec,[]),
+    makeNode(prefix+'_transaction_outcomes','Outcome / Ownership Records','record-detail',sec,[])
+  ]);
+  return [
+    makeNode(prefix+'_offers','Offers / Listings','object-set',sec,[]),
+    makeNode(prefix+'_bids','Bids','object-set',sec,[]),
+    makeNode(prefix+'_records','Records','object-set',sec,[bid,tx])
+  ];
+}
+const v24Catalog={
+'Human / Consumer': ['Needs & Life Domains', {
+  'Shelter': {
+    'Rent': ['Apartments','Basement Suites','Rooms','Houses','Short-term Rentals'],
+    'Ownership': ['Detached Houses','Condos','Townhouses','Modular Homes','Land'],
+    'Utilities': ['Electricity','Natural Gas','Water / Sewer','Internet','Waste / Recycling'],
+    'Maintenance': ['Plumbing Repair','Electrical Repair','Roofing','HVAC Service','Appliance Repair']
+  },
+  'Transportation': {
+    'Road Vehicles': ['Passenger Vehicles','Pickup Trucks','SUVs','Vans / Minivans','Motorcycles'],
+    'Vehicle Support': ['Tires','Auto Parts','Repair Shops','Insurance','Registration'],
+    'Public / Shared Mobility': ['Bus Passes','Train Tickets','Ride Share','Taxi','Car Share'],
+    'Travel': ['Flights','Hotels','Rental Cars','Campgrounds','Travel Insurance']
+  },
+  'Food': {
+    'Groceries': ['Produce','Meat / Fish','Dairy','Pantry Goods','Frozen Foods'],
+    'Prepared Food': ['Restaurants','Takeout','Meal Kits','Catering','Coffee Shops'],
+    'Home Production': ['Garden Seeds','Soil / Compost','Greenhouses','Canning Supplies','Food Storage'],
+    'Nutrition': ['Diet Plans','Supplements','Allergy Foods','Senior Meals','Child Nutrition']
+  },
+  'Health': {
+    'Primary Care': ['Family Doctors','Walk-in Clinics','Nurse Practitioners','Telehealth','Urgent Care'],
+    'Dental / Vision': ['Dental Cleaning','Dentures','Eye Exams','Glasses','Contact Lenses'],
+    'Fitness': ['Gyms','Home Exercise Equipment','Personal Trainers','Sports Programs','Physiotherapy'],
+    'Pharmacy / Support': ['Prescription Services','OTC Medicine','Mobility Aids','Home Care','Mental Health Counselling']
+  },
+  'Income & Work': {
+    'Employment': ['Full-time Jobs','Part-time Jobs','Contract Jobs','Remote Work','Seasonal Work'],
+    'Self Employment': ['Freelance Services','Home Business','Trades Services','Online Sales','Consulting'],
+    'Training': ['College Courses','Certifications','Apprenticeships','Online Courses','Workshops'],
+    'Tools / Equipment': ['Work Trucks','Tools','Software','Safety Gear','Office Equipment']
+  }
+}],
+'Market / Exchange': ['Exchange Classification', {
+  'Listings & Channels': {
+    'Classified Channels': ['Vehicle Classifieds','Rental Classifieds','Job Boards','Equipment Listings','Service Directories'],
+    'Retail Channels': ['Local Stores','Online Stores','Dealers','Distributors','Wholesalers'],
+    'Auction / Tender': ['Auctions','Reverse Auctions','Tenders','Requests For Quote','Liquidations'],
+    'Brokered Exchange': ['Real Estate Brokers','Insurance Brokers','Freight Brokers','Business Brokers','Mortgage Brokers']
+  },
+  'Pricing & Discovery': {
+    'Price Types': ['Asking Price','Bid Price','Sold Price','Reserve Price','Recurring Price'],
+    'Adjustment Types': ['Discounts','Fees','Taxes','Rebates','Delivery Charges'],
+    'Value Signals': ['Availability','Quality Rating','Risk Rating','Evidence Strength','Seller Reputation'],
+    'Comparison Views': ['Shortlists','Watchlists','Saved Searches','Ranking Rules','Decision Matrices']
+  },
+  'Transaction Flow': {
+    'Buyer States': ['Want / Need','Plan','Seek','Evaluate','Accept'],
+    'Seller States': ['Post','Revise','Counter','Reserve','Close'],
+    'Contract States': ['Pending','Accepted','Rejected','Modified','Cancelled'],
+    'Delivery States': ['Pickup','Shipment','Installation','Service Delivery','Completion']
+  },
+  'Market Participants': {
+    'Buyers': ['Consumers','Businesses','Governments','Nonprofits','Agents'],
+    'Sellers': ['Private Sellers','Retailers','Service Providers','Manufacturers','Public Agencies'],
+    'Intermediaries': ['Brokers','Platforms','Inspectors','Escrow Services','Review Sites'],
+    'Regulators': ['Licensing Bodies','Inspectors','Courts','Ombudsmen','Standards Bodies']
+  },
+  'Exchange Records': {
+    'Offer Records': ['Listing Changes','Price Changes','Availability Changes','Seller Replies','Evidence Updates'],
+    'Bid Records': ['Submitted Bids','Counter Bids','Withdrawn Bids','Accepted Bids','Rejected Bids'],
+    'Transaction Records': ['Contracts','Payments','Receipts','Delivery Proof','Outcome Notes'],
+    'Learning Records': ['Saved Comparisons','Decision Reasons','Satisfaction Notes','Problem Reports','Resale Notes']
+  }
+}],
+'Business / Commercial': ['Commercial Classification', {
+  'Business Types': {
+    'Service Businesses': ['Auto Repair Shop','Hair Salon','Cleaning Company','Accounting Firm','Security Installer'],
+    'Manufacturing': ['Metal Fabrication','Cabinet Shop','Food Processing','Plastics Shop','Electronics Assembly'],
+    'Construction / Trades': ['General Contractor','Plumbing Contractor','Electrical Contractor','HVAC Contractor','Roofing Contractor'],
+    'Retail / Food': ['Convenience Store','Food Truck','Restaurant','Bakery','Online Retailer']
+  },
+  'Customers & Offers': {
+    'Customer Segments': ['Households','Small Business','Industrial Buyers','Public Buyers','Dealers'],
+    'Offer Types': ['Product Sale','Service Package','Subscription','Project Quote','Warranty / Support'],
+    'Problem Evidence': ['Interview Notes','Complaint Evidence','Search Demand','Competitor Reviews','Repeat Purchase'],
+    'Sales Channels': ['Direct Sales','Dealer Network','Online Marketplace','Distributor','Public Tender']
+  },
+  'Operations': {
+    'Departments': ['Sales','Engineering','Production','Service','Administration'],
+    'Workflows': ['Quote To Cash','Order Fulfillment','Service Call','Production Batch','Quality Check'],
+    'Capacity': ['Staff Hours','Machine Hours','Inventory Limits','Delivery Slots','Facility Space'],
+    'Quality / Safety': ['Inspection Plan','Rework Process','Safety Checklist','Warranty Claim','Corrective Action']
+  },
+  'Supply & Logistics': {
+    'Suppliers': ['Raw Materials','Purchased Components','Subcontractors','Freight Carriers','Tooling Suppliers'],
+    'Inventory': ['Stock Items','Critical Parts','Consumables','Work In Process','Finished Goods'],
+    'Purchasing': ['Purchase Orders','Supplier Quotes','Lead Times','Minimum Orders','Payment Terms'],
+    'Delivery': ['Local Delivery','LTL Freight','Courier','Customer Pickup','Installation']
+  },
+  'Business Records': {
+    'Financial Records': ['Invoices','Receipts','Payroll','Tax Filings','Bank Statements'],
+    'Customer Records': ['CRM Notes','Contracts','Support Tickets','Satisfaction Surveys','Reference Letters'],
+    'Compliance Records': ['Licenses','Permits','Insurance Certificates','Safety Records','Audit Results'],
+    'Assessment Records': ['Credit Modules','Evidence Gaps','Risk Scores','Mentor Notes','Improvement Plans']
+  }
+}],
+'Finance / Capital': ['Capital & Credit Classification', {
+  'Personal Credit': {
+    'Accounts': ['Chequing Accounts','Savings Accounts','Credit Cards','Lines Of Credit','Mortgages'],
+    'Loan Products': ['Auto Loans','Personal Loans','Student Loans','Home Equity Loans','Debt Consolidation'],
+    'Credit Factors': ['Payment History','Utilization','Income Proof','Collateral','Credit Score'],
+    'Personal Records': ['Statements','Payment Records','Credit Reports','Loan Agreements','Receipts']
+  },
+  'Business Capital': {
+    'Startup Capital': ['Founder Savings','Friends / Family Loans','Microloans','Grants','Angel Investment'],
+    'Working Capital': ['Operating Line','Inventory Financing','Invoice Factoring','Equipment Lease','Purchase Order Financing'],
+    'Growth Capital': ['Term Loans','Equity Investment','Revenue Financing','Strategic Partner','Public Funding'],
+    'Capital Records': ['Term Sheets','Security Agreements','Cap Tables','Repayment Records','Covenants']
+  },
+  'Investment Markets': {
+    'Public Markets': ['Stocks','Bonds','ETFs','Mutual Funds','Commodities'],
+    'Private Markets': ['Private Equity','Real Estate Funds','Private Debt','Limited Partnerships','Crowdfunding'],
+    'Return Measures': ['Yield','Capital Gain','Dividend','Cash Flow','Total Return'],
+    'Risk Measures': ['Volatility','Liquidity Risk','Default Risk','Inflation Risk','Currency Risk']
+  },
+  'Insurance / Risk': {
+    'Personal Insurance': ['Auto Insurance','Home Insurance','Tenant Insurance','Life Insurance','Disability Insurance'],
+    'Business Insurance': ['General Liability','Property Insurance','E&O Insurance','Cyber Insurance','Fleet Insurance'],
+    'Risk Transfer': ['Deductibles','Coverage Limits','Exclusions','Claims','Premiums'],
+    'Insurance Records': ['Policies','Claims','Photos','Adjuster Reports','Settlement Records']
+  },
+  'Payment Systems': {
+    'Payment Rails': ['Cash','Debit','Credit Card','E-Transfer','Wire Transfer'],
+    'Merchant Services': ['POS Terminals','Online Payments','Payment Gateway','Chargebacks','Batch Settlement'],
+    'Receivables': ['Invoices','Aging Reports','Collections','Deposits','Credit Notes'],
+    'Payables': ['Bills','Purchase Orders','Supplier Payments','Expense Claims','Tax Remittance']
+  }
+}],
+'Public / Government': ['Public Value Classification', {
+  'Public Services': {
+    'Health Services': ['Hospitals','Clinics','Public Health','Ambulance','Mental Health Services'],
+    'Education Services': ['Elementary Schools','High Schools','Colleges','Libraries','Adult Education'],
+    'Safety Services': ['Police','Fire Services','Emergency Management','Animal Control','Bylaw Enforcement'],
+    'Social Services': ['Income Support','Housing Support','Disability Support','Child Services','Senior Services']
+  },
+  'Regulation & Rights': {
+    'Permits': ['Building Permits','Business Licenses','Vehicle Registration','Development Permits','Special Event Permits'],
+    'Inspections': ['Health Inspection','Fire Inspection','Building Inspection','Vehicle Inspection','Workplace Safety Inspection'],
+    'Rights / Appeals': ['Ombudsman','Human Rights Complaint','Tenant Dispute','Consumer Complaint','Access To Information'],
+    'Enforcement': ['Fines','Orders','Hearings','Court Process','Compliance Agreements']
+  },
+  'Jurisdictions': {
+    'Federal': ['Tax Agency','Immigration','National Defense','Federal Programs','Federal Courts'],
+    'Provincial / State': ['Health Ministry','Education Ministry','Highways','Provincial Courts','Consumer Protection'],
+    'Municipal': ['Zoning','Water Services','Local Roads','Waste Collection','Transit Authority'],
+    'Intergovernmental': ['Agreements','Transfers','Joint Programs','Emergency Coordination','Shared Infrastructure']
+  },
+  'Infrastructure': {
+    'Transportation Infrastructure': ['Roads','Bridges','Rail','Airports','Ports'],
+    'Utility Infrastructure': ['Water Systems','Sewer Systems','Power Grid','Natural Gas Network','Telecom Network'],
+    'Public Buildings': ['City Halls','Schools','Hospitals','Courthouses','Recreation Centres'],
+    'Maintenance Programs': ['Snow Removal','Road Repair','Asset Management','Capital Projects','Emergency Repairs']
+  },
+  'Public Records': {
+    'Program Records': ['Applications','Approvals','Denials','Appeals','Renewals'],
+    'Financial Records': ['Budgets','Grants','Taxes','Fees','Public Accounts'],
+    'Performance Records': ['Audits','Service Metrics','Complaints','Outcome Reports','Public Consultations'],
+    'Legal Records': ['Bylaws','Regulations','Policies','Court Records','Notices']
+  }
+}]
+};
+function buildTaxonomy(){
+  const trees={};
+  sectors.filter(s=>s!=='Home').forEach(sec=>{
+    const root=makeNode(slug(sec)+'_root',sec,'sector',sec,[]);
+    const entry=v24Catalog[sec];
+    const domain=makeNode(slug(sec+' '+entry[0]),entry[0],'domain',sec,[]);
+    Object.entries(entry[1]).forEach(([groupName,categories])=>{
+      const group=makeNode(slug(sec+' '+entry[0]+' '+groupName),groupName,'group',sec,[]);
+      Object.entries(categories).forEach(([catName,classes])=>{
+        const cat=makeNode(slug(sec+' '+entry[0]+' '+groupName+' '+catName),catName,'category',sec,[]);
+        classes.forEach(cls=>{
+          const prefix=slug(sec+' '+entry[0]+' '+groupName+' '+catName+' '+cls);
+          const classNode=makeNode(prefix,cls,'class',sec,objectSetChildren(sec,prefix));
+          cat.children.push(classNode);
+        });
+        group.children.push(cat);
+      });
+      domain.children.push(group);
+    });
+    root.children.push(domain);
+    trees[sec]=root;
+  });
+  const home=makeNode('home_root','Economy Home','orientation','Home',sectors.filter(s=>s!=='Home').map(s=>makeNode(slug(s)+'_home',s,'sector-link','Home',[])));
+  trees.Home=home;
+  return trees;
+}
+function pathToNode(id,root=currentRoot(),path=[]){
+  if(!id)return null;
+  const next=path.concat(root);
+  if(root.id===id)return next;
+  for(const c of root.children||[]){const p=pathToNode(id,c,next);if(p)return p;}
+  return null;
+}
+function selectedPath(){return app.selectedNodeId?(pathToNode(app.selectedNodeId)||[]):[];}
+function selectedClass(){const p=selectedPath();for(let i=p.length-1;i>=0;i--){if(p[i].type==='class')return p[i];}return null;}
+function contextKind(){
+  const labels=selectedPath().map(n=>n.label);
+  if(labels.includes('Offers / Listings'))return 'offer';
+  if(labels.includes('Bids')||labels.includes('Bid Records')||labels.includes('Bid History')||labels.includes('Bid Evidence / Attachments'))return 'bid';
+  if(labels.includes('Records')||labels.includes('Transaction Records')||labels.includes('Transaction History')||labels.includes('Evidence / Attachments')||labels.includes('Invoices / Receipts')||labels.includes('Outcome / Ownership Records'))return 'transaction';
+  return 'offer';
+}
+function classLabel(){const c=selectedClass();return c?c.label:contextTitle();}
+function classTemplate(){
+  const path=selectedPath().map(n=>n.label).join(' > ').toLowerCase();
+  const label=classLabel().toLowerCase();
+  const vehicleWords=['passenger vehicles','pickup trucks','suvs','vans / minivans','motorcycles','tires','auto parts','repair shops','auto loans','auto insurance','vehicle classifieds','vehicle registration','vehicle inspection'];
+  if(vehicleWords.some(w=>path.includes(w)||label.includes(w)))return 'vehicle';
+  if(path.includes('shelter')||label.includes('apartments')||label.includes('houses')||label.includes('condos')||label.includes('rent')||label.includes('rooms')||label.includes('land'))return 'shelter';
+  if(path.includes('food')||path.includes('grocer')||label.includes('restaurants')||label.includes('meal'))return 'food';
+  if(path.includes('health')||label.includes('dental')||label.includes('clinics')||label.includes('physio'))return 'health';
+  if(path.includes('business')||path.includes('commercial')||label.includes('auto repair shop')||label.includes('metal fabrication')||label.includes('food truck')||label.includes('contractor'))return 'business';
+  if(path.includes('finance')||path.includes('capital')||path.includes('credit')||path.includes('loan')||label.includes('mortgages')||label.includes('stocks'))return 'finance';
+  if(path.includes('public')||path.includes('government')||path.includes('regulation')||path.includes('jurisdiction')||label.includes('permits'))return 'public';
+  return 'generic';
+}
+function standardColumns(){return ['ITEM','UID','STATUS','SELLER','AVAILABLE','ASK_PRICE','LOCATION','RISK','SCOPE'];}
+function templateColumns(template){
+  const m={
+    vehicle:['YEAR','MAKE','MODEL','TRIM','VIN','ODOMETER','ENGINE','TRANSMISSION','BODY','CERTIFIED','CONDITION'],
+    shelter:['ADDRESS','UNIT_TYPE','BEDROOMS','BATHS','SQFT','UTILITIES','LEASE_TERM','PARKING','PETS','DEPOSIT'],
+    food:['BRAND','SIZE','UNIT_PRICE','STORE','DELIVERY','EXPIRY','ORGANIC','DIET_TYPE','PACKAGE','QUALITY'],
+    health:['PROVIDER','SERVICE_TYPE','WAIT_TIME','COVERAGE','REFERRAL','DISTANCE','LICENSE','RATING','FOLLOWUP','COST_TYPE'],
+    business:['BUSINESS_TYPE','CUSTOMER_SEGMENT','OFFER_TYPE','REVENUE_MODEL','CAPACITY','LEAD_TIME','MARGIN','STAFF','LICENSE','QUALITY_SYSTEM'],
+    finance:['APR','TERM','PAYMENT','COLLATERAL','CREDIT_SCORE','FEES','LTV','RATE_TYPE','PENALTY','DOCUMENTS'],
+    public:['AGENCY','JURISDICTION','PROGRAM','ELIGIBILITY','DEADLINE','CONTACT','SERVICE_LEVEL','APPEAL','FEE','AUTHORITY'],
+    generic:['CATEGORY','SUBCLASS','FEATURES','QUALITY','CONDITION','TIME_VALUE','SYSTEM_VALUE','NOTES']
+  };
+  return m[template]||m.generic;
+}
+function gridColumns(){
+  const kind=contextKind(),template=classTemplate();
+  if(kind==='bid')return ['ITEM','UID','STATUS','SELLER','BUYER','OFFER_UID','BID_AMOUNT','BID_DATE','COUNTER_AMOUNT','EXPIRY','TERMS','LOCATION','RISK','SCOPE'].concat(templateColumns(template).slice(0,6));
+  if(kind==='transaction')return ['ITEM','UID','STATUS','SELLER','BUYER','OFFER_UID','BID_UID','ACCEPTED_PRICE','CONTRACT_DATE','PAYMENT_STATUS','DELIVERY_STATUS','OUTCOME','RECEIPT','EVIDENCE_REF','LOCATION','RISK','SCOPE'].concat(templateColumns(template).slice(0,6));
+  return standardColumns().concat(templateColumns(template));
+}
+function rowBase(i){
+  const label=classLabel();
+  return {__id:`row_${slug(app.activeSector)}_${slug(label)}_${contextKind()}_${i}`,ITEM:String(i).padStart(3,'0'),UID:`${slug(label).slice(0,4).toUpperCase()}-${String(i).padStart(4,'0')}`,STATUS:['FS','Review','Shortlist','Compare','Bid'][i-1]||'FS',SELLER:['Dealer 1001','Private 1002','Online 1003','Local 1004','Public 1005'][i-1],AVAILABLE:i===2?'Limited':'Yes',ASK_PRICE:'$'+(900+i*825).toLocaleString(),LOCATION:['Red Deer','Calgary','Edmonton','Springbrook','Online'][i-1],RISK:['Low','Medium','Review','Low','High'][i-1],SCOPE:app.activeScope,BUYER:'Chris / Sample Buyer',OFFER_UID:`OFF-${String(i).padStart(4,'0')}`,BID_UID:`BID-${String(i).padStart(4,'0')}`,BID_AMOUNT:'$'+(750+i*760).toLocaleString(),BID_DATE:`2026-06-${String(10+i).padStart(2,'0')}`,COUNTER_AMOUNT:i%2?'':'$'+(800+i*800).toLocaleString(),EXPIRY:`2026-06-${20+i}`,TERMS:['Subject to inspection','Cash / pickup','Finance approval','Counter requested','Hold pending records'][i-1],ACCEPTED_PRICE:'$'+(850+i*790).toLocaleString(),CONTRACT_DATE:`2026-06-${14+i}`,PAYMENT_STATUS:['Paid','Deposit','Pending','Refunded','Scheduled'][i-1],DELIVERY_STATUS:['Received','Pickup booked','Inspection pending','Delivered','Closed'][i-1],OUTCOME:['Accepted','In progress','Rejected','Completed','Problem noted'][i-1],RECEIPT:`REC-${String(i).padStart(4,'0')}`,EVIDENCE_REF:`EV-${String(i).padStart(4,'0')}`};
+}
+function vehicleRows(kind){
+  const offers=[
+    {YEAR:'2016',MAKE:'Honda',MODEL:'Civic',TRIM:'LX',VIN:'2HGFC2F59GH000001',ODOMETER:'147K',ENGINE:'2.0L',TRANSMISSION:'CVT',BODY:'Sedan',CERTIFIED:'YES',CONDITION:'Good',ASK_PRICE:'$9,850',SELLER:'Dealer 1001',LOCATION:'Red Deer'},
+    {YEAR:'2014',MAKE:'Toyota',MODEL:'Corolla',TRIM:'CE',VIN:'2T1BURHE4EC000002',ODOMETER:'182K',ENGINE:'1.8L',TRANSMISSION:'Auto',BODY:'Sedan',CERTIFIED:'-',CONDITION:'Fair',ASK_PRICE:'$7,400',SELLER:'Private 1002',LOCATION:'Calgary'},
+    {YEAR:'2018',MAKE:'Ford',MODEL:'F-150',TRIM:'XLT',VIN:'1FTEW1EP9JFA00003',ODOMETER:'156K',ENGINE:'2.7 EcoBoost',TRANSMISSION:'Auto',BODY:'Crew Cab',CERTIFIED:'YES',CONDITION:'Good',ASK_PRICE:'$24,900',SELLER:'Dealer 1003',LOCATION:'Edmonton'},
+    {YEAR:'2012',MAKE:'Dodge',MODEL:'Grand Caravan',TRIM:'SE',VIN:'2C4RDGBG8CR000004',ODOMETER:'211K',ENGINE:'3.6L',TRANSMISSION:'Auto',BODY:'Van',CERTIFIED:'-',CONDITION:'Review',ASK_PRICE:'$3,250',SELLER:'Private 1004',LOCATION:'Springbrook'},
+    {YEAR:'2020',MAKE:'Subaru',MODEL:'Outback',TRIM:'Touring',VIN:'4S4BTACC0L3000005',ODOMETER:'96K',ENGINE:'2.5L',TRANSMISSION:'CVT',BODY:'Wagon',CERTIFIED:'YES',CONDITION:'Excellent',ASK_PRICE:'$27,800',SELLER:'Dealer 1005',LOCATION:'Calgary'}];
+  return offers.map((o,idx)=>({ ...rowBase(idx+1), ...o, UID:`VEH-${String(idx+1).padStart(4,'0')}`, OFFER_UID:`VEH-OFF-${String(idx+1).padStart(4,'0')}`, BID_UID:`VEH-BID-${String(idx+1).padStart(4,'0')}`, STATUS: kind==='offer'?['FS','Review','Shortlist','Compare','FS'][idx]: kind==='bid'?['Submitted','Countered','Rejected','Draft','Accepted'][idx]:['Closed','Closed','Cancelled','Closed','Warranty'][idx], BID_AMOUNT:['$8,900','$6,800','$22,500','$2,800','$25,000'][idx], ACCEPTED_PRICE:['$9,300','$7,000','-','$3,000','$26,200'][idx], PAYMENT_STATUS:['Paid','Deposit','-','Paid','Pending'][idx], DELIVERY_STATUS:['Received','Pickup booked','-','Received','Inspection pending'][idx], OUTCOME:['Purchased','Negotiating','Rejected','Purchased / repair needed','Pending inspection'][idx]}));
+}
+function shelterRows(kind){
+  const offers=[
+    {ADDRESS:'48 Example Ave',UNIT_TYPE:'Apartment',BEDROOMS:'1',BATHS:'1',SQFT:'620',UTILITIES:'Heat incl.',LEASE_TERM:'12 mo',PARKING:'1 stall',PETS:'Cat OK',DEPOSIT:'$1,350',ASK_PRICE:'$1,350/mo',SELLER:'Landlord 1001',LOCATION:'Red Deer'},
+    {ADDRESS:'12 Basement Rd',UNIT_TYPE:'Basement Suite',BEDROOMS:'2',BATHS:'1',SQFT:'780',UTILITIES:'Shared',LEASE_TERM:'6 mo',PARKING:'Street',PETS:'No',DEPOSIT:'$1,100',ASK_PRICE:'$1,100/mo',SELLER:'Private 1002',LOCATION:'Springbrook'},
+    {ADDRESS:'70 Condo Way',UNIT_TYPE:'Condo',BEDROOMS:'2',BATHS:'2',SQFT:'910',UTILITIES:'Power extra',LEASE_TERM:'12 mo',PARKING:'Underground',PETS:'Small OK',DEPOSIT:'$1,525',ASK_PRICE:'$1,525/mo',SELLER:'Manager 1003',LOCATION:'Calgary'},
+    {ADDRESS:'5 Room St',UNIT_TYPE:'Room',BEDROOMS:'1',BATHS:'Shared',SQFT:'180',UTILITIES:'Included',LEASE_TERM:'Month',PARKING:'None',PETS:'No',DEPOSIT:'$650',ASK_PRICE:'$650/mo',SELLER:'Household 1004',LOCATION:'Edmonton'},
+    {ADDRESS:'99 House Lane',UNIT_TYPE:'House',BEDROOMS:'3',BATHS:'2',SQFT:'1280',UTILITIES:'Extra',LEASE_TERM:'12 mo',PARKING:'Driveway',PETS:'Negotiable',DEPOSIT:'$2,100',ASK_PRICE:'$2,100/mo',SELLER:'Agency 1005',LOCATION:'Red Deer'}];
+  return offers.map((o,idx)=>({ ...rowBase(idx+1), ...o, UID:`APT-${String(idx+1).padStart(4,'0')}`, OFFER_UID:`APT-OFF-${String(idx+1).padStart(4,'0')}`, BID_UID:`APT-BID-${String(idx+1).padStart(4,'0')}`, STATUS: kind==='offer'?['FS','Review','Shortlist','Compare','FS'][idx]:kind==='bid'?['Application','Countered','Submitted','Rejected','Accepted'][idx]:['Lease signed','Application pending','Rejected','Closed','Lease signed'][idx], BID_AMOUNT:['$1,300/mo','$1,050/mo','$1,475/mo','$600/mo','$2,000/mo'][idx], ACCEPTED_PRICE:['$1,325/mo','-','-','-','$2,050/mo'][idx], OUTCOME:['Lease active','Waiting on reply','Declined','Rejected','Move-in scheduled'][idx]}));
+}
+function businessRows(kind){
+  const rows=[
+    {BUSINESS_TYPE:'Auto Repair Shop',CUSTOMER_SEGMENT:'Local drivers',OFFER_TYPE:'Brake service',REVENUE_MODEL:'Service job',CAPACITY:'6 jobs/day',LEAD_TIME:'2 days',MARGIN:'42%',STAFF:'3 techs',LICENSE:'Municipal',QUALITY_SYSTEM:'Inspection checklist',ASK_PRICE:'$480',SELLER:'RepairCo 1001',LOCATION:'Red Deer'},
+    {BUSINESS_TYPE:'Auto Repair Shop',CUSTOMER_SEGMENT:'Fleet owner',OFFER_TYPE:'Preventive maintenance',REVENUE_MODEL:'Account',CAPACITY:'12 units/week',LEAD_TIME:'5 days',MARGIN:'35%',STAFF:'5 techs',LICENSE:'Municipal',QUALITY_SYSTEM:'Fleet log',ASK_PRICE:'$1,850',SELLER:'FleetFix 1002',LOCATION:'Calgary'},
+    {BUSINESS_TYPE:'Auto Repair Shop',CUSTOMER_SEGMENT:'Used vehicle buyer',OFFER_TYPE:'Pre-purchase inspection',REVENUE_MODEL:'Flat fee',CAPACITY:'4/day',LEAD_TIME:'1 day',MARGIN:'58%',STAFF:'2 techs',LICENSE:'Provincial',QUALITY_SYSTEM:'Photo report',ASK_PRICE:'$180',SELLER:'InspectAuto 1003',LOCATION:'Edmonton'},
+    {BUSINESS_TYPE:'Auto Repair Shop',CUSTOMER_SEGMENT:'RV owner',OFFER_TYPE:'Electrical diagnostic',REVENUE_MODEL:'Hourly',CAPACITY:'8 hr/day',LEAD_TIME:'3 days',MARGIN:'46%',STAFF:'1 specialist',LICENSE:'Trade cert',QUALITY_SYSTEM:'Test sheet',ASK_PRICE:'$125/hr',SELLER:'RV Tech 1004',LOCATION:'Springbrook'},
+    {BUSINESS_TYPE:'Auto Repair Shop',CUSTOMER_SEGMENT:'Commercial vans',OFFER_TYPE:'Transmission service',REVENUE_MODEL:'Service job',CAPACITY:'2/day',LEAD_TIME:'7 days',MARGIN:'31%',STAFF:'4 techs',LICENSE:'Municipal',QUALITY_SYSTEM:'Warranty review',ASK_PRICE:'$1,250',SELLER:'VanWorks 1005',LOCATION:'Red Deer'}];
+  return rows.map((o,idx)=>({ ...rowBase(idx+1), ...o, UID:`BUS-${String(idx+1).padStart(4,'0')}`, OFFER_UID:`BUS-OFF-${String(idx+1).padStart(4,'0')}`, BID_UID:`BUS-BID-${String(idx+1).padStart(4,'0')}`, STATUS:kind==='offer'?['FS','FS','Shortlist','Review','Compare'][idx]:kind==='bid'?['Requested','Quoted','Accepted','Countered','Review'][idx]:['Completed','Scheduled','Paid','Problem noted','Warranty'][idx], BID_AMOUNT:['$430','$1,650','$160','$110/hr','$1,100'][idx], ACCEPTED_PRICE:['$450','-','$170','-','$1,180'][idx], OUTCOME:['Completed','Open quote','Inspection received','Needs specialist','Scheduled'][idx]}));
+}
+function genericRows(kind){
+  const template=classTemplate(), extra=templateColumns(template), rows=[];
+  for(let i=1;i<=5;i++){
+    const r=rowBase(i);
+    extra.forEach((c,j)=>{ if(!(c in r)) r[c]=sampleValue(c,i,j); });
+    if(kind==='bid'){r.STATUS=['Submitted','Countered','Draft','Accepted','Rejected'][i-1];}
+    if(kind==='transaction'){r.STATUS=['Closed','Pending','Closed','Review','Archived'][i-1];}
+    rows.push(r);
+  }
+  return rows;
+}
+function sampleValue(c,i,j){
+  const values={CATEGORY:classLabel(),SUBCLASS:['A','B','C','D','E'][i-1],FEATURES:['Local','Warranty','Fast','Evidence','Low cost'][i-1],QUALITY:['Good','Fair','High','Review','Excellent'][i-1],CONDITION:['New','Used','Serviceable','Review','Good'][i-1],TIME_VALUE:['Soon','Flexible','Urgent','Scheduled','Open'][i-1],SYSTEM_VALUE:['Low','Medium','High','Linked','Unknown'][i-1],NOTES:'sample'};
+  if(values[c])return values[c];
+  if(c.includes('DATE')||c==='DEADLINE')return `2026-06-${String(10+i+j).padStart(2,'0')}`;
+  if(c.includes('PRICE')||c==='PAYMENT'||c==='FEE'||c==='FEES')return '$'+(100*i+25*j).toLocaleString();
+  if(c==='APR')return (5+i+j/10).toFixed(1)+'%';
+  if(c==='TERM')return (12*i)+' mo';
+  if(c==='CREDIT_SCORE')return String(560+i*25);
+  if(c==='LOCATION')return ['Red Deer','Calgary','Edmonton','Springbrook','Online'][i-1];
+  return [c+' A',c+' B',c+' C',c+' D',c+' E'][i-1]||'-';
+}
+function getGridRows(){
+  const kind=contextKind(), template=classTemplate(), label=classLabel();
+  let rows;
+  const path=selectedPath().map(n=>n.label).join(' > ');
+  if(template==='vehicle'&&label==='Passenger Vehicles')rows=vehicleRows(kind);
+  else if(template==='shelter'&&label==='Apartments')rows=shelterRows(kind);
+  else if(template==='business'&&label==='Auto Repair Shop')rows=businessRows(kind);
+  else rows=genericRows(kind);
+  return rows.slice(0,5).map((r,i)=>({...r,__id:`row_${slug(app.activeSector)}_${slug(path||label)}_${kind}_${i+1}`}));
+}
+function defaultGridWidths(cols){
+  const preset={ITEM:42,UID:82,STATUS:72,SELLER:95,BUYER:95,AVAILABLE:70,ASK_PRICE:78,LOCATION:78,RISK:56,SCOPE:64,OFFER_UID:90,BID_UID:90,BID_AMOUNT:78,BID_DATE:78,COUNTER_AMOUNT:92,EXPIRY:72,TERMS:125,ACCEPTED_PRICE:92,CONTRACT_DATE:88,PAYMENT_STATUS:92,DELIVERY_STATUS:96,OUTCOME:120,RECEIPT:70,EVIDENCE_REF:84,YEAR:48,MAKE:70,MODEL:90,TRIM:80,VIN:128,ODOMETER:70,ENGINE:90,TRANSMISSION:85,BODY:72,CERTIFIED:62,CONDITION:75,ADDRESS:130,UNIT_TYPE:95,BEDROOMS:70,BATHS:55,SQFT:55,UTILITIES:86,LEASE_TERM:75,PARKING:80,PETS:55,DEPOSIT:75};
+  return Object.fromEntries(cols.map(c=>[c,preset[c]||88]));
+}
+function renderDatagrid(){
+  const rows=sortedRows(getGridRows()),cols=gridColumns();
+  const key='dense_v24_'+classTemplate()+'_'+contextKind();
+  if(!app.gridWidths[key])app.gridWidths[key]=defaultGridWidths(cols);
+  cols.forEach(c=>{if(!app.gridWidths[key][c])app.gridWidths[key][c]=defaultGridWidths([c])[c];});
+  document.getElementById('workspace').innerHTML=`<div class="callout"><h3>Dense Datagrid — ${esc(contextTitle())}</h3><p>Class-specific Comparator grid: standard columns plus template fields for the selected class. Five sample records per node. Header click cycles: ascending ▲ → descending ▼ → original/order-added. ITEM preserves original record order.</p><p><b>${esc(sortLabel())}</b> <button class="miniBtn" onclick="clearGridSort()">Original Order</button> <span class="mini">Template: ${esc(classTemplate())}; record set: ${esc(contextKind())}</span></p></div><div class="gridShell"><table class="denseGrid" id="denseGrid"><colgroup>${cols.map(c=>`<col style="width:${app.gridWidths[key][c]}px">`).join('')}</colgroup><thead><tr>${cols.map(c=>`<th data-col="${esc(c)}" title="Click: ascending → descending → original order"><div class="thWrap">${esc(c)}${sortMark(c)}<span class="resizeHandle" data-resize="${esc(c)}"></span></div></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr class="${app.selectedCenterId===r.__id?'selected':''}" data-id="${esc(r.__id)}">${cols.map(c=>`<td>${esc(r[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  document.querySelectorAll('.denseGrid th[data-col]').forEach(th=>th.onclick=e=>{if(e.target.closest('.resizeHandle'))return;setGridSort(th.dataset.col)});
+  document.querySelectorAll('.denseGrid tbody tr').forEach(tr=>tr.onclick=()=>{app.selectedCenterId=tr.dataset.id;app.selectedCenterType='gridRow';render()});
+  initColumnResize(key,cols);
+}
+function renderCompare(){renderDatagrid();const h=document.querySelector('.callout h3'),p=document.querySelector('.callout p');if(h)h.textContent='Compare / Transact — '+contextTitle();if(p)p.textContent='Comparable offer, bid, or transaction rows. Select a row to inspect, bid, revise, accept, reject, document, or record an outcome.';}
+// Rebuild with the v2.4 taxonomy before initial render.
+trees=buildTaxonomy();
+attachCustomNodes();
+app.evidence.unshift('REC | v2.4 Comparator tree uses Offers / Listings, Bids, and Records; Evidence/VRQ/Models removed as standard top-level class children | Saved');
+// ---------------- end v2.4 override ----------------
+
 defaultSelectForSector();wireButtons();render();
 </script>
 </body>

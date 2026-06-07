@@ -1,46 +1,34 @@
-# Economy Master Overview v2.3 — GitHub-ready Prototype
+# Economy Master Overview v2.4 — GitHub-ready Prototype
 
 Date: 2026-06-07
 
-This build is focused on the durable interface framework, not on pretending the whole economy library is finished.
+This is a narrow update from v2.3.2 focused on the Comparator TreeView and class-specific dense datagrids.
 
-## Main corrections in v2.3
+## Preserved
 
-- Home opens with a smaller, fully visible clickable five-sector wheel.
-- Wheel regions drill into the matching sector.
-- Activity Tool selection persists until manually changed.
-- Sector changes do not reset the selected Activity Tool.
-- TreeView is always populated and has at least three meaningful levels under each sector.
-- Datagrid has been changed back to a dense legacy Comparator-style grid.
-- Datagrid uses visible row and column lines, 8 pt font, tight cell padding, many rows and columns.
-- Datagrid columns can be resized by dragging header boundaries.
-- Row height dragging is not implemented.
-- Inspector context hierarchy remains: center selection -> TreeView node -> sector/scope/overlay -> startup.
-- Object creation/editing now exists through the inspector actions and center toolbar.
-- Custom objects can be saved to browser storage, exported as JSON, and imported again.
-- VRQ/message streams remain one-line compact text rows.
+- Overall UI layout and modern style
+- Dense 8 pt legacy Comparator-style datagrid
+- Resizable datagrid columns
+- Three-state header sorting: ascending, descending, original order
+- Activity Tool persistence
+- Inspector context hierarchy
+- Compact one-line VRQ/event streams
 
-## Core interface doctrine
+## Changed
 
-```text
-Sector / Viewpoint × Activity Tool × Scope × Classification Tree × Selected Object
-```
+- Rebuilt the TreeView as a deeper Comparator-style classification structure.
+- Each sector now has 100 class leaves and more than 1,000 nodes when object-set children are included.
+- Standard class children are now: Offers / Listings, Bids, Records.
+- Evidence, invoices, history, and outcome records are nested under Records instead of being top-level class children.
+- Models and VRQs are not default TreeView children. Models are controlled by the Model tool. VRQs remain in the event/message stream.
+- Datagrid columns are class-specific: common comparator fields plus template fields for the selected class.
+- Each datagrid shows 5 sample records.
 
-The interface is the workshop. The large object/model library can be built later inside this framework.
+## Sample paths to inspect
 
-## Uploading to GitHub
-
-Upload these files/folders to the repository root and allow `index.html` and `README.md` to replace the existing versions.
-
-```text
-index.html
-README.md
-data/
-docs/
-```
-
-GitHub Pages URL after upload:
-
-```text
-https://chrisg288.github.io/Economy-Master-Overview/
-```
+- Human / Consumer > Needs & Life Domains > Transportation > Road Vehicles > Passenger Vehicles > Offers / Listings
+- Human / Consumer > Needs & Life Domains > Transportation > Road Vehicles > Passenger Vehicles > Bids
+- Human / Consumer > Needs & Life Domains > Transportation > Road Vehicles > Passenger Vehicles > Records > Transaction Records
+- Human / Consumer > Needs & Life Domains > Shelter > Rent > Apartments > Offers / Listings
+- Human / Consumer > Needs & Life Domains > Shelter > Rent > Apartments > Records > Transaction Records
+- Business / Commercial > Commercial Classification > Business Types > Service Businesses > Auto Repair Shop > Records > Transaction Records
