@@ -1,0 +1,19 @@
+{
+  "version": "0.2",
+  "inspector_context_order": [
+    "center_panel_selected_object",
+    "treeview_selected_node",
+    "sector_scope_overlay_context",
+    "startup_sector_button_explanation"
+  ],
+  "activity_tools": [
+    "Swimlane",
+    "Datagrid",
+    "Model",
+    "Simulate",
+    "Assess",
+    "Compare / Transact",
+    "Objects / Definitions"
+  ],
+  "tree_to_center_rule": "Selected TreeView Node × Activity Tool = Center Presentation"
+}

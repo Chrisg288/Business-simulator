@@ -1,0 +1,5 @@
+{
+  "vrq": "Value Reprioritization Request",
+  "row_display_rule": "one line of text per VRQ/message",
+  "fields": ["priority", "source", "target", "scope", "overlay", "handler", "status", "evidence_link"]
+}

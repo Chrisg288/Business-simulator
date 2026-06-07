@@ -1,43 +1,26 @@
-# Economy Master Overview v2.1 — GitHub-ready Prototype
+# Economy Master Overview v2.2 — GitHub-ready Prototype
 
 Date: 2026-06-07
 
-This build advances the Economy / Comparator / Business Simulation master interface from v2.0 by focusing on the **context hierarchy** and **sector-level swimlanes**.
+This root prototype demonstrates the updated Economy / Comparator / Business Simulation master interface.
 
-## Start URL after upload
+## v2.2 focus
 
-https://chrisg288.github.io/Economy-Master-Overview/
-
-## New in v2.1
-
-- Added a leftmost **Home** button before the Sector buttons.
-- Renamed **Government / Public** to **Public / Government**.
-- Home center panel now shows the five-sector wheel image.
-- Home TreeView corresponds to the five sector buttons:
-  - Human / Consumer
-  - Market / Exchange
-  - Business / Commercial
-  - Finance / Capital
-  - Public / Government
-- Added **Swimlane** as the first Activity Tool button.
-- Each sector now has stable top-level swimlanes.
-- Inspector panel now demonstrates the requested context hierarchy:
-  1. Center-panel selected object
-  2. TreeView selected node
-  3. Sector + Scope + Cross-sector Overlay
-  4. Startup / Sector button explanation
-- Replaced most interrupt language with **VRQ = Value Reprioritization Request**.
+- Home opens with a clickable five-sector economy wheel.
+- Sector row uses: Home, Human / Consumer, Market / Exchange, Business / Commercial, Finance / Capital, Public / Government.
+- Activity Tool row uses: Swimlane, Datagrid, Model, Simulate, Assess, Compare / Transact, Objects / Definitions.
+- TreeView remains populated for every sector.
+- Clicking a TreeView node changes the center workspace according to the selected Activity Tool.
+- Inspector follows the hierarchy: center selection, tree node, sector/scope/overlay, startup.
+- Bottom VRQ/message/evidence streams are compact one-line text rows.
+- Scope/overlay controls are compacted to leave more height for the TreeView.
 
 ## Upload instructions
 
-Upload/replace these root files and folders in the GitHub repo root:
+Upload these files into the root of the existing GitHub repo and allow `index.html` and `README.md` to overwrite the previous versions.
+
+Expected GitHub Pages URL:
 
 ```text
-index.html
-README.md
-assets/
-data/
-docs/
+https://chrisg288.github.io/Economy-Master-Overview/
 ```
-
-Keep existing folders such as `Business-Simulator/`, `Comparator-definitions/`, and `Prototypes/` unless intentionally pruning old history.
