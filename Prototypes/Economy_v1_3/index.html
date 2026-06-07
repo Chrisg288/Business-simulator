@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Economy Master Overview Prototype v1.3</title>
+<style>
+  :root {
+    --bg: #edf3f8;
+    --panel: #ffffff;
+    --panel2: #f7fafc;
+    --line: #d7e1ea;
+    --line2: #c1cfda;
+    --text: #1c2c38;
+    --muted: #647988;
+    --accent: #2e7fab;
+    --accent2: #0e5f86;
+    --good: #16a085;
+    --warn: #d68910;
+    --risk: #c0392b;
+    --shadow: 0 10px 28px rgba(31, 59, 79, 0.11);
+    --radius: 14px;
+    --mono: Consolas, "Courier New", monospace;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background: linear-gradient(145deg, #e7f0f7, #f6f9fb 58%, #e8f2f6);
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  .app {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 58px 44px 1fr 28px;
+    gap: 0;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(10px);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: radial-gradient(circle at 35% 28%, #7ed3ee, #2e7fab 58%, #164e69);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 8px 22px rgba(18,95,135,.28);
+  }
+
+  .brand-title {
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: .2px;
+  }
+
+  .brand-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-weight: 500;
+  }
+
+  .header-tools {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .pill {
+    border: 1px solid var(--line2);
+    background: var(--panel);
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 7px 11px;
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .topbar {
+    display: flex;
+    gap: 8px;
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--line);
+    background: #f8fbfd;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .modeBtn {
+    flex: 0 0 auto;
+    border: 1px solid var(--line2);
+    background: #fff;
+    color: #315162;
+    border-radius: 10px;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .14s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .modeBtn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(35,77,98,.11); }
+  .modeBtn.active {
+    background: linear-gradient(180deg, #247ba8, #17698f);
+    color: #fff;
+    border-color: #146486;
+    box-shadow: 0 6px 15px rgba(18,95,135,.24);
+  }
+  .modeBtn.tool.active { background: linear-gradient(180deg, #555f7a, #3e465d); border-color:#3c465d; }
+  .divider { width: 1px; background: var(--line2); margin: 3px 3px; flex: 0 0 auto; }
+  .section-label {
+    align-self: center;
+    font-size: 10px;
+    color: #8496a3;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    padding: 0 1px 0 4px;
+  }
+
+  .main {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 308px 1fr 326px;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .panel {
+    min-height: 0;
+    background: rgba(255,255,255,0.89);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-title {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 10px;
+    background: linear-gradient(180deg, #fff, #f6fafc);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .25px;
+  }
+
+  .panel-title span.small {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 650;
+  }
+
+  .tree-tools, .inspector-tools {
+    display: flex;
+    gap: 5px;
+  }
+  .iconbtn {
+    height: 22px;
+    min-width: 22px;
+    border: 1px solid var(--line2);
+    border-radius: 7px;
+    background: #fff;
+    color: #526977;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .treeSearch {
+    padding: 8px;
+    border-bottom: 1px solid var(--line);
+    background: #f7fafc;
+  }
+  .treeSearch input {
+    width: 100%;
+    border: 1px solid var(--line2);
+    border-radius: 8px;
+    padding: 7px 9px;
+    font-size: 12px;
+    outline: none;
+  }
+
+  .treewrap {
+    overflow: auto;
+    padding: 8px 6px 12px 8px;
+    font-size: 12px;
+    flex: 1;
+  }
+  .treeNode {
+    user-select: none;
+    margin: 1px 0;
+  }
+  .nodeRow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 22px;
+    padding: 2px 5px 2px 2px;
+    border-radius: 7px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nodeRow:hover { background: #eef5f9; }
+  .nodeRow.selected { background: #dceefa; outline: 1px solid #b9d8e8; }
+  .twisty {
+    width: 15px;
+    text-align: center;
+    color: #577080;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .nodeIcon { width: 16px; text-align:center; opacity:.84; }
+  .nodeText { overflow: hidden; text-overflow: ellipsis; }
+  .children { margin-left: 17px; display: none; }
+  .treeNode.open > .children { display: block; }
+
+  .workspace {
+    min-height: 0;
+    display: grid;
+    grid-template-rows: 68px 1fr;
+  }
+
+  .contextHeader {
+    border-bottom: 1px solid var(--line);
+    padding: 9px 12px;
+    background: linear-gradient(180deg, #ffffff, #f4f9fc);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .contextTitle {
+    font-weight: 800;
+    font-size: 16px;
+  }
+  .contextPath {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .matrixBadge {
+    border: 1px solid #bad3e2;
+    color: #2c6482;
+    background: #eef8fd;
+    border-radius: 11px;
+    padding: 7px 10px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .canvas {
+    overflow: auto;
+    padding: 16px;
+    background:
+      linear-gradient(rgba(32,83,112,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(32,83,112,.045) 1px, transparent 1px),
+      #f7fbfd;
+    background-size: 22px 22px;
+  }
+
+  .overviewGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(190px, 1fr));
+    gap: 12px;
+    max-width: 1040px;
+  }
+  .sectorCard, .toolCard, .valueCard, .block {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.95);
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(32,69,88,.09);
+  }
+  .sectorCard {
+    padding: 12px;
+    min-height: 126px;
+    cursor: pointer;
+    transition: .14s ease;
+    position: relative;
+  }
+  .sectorCard:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(32,69,88,.14); }
+  .sectorCard .kicker { font-size: 10px; color: #78909f; font-weight: 900; text-transform: uppercase; letter-spacing:.7px; }
+  .sectorCard h3 { margin: 7px 0 6px; font-size: 15px; }
+  .sectorCard p { margin: 0; color: #627a8a; font-size: 12px; line-height: 1.35; }
+  .sectorCard .minirow { display:flex; gap:5px; flex-wrap: wrap; margin-top:10px; }
+  .chip { font-size: 10px; padding: 3px 6px; border-radius: 999px; background: #eef4f8; border:1px solid #d9e6ed; color:#526b7a; font-weight:700; }
+
+  .humanGrid {
+    display: grid;
+    grid-template-columns: minmax(490px, 540px) minmax(430px, 1fr);
+    gap: 16px;
+    max-width: 1320px;
+    align-items: start;
+  }
+  .lifeWheelShell {
+    border-radius: 22px;
+    border: 1px solid #d3e1ea;
+    background: linear-gradient(180deg, #fbfdfe, #edf5f9);
+    min-height: 368px;
+    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.75), 0 10px 22px rgba(31,67,89,.10);
+    overflow: hidden;
+  }
+  .lifeWheelHeader {
+    position:absolute;
+    left:16px; right:16px; top:12px;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    z-index:5;
+    pointer-events:none;
+  }
+  .lifeWheelHeader strong {
+    font-size:12px;
+    color:#315c72;
+    letter-spacing:.2px;
+  }
+  .lifeWheelHint {
+    display:none;
+  }
+  .spinControls {
+    position:absolute;
+    right:10px; top:144px;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+    z-index:8;
+  }
+  .spinBtn {
+    border:1px solid #bcd3e0;
+    background:#fff;
+    color:#285d78;
+    border-radius:12px;
+    padding:10px 14px;
+    font-size:12px;
+    font-weight:900;
+    box-shadow:0 5px 12px rgba(34,75,98,.10);
+    cursor:pointer;
+    min-width: 78px;
+    text-align:center;
+  }
+  .spinBtn:hover { transform: translateY(-1px); box-shadow:0 8px 15px rgba(34,75,98,.16); }
+  .wheelCenter {
+    position:absolute;
+    left:220px; top:190px;
+    transform:translate(-50%,-50%);
+    width:94px; height:94px;
+    border-radius:50%;
+    background:linear-gradient(180deg,#ffffff,#e8f4fa);
+    border:1px solid #a9d0e2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#245f7d;
+    font-weight:950;
+    font-size:12px;
+    line-height:1.22;
+    box-shadow:0 10px 24px rgba(30,91,124,.13);
+    z-index:2;
+  }
+  .wheelRing {
+    position:absolute;
+    left:220px; top:190px;
+    width:290px; height:242px;
+    border:1px dashed rgba(46,127,171,.22);
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    z-index:1;
+  }
+  .wheelRing.inner {
+    width:150px; height:150px;
+    border-style: solid;
+    border-color: rgba(46,127,171,.14);
+  }
+  .domainOrb {
+    position:absolute;
+    min-width:42px;
+    min-height:22px;
+    padding:2px 5px;
+    border-radius:12px;
+    border:1px solid #c5dbe7;
+    background:rgba(255,255,255,.96);
+    font-size:8.5px;
+    font-weight:900;
+    text-align:center;
+    color:#345a6f;
+    box-shadow:0 5px 12px rgba(34,75,98,.10);
+    cursor:pointer;
+    z-index:3;
+    transition:left .22s ease, top .22s ease, transform .16s ease, background .14s ease, color .14s ease;
+    line-height:1.02;
+    white-space:nowrap;
+  }
+  .domainOrb:hover { transform:scale(1.05); box-shadow:0 8px 16px rgba(34,75,98,.16); }
+  .domainOrb.active {
+    background:linear-gradient(180deg,#2f83af,#17698f);
+    border-color:#17698f;
+    color:#fff;
+    transform:scale(1.08);
+    z-index:7;
+    box-shadow:0 10px 22px rgba(24,101,139,.27);
+  }
+  .domainOrb.near {
+    background:#f3fbfe;
+    border-color:#b5d6e7;
+  }
+  .domainPanel {
+    display:grid;
+    grid-template-rows:auto auto 1fr;
+    gap:12px;
+  }
+  .priorityCard {
+    padding:14px;
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 6px 16px rgba(31,67,89,.08);
+  }
+  .priorityCard h2 { margin:0 0 7px; font-size:18px; }
+  .priorityCard p { margin:0; color:var(--muted); font-size:12px; line-height:1.45; }
+  .domainQuickGrid {
+    display:grid;
+    grid-template-columns:repeat(3, minmax(96px,1fr));
+    gap:8px;
+  }
+  .quickButton {
+    border:1px solid #d2e1e9;
+    background:#fff;
+    border-radius:10px;
+    padding:8px 8px;
+    font-size:11px;
+    color:#375c6f;
+    font-weight:850;
+    text-align:left;
+    cursor:pointer;
+  }
+  .quickButton.primary { background:#eaf7fc; border-color:#b9d9e8; color:#17698f; }
+  .fourcols {
+    display:grid;
+    grid-template-columns:repeat(4, minmax(130px,1fr));
+    gap:10px;
+  }
+  .miniPanel {
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:#fff;
+    padding:10px;
+    min-height:134px;
+  }
+  .miniPanel h4 { margin:0 0 8px; font-size:12px; color:#244f65; }
+  .miniPanel ul { margin:0; padding-left:16px; color:#5d7482; font-size:11px; line-height:1.5; }
+
+  .diagram {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+    gap: 14px;
+    max-width: 1120px;
+  }
+  .lane {
+    border: 1px solid #cbdde8;
+    background: rgba(255,255,255,.95);
+    border-radius: 15px;
+    padding: 10px;
+    min-height: 510px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .lane h3 { margin:0; font-size:13px; color:#315c72; }
+  .block { padding: 10px; min-height: 86px; position:relative; }
+  .block h4 { margin:0 0 6px; font-size:12px; }
+  .block p { margin:0; color:#657b89; font-size:11px; line-height:1.3; }
+  .port { position:absolute; width:8px; height:8px; border-radius:50%; background:#2e7fab; border:1px solid #fff; box-shadow:0 0 0 1px #2e7fab; }
+  .port.left { left:-5px; top:50%; }
+  .port.right { right:-5px; top:50%; }
+
+  .gridTable {
+    width:100%;
+    border-collapse: collapse;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow: 0 5px 15px rgba(31,67,89,.08);
+    font-size:12px;
+  }
+  .gridTable th, .gridTable td {
+    border-bottom:1px solid #e4edf2;
+    border-right:1px solid #e4edf2;
+    padding:8px 9px;
+    text-align:left;
+  }
+  .gridTable th { background:#edf5fa; color:#365f73; font-size:11px; text-transform:uppercase; letter-spacing:.5px; }
+  .gridTable tr:hover td { background:#f7fbfe; }
+
+  .inspector {
+    min-height:0;
+  }
+  .inspectorBody {
+    overflow:auto;
+    padding: 8px;
+    flex:1;
+    background:#f7fafc;
+  }
+  .selectedHeader {
+    border:1px solid var(--line);
+    border-radius:11px;
+    background:#fff;
+    padding:9px;
+    margin-bottom:8px;
+  }
+  .selectedHeader .classline { font-size:8.5px; color:#78909f; text-transform:uppercase; letter-spacing:.7px; font-weight:900; }
+  .selectedHeader .objname { font-size:14px; margin-top:4px; font-weight:900; color:#223f4d; }
+  .badges { display:flex; gap:5px; flex-wrap:wrap; margin-top:7px; }
+  .badge { font-size:8.5px; font-weight:800; border-radius:999px; padding:3px 6px; background:#edf5f9; border:1px solid #d4e2ea; color:#547080; }
+  .badge.good { background:#e9f7f3; border-color:#bde7db; color:#16775f; }
+  .badge.warn { background:#fff5e7; border-color:#f1d5a9; color:#9b660f; }
+  .badge.risk { background:#fdecea; border-color:#f1b8b2; color:#a92c22; }
+
+  .actionGrid {
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:6px;
+    margin-bottom:8px;
+  }
+  .actionGrid button {
+    border:1px solid var(--line2);
+    background:#fff;
+    border-radius:9px;
+    padding:7px 6px;
+    font-size:11px;
+    font-weight:800;
+    color:#405d6c;
+    cursor:pointer;
+  }
+  .actionGrid button.primary { background:#eaf6fb; color:#16698e; border-color:#bedae8; }
+
+  .propSection {
+    border:1px solid var(--line);
+    border-radius:11px;
+    background:#fff;
+    margin-bottom:8px;
+    overflow:hidden;
+  }
+  .propSection h3 {
+    margin:0;
+    padding:3px 4px;
+    font-size:11px;
+    color:#315c72;
+    background:#edf5fa;
+    border-bottom:1px solid var(--line);
+    text-transform:uppercase;
+    letter-spacing:.5px;
+  }
+  .propGrid {
+    width:100%;
+    border-collapse:collapse;
+    font-size:11px;
+  }
+  .propGrid td {
+    border-bottom:1px solid #edf2f5;
+    padding:5px 7px;
+    vertical-align:top;
+  }
+  .propGrid tr:last-child td { border-bottom:0; }
+  .propGrid td:first-child {
+    color:#657b89;
+    width: 42%;
+    background:#fafcfd;
+    font-weight:750;
+  }
+  .propGrid td:last-child {
+    color:#243f4d;
+    font-family: var(--mono);
+    font-size:10.5px;
+  }
+
+
+  .activityStrip {
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:5px;
+    margin-bottom:8px;
+  }
+  .activityBtn {
+    border:1px solid #bed5e2;
+    background:linear-gradient(180deg,#ffffff,#f2f8fb);
+    color:#285d78;
+    border-radius:9px;
+    padding:7px 4px;
+    font-size:8.5px;
+    font-weight:900;
+    line-height:1.02;
+    cursor:pointer;
+    text-align:center;
+    min-height:42px;
+  }
+  .activityBtn:hover {
+    background:#eaf6fb;
+    transform:translateY(-1px);
+    box-shadow:0 5px 11px rgba(34,75,98,.12);
+  }
+
+  .activityBtn.simple {
+    box-shadow:none;
+  }
+  .classActionTitle {
+    font-size:8.5px;
+    color:#78909f;
+    text-transform:uppercase;
+    letter-spacing:.65px;
+    font-weight:900;
+    margin:2px 0 6px;
+  }
+  .standardNote {
+    border:1px solid #d7e5ed;
+    background:#fbfdfe;
+    border-radius:10px;
+    padding:7px 8px;
+    font-size:10.5px;
+    color:#536c7a;
+    line-height:1.35;
+    margin-bottom:8px;
+  }
+
+
+  .spinBtn { font-size: 11px; padding: 8px 12px; min-width: 68px; }
+  .domainOrb { overflow:hidden; text-overflow:ellipsis; }
+
+
+  .scopePanel {
+    border-top: 1px solid var(--line);
+    background: linear-gradient(180deg, #f2f7fa, #e8f0f5);
+    padding: 8px 10px 9px;
+  }
+  .scopeTitle {
+    text-align:center;
+    font-size:12px;
+    font-weight:900;
+    color:#274b5f;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+    margin-bottom:6px;
+  }
+  .scopeGrid {
+    display:grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap:6px 8px;
+    font-size:11px;
+    color:#344f5e;
+    font-weight:700;
+  }
+  .scopeGrid label {
+    display:flex;
+    align-items:center;
+    gap:5px;
+    white-space:nowrap;
+  }
+  .scopeGrid input { accent-color:#2e7fab; }
+
+  .presentationTools {
+    display:grid;
+    grid-template-columns: 1fr auto;
+    gap:10px;
+    align-items:center;
+    margin-bottom:12px;
+    max-width:1120px;
+  }
+  .presentationTools .toolCaption {
+    border:1px solid #d4e3eb;
+    background:#fff;
+    border-radius:12px;
+    padding:9px 11px;
+    box-shadow:0 4px 12px rgba(31,67,89,.06);
+    color:#4f6b7a;
+    font-size:12px;
+    line-height:1.35;
+  }
+  .presentationNav {
+    display:flex;
+    gap:4px;
+    align-items:center;
+    border:1px solid #cbdce6;
+    background:#fff;
+    border-radius:10px;
+    padding:5px;
+  }
+  .presentationNav button {
+    min-width:26px;
+    height:24px;
+    border:1px solid #cfdee7;
+    background:#f8fbfd;
+    border-radius:6px;
+    color:#365f73;
+    font-size:11px;
+    font-weight:900;
+    cursor:pointer;
+  }
+
+  .swimlaneBoard {
+    display:grid;
+    grid-template-columns: repeat(4, minmax(190px, 1fr));
+    gap:14px;
+    max-width:1120px;
+  }
+  .swimlane {
+    border:1px solid #cbdde8;
+    background:rgba(255,255,255,.96);
+    border-radius:15px;
+    min-height:500px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(31,67,89,.08);
+  }
+  .laneHeader {
+    padding:9px 10px;
+    background:linear-gradient(180deg,#f9fcfd,#eaf3f8);
+    border-bottom:1px solid #d8e6ee;
+  }
+  .laneHeader h3 {
+    margin:0;
+    font-size:13px;
+    color:#24556e;
+  }
+  .laneHeader .laneMeta {
+    margin-top:3px;
+    font-size:10px;
+    color:#78909f;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.45px;
+  }
+  .laneBody {
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .swimObj {
+    position:relative;
+    border:1px solid #c9dae5;
+    background:#fff;
+    border-radius:12px;
+    padding:9px 9px 8px;
+    min-height:82px;
+    cursor:pointer;
+    box-shadow:0 5px 14px rgba(31,67,89,.07);
+  }
+  .swimObj:hover {
+    outline:2px solid #cbe7f4;
+    transform:translateY(-1px);
+  }
+  .swimObj h4 {
+    margin:0 0 4px;
+    font-size:12px;
+    color:#223f4d;
+  }
+  .swimObj p {
+    margin:0;
+    color:#5d7482;
+    font-size:10.5px;
+    line-height:1.28;
+  }
+  .swimObj .micro {
+    display:flex;
+    gap:4px;
+    flex-wrap:wrap;
+    margin-top:7px;
+  }
+  .micro span {
+    font-size:9px;
+    font-weight:800;
+    color:#526b7a;
+    background:#eef5f8;
+    border:1px solid #d9e6ed;
+    border-radius:999px;
+    padding:2px 5px;
+  }
+  .objectPort {
+    position:absolute;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#2e7fab;
+    border:1px solid #fff;
+    box-shadow:0 0 0 1px #2e7fab;
+  }
+  .objectPort.left { left:-5px; top:50%; }
+  .objectPort.right { right:-5px; top:50%; }
+  .objectPort.top { top:-5px; left:50%; }
+  .objectPort.bottom { bottom:-5px; left:50%; }
+  .swimSummary {
+    margin-top:12px;
+    max-width:1120px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:10px;
+  }
+  .summaryBox {
+    border:1px solid #d3e2eb;
+    background:#fff;
+    border-radius:12px;
+    padding:9px 10px;
+    font-size:11px;
+    color:#536c7a;
+  }
+  .summaryBox strong {
+    display:block;
+    color:#244f65;
+    font-size:12px;
+    margin-bottom:4px;
+  }
+
+
+  .listingHeader {
+    display:grid;
+    grid-template-columns: 1fr auto;
+    gap:10px;
+    align-items:center;
+    max-width:1120px;
+    margin-bottom:10px;
+  }
+  .listingHeader .titleBox {
+    border:1px solid #d4e3eb;
+    background:#fff;
+    border-radius:14px;
+    padding:11px 13px;
+    box-shadow:0 5px 14px rgba(31,67,89,.07);
+  }
+  .titleBox h2 { margin:0 0 4px; font-size:17px; color:#203f50; }
+  .titleBox p { margin:0; font-size:12px; color:#5f7786; line-height:1.35; }
+  .listingToolbar {
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+  .listingToolbar button {
+    border:1px solid #bdd5e2;
+    background:#fff;
+    color:#2b607a;
+    border-radius:999px;
+    padding:7px 10px;
+    font-size:11px;
+    font-weight:850;
+    cursor:pointer;
+  }
+  .listingGridWrap {
+    max-width:1120px;
+    border:1px solid #cbdce6;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 7px 18px rgba(31,67,89,.08);
+  }
+  .listingGrid {
+    width:100%;
+    border-collapse:collapse;
+    font-size:11.5px;
+  }
+  .listingGrid th, .listingGrid td {
+    border-right:1px solid #dde9ef;
+    border-bottom:1px solid #dde9ef;
+    padding:7px 8px;
+    text-align:left;
+    white-space:nowrap;
+  }
+  .listingGrid th {
+    background:#eaf3f8;
+    color:#304f61;
+    text-transform:uppercase;
+    letter-spacing:.35px;
+    font-size:10px;
+  }
+  .listingGrid tr.selected td {
+    background:#d8f3da;
+  }
+  .listingGrid tr:hover td {
+    background:#f4fbfe;
+  }
+  .lowerDetail {
+    max-width:1120px;
+    display:grid;
+    grid-template-columns: 260px 1fr;
+    gap:10px;
+    margin-top:10px;
+  }
+  .detailPanel {
+    border:1px solid #d3e2eb;
+    background:#fff;
+    border-radius:12px;
+    min-height:124px;
+    overflow:hidden;
+  }
+  .detailPanel h3 {
+    margin:0;
+    padding:7px 9px;
+    background:#edf5fa;
+    color:#315c72;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    border-bottom:1px solid #d7e4ec;
+  }
+  .detailPanel table {
+    width:100%;
+    border-collapse:collapse;
+    font-size:11px;
+  }
+  .detailPanel td {
+    border-bottom:1px solid #eef3f6;
+    padding:5px 7px;
+  }
+  .detailPanel td:first-child {
+    width:42%;
+    color:#657b89;
+    font-weight:750;
+    background:#fafcfd;
+  }
+  .overlayNote {
+    max-width:1120px;
+    border:1px dashed #bad3e2;
+    background:#f8fcfe;
+    border-radius:12px;
+    padding:9px 11px;
+    margin-top:12px;
+    color:#557080;
+    font-size:12px;
+    line-height:1.4;
+  }
+
+  .statusbar {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 4px 10px;
+    background:#203745;
+    color:#d7e7ef;
+    font-size:11px;
+    font-weight:650;
+  }
+  .statusbar .muted { color:#9fb8c5; }
+
+
+  .activityStrip {
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap:7px 10px;
+    margin-bottom:8px;
+  }
+  .activityBtn {
+    border:1px solid #9cb5c4;
+    background:#fff;
+    color:#263a47;
+    border-radius:999px;
+    padding:7px 4px;
+    font-size:11px;
+    font-weight:650;
+    line-height:1.0;
+    cursor:pointer;
+    text-align:center;
+    min-height:30px;
+    text-transform:uppercase;
+    letter-spacing:.15px;
+  }
+  .activityBtn.simple { box-shadow:none; }
+  .activityBtn.row1 { grid-column: span 3; }
+  .activityBtn.row2 { grid-column: span 4; }
+
+  @media (max-width: 1100px) {
+    .main { grid-template-columns: 280px 1fr 300px; }
+    .overviewGrid { grid-template-columns: repeat(2, minmax(190px,1fr)); }
+    .humanGrid { grid-template-columns: 1fr; }
+    .diagram { grid-template-columns: repeat(2,minmax(160px,1fr)); }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div class="brand-title">Economy Master Overview</div>
+        <div class="brand-subtitle">Prototype v1.3 — clickable life-domain wheel, sectors/tools, deep tree, compact inspector</div>
+      </div>
+    </div>
+    <div class="header-tools">
+      <div class="pill">Matrix View: <b>Mode × Tree Node</b></div>
+      <div class="pill">Local Draft</div>
+    </div>
+  </header>
+
+  <nav class="topbar" id="topbar"></nav>
+
+  <main class="main">
+    <section class="panel">
+      <div class="panel-title">
+        <div>Classification Tree <span class="small" id="treeModeLabel"></span></div>
+        <div class="tree-tools">
+          <button class="iconbtn" onclick="expandAll()" title="Expand all">+</button>
+          <button class="iconbtn" onclick="collapseAll()" title="Collapse all">−</button>
+        </div>
+      </div>
+      <div class="treeSearch"><input id="treeSearch" placeholder="Filter current tree..." /></div>
+      <div class="treewrap" id="tree"></div>
+      <div class="scopePanel">
+        <div class="scopeTitle">Scope</div>
+        <div class="scopeGrid" id="scopeGrid">
+          <label><input type="radio" name="scope" value="International"> International</label>
+          <label><input type="radio" name="scope" value="National"> National</label>
+          <label><input type="radio" name="scope" value="Provincial / State" checked> Provincial / State</label>
+          <label><input type="radio" name="scope" value="Municipal"> Municipal</label>
+          <label><input type="radio" name="scope" value="Organizational"> Organizational</label>
+          <label><input type="radio" name="scope" value="Personal"> Personal</label>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel workspace">
+      <div class="contextHeader">
+        <div>
+          <div class="contextTitle" id="contextTitle">Economy Overview</div>
+          <div class="contextPath" id="contextPath">Economy / Whole System Map</div>
+        </div>
+        <div class="matrixBadge" id="matrixBadge">ECONOMY × ROOT</div>
+      </div>
+      <div class="canvas" id="canvas"></div>
+    </section>
+
+    <section class="panel inspector">
+      <div class="panel-title">
+        <div>Object Inspector <span class="small">IDE property panel</span></div>
+        <div class="inspector-tools"><button class="iconbtn">⋮</button></div>
+      </div>
+      <div class="inspectorBody" id="inspector"></div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <div id="statusPath">Ready.</div>
+    <div><span class="muted">Selected:</span> <span id="statusSelected">Economy / Root</span></div>
+  </footer>
+</div>
+
+<script>
+const modes = [
+  { id:'economy', label:'Economy', kind:'sector', icon:'◎' },
+  { id:'human', label:'Human / Consumer', kind:'sector', icon:'☉' },
+  { id:'market', label:'Market / Exchange', kind:'sector', icon:'⇄' },
+  { id:'business', label:'Business / Commercial', kind:'sector', icon:'▣' },
+  { id:'finance', label:'Finance / Capital', kind:'sector', icon:'◈' },
+  { id:'government', label:'Government / Public', kind:'sector', icon:'⌂' },
+  { id:'comparator', label:'Comparator', kind:'tool', icon:'≋' },
+  { id:'simulation', label:'Simulation', kind:'tool', icon:'▶' },
+  { id:'credits', label:'Credits / Value', kind:'tool', icon:'◆' },
+  { id:'objects', label:'Objects', kind:'tool', icon:'□' }
+];
+
+const trees = {
+ economy: {
+   text:'Economy', icon:'◎', type:'WholeSystem', children:[
+     {text:'Human / Consumer / Household', icon:'☉', type:'EconomySector', children:[
+       {text:'Personal Value Dashboard', type:'Dashboard'}, {text:'Life Domain Lazy Susan', type:'PrioritySelector'}, {text:'Profile / Needs / Risks', type:'Profile'}
+     ]},
+     {text:'Business / Commercial', icon:'▣', type:'EconomySector', children:[
+       {text:'Business Type Library', type:'Library'}, {text:'Departments', type:'Classification'}, {text:'Offers / Products / Services', type:'OfferSet'}
+     ]},
+     {text:'Market / Exchange', icon:'⇄', type:'EconomySector', children:[
+       {text:'Offers', type:'OfferSet'}, {text:'Prices', type:'PriceSystem'}, {text:'Transactions', type:'TransactionSet'}
+     ]},
+     {text:'Finance / Credit / Capital', icon:'◈', type:'EconomySector', children:[
+       {text:'Money', type:'System'}, {text:'Credit', type:'System'}, {text:'Insurance / Risk', type:'RiskSystem'}
+     ]},
+     {text:'Government / Public Services', icon:'⌂', type:'EconomySector'},
+     {text:'Law / Regulation / Rights', icon:'⚖', type:'EconomySector'},
+     {text:'Infrastructure', icon:'▤', type:'EconomySector'},
+     {text:'Resources / Environment', icon:'◌', type:'EconomySector'},
+     {text:'Information / Communication', icon:'✧', type:'EconomySector'}
+   ]
+ },
+ human: {
+   text:'Human / Consumer / Household', icon:'☉', type:'EconomySector', children:[
+    {text:'Personal Value Dashboard', type:'Dashboard', children:[
+      {text:'Current Priority', type:'Priority'}, {text:'What is stable?', type:'Question'}, {text:'What is at risk?', type:'Question'}, {text:'What needs action?', type:'Question'}
+    ]},
+    {text:'Life Domains', type:'Taxonomy', children:[
+      {text:'Air', type:'LifeDomain'}, {text:'Water', type:'LifeDomain'}, {text:'Food', type:'LifeDomain', children:[
+        {text:'Food Products', type:'ProductClass', children:[
+          {text:'Fruit', type:'FoodClass', children:[{text:'Citrus', type:'FoodClass'}, {text:'Berries', type:'FoodClass'}, {text:'Apples', type:'FoodClass'}]},
+          {text:'Vegetables', type:'FoodClass', children:[{text:'Tubers', type:'FoodClass', children:[{text:'Potato', type:'FoodItem'}]}, {text:'Leafy', type:'FoodClass'}, {text:'Roots', type:'FoodClass'}]},
+          {text:'Meat / Protein', type:'FoodClass', children:[{text:'Beef', type:'FoodItem'}, {text:'Poultry', type:'FoodItem'}, {text:'Seafood', type:'FoodItem'}, {text:'Eggs', type:'FoodItem'}]},
+          {text:'Baked / Prepared', type:'FoodClass', children:[{text:'Bread', type:'FoodItem'}, {text:'Pizza', type:'FoodItem'}, {text:'Burgers', type:'FoodItem'}]},
+          {text:'Canned / Preserved', type:'FoodClass', children:[{text:'Pickles', type:'FoodItem'}, {text:'Sauces', type:'FoodItem'}, {text:'Fruits', type:'FoodItem'}]}
+        ]},
+        {text:'Food Services', type:'ServiceClass', children:[{text:'Restaurants', type:'ServiceType'}, {text:'Food Shopping Services', type:'ServiceType'}]},
+        {text:'Food Safety / Quality', type:'RiskClass', children:[{text:'Spoilage', type:'Risk'}, {text:'Ingredients', type:'EvidenceField'}, {text:'Nutrition', type:'EvidenceField'}]},
+        {text:'Food Budget', type:'BudgetClass', children:[{text:'Cost Basket', type:'ComparatorSet'}, {text:'Bulk Buying', type:'ComparatorSet'}, {text:'Meal Plan', type:'Plan'}]}
+      ]},
+      {text:'Shelter', type:'LifeDomain', children:[
+        {text:'Rent', type:'NeedClass', children:[
+          {text:'Apartments', type:'ListingClass'}, {text:'Rooms', type:'ListingClass'}, {text:'Houses', type:'ListingClass'}, {text:'Storage', type:'ListingClass'}, {text:'Short-term', type:'ListingClass'}
+        ]},
+        {text:'Ownership', type:'NeedClass', children:[
+          {text:'Condo', type:'PurchaseClass'}, {text:'House', type:'PurchaseClass'}, {text:'Modular', type:'PurchaseClass'}, {text:'Land', type:'PurchaseClass'}, {text:'Mortgage / Financing', type:'FinanceClass'}
+        ]},
+        {text:'Utilities', type:'NeedClass'}, {text:'Maintenance', type:'NeedClass'}, {text:'Location', type:'NeedClass'}
+      ]},
+      {text:'Clothing', type:'LifeDomain'}, {text:'Safety', type:'LifeDomain'}, {text:'Security', type:'LifeDomain'},
+      {text:'Health', type:'LifeDomain'}, {text:'Transportation', type:'LifeDomain'}, {text:'Communication', type:'LifeDomain'},
+      {text:'Energy', type:'LifeDomain'}, {text:'Income / Work', type:'LifeDomain'}, {text:'Family / Community', type:'LifeDomain'},
+      {text:'Education / Knowledge', type:'LifeDomain'}, {text:'Legal / Rights', type:'LifeDomain'}, {text:'Recreation', type:'LifeDomain'},
+      {text:'Spiritual / Meaning', type:'LifeDomain'}, {text:'Wealth / Finance', type:'LifeDomain'}
+    ]},
+    {text:'Profile Objects', type:'ObjectLibrary', children:[
+      {text:'Person Profile', type:'Profile'}, {text:'Household', type:'Household'}, {text:'Budget', type:'Budget'}, {text:'Owned Assets', type:'AssetList'}, {text:'Constraints', type:'ConstraintSet'}
+    ]},
+    {text:'Comparison Sessions', type:'ComparatorLink'},
+    {text:'Ownership / Outcome Records', type:'RecordSet'}
+   ]
+ },
+ business: {
+   text:'Business / Commercial', icon:'▣', type:'EconomySector', children:[
+    {text:'Business Type Library', type:'Library', children:[
+      {text:'Core Structured 1200', type:'BusinessLibrary'}, {text:'Expansion Seed 5000', type:'SeedLibrary'}, {text:'Q1 Requirement Codes', type:'CodeSystem'}, {text:'Inheritance Classes', type:'ClassModel'}
+    ]},
+    {text:'Business Model Graph', type:'Graph', children:[
+      {text:'Demand Identification', type:'Function'}, {text:'Customer Acquisition', type:'Function'}, {text:'Offer / Price / Contract', type:'Function'}, {text:'Delivery / Fulfillment', type:'Function'}, {text:'Customer Success', type:'Function'}
+    ]},
+    {text:'Department Swimlanes', type:'Swimlanes', children:[
+      {text:'Sales / Marketing', type:'Department', children:[
+        {text:'Lead Source', type:'ProcessStep'}, {text:'Qualification', type:'ProcessStep'}, {text:'Quote / Offer', type:'ProcessStep'}, {text:'Close / Handoff', type:'ProcessStep'}
+      ]},
+      {text:'Operations', type:'Department', children:[
+        {text:'Capacity', type:'Resource'}, {text:'Schedule', type:'ProcessStep'}, {text:'Fulfillment', type:'ProcessStep'}, {text:'Bottlenecks', type:'ConstraintSet'}
+      ]},
+      {text:'Quality / Safety', type:'Department', children:[
+        {text:'Inspection Points', type:'InspectionPoint'}, {text:'Defect / Rework', type:'WasteClass'}, {text:'Safety Risk', type:'RiskClass'}, {text:'Conformance Evidence', type:'EvidenceSet'}
+      ]},
+      {text:'Accounting / Finance', type:'Department', children:[
+        {text:'Revenue Pulse', type:'FinancialPulse'}, {text:'Cost Pulse', type:'FinancialPulse'}, {text:'Cash Position', type:'FinancialPulse'}, {text:'Payroll / AP / AR', type:'FinancialPulse'}
+      ]},
+      {text:'Engineering / Product', type:'Department', children:[
+        {text:'Product Definition', type:'ObjectTemplate'}, {text:'BOM / Specs', type:'DataObject'}, {text:'Change Control', type:'ProcessStep'}, {text:'Configuration', type:'ObjectTemplate'}
+      ]},
+      {text:'Customer Success', type:'Department', children:[
+        {text:'Support', type:'ProcessStep'}, {text:'Warranty / Claims', type:'ProcessStep'}, {text:'CSAT / Feedback', type:'Metric'}, {text:'Repeat / Referral', type:'Metric'}
+      ]}
+    ]},
+    {text:'Offers / Products / Services', type:'OfferSet'},
+    {text:'Customers / Segments', type:'CustomerSet'},
+    {text:'Suppliers / Vendors', type:'SupplierSet'},
+    {text:'Evidence / Records', type:'EvidenceSet'}
+   ]
+ },
+ market: {
+   text:'Market / Exchange', icon:'⇄', type:'EconomySector', children:[
+    {text:'Direct Market', type:'MarketContext', children:[
+      {text:'Customer Segments', type:'CustomerSet'}, {text:'Competitors', type:'CompetitorSet'}, {text:'Substitutes', type:'SubstituteSet'}, {text:'Buying Triggers', type:'TriggerSet'}
+    ]},
+    {text:'Offer Field', type:'OfferField', children:[
+      {text:'Prices', type:'PriceSet'}, {text:'Availability', type:'SupplyState'}, {text:'Quality Claims', type:'QualitySet'}, {text:'Trust / Reputation', type:'TrustSet'}
+    ]},
+    {text:'Transactions', type:'TransactionSet'},
+    {text:'Contracts / Terms', type:'ContractSet'},
+    {text:'Evidence Overrides', type:'OverrideSet'}
+   ]
+ },
+ finance: { text:'Finance / Credit / Capital', icon:'◈', type:'EconomySector', children:[
+   {text:'Money / Payment Systems', type:'PaymentSystem'}, {text:'Credit', type:'CreditSystem'}, {text:'Debt Service', type:'DebtSystem'}, {text:'Capital / Investment', type:'CapitalSystem'}, {text:'Insurance / Risk Pooling', type:'InsuranceSystem'}, {text:'Financial Pulse Packets', type:'PacketSet'}
+ ]},
+ government: { text:'Government / Public Services', icon:'⌂', type:'EconomySector', children:[
+   {text:'Public Services', type:'ServiceSet'}, {text:'Taxes / Public Revenue', type:'TaxSystem'}, {text:'Permits / Licensing', type:'PermissionSystem'}, {text:'Public Safety', type:'SafetySystem'}, {text:'Welfare / Support', type:'SupportSystem'}
+ ]},
+ law: { text:'Law / Regulation / Rights', icon:'⚖', type:'EconomySector', children:[
+   {text:'Rights', type:'RightsSet'}, {text:'Regulations', type:'RegulationSet'}, {text:'Contracts', type:'ContractSet'}, {text:'Liability / Compliance', type:'ComplianceSet'}, {text:'Dispute Resolution', type:'ProcessSet'}
+ ]},
+ infrastructure: { text:'Infrastructure', icon:'▤', type:'EconomySector', children:[
+   {text:'Transportation Networks', type:'Network'}, {text:'Energy Grid', type:'Network'}, {text:'Water / Wastewater', type:'Network'}, {text:'Telecommunications', type:'Network'}, {text:'Public Facilities', type:'FacilitySet'}, {text:'Logistics Capacity', type:'CapacitySet'}
+ ]},
+ resources: { text:'Resources / Environment', icon:'◌', type:'EconomySector', children:[
+   {text:'Air', type:'Resource'}, {text:'Water', type:'Resource'}, {text:'Land', type:'Resource'}, {text:'Energy Resources', type:'Resource'}, {text:'Materials', type:'Resource'}, {text:'Waste / Pollution', type:'Externality'}
+ ]},
+ information: { text:'Information / Communication', icon:'✧', type:'EconomySector', children:[
+   {text:'Media / Publishing', type:'InfoSystem'}, {text:'Communications', type:'Network'}, {text:'Data / Records', type:'DataSet'}, {text:'Knowledge / Education', type:'KnowledgeSystem'}, {text:'Signals / Reputation', type:'SignalSystem'}
+ ]},
+ comparator: { text:'Comparator', icon:'≋', type:'CrossSystemTool', children:[
+   {text:'Product / Service Taxonomy', type:'Taxonomy', children:[
+     {text:'Food', type:'Category', children:[
+       {text:'Products', type:'ProductGroup', children:[
+         {text:'Fruit', type:'ProductClass', children:[{text:'Citrus', type:'ProductClass'}, {text:'Berries', type:'ProductClass'}, {text:'Apples', type:'ProductType'}]},
+         {text:'Vegetable', type:'ProductClass', children:[{text:'Tubers', type:'ProductClass'}, {text:'Fibrous', type:'ProductClass'}, {text:'Leafy', type:'ProductClass'}]},
+         {text:'Dairy', type:'ProductClass'},
+         {text:'Baked', type:'ProductClass', children:[{text:'Bread', type:'ProductType'}, {text:'Bagel', type:'ProductType'}, {text:'Croissant', type:'ProductType'}, {text:'Pizza', type:'ProductType'}]},
+         {text:'Meat', type:'ProductClass', children:[{text:'Beef', type:'ProductType'}, {text:'Poultry', type:'ProductType'}, {text:'Pork', type:'ProductType'}, {text:'Seafood', type:'ProductType'}, {text:'Game', type:'ProductType'}, {text:'Eggs', type:'ProductType'}]},
+         {text:'Frozen', type:'ProductClass', children:[{text:'Juice', type:'ProductType'}, {text:'Meat', type:'ProductType'}, {text:'Vegetables', type:'ProductType'}, {text:'Potato', type:'ProductType'}, {text:'Waffles', type:'ProductType'}, {text:'Ice Cream', type:'ProductType'}]},
+         {text:'Dehydrated', type:'ProductClass', children:[{text:'Potato', type:'ProductType'}, {text:'Rice', type:'ProductType'}, {text:'Beans', type:'ProductType'}, {text:'Fruit', type:'ProductType'}]},
+         {text:'Canned', type:'ProductClass', children:[{text:'Pickles', type:'ProductType'}, {text:'Sauces', type:'ProductType'}, {text:'Fruits', type:'ProductType'}]},
+         {text:'Sauces', type:'ProductClass', children:[{text:'Tomato', type:'ProductType'}, {text:'Salsa', type:'ProductType'}, {text:'Meat', type:'ProductType'}, {text:'Prepared', type:'ProductType'}, {text:'Gravy', type:'ProductType'}]},
+         {text:'Spices', type:'ProductClass', children:[{text:'Salt', type:'ProductType'}, {text:'Pepper', type:'ProductType'}, {text:'Basil', type:'ProductType'}, {text:'Thyme', type:'ProductType'}, {text:'Curry', type:'ProductType'}]},
+         {text:'Sweets', type:'ProductClass', children:[{text:'Chocolate', type:'ProductType'}, {text:'Candy', type:'ProductType'}, {text:'Desserts', type:'ProductType'}, {text:'Maple Syrup', type:'ProductType'}]},
+         {text:'Drinks & Drink Mixes', type:'ProductClass', children:[{text:'Water', type:'ProductType'}, {text:'Coffee', type:'ProductType'}, {text:'Tea', type:'ProductType'}, {text:'Softdrinks', type:'ProductType'}]}
+       ]},
+       {text:'Services', type:'ServiceGroup', children:[{text:'Restaurants', type:'ServiceType'}, {text:'Shopping Service', type:'ServiceType'}]}
+     ]},
+     {text:'Clothing', type:'Category', children:[
+       {text:'Products', type:'ProductGroup', children:[
+         {text:'Ladies Formal', type:'ProductClass'}, {text:'Ladies Casual', type:'ProductClass'}, {text:'Ladies Footwear', type:'ProductClass'}, {text:"Men's Formal", type:'ProductClass'}, {text:"Men's Casual", type:'ProductClass'}, {text:"Men's Footwear", type:'ProductClass'},
+         {text:'Accessories', type:'ProductClass', children:[{text:'Purses', type:'ProductType'}, {text:'Wallets', type:'ProductType'}, {text:'Jewellery', type:'ProductType'}, {text:'Scarves', type:'ProductType'}, {text:'Gloves & Mittens', type:'ProductType'}, {text:'Hats', type:'ProductType'}]}
+       ]},
+       {text:'Services', type:'ServiceGroup', children:[{text:'Dry Cleaning Services', type:'ServiceType'}, {text:'Laundry Services', type:'ServiceType'}, {text:'Haute Couture Shops', type:'ServiceType'}]}
+     ]},
+     {text:'Shelter', type:'Category', children:[
+       {text:'Products', type:'ProductGroup', children:[
+         {text:'Concrete Products', type:'ProductClass', children:[{text:'Brick and Block', type:'ProductType'}]},
+         {text:'Lumber & Dimensional Products', type:'ProductClass', children:[{text:'Board', type:'ProductType'}, {text:'Sheet', type:'ProductType'}, {text:'Trim', type:'ProductType'}, {text:'Joist & Truss', type:'ProductType'}]},
+         {text:'Hardware', type:'ProductClass', children:[{text:'Fasteners', type:'ProductType'}, {text:'Hinges', type:'ProductType'}]},
+         {text:'Electrical', type:'ProductClass', children:[{text:'Panels', type:'ProductType'}, {text:'Wiring', type:'ProductType'}, {text:'Switches & Outlets', type:'ProductType'}]},
+         {text:'HVAC', type:'ProductClass', children:[{text:'Heating', type:'ProductType'}, {text:'Air Conditioning', type:'ProductType'}, {text:'Ducting', type:'ProductType'}]},
+         {text:'Doors and Windows', type:'ProductClass', children:[{text:'Doors', type:'ProductType'}, {text:'Windows', type:'ProductType'}]},
+         {text:'Roofing', type:'ProductClass', children:[{text:'Shingles', type:'ProductType'}, {text:'Metal Sheets', type:'ProductType'}, {text:'Slate', type:'ProductType'}, {text:'Copper', type:'ProductType'}]}
+       ]},
+       {text:'Services', type:'ServiceGroup', children:[
+         {text:'Rentals', type:'ServiceClass', children:[{text:'Storage', type:'ServiceType'}, {text:'Rooms', type:'ServiceType'}, {text:'One Bedroom Apt', type:'ServiceType'}, {text:'Two Bedroom Apt', type:'ServiceType'}, {text:'House', type:'ServiceType'}, {text:'Acreage', type:'ServiceType'}]},
+         {text:'Real Estate Services', type:'ServiceClass', children:[{text:'Brokers', type:'ServiceType'}, {text:'Surveyors', type:'ServiceType'}, {text:'Property Inspectors', type:'ServiceType'}]},
+         {text:'Construction Contractors', type:'ServiceClass', children:[{text:'Foundation', type:'ServiceType'}, {text:'Framing', type:'ServiceType'}, {text:'Carpentry', type:'ServiceType'}, {text:'Roofing', type:'ServiceType'}, {text:'Plumbing', type:'ServiceType'}, {text:'Electrical', type:'ServiceType'}, {text:'HVAC', type:'ServiceType'}]}
+       ]}
+     ]},
+     {text:'Transportation', type:'Category', children:[
+       {text:'Products', type:'ProductGroup', children:[
+         {text:'Watercraft', type:'ProductClass', children:[{text:'Boat', type:'ProductType'}, {text:'Canoe', type:'ProductType'}, {text:'Kayak', type:'ProductType'}, {text:'Houseboat', type:'ProductType'}]},
+         {text:'Aircraft', type:'ProductClass', children:[{text:'Airplanes', type:'ProductType'}, {text:'Helicopters', type:'ProductType'}, {text:'Ultralights', type:'ProductType'}]},
+         {text:'Road Vehicles', type:'ProductClass', children:[{text:'Automotive Parts', type:'ProductType'}, {text:'Passenger Vehicles', type:'ProductType'}, {text:'Motorcycles', type:'ProductType'}, {text:'Bicycles', type:'ProductType'}, {text:'Transport Trucks', type:'ProductType'}, {text:'Recreational Vehicles', type:'ProductType'}]},
+         {text:'Offroad Vehicles', type:'ProductClass', children:[{text:'All Terrain Vehicles', type:'ProductType'}, {text:'Snowmobiles', type:'ProductType'}, {text:'Dirtbikes', type:'ProductType'}, {text:'Tracked Vehicles', type:'ProductType'}]}
+       ]},
+       {text:'Services', type:'ServiceGroup', children:[{text:'Shipping', type:'ServiceClass', children:[{text:'Courier Services', type:'ServiceType'}, {text:'Local Delivery', type:'ServiceType'}, {text:'Packaging Services', type:'ServiceType'}]}, {text:'Automotive Repair', type:'ServiceType'}, {text:'Taxi Services', type:'ServiceType'}, {text:'Customs Services', type:'ServiceType'}]}
+     ]},
+     {text:'Communications', type:'Category', children:[
+       {text:'Products', type:'ProductGroup', children:[{text:'Broadcasting', type:'ProductClass', children:[{text:'Radio Broadcast Equipment', type:'ProductType'}, {text:'Television Broadcast Equipment', type:'ProductType'}]}, {text:'Publishing', type:'ProductClass', children:[{text:'Printing Equipment', type:'ProductType'}]}, {text:'Photography', type:'ProductClass', children:[{text:'Camera Equipment', type:'ProductType'}]}]},
+       {text:'Services', type:'ServiceGroup', children:[{text:'Mass Media', type:'ServiceClass', children:[{text:'Radio Broadcast', type:'ServiceType'}, {text:'Television Broadcast', type:'ServiceType'}, {text:'Newspaper Publishing', type:'ServiceType'}, {text:'Book Publishing', type:'ServiceType'}]}, {text:'Internet Web Development Services', type:'ServiceType'}, {text:'Graphic Design Services', type:'ServiceType'}, {text:'Advertising Agencies', type:'ServiceType'}]}
+     ]},
+     {text:'Energy', type:'Category', children:[
+       {text:'Products', type:'ProductGroup', children:[{text:'Petroleum', type:'ProductType'}, {text:'Natural Gas', type:'ProductType'}, {text:'Hydroelectric', type:'ProductType'}, {text:'Coal', type:'ProductType'}, {text:'Nuclear', type:'ProductType'}, {text:'Solar Energy', type:'ProductType'}, {text:'Wind', type:'ProductType'}, {text:'Storage', type:'ProductClass', children:[{text:'Battery', type:'ProductType'}, {text:'Flywheel', type:'ProductType'}, {text:'Fuel Cell', type:'ProductType'}]}]},
+       {text:'Services', type:'ServiceGroup', children:[{text:'Electricity', type:'ServiceType'}]}
+     ]},
+     {text:'Employment And Contract', type:'Category', children:[{text:'Listings', type:'ListingGroup', children:[{text:'Positions Available', type:'ListingClass'}, {text:'Positions Sought', type:'ListingClass'}, {text:'Biddable Contracts', type:'ListingClass'}]}, {text:'Services', type:'ServiceGroup', children:[{text:'Resume Writing Services', type:'ServiceType'}, {text:'Job Finding Services', type:'ServiceType'}]}]},
+     {text:'Business & Industry', type:'Category', children:[{text:'Farming', type:'IndustryClass'}, {text:'Manufacturing', type:'IndustryClass', children:[{text:'Mechanical', type:'IndustryClass'}, {text:'Electronic', type:'IndustryClass'}, {text:'Industrial Equipment', type:'IndustryClass'}]}, {text:'Mining', type:'IndustryClass'}, {text:'Business Services', type:'IndustryClass'}, {text:'Tourism', type:'IndustryClass'}]}
+   ]},
+   {text:'Typed DataGrids', type:'GridSet', children:[{text:'Offer Rows', type:'DataGrid'}, {text:'Field Templates', type:'TemplateSet'}, {text:'Shortlist / Review Grid', type:'DataGrid'}]},
+   {text:'Value Formula', type:'Formula', children:[{text:'Human Need', type:'ValueFactor'}, {text:'Availability', type:'ValueFactor'}, {text:'Comparative Cost', type:'ValueFactor'}, {text:'Comparative Quality', type:'ValueFactor'}, {text:'Time Value', type:'ValueFactor'}, {text:'System Value', type:'ValueFactor'}, {text:'Risk Value', type:'ValueFactor'}]},
+   {text:'Comparison Sessions', type:'SessionSet'},
+   {text:'Transaction Chain', type:'Chain', children:[{text:'Want / Need', type:'ChainStep'}, {text:'Plan', type:'ChainStep'}, {text:'Seek', type:'ChainStep'}, {text:'Find', type:'ChainStep'}, {text:'Evaluate', type:'ChainStep'}, {text:'Contract', type:'ChainStep'}, {text:'Payment / Receive', type:'ChainStep'}, {text:'Records / Ownership', type:'ChainStep'}]},
+   {text:'Ownership Evaluation', type:'OutcomeSet', children:[{text:'Benefits', type:'OutcomeClass'}, {text:'Detractors', type:'OutcomeClass'}, {text:'Replacement / Resale', type:'OutcomeClass'}]}
+ ]},
+ simulation: { text:'Simulation', icon:'▶', type:'CrossSystemTool', children:[
+   {text:'Scenario Library', type:'ScenarioSet'}, {text:'Agents', type:'AgentSet', children:[{text:'Buyer Agents', type:'AgentClass'}, {text:'Seller Agents', type:'AgentClass'}, {text:'Supplier Agents', type:'AgentClass'}, {text:'Regulator Agents', type:'AgentClass'}]},
+   {text:'Variables / Assumptions', type:'VariableSet'}, {text:'Runs / Results', type:'RunSet'}, {text:'Market Environments', type:'EnvironmentSet'}
+ ]},
+ credits: { text:'Credits / Value Assessment', icon:'◆', type:'CrossSystemTool', children:[
+   {text:'Credit Modules', type:'CreditSet'}, {text:'Evidence Records', type:'EvidenceSet'}, {text:'Inspection Findings', type:'InspectionSet'}, {text:'Heatmaps', type:'Dashboard'}, {text:'Delta Value Packets', type:'PacketSet'}
+ ]},
+ objects: { text:'Objects', icon:'□', type:'CrossSystemTool', children:[
+   {text:'Object Classes', type:'ClassSet'}, {text:'Templates', type:'TemplateSet'}, {text:'Inputs / Outputs', type:'IOSet'}, {text:'Ports / Links', type:'GraphSet'}, {text:'Custom Editors', type:'EditorSet'}, {text:'Permissions / Visibility', type:'AccessControl'}
+ ]}
+};
+
+let currentMode = 'human';
+let selectedNode = trees.human.children[1];
+let selectedPath = ['Human / Consumer / Household','Life Domains'];
+let expandedPaths = new Set(['Human / Consumer / Household','Human / Consumer / Household / Life Domains']);
+let activeDomainIndex = 3;
+let currentScope = 'Provincial / State';
+
+
+function findNodeByPathArray(node, path, depth=0){
+  if(!node || node.text!==path[depth]) return null;
+  if(depth===path.length-1) return node;
+  for(const ch of (node.children||[])){
+    const hit = findNodeByPathArray(ch, path, depth+1);
+    if(hit) return hit;
+  }
+  return null;
+}
+function selectHumanDomainNode(index){
+  const full = lifeDomains[index].full;
+  const path = ['Human / Consumer / Household','Life Domains', full];
+  const node = findNodeByPathArray(trees.human, path);
+  if(node){
+    selectedNode = node;
+    selectedPath = path;
+    for(let i=0;i<path.length;i++) expandedPaths.add(path.slice(0,i+1).join('/'));
+  }
+}
+
+function init(){
+  renderTopbar();
+  renderTree();
+  syncDomainToTreeSelection(selectedPath, selectedNode);
+  renderWorkspace();
+  renderInspector();
+  document.getElementById('treeSearch').addEventListener('input', renderTree);
+  document.querySelectorAll('input[name="scope"]').forEach(r => {
+    r.addEventListener('change', () => {
+      currentScope = document.querySelector('input[name="scope"]:checked').value;
+      renderWorkspace();
+      renderInspector();
+    });
+  });
+}
+
+function renderTopbar(){
+  const bar = document.getElementById('topbar');
+  bar.innerHTML='';
+  bar.appendChild(label('Sectors'));
+  modes.filter(m=>m.kind==='sector').forEach(m=>bar.appendChild(modeButton(m)));
+  bar.appendChild(divider());
+  bar.appendChild(label('Tools'));
+  modes.filter(m=>m.kind==='tool').forEach(m=>bar.appendChild(modeButton(m)));
+}
+function label(text){ const d=document.createElement('div'); d.className='section-label'; d.textContent=text; return d; }
+function divider(){ const d=document.createElement('div'); d.className='divider'; return d; }
+function modeButton(m){
+  const b=document.createElement('button');
+  b.className='modeBtn '+m.kind+(m.id===currentMode?' active':'');
+  b.innerHTML=`<span>${m.icon}</span><span>${m.label}</span>`;
+  b.onclick=()=>{ currentMode=m.id; selectedNode=trees[currentMode]; selectedPath=[trees[currentMode].text]; expandedPaths=new Set([selectedPath.join('/')]); renderTopbar(); renderTree(); renderWorkspace(); renderInspector(); };
+  return b;
+}
+
+function renderTree(){
+  const root = trees[currentMode];
+  document.getElementById('treeModeLabel').textContent = '— ' + modeLabel(currentMode);
+  const q = document.getElementById('treeSearch').value.trim().toLowerCase();
+  const wrap=document.getElementById('tree');
+  wrap.innerHTML='';
+  wrap.appendChild(renderNode(root, [root.text], q));
+}
+function renderNode(node, path, q){
+  const hasChildren=node.children && node.children.length;
+  const full=path.join('/');
+  const open=expandedPaths.has(full) || q;
+  const include = !q || JSON.stringify(node).toLowerCase().includes(q);
+  const container=document.createElement('div');
+  container.className='treeNode '+(open?'open':'');
+  if(!include) container.style.display='none';
+  const row=document.createElement('div');
+  row.className='nodeRow '+(selectedPath.join('/')===full?'selected':'');
+  row.style.paddingLeft='0px';
+  const twist=document.createElement('span'); twist.className='twisty'; twist.textContent=hasChildren?(open?'▾':'▸'):'·';
+  twist.onclick=(e)=>{ e.stopPropagation(); if(expandedPaths.has(full)) expandedPaths.delete(full); else expandedPaths.add(full); renderTree(); };
+  const icon=document.createElement('span'); icon.className='nodeIcon'; icon.textContent=node.icon || iconForType(node.type);
+  const text=document.createElement('span'); text.className='nodeText'; text.textContent=node.text;
+  row.append(twist, icon, text);
+  row.onclick=()=>{ selectedNode=node; selectedPath=path; syncDomainToTreeSelection(path, node); renderTree(); renderWorkspace(); renderInspector(); };
+  container.appendChild(row);
+  if(hasChildren){
+    const kids=document.createElement('div'); kids.className='children';
+    node.children.forEach(ch=>kids.appendChild(renderNode(ch, [...path,ch.text], q)));
+    container.appendChild(kids);
+  }
+  return container;
+}
+function iconForType(t){
+  const map={EconomySector:'◉', CrossSystemTool:'◧', Dashboard:'▦', Taxonomy:'▤', Library:'▣', Department:'▥', Function:'ƒ', AgentClass:'♟', LifeDomain:'●', Formula:'Σ', Chain:'⛓', GridSet:'▦', PacketSet:'◇', Category:'▣', ProductGroup:'▦', ProductClass:'▤', ProductType:'▪', ServiceGroup:'▧', ServiceClass:'▥', ServiceType:'▫', FoodItem:'▪', ChainStep:'→'};
+  return map[t] || '□';
+}
+function modeLabel(id){ return modes.find(m=>m.id===id).label; }
+function expandAll(){ collectPaths(trees[currentMode], [trees[currentMode].text]).forEach(p=>expandedPaths.add(p)); renderTree(); }
+function collapseAll(){ expandedPaths = new Set([trees[currentMode].text]); renderTree(); }
+function collectPaths(node,path){ let arr=[path.join('/')]; (node.children||[]).forEach(ch=>arr=arr.concat(collectPaths(ch,[...path,ch.text]))); return arr; }
+
+function renderWorkspace(){
+  const path=selectedPath.join(' / ');
+  document.getElementById('contextTitle').textContent = selectedNode.text;
+  document.getElementById('contextPath').textContent = path;
+  document.getElementById('matrixBadge').textContent = modeLabel(currentMode).toUpperCase() + ' × ' + selectedNode.type;
+  document.getElementById('statusPath').textContent = 'Mode: ' + modeLabel(currentMode) + ' | Scope: ' + currentScope + ' | Tree path: ' + path;
+  document.getElementById('statusSelected').textContent = selectedNode.text;
+  const c=document.getElementById('canvas');
+  if(currentMode==='human' && selectedPath.includes('Shelter') && (selectedPath.includes('Rent') || selectedNode.text==='Rent' || ['Apartments','Rooms','Houses','Storage','Short-term'].some(x=>selectedPath.includes(x)))){ c.innerHTML=rentalListingsGrid(); return; }
+  if(currentMode==='human' && selectedPath.includes('Shelter') && (selectedPath.includes('Ownership') || ['Condo','House','Modular','Land','Mortgage / Financing'].some(x=>selectedPath.includes(x)))){ c.innerHTML=ownershipOptionsGrid(); return; }
+  if(currentMode==='human' && (selectedNode.text==='Human / Consumer / Household' || selectedNode.text==='Personal Value Dashboard' || selectedNode.type==='LifeDomain' || selectedPath.join('/').endsWith('Life Domains'))){ c.innerHTML=humanDashboard(); placeDots(); return; }
+  if(currentMode==='economy' && selectedNode.text==='Economy'){ c.innerHTML=economyOverview(); return; }
+  if(currentMode==='business' && (selectedPath.includes('Department Swimlanes') || selectedNode.type==='Department')){ c.innerHTML=departmentDiagram(); return; }
+  if(currentMode==='comparator'){ c.innerHTML=comparatorGrid(); return; }
+  if(currentMode==='simulation'){ c.innerHTML=simulationDiagram(); return; }
+  if(currentMode==='credits'){ c.innerHTML=creditsHeatmap(); return; }
+  if(currentMode==='objects'){ c.innerHTML=objectWorkbench(); return; }
+  c.innerHTML=genericSectorWorkspace();
+}
+
+function economyOverview(){
+  const sectorIds=['human','market','business','finance','government'];
+  const desc={
+    human:'One person or household asking what has value relative to life, needs, risks, and outcomes.',
+    business:'Organizations creating, delivering, capturing, measuring, and improving value.',
+    market:'Offer fields, prices, comparison, trust, exchange, contracts, and transaction chains.',
+    finance:'Money, credit, capital, investment, risk transfer, debt, and payment systems.',
+    government:'Public services, taxes, permissions, safety, welfare, and public administration.',
+    overlays:'Law/rights, infrastructure, resources/environment, information/communication, security/defense, and other boundary-crossing systems are treated as cross-sector layers rather than first-row sectors.'
+  };
+  return `<div class="overviewGrid">${sectorIds.map(id=>{
+    const m=modes.find(x=>x.id===id);
+    return `<div class="sectorCard" onclick="switchMode('${id}')"><div class="kicker">Economy Sector</div><h3>${m.icon} ${m.label}</h3><p>${desc[id]}</p><div class="minirow"><span class="chip">Tree</span><span class="chip">Objects</span><span class="chip">Simulation-ready</span></div></div>`
+  }).join('')}</div>`;
+}
+window.switchMode=(id)=>{ currentMode=id; selectedNode=trees[id]; selectedPath=[trees[id].text]; expandedPaths=new Set([selectedPath.join('/')]); syncDomainToTreeSelection(selectedPath, selectedNode); renderTopbar(); renderTree(); renderWorkspace(); renderInspector(); };
+
+const lifeDomains = [
+  { short:'Air', full:'Air', pressure:'low', need:['Clean air','Ventilation','Indoor quality','Smoke / dust exposure'], compare:['Filters','Ventilation choices','Location exposure','Air-quality data'], risk:['Pollution','Mold','Smoke','Respiratory stress'], act:['Monitor conditions','Improve ventilation','Compare filters','Update profile'] },
+  { short:'Water', full:'Water', pressure:'low', need:['Safe drinking water','Reliable supply','Taste / treatment','Emergency reserve'], compare:['Tap vs filtered','Bottled vs home filter','Storage options','Monthly cost'], risk:['Contamination','Shortage','High cost','System failure'], act:['Check quality','Compare filters','Build reserve','Record supplier'] },
+  { short:'Food', full:'Food', pressure:'low', need:['Nutrition','Regular access','Budget fit','Food quality'], compare:['Cost basket','Stores','Meal options','Bulk buying'], risk:['Inflation','Poor nutrition','Spoilage','Supply gaps'], act:['Monitor basket','Compare stores','Plan meals','Update budget'] },
+  { short:'Shelter', full:'Shelter', pressure:'medium', need:['Housing cost','Location fit','Safety','Utilities'], compare:['Rent vs buy','Unit types','Communities','Total cost'], risk:['Affordability','Condition','Legal terms','Energy cost'], act:['Create comparison','Add evidence','Run scenario','Update profile'] },
+  { short:'Clothing', full:'Clothing', pressure:'low', need:['Weather protection','Work suitability','Fit / comfort','Replacement cycle'], compare:['New vs used','Durability','Seasonal needs','Cost per wear'], risk:['Poor fit','Low durability','Weather exposure','Waste'], act:['Inventory basics','Compare brands','Plan replacement','Track spend'] },
+  { short:'Safety', full:'Safety', pressure:'medium', need:['Injury prevention','Emergency readiness','Safe equipment','Safe routines'], compare:['Safety gear','Training','Home risk fixes','Emergency kits'], risk:['Accidents','Fire','Weather event','Work hazard'], act:['List hazards','Add evidence','Prioritize fixes','Create checklist'] },
+  { short:'Security', full:'Security', pressure:'medium', need:['Personal security','Home security','Data security','Asset protection'], compare:['Locks','Alarms','Insurance','Passwords'], risk:['Theft','Fraud','Break-in','Identity loss'], act:['Review gaps','Compare options','Harden systems','Update profile'] },
+  { short:'Health', full:'Health', pressure:'medium', need:['Physical health','Prevention','Medication / care','Mobility'], compare:['Providers','Routine options','Diet / exercise','Coverage'], risk:['Illness','Delay','Cost','Loss of ability'], act:['Track symptoms','Book care','Compare supports','Update records'] },
+  { short:'Transport', full:'Transportation', pressure:'high', need:['Reliable mobility','Low operating cost','Repair access','Weather capability'], compare:['Repair vs replace','Vehicle choices','Transit','Insurance'], risk:['Breakdown','Fuel cost','Insurance','Access loss'], act:['Compare repair','Price replacement','Track maintenance','Run scenario'] },
+  { short:'Comm', full:'Communication', pressure:'low', need:['Phone / internet','Information access','Emergency contact','Social connection'], compare:['Plans','Providers','Devices','Data needs'], risk:['Outage','High cost','Bad contract','Isolation'], act:['Compare plans','Check coverage','Record contract','Update budget'] },
+  { short:'Energy', full:'Energy', pressure:'medium', need:['Heating / power','Fuel','Backup power','Efficiency'], compare:['Providers','Solar/battery','Insulation','Appliance loads'], risk:['Price shock','Outage','Cold exposure','Waste'], act:['Audit use','Compare rates','Plan backup','Run scenario'] },
+  { short:'Income', full:'Income / Work', pressure:'high', need:['Cash flow','Stable employment','Skill value','Backup income'], compare:['Jobs','Side income','Training','Business options'], risk:['Employer risk','Skill mismatch','Debt pressure','Low reserve'], act:['Compare income options','Assess skills','Build pipeline','Update profile'] },
+  { short:'Family', full:'Family / Community', pressure:'low', need:['Support network','Care duties','Belonging','Mutual help'], compare:['Local resources','Care options','Community groups','Time commitments'], risk:['Isolation','Care burden','Conflict','Emergency gap'], act:['Map supports','Record contacts','Compare resources','Plan visits'] },
+  { short:'Education', full:'Education / Knowledge', pressure:'low', need:['Useful skills','Decision knowledge','Credentials','Lifelong learning'], compare:['Courses','Books','Mentors','Practice projects'], risk:['Obsolete skills','Bad advice','Low confidence','Wasted time'], act:['Pick skill gap','Compare learning paths','Schedule study','Track progress'] },
+  { short:'Legal', full:'Legal / Rights', pressure:'low', need:['Rights awareness','Contracts','Documents','Dispute protection'], compare:['DIY vs lawyer','Document tools','Insurance','Agencies'], risk:['Bad contract','Missed rights','Penalty','Dispute'], act:['Collect documents','Compare advice','Check terms','Add evidence'] },
+  { short:'Recreation', full:'Recreation', pressure:'low', need:['Rest','Joy','Exercise','Creativity'], compare:['Low-cost activities','Travel','Hobbies','Social options'], risk:['Burnout','Overspending','Inactivity','Isolation'], act:['Plan activity','Compare costs','Schedule rest','Update wellbeing'] },
+  { short:'Meaning', full:'Spiritual / Meaning', pressure:'low', need:['Purpose','Values','Reflection','Contribution'], compare:['Practices','Communities','Volunteer options','Creative work'], risk:['Drift','Despair','Conflict','Neglect'], act:['Define values','Compare communities','Choose practice','Record outcome'] },
+  { short:'Wealth', full:'Wealth / Finance', pressure:'medium', need:['Savings','Debt control','Assets','Retirement path'], compare:['Accounts','Debt plans','Investments','Housing options'], risk:['Inflation','Debt','Bad advice','Insufficient reserve'], act:['Compare plan','Track net worth','Run forecast','Update profile'] }
+];
+function domainIndexByName(name){
+  const clean = String(name || '').toLowerCase();
+  const aliases = {
+    'air':'Air',
+    'water':'Water',
+    'drink':'Water',
+    'drinks & drink mixes':'Water',
+    'food':'Food',
+    'nutrition':'Food',
+    'fruit':'Food',
+    'vegetable':'Food',
+    'meat':'Food',
+    'beef':'Food',
+    'poultry':'Food',
+    'pork':'Food',
+    'seafood':'Food',
+    'eggs':'Food',
+    'bread':'Food',
+    'bagel':'Food',
+    'croissant':'Food',
+    'pizza':'Food',
+    'burger':'Food',
+    'burgers':'Food',
+    'pickles':'Food',
+    'sauces':'Food',
+    'spices':'Food',
+    'shelter':'Shelter',
+    'rent':'Shelter',
+    'rentals':'Shelter',
+    'ownership':'Shelter',
+    'mortgage':'Shelter',
+    'housing':'Shelter',
+    'rentals':'Shelter',
+    'apartments':'Shelter',
+    'construction':'Shelter',
+    'clothing':'Clothing',
+    'apparel':'Clothing',
+    'safety':'Safety',
+    'security':'Security',
+    'health':'Health',
+    'medical':'Health',
+    'transportation':'Transportation',
+    'transport':'Transportation',
+    'road vehicles':'Transportation',
+    'automotive':'Transportation',
+    'passenger vehicles':'Transportation',
+    'bicycles':'Transportation',
+    'communication':'Communication',
+    'communications':'Communication',
+    'publishing':'Communication',
+    'broadcasting':'Communication',
+    'energy':'Energy',
+    'electricity':'Energy',
+    'income':'Income / Work',
+    'employment':'Income / Work',
+    'work':'Income / Work',
+    'education':'Education / Knowledge',
+    'knowledge':'Education / Knowledge',
+    'legal':'Legal / Rights',
+    'rights':'Legal / Rights',
+    'entertainment':'Recreation',
+    'recreation':'Recreation',
+    'spiritual':'Spiritual / Meaning',
+    'meaning':'Spiritual / Meaning',
+    'wealth':'Wealth / Finance',
+    'finance':'Wealth / Finance'
+  };
+  let target = aliases[clean];
+  if(!target){
+    const hit = lifeDomains.find(d => clean === d.full.toLowerCase() || clean === d.short.toLowerCase());
+    target = hit ? hit.full : null;
+  }
+  if(!target) return -1;
+  return lifeDomains.findIndex(d => d.full === target || d.short === target);
+}
+function syncDomainToTreeSelection(path, node){
+  if(currentMode !== 'human') return;
+  let idx = -1;
+  const lifeIndex = path.indexOf('Life Domains');
+  if(lifeIndex >= 0 && path.length > lifeIndex + 1){
+    idx = domainIndexByName(path[lifeIndex + 1]);
+  }
+  if(idx < 0){
+    // Fallback: scan the entire path from right to left, so child nodes like Pickles still resolve to Food.
+    for(let i=path.length-1; i>=0; i--){
+      idx = domainIndexByName(path[i]);
+      if(idx >= 0) break;
+    }
+  }
+  if(idx >= 0) activeDomainIndex = idx;
+}
+
+function humanDashboard(){
+  const d=lifeDomains[activeDomainIndex];
+  return `<div class="humanGrid"><div class="lifeWheelShell" id="lifeWheel"><div class="lifeWheelHeader"><strong>Personal Value Domain Wheel</strong><span class="lifeWheelHint"></span></div><div class="wheelRing"></div><div class="wheelRing inner"></div><div class="wheelCenter">Personal<br>Value<br>Dashboard</div>${lifeDomains.map((x,i)=>`<button class="domainOrb ${i===activeDomainIndex?'active':''}" data-i="${i}" onclick="setDomain(${i})" title="${x.full}">${x.short}</button>`).join('')}<div class="spinControls"><button class="spinBtn" onclick="spinDomain(-1)">Prev ▲</button><button class="spinBtn" onclick="spinDomain(1)">Next ▼</button></div></div><div class="domainPanel"><div class="priorityCard"><h2>Current priority: ${d.full}</h2><p>This is the human-facing Comparator viewpoint: what is of value relative to my life, what is stable, what is at risk, and what action should I take next?</p><div class="badges"><span class="badge ${d.pressure==='high'?'risk':d.pressure==='medium'?'warn':'good'}">Pressure: ${d.pressure}</span><span class="badge good">Profile grows with use</span><span class="badge">Comparator ready</span></div></div><div class="domainQuickGrid"><button class="quickButton primary">Create comparison</button><button class="quickButton">Add evidence</button><button class="quickButton">Update profile</button><button class="quickButton">Run scenario</button><button class="quickButton">View ownership</button><button class="quickButton">Open full editor</button></div><div class="fourcols"><div class="miniPanel"><h4>Need State</h4><ul>${d.need.map(v=>`<li>${v}</li>`).join('')}</ul></div><div class="miniPanel"><h4>Compare</h4><ul>${d.compare.map(v=>`<li>${v}</li>`).join('')}</ul></div><div class="miniPanel"><h4>Risk</h4><ul>${d.risk.map(v=>`<li>${v}</li>`).join('')}</ul></div><div class="miniPanel"><h4>Act</h4><ul>${d.act.map(v=>`<li>${v}</li>`).join('')}</ul></div></div></div></div>`;
+}
+function setDomain(i){
+  activeDomainIndex = ((i % lifeDomains.length) + lifeDomains.length) % lifeDomains.length;
+  if(currentMode==='human') selectHumanDomainNode(activeDomainIndex);
+  renderTree();
+  renderWorkspace();
+  renderInspector();
+}
+function spinDomain(delta){ setDomain(activeDomainIndex + delta); }
+function placeDots(){
+  const shell=document.getElementById('lifeWheel');
+  if(!shell) return;
+  const dots=[...shell.querySelectorAll('.domainOrb')];
+  const step=360/dots.length;
+  const cx=220, cy=190, rx=158, ry=122;
+  dots.forEach((el,i)=>{
+    const label=(el.textContent||'').trim();
+    const w=Math.max(42, Math.min(70, Math.round(label.length*5.4 + 8)));
+    el.style.width = w + 'px';
+    const rel=i-activeDomainIndex;
+    const angle=(rel*step)*Math.PI/180;
+    const x=cx + Math.cos(angle)*rx - (w/2);
+    const y=cy + Math.sin(angle)*ry - 11;
+    el.style.left=x+'px';
+    el.style.top=y+'px';
+    const dist=Math.min(Math.abs(rel), dots.length-Math.abs(rel));
+    el.classList.toggle('near', dist===1 || dist===2);
+  });
+}
+
+
+function rentalListingsGrid(){
+  const subtype = selectedPath.includes('Apartments') ? 'Apartments' : selectedPath.includes('Rooms') ? 'Rooms' : selectedPath.includes('Houses') ? 'Houses' : selectedNode.text;
+  return `<div class="listingHeader">
+    <div class="titleBox">
+      <h2>Rental Options — ${subtype}</h2>
+      <p>Sector: <b>${modeLabel(currentMode)}</b> · Scope: <b>${currentScope}</b> · Domain: <b>Shelter</b>. This is where the original Comparator grid becomes practical listings and offer comparison.</p>
+    </div>
+    <div class="listingToolbar"><button>Filter</button><button>Sort</button><button>Compare</button><button>Save shortlist</button></div>
+  </div>
+  <div class="listingGridWrap">
+    <table class="listingGrid">
+      <thead><tr><th>Item</th><th>Status</th><th>Posted</th><th>Rent</th><th>Bedrooms</th><th>Location</th><th>Utilities</th><th>Transit</th><th>Pets</th><th>Condition</th><th>Risk</th><th>CVU</th></tr></thead>
+      <tbody>
+        <tr><td>001</td><td>Available</td><td>Today</td><td>$1,250</td><td>1</td><td>Red Deer</td><td>Partial</td><td>Good</td><td>Ask</td><td>Good</td><td>Low</td><td>78</td></tr>
+        <tr class="selected"><td>002</td><td>Available</td><td>2d</td><td>$1,400</td><td>2</td><td>Springbrook</td><td>Extra</td><td>Fair</td><td>Yes</td><td>Good</td><td>Medium</td><td>81</td></tr>
+        <tr><td>003</td><td>Watch</td><td>4d</td><td>$975</td><td>Room</td><td>Red Deer</td><td>Included</td><td>Good</td><td>No</td><td>Unknown</td><td>Medium</td><td>69</td></tr>
+        <tr><td>004</td><td>Available</td><td>1w</td><td>$1,650</td><td>2</td><td>Penhold</td><td>Extra</td><td>Low</td><td>Ask</td><td>Excellent</td><td>Low</td><td>74</td></tr>
+        <tr><td>005</td><td>Expired</td><td>2w</td><td>$1,100</td><td>1</td><td>Red Deer</td><td>Partial</td><td>Good</td><td>No</td><td>Fair</td><td>High</td><td>61</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="lowerDetail">
+    <div class="detailPanel"><h3>Selected Offer Properties</h3><table><tr><td>Need Fit</td><td>Stable housing</td></tr><tr><td>Pressure</td><td>Rent pressure</td></tr><tr><td>Evidence</td><td>listing + inspection needed</td></tr><tr><td>Action</td><td>Compare / contact / verify</td></tr></table></div>
+    <div class="detailPanel"><h3>Transaction / Contact History</h3><table><tr><td>Contact landlord</td><td>not started</td></tr><tr><td>Viewing</td><td>not scheduled</td></tr><tr><td>Application</td><td>not submitted</td></tr><tr><td>Records</td><td>save listing, terms, photos, messages</td></tr></table></div>
+  </div>
+  <div class="overlayNote"><b>Matrix note:</b> Personal need does not mean the answer is only personal. A rental issue can connect to municipal listings, provincial tenancy rules, business landlords, finance/budget, and legal/rights overlays.</div>`;
+}
+function ownershipOptionsGrid(){
+  return `<div class="listingHeader">
+    <div class="titleBox">
+      <h2>Ownership Options</h2>
+      <p>Separate from Rent because the user intent, transaction chain, financing, risk, and evidence are different.</p>
+    </div>
+    <div class="listingToolbar"><button>Affordability</button><button>Mortgage</button><button>Compare</button><button>Save scenario</button></div>
+  </div>
+  <div class="listingGridWrap">
+    <table class="listingGrid">
+      <thead><tr><th>Item</th><th>Type</th><th>Price</th><th>Down</th><th>Monthly</th><th>Location</th><th>Condition</th><th>Fees</th><th>Risk</th><th>CVU</th></tr></thead>
+      <tbody>
+        <tr><td>001</td><td>Condo</td><td>$99,000</td><td>$20k</td><td>$780</td><td>Springbrook</td><td>Fair</td><td>Condo fees</td><td>Medium</td><td>76</td></tr>
+        <tr><td>002</td><td>Modular</td><td>$150,000</td><td>$30k</td><td>$1,050</td><td>Clive</td><td>Good</td><td>Lot rent?</td><td>Medium</td><td>73</td></tr>
+        <tr><td>003</td><td>House</td><td>$240,000</td><td>$48k</td><td>$1,650</td><td>Red Deer Area</td><td>Unknown</td><td>Taxes</td><td>High</td><td>62</td></tr>
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function departmentDiagram(){
+ return `<div class="presentationTools">
+   <div class="toolCaption"><b>Presentation Panel:</b> optimized swimlane representation of the selected business system. Scope: <b>${currentScope}</b>. Select any swimlane object to inspect it on the right.</div>
+   <div class="presentationNav"><button>&lt;</button><button>&gt;</button><button>1</button><button>2</button><button>3</button><button>⋯</button></div>
+ </div>
+ <div class="swimlaneBoard">
+   ${lane('Market Facing','Demand → Offer → Commitment',[
+     obj('Customer Segment','Who has the problem, budget, urgency, and willingness to pay.','CustomerSegment',['Need','Budget','Trust']),
+     obj('Offer / Price','Convert value into a selectable offer with price, terms, evidence, and risk.','OfferObject',['CVU','Price','Terms']),
+     obj('Sales Pipeline','Lead source, qualification, quote, close, handoff, and lost-sale evidence.','ProcessLane',['Lead','Quote','Close'])
+   ])}
+   ${lane('Internal Delivery','Capacity → Work → Fulfillment',[
+     obj('Operations','Capacity, schedule, labour, work flow, bottlenecks, and fulfillment status.','Department',['Capacity','Flow','Cost']),
+     obj('Quality / Safety','Inspection points, defect prevention, safety controls, and conformance evidence.','Department',['Inspect','Risk','Proof']),
+     obj('Engineering / Product','Product definition, configuration, BOM/spec control, change control, and improvement.','Department',['Spec','BOM','ECN'])
+   ])}
+   ${lane('Business Control','Money → Records → Credit',[
+     obj('Accounting / Finance','Revenue, cost, cash, debt, payroll, AP/AR, and financial pulse packets.','Department',['Cash','Cost','Pulse']),
+     obj('Evidence / Records','Invoices, photos, contracts, ECNs, DVPs, inspection records, and source links.','EvidenceSet',['Docs','Links','Audit']),
+     obj('Credit Assessment','Verified value, risk reduction, trust, capability, and evidence-backed scores.','CreditModule',['Score','Gap','Trust'])
+   ])}
+   ${lane('Simulation Layer','Agents → Scenario → Feedback',[
+     obj('Agents','Buyer, seller, supplier, staff, regulator, competitor, and environment agents.','AgentSet',['Buyer','Supplier','Staff']),
+     obj('Scenario Run','Demand, capacity, price, delay, cash, quality, risk, and customer response tests.','SimulationRun',['Run','Result','Compare']),
+     obj('Feedback Loop','Simulation and real evidence update assumptions, models, DVPs, and priorities.','FeedbackLoop',['Learn','Update','DVP'])
+   ])}
+ </div>
+ <div class="swimSummary">
+   <div class="summaryBox"><strong>Selected model level</strong>Department swimlanes show major business functions and their handoffs.</div>
+   <div class="summaryBox"><strong>Standard actions</strong>New, Open, Edit, Save, Simulate, Assess, and Document apply to the selected object.</div>
+   <div class="summaryBox"><strong>Next depth</strong>Each object can open a custom editor, detailed process map, grid, evidence locker, or simulation panel.</div>
+ </div>`;
+}
+function lane(title, meta, objects){
+  return `<div class="swimlane"><div class="laneHeader"><h3>${title}</h3><div class="laneMeta">${meta}</div></div><div class="laneBody">${objects.join('')}</div></div>`;
+}
+function obj(h,p,cls,tags){
+  return `<div class="swimObj" onclick="selectWorkspaceObject('${escapeJs(h)}','${escapeJs(cls)}','${escapeJs(p)}')">
+    <span class="objectPort left"></span><span class="objectPort right"></span><span class="objectPort top"></span><span class="objectPort bottom"></span>
+    <h4>${h}</h4><p>${p}</p><div class="micro">${tags.map(t=>`<span>${t}</span>`).join('')}</div>
+  </div>`;
+}
+function block(h,p,cls='ProcessBlock'){
+  return `<div class="block" onclick="selectWorkspaceObject('${escapeJs(h)}','${escapeJs(cls)}','${escapeJs(p)}')"><span class="port left"></span><span class="port right"></span><h4>${h}</h4><p>${p}</p></div>`;
+}
+function escapeJs(v){ return String(v).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+function selectWorkspaceObject(name, cls, note){
+  selectedNode = {text:name, type:cls, note:note || '', virtual:true};
+  selectedPath = [modeLabel(currentMode), 'Workspace Object', name].filter(Boolean);
+  renderInspector();
+  document.getElementById('statusSelected').textContent = name;
+  document.getElementById('statusPath').textContent = `Mode: ${modeLabel(currentMode)} | Workspace object: ${name}`;
+}
+
+function comparatorGrid(){
+ const label = selectedNode && selectedNode.text ? selectedNode.text : 'Selected Type';
+ const type = selectedNode && selectedNode.type ? selectedNode.type : 'Comparator';
+ return `<div class="priorityCard"><h2>Comparator grid: ${label}</h2><p>Selected class/type: <b>${type}</b>. This view follows the legacy tree + typed-grid idea: the tree selects the comparison context, and the grid shows comparable offer rows with value factors.</p></div><br><table class="gridTable"><thead><tr><th>Comparable Offer</th><th>Need Fit</th><th>Availability</th><th>Cost</th><th>Quality</th><th>Risk</th><th>CVU</th><th>Action</th></tr></thead><tbody><tr><td>${label} Option A</td><td>82</td><td>70</td><td>64</td><td>78</td><td>Low</td><td>76</td><td>Shortlist</td></tr><tr><td>${label} Option B</td><td>74</td><td>90</td><td>55</td><td>68</td><td>Medium</td><td>69</td><td>Watch</td></tr><tr><td>${label} Option C</td><td>91</td><td>42</td><td>71</td><td>84</td><td>Low</td><td>80</td><td>Compare deeper</td></tr></tbody></table>`;
+}
+function simulationDiagram(){ return `<div class="diagram"><div class="lane"><h3>Scenario</h3>${block('Assumptions','Demand, price, capacity, costs, constraints.')}${block('Environment','Market, labour, regulation, supply.')}</div><div class="lane"><h3>Agents</h3>${block('Buyer Agents','Need, budget, urgency, comparison behaviour.')}${block('Seller Agent','Offer, price, delivery capability.')}${block('Supplier Agent','Lead time, cost, reliability.')}</div><div class="lane"><h3>Run</h3>${block('Simulation Loop','Step time forward and record events.')}${block('DVP Stream','Meaningful value changes captured as packets.')}</div><div class="lane"><h3>Results</h3>${block('Heatmap','Red/yellow/green evidence and weakness view.')}${block('Model Update','Use results to improve assumptions.')}</div></div>`; }
+function creditsHeatmap(){
+ const rows=['Business Concept','Customer Problem Evidence','Offer Fit','Delivery Capability','Quality / Safety','Financial Pulse','Founder Fit','Risk / Compliance'];
+ return `<table class="gridTable"><thead><tr><th>Credit Area</th><th>Evidence</th><th>Score</th><th>Gap</th><th>Next Action</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${r}</td><td>${i%3===0?'Low':i%3===1?'Medium':'High'}</td><td>${55+i*5}</td><td>${i%2?'Need proof':'Needs review'}</td><td>Add evidence</td></tr>`).join('')}</tbody></table>`;
+}
+function objectWorkbench(){ return `<div class="priorityCard"><h2>Object Workbench</h2><p>Objects are created, edited, connected, launched into custom editors, exposed through ports, and reused across sectors/tools.</p></div><br><table class="gridTable"><thead><tr><th>Class</th><th>Purpose</th><th>Editor</th><th>Ports</th></tr></thead><tbody><tr><td>Business</td><td>Commercial model root</td><td>Business Editor</td><td>Inputs / Outputs</td></tr><tr><td>Customer Segment</td><td>Demand and behaviour profile</td><td>Segment Editor</td><td>Needs / Offers</td></tr><tr><td>Offer</td><td>Comparable product/service claim</td><td>Offer Editor</td><td>Price / Quality / Risk</td></tr><tr><td>Simulation Agent</td><td>Scenario behaviour object</td><td>Agent Editor</td><td>Events / Decisions</td></tr></tbody></table>`; }
+function genericSectorWorkspace(){
+ return `<div class="overviewGrid"><div class="valueCard sectorCard"><div class="kicker">Selected Node</div><h3>${selectedNode.text}</h3><p>This center panel is the visual working surface for the selected sector/tool and tree node.</p><div class="minirow"><span class="chip">${selectedNode.type}</span><span class="chip">Visual layout</span><span class="chip">Object aware</span></div></div><div class="valueCard sectorCard"><div class="kicker">Matrix Rule</div><h3>${modeLabel(currentMode)} × ${selectedNode.text}</h3><p>The top button sets the sector/tool. The TreeView selects the classification node. Scope sets the scale/jurisdiction. The center changes to the appropriate view.</p></div><div class="valueCard sectorCard"><div class="kicker">Next Interfaces</div><h3>Graph / Grid / Swimlane</h3><p>This node can later open a dashboard, typed datagrid, simulation graph, object editor, or custom popup.</p></div></div>`;
+}
+
+function renderInspector(){
+ const n=selectedNode;
+ const className=n.type || 'Object';
+ const standard = standardActivityButtonsFor(currentMode, className);
+ const actions = actionButtonsFor(currentMode, className);
+ const note = standardActivityNoteFor(currentMode, className);
+ document.getElementById('inspector').innerHTML = `<div class="selectedHeader"><div class="classline">Selected ${className}</div><div class="objname">${n.text}</div><div class="badges"><span class="badge good">Editable</span><span class="badge">Mode: ${modeLabel(currentMode)}</span><span class="badge warn">Draft schema</span></div></div>
+ <div class="activityStrip">${standard.map((a,i)=>`<button class="activityBtn simple ${i<4?'row1':'row2'}">${a}</button>`).join('')}</div>
+ <div class="standardNote">${note}</div>
+ <div class="classActionTitle">Class-specific actions</div>
+ <div class="actionGrid">${actions.map((a,i)=>`<button class="${i===0?'primary':''}">${a}</button>`).join('')}</div>
+ <div class="propSection"><h3>Identity</h3><table class="propGrid"><tr><td>Name</td><td>${n.text}</td></tr><tr><td>Class</td><td>${className}</td></tr><tr><td>Mode/Sector</td><td>${modeLabel(currentMode)}</td></tr><tr><td>Scope</td><td>${currentScope}</td></tr><tr><td>Path</td><td>${selectedPath.join(' / ')}</td></tr><tr><td>Parent</td><td>${selectedPath.length>1?selectedPath[selectedPath.length-2]:'none'}</td></tr></table></div>
+ <div class="propSection"><h3>Object Data</h3><table class="propGrid"><tr><td>Inputs</td><td>${inputsFor(currentMode)}</td></tr><tr><td>Outputs</td><td>${outputsFor(currentMode)}</td></tr><tr><td>Evidence</td><td>0 records attached</td></tr><tr><td>Credits</td><td>not scored</td></tr><tr><td>Simulation Role</td><td>${simRoleFor(currentMode,className)}</td></tr><tr><td>Activity State</td><td>create / modify / calculate / assess / document</td></tr><tr><td>Visibility</td><td>private / draft</td></tr></table></div>
+ <div class="propSection"><h3>Editor Launch</h3><table class="propGrid"><tr><td>Default Editor</td><td>${editorFor(className)}</td></tr><tr><td>Custom Popup</td><td>available later</td></tr><tr><td>Template</td><td>${className}_template_v0</td></tr></table></div>`;
+}
+function standardActivityButtonsFor(mode, cls){
+ return ['New','Open','Edit','Save','Simulate','Assess','Document'];
+}
+function standardActivityNoteFor(mode, cls){
+ if(cls==='Swimlanes') return 'At this level the work is to create or modify lanes, simulate/calculate flow or capacity, assess/measure the lane system, and document evidence of the model.';
+ if(cls==='Department') return 'At department level, activities focus on processes, capacity, handoffs, metrics, risks, and evidence records.';
+ if(mode==='comparator') return 'Comparator activity means create comparable items, modify fields, calculate value, assess fit/risk, and document comparison evidence.';
+ if(mode==='simulation') return 'Simulation activity means create scenarios/agents, modify assumptions, run calculations, assess results, and document the run record.';
+ if(mode==='credits') return 'Credit activity means create a claim, modify evidence, calculate provisional value, assess authority/confidence, and document the decision.';
+ return 'Standard activity layer: every category should support New, Open, Edit, Save, Simulate, Assess, and Document.';
+}
+function actionButtonsFor(mode, cls){
+ const baseByClass = {
+   ProductType:['+ Offer','+ Field','Compare','Open Type Grid'],
+   ProductClass:['+ Type','+ Template','Compare Class','Open Class Grid'],
+   ProductGroup:['+ Class','+ Field Set','Normalize','Open Product Grid'],
+   ServiceType:['+ Offer','+ Provider','Compare','Open Service Grid'],
+   ServiceClass:['+ Service','+ Template','Assess','Open Service Class'],
+   Category:['+ Subcategory','+ Template','Compare Category','Open Category Editor'],
+   Swimlanes:['+ New Lane','+ New Block','Set Handoff','Open Swimlane Editor'],
+   Department:['+ Process','+ Metric','Add Capacity','Open Department Editor'],
+   ProcessStep:['+ Input','+ Output','Link Step','Open Process Editor'],
+   CustomerSegment:['+ Need','+ Buyer Agent','Compare Segment','Open Segment Editor'],
+   OfferObject:['+ Field','+ Price Test','Compare Offer','Open Offer Editor'],
+   EvidenceSet:['+ Evidence','Attach File','Review Source','Open Evidence Locker'],
+   CreditModule:['+ Claim','Score Credit','Review Authority','Open Credit Editor'],
+   AgentSet:['+ Agent','Set Behaviour','Run Agent Test','Open Agent Editor'],
+   SimulationRun:['+ Scenario','Run / Re-run','Compare Result','Open Run Log'],
+   FeedbackLoop:['+ Finding','Update Model','Create DVP','Open Feedback Editor']
+ };
+ const map={
+   human:['+ New Need','+ New Asset','Compare','Update Profile'],
+   business:['+ New Business','+ New Offer','Add Evidence','Run Test'],
+   comparator:['+ New Offer','+ New Field','Score Value','Open Grid'],
+   simulation:['+ New Agent','+ Scenario','Run','Compare Runs'],
+   credits:['+ Evidence','+ Credit','Inspect','Heatmap'],
+   objects:['+ Object','+ Template','Ports','Custom Editor']
+ };
+ return baseByClass[cls] || map[mode] || ['+ New Child','Duplicate','Link','Open Full'];
+}
+function inputsFor(mode){ return ({human:'needs, budget, risks',business:'demand, resources, capacity',market:'offers, price signals',finance:'payments, credit, risk',simulation:'assumptions, agents',comparator:'comparable offers',credits:'evidence, authority',objects:'class schema'})[mode] || 'sector context'; }
+function outputsFor(mode){ return ({human:'choices, actions, profile updates',business:'offers, revenue, DVPs',market:'transactions, prices',finance:'capital flow, risk score',simulation:'run results',comparator:'CVU ranking',credits:'verified score',objects:'exposed ports'})[mode] || 'mapped objects'; }
+function simRoleFor(mode,cls){ if(mode==='simulation') return 'active simulation object'; if(['business','market','human'].includes(mode)) return 'can become simulation input'; return 'support / reference'; }
+function editorFor(cls){ return ({LifeDomain:'Life Domain Editor',EconomySector:'Sector Editor',BusinessLibrary:'Library Browser',Department:'Department Swimlane Editor',Function:'Function Block Editor',GridSet:'DataGrid Editor',Formula:'Formula Editor',PacketSet:'Packet Editor',AgentClass:'Agent Editor'})[cls] || cls+' Editor'; }
+
+init();
+</script>
+</body>
+</html>
