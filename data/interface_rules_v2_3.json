@@ -1,0 +1,28 @@
+{
+  "version": "2.3",
+  "activity_tool_persistence": true,
+  "home_shows_clickable_wheel": true,
+  "tree_minimum_depth": 3,
+  "inspector_context_order": [
+    "center_selection",
+    "treeview_node",
+    "sector_scope_overlay",
+    "startup_sector_buttons"
+  ],
+  "datagrid": {
+    "style": "dense_legacy_comparator",
+    "font_size": "8pt",
+    "row_lines": true,
+    "column_lines": true,
+    "column_resize": true,
+    "row_resize": false,
+    "preserve_after_approval": true
+  },
+  "object_workshop": {
+    "create": true,
+    "edit": true,
+    "save_local_storage": true,
+    "export_json": true,
+    "import_json": true
+  }
+}
