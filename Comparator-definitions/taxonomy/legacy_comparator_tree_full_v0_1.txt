@@ -1,0 +1,652 @@
+- Food
+  - Products
+    - Fruit
+    - Vegetable
+      - Tubers
+      - Fibrous
+      - Leafy
+    - Dairy
+    - Baked
+      - Bread
+      - Bagel
+      - Croissant
+      - Pizza
+    - Meat
+      - Beef
+      - Poultry
+      - Pork
+      - Seafood
+      - Game
+      - Fowl
+      - Eggs
+      - Other
+    - Frozen
+      - Juice
+      - Meat
+      - Vegetables
+      - Potato
+      - Waffles
+      - Ice Cream
+    - Dehydrated
+      - Potato
+      - Rice
+      - Beans
+      - Fruit
+    - Canned
+      - Pickles
+      - Sauces
+      - Fruits
+    - Sauces
+      - Tomato
+      - Salsa
+      - Meat
+      - Prepared
+      - Gravy
+    - Spices
+      - Salt
+      - Pepper
+      - Basil
+      - Thyme
+      - Curry
+    - Sweets
+      - Chocolate
+      - Candy
+      - Desserts
+      - White Sugar
+      - Brown Sugar
+      - Carob
+      - Maple Syrup
+      - Corn Syrup
+    - Drinks & Drink Mixes
+      - Water
+      - Coffee
+      - Tea
+      - Alcohol
+      - Softdrinks
+    - Bulk
+      - Nuts
+    - Pastries
+      - Baklava
+    - Additives
+      - Monsodium Glutamate
+    - Nutritional Supplements
+      - Vitamins
+      - Minerals
+  - Services
+    - Shopping Service
+- Clothing
+  - Products
+    - Ladies Formal
+    - Ladies Casual
+    - Ladies Lingerie
+    - Ladies Fitness & Swimware
+    - Ladies Footwear
+    - Ladies Winter
+    - Men's Formal
+    - Men's Casual
+    - Men's Underwear
+    - Men's Footwear
+    - Men's Winter
+    - Childrens Formal
+    - Childrens Casual
+    - Childrens Underwear
+    - Childrens Footwear
+    - Childrens Winter
+    - Accessories
+      - Purses
+      - Wallets
+      - Jewellery
+      - Scarves
+      - Gloves & Mittens
+      - Hats
+  - Services
+    - Dry Cleaning Services
+    - Laundry Services
+    - Haute Couture Shops
+- Shelter
+  - Products
+    - Concrete Products
+      - Brick and Block
+    - Lumber & Dimensional Products
+      - Board
+      - Sheet
+      - Trim
+      - Joist & Truss
+    - Hardware
+      - Fasteners
+      - Hinges
+    - Electrical
+      - Panels
+      - Wiring
+      - Switches & Outlets
+    - Interior Decor
+      - Floors
+      - Ceilings
+      - Wallcovering & Paint
+      - Drapery & Blinds
+      - Kitchen Cabinetry
+      - Bathroom Cabinetry
+    - Lighting
+      - Light Bulbs
+      - Light Fixtures
+    - HVAC
+      - Heating
+      - Air Conditioning
+      - Ducting
+    - Doors and Windows
+      - Doors
+      - Windows
+    - Roofing
+      - Shingles
+      - Roofing Papers
+      - Hardware
+      - Clay Tiles
+      - Cedar Shingles
+      - Slate
+      - Metal Sheets
+      - Copper
+    - Landscaping
+      - Contractors
+      - Materials
+      - Sod
+    - Forming and Framing
+      - Blue Block
+      - Pre-Fabricated
+    - Construction Tools
+      - Woodworking
+      - Metalworking
+      - Landscaping
+      - Hand Tools
+  - Services
+    - Rentals
+      - Storage
+      - Rooms
+      - Room & Board
+      - One Bedroom Apt
+      - Two Bedroom Apt
+      - Three Bedroom Apt
+      - House
+      - Acreage
+    - Real Estate Services
+      - Brokers
+      - Surveyors
+      - Property Inspectors
+    - Construction Contractors
+      - Foundation
+      - Framing
+      - Carpentry
+      - Roofing
+      - Plumbing
+      - Electrical
+      - Landscaping
+      - Paving
+      - HVAC
+    - Pre-Fabricated Buildings
+    - Architectural Services
+    - Inspectors
+- Security
+  - Products
+    - Home Security Systems
+    - Vehicle Security Systems
+    - Safekeeping Products
+    - Weapons
+  - Services
+    - Bodyguard Services
+    - Home Security Services
+    - Safekeeping Services
+- Spiritual
+  - Products
+    - Symbolic Products
+  - Services
+    - Catholic Services
+    - Anglican Services
+    - Unitarian Services
+    - Islamic Services
+    - Buddhist Services
+    - Wicca Services
+    - Clairvoyant Services
+    - Paranormal Investigations
+    - Other
+- Consumer Products
+  - Products
+    - Appliances
+    - Cookware
+    - Furniture
+    - Consumer Electronics
+    - Toys
+  - Services
+    - Custom Furniture Designers
+    - Upholsterers
+    - Fabric Shops
+    - Appliance Repair Shops
+    - Electronics Repair Shops
+- Health (Non Nutrutional)
+  - Products
+    - Medical
+    - Physical
+    - Spiritual
+  - Services
+    - Medical
+    - Spiritual
+    - Emotional
+    - Physical
+    - Nutritional
+    - Elderly
+    - Longevity
+    - Historical
+    - Statistical
+    - Educational
+    - Infant
+    - Infant Care
+- Wealth
+  - Products
+    - Money Collections
+    - Businesses
+    - Income
+  - Services
+    - Financial Planning
+    - Life Insurance
+    - Business Insurance
+    - Banking
+    - Investments
+- Transportation
+  - Products
+    - Watercraft
+      - Watercraft Parts
+      - Boat
+      - Personal Watercraft
+      - Sailboat
+      - Power Boat
+      - Hydroplane
+      - Submarine
+      - Yacht
+      - Military Ship
+      - Freight Ship
+      - Water bubble
+      - Waterskis
+      - Waterbike
+      - Pedal boat
+      - Canoe
+      - Kayak
+      - Rubber Raft
+      - Wooden Raft
+      - Houseboat
+      - Floating Home
+    - Aircraft
+      - Aircraft Parts
+      - Balloons
+      - Airplanes
+      - Jetliners
+      - Ultralights
+      - Hang gliders
+      - Parachutes
+      - Helicopters
+      - Autogyros
+    - Spacecraft
+      - Spacecraft Parts
+      - Satellite
+      - Rocket Launch Vehicle
+      - Shuttle craft
+      - Space Station
+      - Interplanetary Probe
+      - Interplanetary Vehicle
+      - UFO
+      - Flying Saucer
+    - Road Vehicles
+      - Automotive Parts
+      - Passenger Vehicles
+      - Motorcycles
+      - Bicycles
+      - Transport Trucks
+      - Buses
+      - Recreational Vehicles
+    - Offroad Vehicles
+      - All Terrain Vehicles
+      - Snowmobiles
+      - Dirtbikes
+      - Mountain Bikes
+      - Tracked Vehicles
+    - Trains
+      - Train Parts
+  - Services
+    - Shipping
+      - Transoceanic Shipping
+      - Rail Shipping
+      - Transport Shipping
+      - InterCity Shipping
+      - Courier Services
+      - Local Shipping
+      - Local Delivery
+      - Packaging Services
+      - Local Delivery
+    - Automotive Repair
+    - Taxi Services
+    - Customs Services
+    - Car Pooling
+    - Commuter System
+- Communications
+  - Products
+    - Broadcasting
+      - Radio Broadcast Equipment
+      - Television Broadcast Equipment
+    - Publishing
+      - Printing Equipment
+    - Authoring
+      - Video Authoring
+      - Multimedia Authoring
+      - Animation Authoring
+      - Graphics Authoring
+    - Photography
+      - Camera Equipment
+    - Framing Products
+    - Kiosk Products
+    - Sign Manufacturing Equipment
+  - Services
+    - Mass Media
+      - Radio Broadcast
+      - Television Broadcast
+      - Newspaper Publishing
+      - Magazine Publishing
+      - Book Publishing
+      - Reports
+    - Internet Web Development Services
+    - Multimedia Design Services
+    - Graphic Design Services
+    - Media Replication Services
+    - Editorial Services
+    - Scriptwriting Services
+    - Advertising Agencies
+    - Communications Agencies
+    - Sign Making Shops
+- Employment And Contract
+  - Listings
+    - Positions Available
+      - Retail
+        - Sales Associate
+        - Sales Manager
+      - Food Services
+        - Cook
+        - Server
+        - Bartender
+      - Technical
+        - Programmer
+        - Systems Analyst
+        - Graphic Artist
+        - Draftsperson
+      - Construction
+        - Labourer
+        - Trades
+          - Welder
+          - Pipe Fitter
+          - Stationary Engineer
+          - Carpenter
+          - Plumber
+          - Electrician
+          - Truck Driver
+      - Management
+        - Manager
+        - Supervisor
+      - Administration
+        - Secretary
+        - Receptionist
+        - Data Entry Clerk
+      - Professional
+        - Engineering
+          - Engineer
+          - Technologist
+          - Technician
+        - Science
+          - Horticulturist
+        - Police Officer
+        - Geophysicist
+        - Education
+          - Teacher
+        - Police
+          - Constable
+        - Medical
+          - Doctor
+          - Nurse
+          - RNA
+          - RPN
+          - LPN
+        - Public Welfare
+          - Social Worker
+    - Positions Sought
+      - Retail
+        - Sales Associate
+        - Sales Manager
+      - Food Services
+        - Cook
+        - Server
+        - Bartender
+      - Technical
+        - Programmer
+        - Systems Analyst
+        - Graphic Artist
+        - Draftsperson
+      - Construction
+        - Labourer
+        - Trades
+          - Welder
+          - Pipe Fitter
+          - Stationary Engineer
+          - Carpenter
+          - Plumber
+          - Electrician
+          - Truck Driver
+      - Management
+        - Manager
+        - Supervisor
+      - Administration
+        - Secretary
+        - Receptionist
+        - Data Entry Clerk
+      - Professional
+        - Engineering
+          - Engineer
+          - Technologist
+          - Technician
+        - Science
+          - Horticulturist
+        - Police Officer
+        - Geophysicist
+        - Education
+          - Teacher
+        - Police
+          - Constable
+        - Medical
+          - Doctor
+          - Nurse
+          - RNA
+          - RPN
+          - LPN
+        - Public Welfare
+          - Social Worker
+    - Biddable Contracts
+    - Contractors Available
+    - Consultants Available
+    - Job Seeker Listings
+  - Services
+    - Resume Writing Services
+    - Job Finding Services
+    - Headhunder Services
+- Energy
+  - Products
+    - Petroleum
+    - Natural Gas
+    - Hydroelectric
+    - Coal
+    - Nuclear
+    - Wood
+    - Solar Energy
+    - Wind
+    - Wave
+    - Tidal
+    - Battery
+    - Flywheel
+    - Piezoelectric
+    - Geothermal
+    - Zero Point
+    - Magnetohydrodynamic
+    - Plasmic
+    - GeoHarmonic
+  - Services
+    - Electricity
+- Knowledge And Education
+  - Products
+    - Books
+    - Magazines
+    - Video Training
+    - CD & DVD Training
+    - Teacher Aids
+    - Student Supplies
+  - Services
+    - K-12 Schools
+    - Adult Educaiton Programs
+    - Colleges
+    - Universities
+    - Distance Education Programs
+    - Libraries
+    - Bookstores
+    - Internet Training
+    - Computer Based Training
+    - Specialty Training
+- Entertainment
+  - Products
+    - Movie Media
+    - Audio Media
+    - Sensory
+    - Musical Instruments
+    - Electronic Games
+      - PC
+      - Mac
+      - Xbox
+      - Xbox 360
+      - Playstation
+      - Playstation 2
+      - Gameboy
+    - Board Games
+      - Monopoly
+      - Risk
+  - Services
+    - Music Performers
+    - Movie Theaters
+    - Theatrical Productions
+    - Theme Parks
+    - Travel Agencies
+    - Strippers
+  - Ticketed Events
+    - Sports
+    - Concerts
+    - Carnivals
+    - Fairs
+    - Exhibitions
+- Government
+  - Rights & Freedoms
+    - Charter Of Rights And Freedoms
+  - Political Representation System
+    - International
+    - National
+    - Provincial Or State
+    - City & Municipal
+  - Governmental Responsiblities And Services
+    - International
+      - International Security (Army)
+      - Foreign Affairs
+      - International Banking
+    - National
+      - National External Security (CSE)
+      - National Internal Security (CSIS)
+      - National Internal Policing (RCMP)
+      - Economic Management
+      - Industry Watchdog
+      - Government Auditing
+      - Public Health & Welfare
+      - Justice Services
+    - Provincial & State
+      - Banking
+      - Police Services
+      - Vehicle Licencing
+      - Driver Licencing
+      - Justice Services
+    - City & Municipal
+      - Banking
+      - Property Taxes
+      - Real Estate Records
+      - Construction Licencing & Inspection
+      - Public Safety
+        - Elevators
+      - Police Services
+      - Ambulance Services
+      - Hospital Services
+      - Justice Services
+      - Public Transportation Services
+- Legal
+  - Products
+    - DIY Will Kits
+    - DIY Divorce Kits
+  - Services
+    - Legal Consulting
+    - Legal Representation
+    - Notary Public
+    - Document Preparation
+    - Witnessing
+- Business & Industry
+  - Farming
+    - Seed Providers
+    - Farm Equipment Sales
+    - Farm Building Erectors
+    - Farm Building Providers
+    - Harvest Services
+  - Manufacturing
+    - Mechanical
+      - Bearings
+      - Seals
+      - Fasteners
+      - Valves
+      - Motors
+      - Pumps
+      - Engines
+    - Electronic
+      - Computers
+      - Consumer Electronics
+      - Industrial Electronics
+    - Industrial Equipment
+      - Machine Tools
+      - Injection Moulding
+      - Plastic Forming
+      - Metal Forming
+      - Machine Tool Services
+      - Packaging Specialists
+  - Mining
+    - Coal
+    - Metal
+    - Crystal
+    - Mineral
+    - Aggregate
+    - Other
+  - Business
+    - Business Consultants
+    - Accounting Professionals
+    - Auditors
+    - Tax Consultants
+    - International Business Facilitators
+    - Human Resource Specialists
+    - Franchises
+    - Businesses For Sale
+    - Businesses Wanted
+    - Local BIA's
+    - Chambers of Commerce
+    - City Business Organizations
+    - Business Publishing
+  - Tourism
+    - Hotels
+    - Restaraurants
+    - Heritage Restoration
+    - Cruises
+- Help
+  - Starting a new Section
+  - Starting a new Class
+  - Deleting a Section
+  - Deleting a Class
+  - Open a Section file

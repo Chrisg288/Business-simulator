@@ -1,0 +1,2916 @@
+{
+  "metadata": {
+    "name": "Legacy Comparator Tree Full",
+    "source": "Comparator_Master_Taxonomy_Extracts_V2_2026-06-06.json / legacy_trees.volume1_comparator_tree_1",
+    "node_count": 652,
+    "root_category_count": 18,
+    "root_categories": [
+      "Food",
+      "Clothing",
+      "Shelter",
+      "Security",
+      "Spiritual",
+      "Consumer Products",
+      "Health (Non Nutrutional)",
+      "Wealth",
+      "Transportation",
+      "Communications",
+      "Employment And Contract",
+      "Energy",
+      "Knowledge And Education",
+      "Entertainment",
+      "Government",
+      "Legal",
+      "Business & Industry",
+      "Help"
+    ]
+  },
+  "tree": [
+    {
+      "text": "Food",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Fruit",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Vegetable",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Tubers",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Fibrous",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Leafy",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Dairy",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Baked",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Bread",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Bagel",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Croissant",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Pizza",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Meat",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Beef",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Poultry",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Pork",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Seafood",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Game",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Fowl",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Eggs",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Other",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Frozen",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Juice",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Meat",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Vegetables",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Potato",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Waffles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Ice Cream",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Dehydrated",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Potato",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Rice",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Beans",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Fruit",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Canned",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Pickles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Sauces",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Fruits",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Sauces",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Tomato",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Salsa",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Meat",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Prepared",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Gravy",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Spices",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Salt",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Pepper",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Basil",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Thyme",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Curry",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Sweets",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Chocolate",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Candy",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Desserts",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "White Sugar",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Brown Sugar",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Carob",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Maple Syrup",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Corn Syrup",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Drinks & Drink Mixes",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Water",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Coffee",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Tea",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Alcohol",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Softdrinks",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Bulk",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Nuts",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Pastries",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Baklava",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Additives",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Monsodium Glutamate",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Nutritional Supplements",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Vitamins",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Minerals",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Shopping Service",
+              "type": "ServiceType"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Clothing",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Ladies Formal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Ladies Casual",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Ladies Lingerie",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Ladies Fitness & Swimware",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Ladies Footwear",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Ladies Winter",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Men's Formal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Men's Casual",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Men's Underwear",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Men's Footwear",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Men's Winter",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Childrens Formal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Childrens Casual",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Childrens Underwear",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Childrens Footwear",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Childrens Winter",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Accessories",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Purses",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Wallets",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Jewellery",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Scarves",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Gloves & Mittens",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Hats",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Dry Cleaning Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Laundry Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Haute Couture Shops",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Shelter",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Concrete Products",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Brick and Block",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Lumber & Dimensional Products",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Board",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Sheet",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Trim",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Joist & Truss",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Hardware",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Fasteners",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Hinges",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Electrical",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Panels",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Wiring",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Switches & Outlets",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Interior Decor",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Floors",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Ceilings",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Wallcovering & Paint",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Drapery & Blinds",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Kitchen Cabinetry",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Bathroom Cabinetry",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Lighting",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Light Bulbs",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Light Fixtures",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "HVAC",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Heating",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Air Conditioning",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Ducting",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Doors and Windows",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Doors",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Windows",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Roofing",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Shingles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Roofing Papers",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Hardware",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Clay Tiles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Cedar Shingles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Slate",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Metal Sheets",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Copper",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Landscaping",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Contractors",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Materials",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Sod",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Forming and Framing",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Blue Block",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Pre-Fabricated",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Construction Tools",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Woodworking",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Metalworking",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Landscaping",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Hand Tools",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Rentals",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Storage",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Rooms",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Room & Board",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "One Bedroom Apt",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Two Bedroom Apt",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Three Bedroom Apt",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "House",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Acreage",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Real Estate Services",
+              "type": "ServiceClass",
+              "children": [
+                {
+                  "text": "Brokers",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Surveyors",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Property Inspectors",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Construction Contractors",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Foundation",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Framing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Carpentry",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Roofing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Plumbing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Electrical",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Landscaping",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Paving",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "HVAC",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Pre-Fabricated Buildings",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Architectural Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Inspectors",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Security",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Home Security Systems",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Vehicle Security Systems",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Safekeeping Products",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Weapons",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Bodyguard Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Home Security Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Safekeeping Services",
+              "type": "ServiceType"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Spiritual",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Symbolic Products",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Catholic Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Anglican Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Unitarian Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Islamic Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Buddhist Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Wicca Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Clairvoyant Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Paranormal Investigations",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Other",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Consumer Products",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Appliances",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Cookware",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Furniture",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Consumer Electronics",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Toys",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Custom Furniture Designers",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Upholsterers",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Fabric Shops",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Appliance Repair Shops",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Electronics Repair Shops",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Health (Non Nutrutional)",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Medical",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Physical",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Spiritual",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Medical",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Spiritual",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Emotional",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Physical",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Nutritional",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Elderly",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Longevity",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Historical",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Statistical",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Educational",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Infant",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Infant Care",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Wealth",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Money Collections",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Businesses",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Income",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Financial Planning",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Life Insurance",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Business Insurance",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Banking",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Investments",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Transportation",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Watercraft",
+              "type": "ProductClass",
+              "children": [
+                {
+                  "text": "Watercraft Parts",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Boat",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Personal Watercraft",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Sailboat",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Power Boat",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Hydroplane",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Submarine",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Yacht",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Military Ship",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Freight Ship",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Water bubble",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Waterskis",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Waterbike",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Pedal boat",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Canoe",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Kayak",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Rubber Raft",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Wooden Raft",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Houseboat",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Floating Home",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Aircraft",
+              "type": "ProductClass",
+              "children": [
+                {
+                  "text": "Aircraft Parts",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Balloons",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Airplanes",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Jetliners",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Ultralights",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Hang gliders",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Parachutes",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Helicopters",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Autogyros",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Spacecraft",
+              "type": "ProductClass",
+              "children": [
+                {
+                  "text": "Spacecraft Parts",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Satellite",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Rocket Launch Vehicle",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Shuttle craft",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Space Station",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Interplanetary Probe",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Interplanetary Vehicle",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "UFO",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Flying Saucer",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Road Vehicles",
+              "type": "ProductClass",
+              "children": [
+                {
+                  "text": "Automotive Parts",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Passenger Vehicles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Motorcycles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Bicycles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Transport Trucks",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Buses",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Recreational Vehicles",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Offroad Vehicles",
+              "type": "ProductClass",
+              "children": [
+                {
+                  "text": "All Terrain Vehicles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Snowmobiles",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Dirtbikes",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Mountain Bikes",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Tracked Vehicles",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Trains",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Train Parts",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Shipping",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Transoceanic Shipping",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Rail Shipping",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Transport Shipping",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "InterCity Shipping",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Courier Services",
+                  "type": "ServiceType"
+                },
+                {
+                  "text": "Local Shipping",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Local Delivery",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Packaging Services",
+                  "type": "ServiceType"
+                },
+                {
+                  "text": "Local Delivery",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Automotive Repair",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Taxi Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Customs Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Car Pooling",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Commuter System",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Communications",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Broadcasting",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Radio Broadcast Equipment",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Television Broadcast Equipment",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Publishing",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Printing Equipment",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Authoring",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Video Authoring",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Multimedia Authoring",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Animation Authoring",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Graphics Authoring",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Photography",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Camera Equipment",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Framing Products",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Kiosk Products",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Sign Manufacturing Equipment",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Mass Media",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Radio Broadcast",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Television Broadcast",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Newspaper Publishing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Magazine Publishing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Book Publishing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Reports",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Internet Web Development Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Multimedia Design Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Graphic Design Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Media Replication Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Editorial Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Scriptwriting Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Advertising Agencies",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Communications Agencies",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Sign Making Shops",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Employment And Contract",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Listings",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Positions Available",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Retail",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Sales Associate",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Sales Manager",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Food Services",
+                  "type": "ServiceClass",
+                  "children": [
+                    {
+                      "text": "Cook",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Server",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Bartender",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Technical",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Programmer",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Systems Analyst",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Graphic Artist",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Draftsperson",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Construction",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Labourer",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Trades",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Welder",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Pipe Fitter",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Stationary Engineer",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Carpenter",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Plumber",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Electrician",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Truck Driver",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Management",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Manager",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Supervisor",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Administration",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Secretary",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Receptionist",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Data Entry Clerk",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Professional",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Engineering",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Engineer",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Technologist",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Technician",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Science",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Horticulturist",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Police Officer",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Geophysicist",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Education",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Teacher",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Police",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Constable",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Medical",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Doctor",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Nurse",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "RNA",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "RPN",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "LPN",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Public Welfare",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Social Worker",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Positions Sought",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Retail",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Sales Associate",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Sales Manager",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Food Services",
+                  "type": "ServiceClass",
+                  "children": [
+                    {
+                      "text": "Cook",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Server",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Bartender",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Technical",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Programmer",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Systems Analyst",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Graphic Artist",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Draftsperson",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Construction",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Labourer",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Trades",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Welder",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Pipe Fitter",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Stationary Engineer",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Carpenter",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Plumber",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Electrician",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Truck Driver",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Management",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Manager",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Supervisor",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Administration",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Secretary",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Receptionist",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Data Entry Clerk",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Professional",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Engineering",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Engineer",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Technologist",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Technician",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Science",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Horticulturist",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Police Officer",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Geophysicist",
+                      "type": "ComparatorLeaf"
+                    },
+                    {
+                      "text": "Education",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Teacher",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Police",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Constable",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Medical",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Doctor",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "Nurse",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "RNA",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "RPN",
+                          "type": "ComparatorLeaf"
+                        },
+                        {
+                          "text": "LPN",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Public Welfare",
+                      "type": "ComparatorClass",
+                      "children": [
+                        {
+                          "text": "Social Worker",
+                          "type": "ComparatorLeaf"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Biddable Contracts",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Contractors Available",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Consultants Available",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Job Seeker Listings",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Resume Writing Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Job Finding Services",
+              "type": "ServiceType"
+            },
+            {
+              "text": "Headhunder Services",
+              "type": "ServiceType"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Energy",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Petroleum",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Natural Gas",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Hydroelectric",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Coal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Nuclear",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Wood",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Solar Energy",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Wind",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Wave",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Tidal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Battery",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Flywheel",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Piezoelectric",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Geothermal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Zero Point",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Magnetohydrodynamic",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Plasmic",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "GeoHarmonic",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Electricity",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Knowledge And Education",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Books",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Magazines",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Video Training",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "CD & DVD Training",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Teacher Aids",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Student Supplies",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "K-12 Schools",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Adult Educaiton Programs",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Colleges",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Universities",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Distance Education Programs",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Libraries",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Bookstores",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Internet Training",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Computer Based Training",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Specialty Training",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Entertainment",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Movie Media",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Audio Media",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Sensory",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Musical Instruments",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Electronic Games",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "PC",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Mac",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Xbox",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Xbox 360",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Playstation",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Playstation 2",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Gameboy",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Board Games",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Monopoly",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Risk",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Music Performers",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Movie Theaters",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Theatrical Productions",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Theme Parks",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Travel Agencies",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Strippers",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Ticketed Events",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "text": "Sports",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Concerts",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Carnivals",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Fairs",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Exhibitions",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Government",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Rights & Freedoms",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "text": "Charter Of Rights And Freedoms",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Political Representation System",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "text": "International",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "National",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Provincial Or State",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "City & Municipal",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Governmental Responsiblities And Services",
+          "type": "ServiceClass",
+          "children": [
+            {
+              "text": "International",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "International Security (Army)",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Foreign Affairs",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "International Banking",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "National",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "National External Security (CSE)",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "National Internal Security (CSIS)",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "National Internal Policing (RCMP)",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Economic Management",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Industry Watchdog",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Government Auditing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Public Health & Welfare",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Justice Services",
+                  "type": "ServiceType"
+                }
+              ]
+            },
+            {
+              "text": "Provincial & State",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Banking",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Police Services",
+                  "type": "ServiceType"
+                },
+                {
+                  "text": "Vehicle Licencing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Driver Licencing",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Justice Services",
+                  "type": "ServiceType"
+                }
+              ]
+            },
+            {
+              "text": "City & Municipal",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Banking",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Property Taxes",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Real Estate Records",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Construction Licencing & Inspection",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Public Safety",
+                  "type": "ComparatorClass",
+                  "children": [
+                    {
+                      "text": "Elevators",
+                      "type": "ComparatorLeaf"
+                    }
+                  ]
+                },
+                {
+                  "text": "Police Services",
+                  "type": "ServiceType"
+                },
+                {
+                  "text": "Ambulance Services",
+                  "type": "ServiceType"
+                },
+                {
+                  "text": "Hospital Services",
+                  "type": "ServiceType"
+                },
+                {
+                  "text": "Justice Services",
+                  "type": "ServiceType"
+                },
+                {
+                  "text": "Public Transportation Services",
+                  "type": "ServiceType"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Legal",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Products",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "DIY Will Kits",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "DIY Divorce Kits",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Services",
+          "type": "ComparatorGroup",
+          "children": [
+            {
+              "text": "Legal Consulting",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Legal Representation",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Notary Public",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Document Preparation",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Witnessing",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Business & Industry",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Farming",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "text": "Seed Providers",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Farm Equipment Sales",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Farm Building Erectors",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Farm Building Providers",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Harvest Services",
+              "type": "ServiceType"
+            }
+          ]
+        },
+        {
+          "text": "Manufacturing",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "text": "Mechanical",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Bearings",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Seals",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Fasteners",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Valves",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Motors",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Pumps",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Engines",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Electronic",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Computers",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Consumer Electronics",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Industrial Electronics",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            },
+            {
+              "text": "Industrial Equipment",
+              "type": "ComparatorClass",
+              "children": [
+                {
+                  "text": "Machine Tools",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Injection Moulding",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Plastic Forming",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Metal Forming",
+                  "type": "ComparatorLeaf"
+                },
+                {
+                  "text": "Machine Tool Services",
+                  "type": "ServiceType"
+                },
+                {
+                  "text": "Packaging Specialists",
+                  "type": "ComparatorLeaf"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Mining",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "text": "Coal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Metal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Crystal",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Mineral",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Aggregate",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Other",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Business",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "text": "Business Consultants",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Accounting Professionals",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Auditors",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Tax Consultants",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "International Business Facilitators",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Human Resource Specialists",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Franchises",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Businesses For Sale",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Businesses Wanted",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Local BIA's",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Chambers of Commerce",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "City Business Organizations",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Business Publishing",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "text": "Tourism",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "text": "Hotels",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Restaraurants",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Heritage Restoration",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "text": "Cruises",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Help",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "text": "Starting a new Section",
+          "type": "ComparatorLeaf"
+        },
+        {
+          "text": "Starting a new Class",
+          "type": "ComparatorLeaf"
+        },
+        {
+          "text": "Deleting a Section",
+          "type": "ComparatorLeaf"
+        },
+        {
+          "text": "Deleting a Class",
+          "type": "ComparatorLeaf"
+        },
+        {
+          "text": "Open a Section file",
+          "type": "ComparatorLeaf"
+        }
+      ]
+    }
+  ]
+}
