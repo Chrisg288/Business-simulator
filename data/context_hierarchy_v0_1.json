@@ -1,0 +1,10 @@
+{
+  "version": "0.1",
+  "context_hierarchy": [
+    "center_panel_selected_object",
+    "treeview_selected_node",
+    "sector_scope_overlay_selection",
+    "startup_sector_button_explanation"
+  ],
+  "rule": "The inspector always uses the most specific available context."
+}

@@ -1,685 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Economy Master Interface v2.0</title>
-  <style>
-    :root{
-      --bg:#eef4f8;
-      --panel:#ffffff;
-      --panel2:#f8fbfd;
-      --ink:#17212b;
-      --muted:#607284;
-      --line:#d9e6ee;
-      --line2:#c5d7e2;
-      --blue:#2677ff;
-      --blue2:#e8f1ff;
-      --cyan:#18a9c5;
-      --green:#22a06b;
-      --orange:#f59f00;
-      --red:#dc4c64;
-      --purple:#7c5cff;
-      --shadow:0 18px 50px rgba(41,68,91,.12);
-      --radius:18px;
-      --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
-      --font:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%; margin:0; font-family:var(--font); color:var(--ink); background:
-      radial-gradient(circle at 8% 0%, rgba(38,119,255,.16), transparent 26%),
-      radial-gradient(circle at 88% 10%, rgba(24,169,197,.15), transparent 28%),
-      linear-gradient(180deg,#f8fbfd 0%,var(--bg) 100%); overflow:hidden;}
-    button,input,select,textarea{font:inherit}
-    .app{height:100%; display:grid; grid-template-rows:auto auto 1fr 172px; gap:10px; padding:14px; min-width:1180px;}
-    header{background:rgba(255,255,255,.82); backdrop-filter:blur(14px); border:1px solid var(--line); border-radius:24px; box-shadow:var(--shadow); padding:14px 16px 12px; display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center;}
-    .titleBlock h1{margin:0; font-size:22px; letter-spacing:-.02em; font-weight:800;}
-    .titleBlock .sub{margin-top:5px; color:var(--muted); font-size:13px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
-    .badge{display:inline-flex; align-items:center; gap:6px; padding:4px 9px; border:1px solid var(--line); border-radius:999px; background:#fff; font-size:12px; color:#365064; white-space:nowrap;}
-    .badge strong{color:var(--ink)}
-    .principle{max-width:520px; padding:10px 12px; border-radius:18px; background:linear-gradient(135deg,#f3f8ff,#f9fdff); border:1px solid var(--line); color:#385267; font-size:12px; line-height:1.35;}
-    .ribbon{display:grid; grid-template-columns: 1fr 1fr; gap:10px;}
-    .bar{display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:20px; padding:8px; box-shadow:0 8px 24px rgba(41,68,91,.08); overflow:auto; scrollbar-width:thin;}
-    .bar .label{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.09em; font-weight:800; padding:0 6px; white-space:nowrap;}
-    .pill{border:1px solid var(--line); background:#fff; color:#304a5c; border-radius:999px; padding:8px 12px; cursor:pointer; transition:.16s ease; white-space:nowrap; font-size:13px; font-weight:700;}
-    .pill:hover{transform:translateY(-1px); border-color:#adc4d3; box-shadow:0 6px 16px rgba(38,119,255,.08)}
-    .pill.active{background:linear-gradient(135deg,var(--blue),#15a4d8); color:white; border-color:transparent; box-shadow:0 8px 22px rgba(38,119,255,.22)}
-    .main{display:grid; grid-template-columns:292px 1fr 326px; gap:10px; min-height:0;}
-    .panel{background:rgba(255,255,255,.86); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); min-height:0; overflow:hidden;}
-    .panelHead{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 13px; border-bottom:1px solid var(--line); background:linear-gradient(180deg,#fff,#f9fcfe);}
-    .panelHead h2{margin:0; font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:#3c5669;}
-    .mini{font-size:11px; color:var(--muted)}
-    .leftPanel{display:grid; grid-template-rows:auto 1fr auto auto;}
-    .tree{padding:10px; overflow:auto; min-height:0;}
-    .nodeLine{display:flex; align-items:center; gap:5px; padding:7px 7px; border-radius:10px; cursor:pointer; font-size:13px; color:#304a5c; user-select:none;}
-    .nodeLine:hover{background:#f0f7fb}
-    .nodeLine.active{background:var(--blue2); color:#074c9b; font-weight:800; border:1px solid #c7dcff;}
-    .twisty{width:18px; height:18px; border:1px solid var(--line); border-radius:6px; display:inline-flex; align-items:center; justify-content:center; color:#587084; background:#fff; font-size:11px; font-weight:900; flex:0 0 auto;}
-    .nodeText{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-    .nodeMeta{margin-left:auto; color:#8aa0b1; font-size:10px;}
-    .children{margin-left:14px; border-left:1px dashed #d5e2eb; padding-left:4px;}
-    .scopeBox,.overlayBox{padding:10px 12px; border-top:1px solid var(--line); background:#fbfdff;}
-    .scopeGrid{display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;}
-    .scopeBtn{border:1px solid var(--line); background:#fff; border-radius:11px; padding:7px 8px; text-align:left; color:#435c6d; cursor:pointer; font-weight:700; font-size:12px;}
-    .scopeBtn.active{border-color:#9ac4ff; background:#eef6ff; color:#0756ad;}
-    .overlayChips{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;}
-    .chip{font-size:11px; border:1px solid var(--line); background:#fff; border-radius:999px; padding:5px 8px; color:#50687a; cursor:pointer;}
-    .chip.active{background:#f1edff; color:#5132cc; border-color:#cfc3ff; font-weight:800;}
-    .centerPanel{display:grid; grid-template-rows:auto auto 1fr; min-width:0;}
-    .contextBar{display:flex; gap:7px; flex-wrap:wrap; padding:10px 12px; border-bottom:1px solid var(--line); background:#fafdff;}
-    .contextPill{font-size:12px; color:#405b6e; border:1px solid var(--line); border-radius:999px; padding:6px 9px; background:#fff;}
-    .contextPill strong{color:var(--ink)}
-    .workspaceTools{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-bottom:1px solid var(--line); background:#fff;}
-    .toolButtons{display:flex; gap:6px; flex-wrap:wrap;}
-    .smallBtn{border:1px solid var(--line); background:#fff; border-radius:10px; padding:7px 9px; color:#385267; cursor:pointer; font-size:12px; font-weight:800;}
-    .smallBtn:hover{border-color:#adc4d3; background:#f8fbfd;}
-    .smallBtn.primary{background:var(--blue); color:white; border-color:var(--blue)}
-    .smallBtn.green{background:var(--green); color:white; border-color:var(--green)}
-    .smallBtn.orange{background:#fff7e6; color:#9a6200; border-color:#ffd37c}
-    .smallBtn.red{background:#fff2f4; color:#b5243c; border-color:#ffc3cf}
-    .workspace{min-height:0; overflow:auto; padding:12px; background:linear-gradient(180deg,#fbfdff,#f1f7fb);}
-    .inspector{display:grid; grid-template-rows:auto auto auto 1fr auto;}
-    .actionGrid{display:grid; grid-template-columns:repeat(4,1fr); gap:7px; padding:12px; border-bottom:1px solid var(--line); background:#fbfdff;}
-    .actionGrid .wideRow{grid-column:auto;}
-    .act{border:1px solid var(--line); background:#fff; border-radius:11px; padding:9px 6px; font-size:12px; font-weight:900; color:#385267; cursor:pointer;}
-    .act:nth-child(n+5){grid-column:span 1.333;}
-    .actionGrid.second{grid-template-columns:repeat(3,1fr); padding-top:0;}
-    .desc{padding:12px; border-bottom:1px solid var(--line);}
-    .desc h3{margin:0 0 6px; font-size:17px; letter-spacing:-.01em;}
-    .desc p{margin:0; color:var(--muted); font-size:13px; line-height:1.45;}
-    .fieldGrid{padding:12px; overflow:auto; min-height:0;}
-    .field{display:grid; grid-template-columns:116px 1fr; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid #edf3f7; font-size:12px;}
-    .field .k{color:var(--muted); font-weight:800;}
-    .field .v{color:#263c4d; font-family:var(--mono); font-size:11px; overflow:hidden; text-overflow:ellipsis;}
-    .moreBox{padding:12px; border-top:1px solid var(--line); background:#fbfdff; display:flex; gap:8px;}
-    .bottom{display:grid; grid-template-columns: 1.1fr 1.25fr 1fr; gap:10px; min-height:0;}
-    .bottom .panel{display:grid; grid-template-rows:auto 1fr;}
-    .queue,.summaryList,.evidenceList{overflow:auto; padding:10px; min-height:0;}
-    .eventRow{display:grid; grid-template-columns:72px 1fr auto; gap:8px; align-items:start; padding:8px; border:1px solid var(--line); background:#fff; border-radius:13px; margin-bottom:7px;}
-    .priority{font-size:11px; font-weight:900; border-radius:999px; padding:5px 7px; text-align:center;}
-    .priority.high{background:#fff0f2;color:#b5243c;border:1px solid #ffc6d0}.priority.medium{background:#fff8e8;color:#9a6200;border:1px solid #ffdc94}.priority.low{background:#eefaf5;color:#16754d;border:1px solid #bfe9d6}
-    .eventTitle{font-weight:900; font-size:12px; margin-bottom:3px}.eventMeta{color:var(--muted); font-size:11px; line-height:1.35}.status{font-size:11px; color:#516a7c; background:#f2f6f9; border-radius:999px; padding:4px 7px;}
-    .cards{display:grid; grid-template-columns:repeat(3,minmax(160px,1fr)); gap:10px;}
-    .card{border:1px solid var(--line); background:#fff; border-radius:16px; padding:12px; box-shadow:0 8px 20px rgba(41,68,91,.06);}
-    .card h3{margin:0 0 8px; font-size:14px;}.card p{margin:0; color:var(--muted); font-size:12px; line-height:1.4}.card .big{font-size:26px; font-weight:900; letter-spacing:-.04em; margin:8px 0 2px;}.card .tag{font-size:11px; color:#607284; background:#f3f7fa; border-radius:999px; padding:4px 7px; display:inline-flex; margin-top:8px;}
-    .modelWrap{height:100%; min-height:520px; display:grid; grid-template-rows:auto 1fr; gap:10px;}
-    .modelLegend{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}.legendItem{font-size:11px; border:1px solid var(--line); border-radius:999px; background:#fff; padding:5px 8px; color:#526b7d;}.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}.dot.need{background:var(--blue)}.dot.offer{background:var(--green)}.dot.process{background:var(--orange)}.dot.evidence{background:var(--purple)}.dot.interrupt{background:var(--red)}
-    .swimCanvas{position:relative; min-height:560px; border:1px solid var(--line); border-radius:18px; background:#fff; overflow:auto; box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);}
-    .lane{position:relative; height:122px; border-bottom:1px solid #e8f0f5; background:linear-gradient(90deg,#fbfdff,#fff);}
-    .lane:nth-child(even){background:linear-gradient(90deg,#f7fbfd,#fff)}
-    .laneLabel{position:absolute; left:10px; top:10px; width:150px; font-size:11px; font-weight:900; color:#526b7d; text-transform:uppercase; letter-spacing:.07em;}
-    .nodeCard{position:absolute; width:168px; min-height:72px; border:1px solid var(--line2); border-radius:14px; background:white; box-shadow:0 9px 22px rgba(41,68,91,.11); padding:9px; cursor:grab; z-index:2; user-select:none;}
-    .nodeCard:active{cursor:grabbing}.nodeCard.selected{border-color:#6aa7ff; box-shadow:0 0 0 3px rgba(38,119,255,.14),0 12px 28px rgba(41,68,91,.14)}
-    .nodeCard .type{font-size:10px; text-transform:uppercase; letter-spacing:.09em; color:var(--muted); font-weight:900;}.nodeCard .name{font-size:12px; font-weight:900; margin-top:4px;}.nodeCard .note{font-size:11px; color:#657b8c; margin-top:5px; line-height:1.25}.nodeCard.interrupt{border-color:#ffc0ca; background:#fff8fa}.nodeCard.event{border-color:#bfe4ee}.nodeCard.evidence{border-color:#d8ccff}.nodeCard.process{border-color:#ffe0a5}.nodeCard.offer{border-color:#bce8d5}
-    #linkLayer{position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:visible;}
-    .linkLine{stroke:#6c90a6; stroke-width:2.2; fill:none; marker-end:url(#arrow)}.linkLine.interrupt{stroke:#dc4c64; stroke-dasharray:6 4}.linkLine.evidence{stroke:#7c5cff}.linkLabel{font-size:10px; fill:#526b7d; font-weight:700; paint-order:stroke; stroke:#fff; stroke-width:3;}
-    .gridTable{width:100%; border-collapse:separate; border-spacing:0 7px; font-size:12px;}.gridTable th{text-align:left; color:#607284; font-size:11px; text-transform:uppercase; letter-spacing:.07em; padding:0 9px 2px}.gridTable td{background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:10px 9px;}.gridTable td:first-child{border-left:1px solid var(--line); border-radius:12px 0 0 12px; font-weight:900}.gridTable td:last-child{border-right:1px solid var(--line); border-radius:0 12px 12px 0}.gridTable tr.dataRow{cursor:pointer}.gridTable tr.dataRow:hover td{background:#f7fbff}.gridTable tr.dataRow.selected td{background:#edf6ff; border-color:#acd0ff}
-    .metricGrid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:10px;}.metric{background:#fff; border:1px solid var(--line); border-radius:16px; padding:11px;}.metric .label{font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.07em}.metric .value{font-size:24px; font-weight:900; margin-top:4px; letter-spacing:-.04em}.progress{height:8px; background:#eef4f8; border-radius:999px; overflow:hidden; margin-top:8px}.fill{height:100%; background:linear-gradient(90deg,var(--blue),var(--cyan)); width:50%}
-    .split2{display:grid; grid-template-columns:1fr 1fr; gap:10px}.formGrid{display:grid; grid-template-columns:1fr 1fr; gap:10px}.formField label{display:block; font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:.07em; margin-bottom:5px}.formField input,.formField select,.formField textarea{width:100%; border:1px solid var(--line); border-radius:12px; padding:9px 10px; background:#fff; color:#263c4d}.formField textarea{min-height:74px; resize:vertical}.sectionTitle{font-size:12px; font-weight:900; color:#405b6e; text-transform:uppercase; letter-spacing:.08em; margin:10px 0 8px}.jsonBox{font-family:var(--mono); font-size:11px; line-height:1.45; white-space:pre-wrap; background:#101b26; color:#d4e8f7; border-radius:16px; padding:12px; overflow:auto; min-height:230px;}
-    .scoreRow{display:grid; grid-template-columns:1fr 54px 72px; gap:8px; align-items:center; padding:8px 0; border-bottom:1px solid #edf3f7}.scoreName{font-size:12px; font-weight:800}.scoreDesc{font-size:11px; color:var(--muted); margin-top:2px}.scoreVal{font-weight:900}.credit{font-size:11px; border-radius:999px; padding:5px 7px; text-align:center; font-weight:900}.credit.good{background:#eefaf5;color:#16754d}.credit.warn{background:#fff7e8;color:#9a6200}.credit.bad{background:#fff1f3;color:#b5243c}
-    .dialogMask{position:fixed; inset:0; background:rgba(13,25,38,.38); display:none; align-items:center; justify-content:center; z-index:30;}.dialog{width:min(760px,92vw); max-height:88vh; overflow:auto; background:#fff; border-radius:24px; border:1px solid var(--line); box-shadow:0 30px 90px rgba(0,0,0,.28);}.dialogHead{padding:16px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between}.dialogHead h3{margin:0}.dialogBody{padding:16px}.dialogFoot{padding:14px 16px; border-top:1px solid var(--line); display:flex; justify-content:flex-end; gap:8px; background:#fbfdff}.closeX{border:0;background:#f2f6f9;border-radius:10px;padding:7px 9px;cursor:pointer;font-weight:900;color:#526b7d}
-    @media(max-width:1260px){.main{grid-template-columns:270px 1fr 300px}.cards{grid-template-columns:1fr}.metricGrid{grid-template-columns:repeat(2,1fr)}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Economy Master Interface v2.1</title>
+<style>
+:root{
+  --bg:#edf4f8; --panel:#ffffff; --panel2:#f8fbfd; --ink:#17212b; --muted:#607284;
+  --line:#d9e6ee; --line2:#c5d7e2; --blue:#2677ff; --cyan:#15a4d8; --green:#22a06b;
+  --orange:#f59f00; --red:#dc4c64; --purple:#7c5cff; --shadow:0 18px 50px rgba(41,68,91,.12);
+  --radius:18px; --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  --font:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:var(--font);color:var(--ink);background:
+  radial-gradient(circle at 8% 0%, rgba(38,119,255,.16), transparent 26%),
+  radial-gradient(circle at 88% 10%, rgba(24,169,197,.15), transparent 28%),
+  linear-gradient(180deg,#f8fbfd 0%,var(--bg) 100%);overflow:hidden;}
+button,input,select,textarea{font:inherit}.app{height:100%;display:grid;grid-template-rows:auto auto 1fr 170px;gap:10px;padding:14px;min-width:1180px;}
+header{background:rgba(255,255,255,.84);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:14px 16px 12px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;}
+h1{margin:0;font-size:22px;letter-spacing:-.02em}.sub{margin-top:5px;color:var(--muted);font-size:13px;display:flex;gap:10px;flex-wrap:wrap}.badge{display:inline-flex;gap:6px;align-items:center;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:12px}.badge strong{color:var(--ink)}
+.principle{max-width:570px;padding:10px 12px;border-radius:18px;background:linear-gradient(135deg,#f3f8ff,#f9fdff);border:1px solid var(--line);color:#385267;font-size:12px;line-height:1.35}
+.ribbon{display:grid;grid-template-columns:1fr 1fr;gap:10px}.bar{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.78);border:1px solid var(--line);border-radius:20px;padding:8px;box-shadow:0 8px 24px rgba(41,68,91,.08);overflow:auto;scrollbar-width:thin}.bar .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:800;padding:0 6px;white-space:nowrap}
+.pill{border:1px solid var(--line);background:#fff;color:#304a5c;border-radius:999px;padding:8px 12px;cursor:pointer;transition:.16s ease;white-space:nowrap;font-size:13px;font-weight:800}.pill:hover{transform:translateY(-1px);border-color:#adc4d3;box-shadow:0 6px 16px rgba(38,119,255,.08)}.pill.active{background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border-color:transparent;box-shadow:0 8px 22px rgba(38,119,255,.22)}
+.main{display:grid;grid-template-columns:300px 1fr 336px;gap:10px;min-height:0}.panel{background:rgba(255,255,255,.87);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);min-height:0;overflow:hidden}.panelHead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 13px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#f9fcfe)}.panelHead h2{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#3c5669}.mini{font-size:11px;color:var(--muted)}
+.leftPanel{display:grid;grid-template-rows:auto 1fr auto auto}.tree{padding:10px;overflow:auto;min-height:0}.nodeLine{display:flex;align-items:center;gap:5px;padding:7px;border-radius:10px;cursor:pointer;font-size:13px;color:#304a5c;user-select:none}.nodeLine:hover{background:#f0f7fb}.nodeLine.active{background:#e8f1ff;color:#074c9b;font-weight:900;border:1px solid #c7dcff}.twisty{width:18px;height:18px;border:1px solid var(--line);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;color:#587084;background:#fff;font-size:11px;font-weight:900;flex:0 0 auto}.nodeText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nodeMeta{margin-left:auto;color:#8aa0b1;font-size:10px}.children{margin-left:14px;border-left:1px dashed #d5e2eb;padding-left:4px}
+.scopeBox,.overlayBox{padding:10px 12px;border-top:1px solid var(--line);background:#fbfdff}.scopeGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}.scopeBtn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:7px 8px;text-align:left;color:#435c6d;cursor:pointer;font-weight:800;font-size:12px}.scopeBtn.active{border-color:#9ac4ff;background:#eef6ff;color:#0756ad}.overlayChips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.chip{font-size:11px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 8px;color:#50687a;cursor:pointer}.chip.active{background:#f1edff;color:#5132cc;border-color:#cfc3ff;font-weight:900}
+.centerPanel{display:grid;grid-template-rows:auto auto auto 1fr;min-width:0}.contextBar{display:flex;gap:7px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--line);background:#fafdff}.contextPill{font-size:12px;color:#405b6e;border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:#fff}.contextPill strong{color:var(--ink)}.workspaceTools{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);background:#fff}.toolButtons{display:flex;gap:6px;flex-wrap:wrap}.smallBtn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;color:#385267;cursor:pointer;font-size:12px;font-weight:900}.smallBtn:hover{border-color:#adc4d3;background:#f8fbfd}.smallBtn.primary{background:var(--blue);color:white;border-color:var(--blue)}.smallBtn.green{background:var(--green);color:white;border-color:var(--green)}.smallBtn.orange{background:#fff7e6;color:#9a6200;border-color:#ffd37c}.smallBtn.red{background:#fff2f4;color:#b5243c;border-color:#ffc3cf}.workspace{min-height:0;overflow:auto;padding:12px;background:linear-gradient(180deg,#fbfdff,#f1f7fb)}
+.inspector{display:grid;grid-template-rows:auto auto auto auto 1fr auto}.actionGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:12px;border-bottom:1px solid var(--line);background:#fbfdff}.actionGrid.second{grid-template-columns:repeat(3,1fr);padding-top:0}.act{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 6px;font-size:12px;font-weight:900;color:#385267;cursor:pointer}.hierarchyBox{padding:10px 12px;border-bottom:1px solid var(--line);background:#fff}.hierarchyBox h3{margin:0 0 6px;font-size:12px;color:#3c5669;text-transform:uppercase;letter-spacing:.08em}.hierarchySteps{display:grid;gap:4px}.step{font-size:11px;color:#607284;background:#f5f8fb;border:1px solid #e5eef4;border-radius:8px;padding:5px 7px}.step.active{background:#e8f1ff;border-color:#bdd8ff;color:#0756ad;font-weight:900}.desc{padding:12px;border-bottom:1px solid var(--line)}.desc h3{margin:0 0 6px;font-size:17px;letter-spacing:-.01em}.desc p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.fieldGrid{padding:12px;overflow:auto;min-height:0}.field{display:grid;grid-template-columns:122px 1fr;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #edf3f7;font-size:12px}.field .k{color:var(--muted);font-weight:900}.field .v{color:#263c4d;font-family:var(--mono);font-size:11px;overflow:hidden;text-overflow:ellipsis}.moreBox{padding:12px;border-top:1px solid var(--line);background:#fbfdff;display:flex;gap:8px}
+.bottom{display:grid;grid-template-columns:1.05fr 1.25fr 1fr;gap:10px;min-height:0}.bottom .panel{display:grid;grid-template-rows:auto 1fr}.queue,.summaryList,.evidenceList{overflow:auto;padding:10px;min-height:0}.eventRow{display:grid;grid-template-columns:68px 1fr auto;gap:8px;align-items:start;padding:8px;border:1px solid var(--line);background:#fff;border-radius:13px;margin-bottom:7px}.priority{font-size:11px;font-weight:900;border-radius:999px;padding:5px 7px;text-align:center}.priority.high{background:#fff0f2;color:#b5243c;border:1px solid #ffc6d0}.priority.medium{background:#fff8e8;color:#9a6200;border:1px solid #ffdc94}.priority.low{background:#eefaf5;color:#16754d;border:1px solid #bfe9d6}.eventTitle{font-weight:900;font-size:12px;margin-bottom:3px}.eventMeta{color:var(--muted);font-size:11px;line-height:1.35}.status{font-size:11px;color:#516a7c;background:#f2f6f9;border-radius:999px;padding:4px 7px}.cards{display:grid;grid-template-columns:repeat(3,minmax(160px,1fr));gap:10px}.card{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px;box-shadow:0 8px 20px rgba(41,68,91,.06);cursor:pointer}.card:hover{border-color:#9ec8ff}.card.selected{border-color:#6aa7ff;box-shadow:0 0 0 3px rgba(38,119,255,.14),0 12px 28px rgba(41,68,91,.14)}.card h3{margin:0 0 8px;font-size:14px}.card p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}.big{font-size:26px;font-weight:900;letter-spacing:-.04em;margin:8px 0 2px}.tag{font-size:11px;color:#607284;background:#f3f7fa;border-radius:999px;padding:4px 7px;display:inline-flex;margin-top:8px}
+.homeWrap{display:grid;grid-template-columns:minmax(360px,1fr) 330px;gap:14px;align-items:center;min-height:100%}.wheelCard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;text-align:center;box-shadow:0 10px 24px rgba(41,68,91,.08)}.wheelCard img{max-width:100%;height:auto;max-height:640px;border-radius:10px}.homeText{display:grid;gap:10px}.homeText .card{cursor:default}.homeText .card:hover{border-color:var(--line)}
+.swimWrap{display:grid;gap:10px}.swimHelp{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.legendItem{font-size:11px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:5px 8px;color:#526b7d}.laneBoard{display:grid;grid-template-columns:repeat(3,minmax(230px,1fr));gap:10px}.lane{background:#fff;border:1px solid var(--line);border-radius:18px;min-height:190px;padding:10px;box-shadow:0 8px 20px rgba(41,68,91,.06)}.lane h3{font-size:13px;margin:0 0 8px;color:#405b6e;text-transform:uppercase;letter-spacing:.06em}.laneDesc{font-size:12px;color:var(--muted);line-height:1.35;margin-bottom:9px}.laneObj{border:1px solid #e3edf4;border-radius:13px;padding:9px;margin-bottom:7px;background:linear-gradient(180deg,#fff,#fbfdff);cursor:pointer}.laneObj:hover{border-color:#9ec8ff}.laneObj.selected{border-color:#6aa7ff;background:#edf6ff}.laneObj .type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#607284;font-weight:900}.laneObj .name{font-size:12px;font-weight:900;margin-top:3px}.laneObj .note{font-size:11px;color:#657b8c;margin-top:4px;line-height:1.25}.laneHuman{border-top:4px solid #f3ef99}.laneMarket{border-top:4px solid #91efbf}.laneBusiness{border-top:4px solid #b9abc9}.laneFinance{border-top:4px solid #78a4dc}.lanePublic{border-top:4px solid #f4b47c}
+.gridTable{width:100%;border-collapse:separate;border-spacing:0 7px;font-size:12px}.gridTable th{text-align:left;color:#607284;font-size:11px;text-transform:uppercase;letter-spacing:.07em;padding:0 9px 2px}.gridTable td{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 9px}.gridTable td:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px;font-weight:900}.gridTable td:last-child{border-right:1px solid var(--line);border-radius:0 12px 12px 0}.gridTable tr.dataRow{cursor:pointer}.gridTable tr.dataRow:hover td{background:#f7fbff}.gridTable tr.dataRow.selected td{background:#edf6ff;border-color:#acd0ff}.metricGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}.metric{background:#fff;border:1px solid var(--line);border-radius:16px;padding:11px}.metric .label{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.07em}.metric .value{font-size:24px;font-weight:900;margin-top:4px;letter-spacing:-.04em}.progress{height:8px;background:#eef4f8;border-radius:999px;overflow:hidden;margin-top:8px}.fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:50%}.split2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.formField label{display:block;font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}.formField input,.formField select,.formField textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:#fff;color:#263c4d}.formField textarea{min-height:74px;resize:vertical}.sectionTitle{font-size:12px;font-weight:900;color:#405b6e;text-transform:uppercase;letter-spacing:.08em;margin:10px 0 8px}.jsonBox{font-family:var(--mono);font-size:11px;line-height:1.45;white-space:pre-wrap;background:#101b26;color:#d4e8f7;border-radius:16px;padding:12px;overflow:auto;min-height:230px}.scoreRow{display:grid;grid-template-columns:1fr 54px 72px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #edf3f7}.scoreName{font-size:12px;font-weight:900}.scoreDesc{font-size:11px;color:var(--muted);margin-top:2px}.scoreVal{font-weight:900}.credit{font-size:11px;border-radius:999px;padding:5px 7px;text-align:center;font-weight:900}.credit.good{background:#eefaf5;color:#16754d}.credit.warn{background:#fff7e8;color:#9a6200}.credit.bad{background:#fff1f3;color:#b5243c}
+.dialogMask{position:fixed;inset:0;background:rgba(13,25,38,.38);display:none;align-items:center;justify-content:center;z-index:30}.dialog{width:min(760px,92vw);max-height:88vh;overflow:auto;background:#fff;border-radius:24px;border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.28)}.dialogHead{padding:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.dialogHead h3{margin:0}.dialogBody{padding:16px}.dialogFoot{padding:14px 16px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px;background:#fbfdff}.closeX{border:0;background:#f2f6f9;border-radius:10px;padding:7px 9px;cursor:pointer;font-weight:900;color:#526b7d}
+@media(max-width:1260px){.main{grid-template-columns:270px 1fr 300px}.cards{grid-template-columns:1fr}.metricGrid{grid-template-columns:repeat(2,1fr)}.laneBoard{grid-template-columns:1fr}.homeWrap{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <div class="app">
-  <header>
-    <div class="titleBlock">
-      <h1>Economy Master Interface v2.0</h1>
-      <div class="sub">
-        <span class="badge"><strong>Doctrine</strong> Hyper-contextual economy</span>
-        <span class="badge"><strong>Core</strong> Model → Simulate → Assess → Compare/Transact → Evidence → Improve</span>
-        <span class="badge"><strong>Layer</strong> Economic Event Bus</span>
-      </div>
+<header>
+  <div>
+    <h1>Economy Master Interface v2.1</h1>
+    <div class="sub">
+      <span class="badge"><strong>Focus</strong> Inspector context hierarchy</span>
+      <span class="badge"><strong>New</strong> Home + Sector swimlanes</span>
+      <span class="badge"><strong>Event Language</strong> VRQ = Value Reprioritization Request</span>
     </div>
-    <div class="principle"><strong>Value is hyper-contextual.</strong> Every object can be viewed through sector, tool, scope, class, evidence, risk, transaction state, time, and message flow.</div>
-  </header>
-
-  <div class="ribbon">
-    <div class="bar" id="sectorBar"><span class="label">Sector / Viewpoint</span></div>
-    <div class="bar" id="toolBar"><span class="label">Activity Tool</span></div>
   </div>
-
-  <main class="main">
-    <aside class="panel leftPanel">
-      <div class="panelHead"><h2>Unified Classification Tree</h2><span class="mini" id="treeCount">0 nodes</span></div>
-      <div class="tree" id="tree"></div>
-      <div class="scopeBox">
-        <div class="mini"><strong>Primary Scope</strong> — where the user/system is standing</div>
-        <div class="scopeGrid" id="scopeGrid"></div>
-      </div>
-      <div class="overlayBox">
-        <div class="mini"><strong>Cross-sector Overlay</strong> — not a separate top sector</div>
-        <div class="overlayChips" id="overlayChips"></div>
-      </div>
-    </aside>
-
-    <section class="panel centerPanel">
-      <div class="panelHead"><h2 id="workspaceTitle">Workspace</h2><span class="mini" id="workspaceHint">Matrix view</span></div>
-      <div class="contextBar" id="contextBar"></div>
-      <div class="workspaceTools" id="workspaceTools"></div>
-      <div class="workspace" id="workspace"></div>
-    </section>
-
-    <aside class="panel inspector">
-      <div class="panelHead"><h2>Selected Item Inspector</h2><span class="mini" id="saveStatus">Local</span></div>
-      <div class="actionGrid">
-        <button class="act" data-action="new">NEW</button>
-        <button class="act" data-action="open">OPEN</button>
-        <button class="act" data-action="edit">EDIT</button>
-        <button class="act" data-action="save">SAVE</button>
-      </div>
-      <div class="actionGrid second">
-        <button class="act" data-action="simulate">SIMULATE</button>
-        <button class="act" data-action="assess">ASSESS</button>
-        <button class="act" data-action="document">DOCUMENT</button>
-      </div>
-      <div class="desc" id="inspectorDesc"></div>
-      <div class="fieldGrid" id="fieldGrid"></div>
-      <div class="moreBox"><button class="smallBtn primary" id="moreBtn">More / Custom Editor</button><button class="smallBtn" id="jsonBtn">JSON</button></div>
-    </aside>
-  </main>
-
-  <footer class="bottom">
-    <section class="panel"><div class="panelHead"><h2>Selected Summary / Stats</h2><span class="mini" id="summaryHint">Context</span></div><div class="summaryList" id="summaryList"></div></section>
-    <section class="panel"><div class="panelHead"><h2>Economic Event Bus / Interrupt Queue</h2><span class="mini">Interrupt = reprioritization of value in time</span></div><div class="queue" id="eventQueue"></div></section>
-    <section class="panel"><div class="panelHead"><h2>Evidence / Records / Outcomes</h2><span class="mini" id="evidenceHint">Audit trail</span></div><div class="evidenceList" id="evidenceList"></div></section>
-  </footer>
+  <div class="principle"><strong>Context hierarchy:</strong> center selection → tree node → sector/scope/overlay → startup explanation. The inspector always follows the most specific available context.</div>
+</header>
+<div class="ribbon">
+  <div class="bar" id="sectorBar"><span class="label">Sector / Viewpoint</span></div>
+  <div class="bar" id="toolBar"><span class="label">Activity Tool</span></div>
 </div>
-
-<div class="dialogMask" id="dialogMask">
-  <div class="dialog">
-    <div class="dialogHead"><h3 id="dialogTitle">Dialog</h3><button class="closeX" id="closeDialog">×</button></div>
-    <div class="dialogBody" id="dialogBody"></div>
-    <div class="dialogFoot" id="dialogFoot"></div>
-  </div>
+<main class="main">
+  <aside class="panel leftPanel">
+    <div class="panelHead"><h2>Contextual TreeView</h2><span class="mini" id="treeCount">0 nodes</span></div>
+    <div class="tree" id="tree"></div>
+    <div class="scopeBox"><div class="mini"><strong>Primary Scope</strong> — where the user/system is standing</div><div class="scopeGrid" id="scopeGrid"></div></div>
+    <div class="overlayBox"><div class="mini"><strong>Cross-sector Overlay</strong> — relationship layer</div><div class="overlayChips" id="overlayChips"></div></div>
+  </aside>
+  <section class="panel centerPanel">
+    <div class="panelHead"><h2 id="workspaceTitle">Workspace</h2><span class="mini" id="workspaceHint">Matrix view</span></div>
+    <div class="contextBar" id="contextBar"></div>
+    <div class="workspaceTools" id="workspaceTools"></div>
+    <div class="workspace" id="workspace"></div>
+  </section>
+  <aside class="panel inspector">
+    <div class="panelHead"><h2>Selected Item Inspector</h2><span class="mini" id="contextSourceBadge">Startup</span></div>
+    <div class="actionGrid"><button class="act" data-action="new">NEW</button><button class="act" data-action="open">OPEN</button><button class="act" data-action="edit">EDIT</button><button class="act" data-action="save">SAVE</button></div>
+    <div class="actionGrid second"><button class="act" data-action="simulate">SIMULATE</button><button class="act" data-action="assess">ASSESS</button><button class="act" data-action="document">DOCUMENT</button></div>
+    <div class="hierarchyBox" id="hierarchyBox"></div>
+    <div class="desc" id="inspectorDesc"></div>
+    <div class="fieldGrid" id="fieldGrid"></div>
+    <div class="moreBox"><button class="smallBtn primary" id="moreBtn">More / Custom Editor</button><button class="smallBtn" id="jsonBtn">JSON</button></div>
+  </aside>
+</main>
+<footer class="bottom">
+  <section class="panel"><div class="panelHead"><h2>Selected Summary / Stats</h2><span class="mini" id="summaryHint">Context</span></div><div class="summaryList" id="summaryList"></div></section>
+  <section class="panel"><div class="panelHead"><h2>Economic Event Bus / VRQ Queue</h2><span class="mini">VRQ = Value Reprioritization Request</span></div><div class="queue" id="eventQueue"></div></section>
+  <section class="panel"><div class="panelHead"><h2>Evidence / Records / Outcomes</h2><span class="mini" id="evidenceHint">Audit trail</span></div><div class="evidenceList" id="evidenceList"></div></section>
+</footer>
 </div>
-
+<div class="dialogMask" id="dialogMask"><div class="dialog"><div class="dialogHead"><h3 id="dialogTitle">Dialog</h3><button class="closeX" id="closeDialog">×</button></div><div class="dialogBody" id="dialogBody"></div><div class="dialogFoot" id="dialogFoot"></div></div></div>
 <script>
 const app = {
-  sectors:["Human / Consumer","Market / Exchange","Business / Commercial","Finance / Capital","Government / Public"],
-  tools:["Model","Simulate","Assess","Compare / Transact","Objects / Definitions"],
+  sectors:["Home","Human / Consumer","Market / Exchange","Business / Commercial","Finance / Capital","Public / Government"],
+  tools:["Swimlane","Model","Simulate","Assess","Compare / Transact","Objects / Definitions"],
   scopes:["International","National","Provincial / State","Municipal","Organizational","Personal"],
   overlays:["Law / Rights / Regulation","Security / Defense / Intelligence","Infrastructure / Logistics","Resources / Environment","Information / Communication / Records","Risk / Safety / Emergency"],
-  activeSector:"Human / Consumer",
-  activeTool:"Model",
-  activeScope:"Personal",
-  activeOverlay:"Law / Rights / Regulation",
-  expanded:new Set(["human","human_shelter","human_shelter_rent","business","business_operations","business_models","market","finance","gov"]),
-  selectedNodeId:"human_shelter_rent_apartments",
-  selectedOfferId:null,
-  selectedModelNodeId:"need_apartment",
-  connectFrom:null,
-  drag:null,
-  simulationTick:0,
-  model:{
-    lanes:[
-      {id:"lane_need", title:"Need / User Context"},
-      {id:"lane_offer", title:"Offer / Market"},
-      {id:"lane_business", title:"Business / Operations"},
-      {id:"lane_finance", title:"Finance / Capital"},
-      {id:"lane_gov", title:"Government / Rules"},
-      {id:"lane_evidence", title:"Evidence / Records"}
-    ],
-    nodes:[
-      {id:"need_apartment", lane:"lane_need", x:190, y:22, type:"need", title:"Need: stable rental housing", note:"Human value need: shelter, location, affordability, safety.", status:"Planning", valueImpact:"High"},
-      {id:"offer_rental", lane:"lane_offer", x:430, y:22, type:"offer", title:"Offer: apartment listing", note:"Comparable object with price, location, evidence, terms.", status:"Candidate", valueImpact:"Medium"},
-      {id:"process_compare", lane:"lane_offer", x:670, y:22, type:"process", title:"Compare options", note:"Filter, shortlist, bid/revise/accept workflow.", status:"Active", valueImpact:"Medium"},
-      {id:"biz_property", lane:"lane_business", x:430, y:22, type:"process", title:"Landlord service process", note:"Maintenance, availability, lease quality, service reliability.", status:"Modeled", valueImpact:"Medium"},
-      {id:"finance_budget", lane:"lane_finance", x:190, y:22, type:"process", title:"Budget / affordability check", note:"Rent, utilities, deposit, cash flow, credit constraints.", status:"Needs evidence", valueImpact:"High"},
-      {id:"gov_rules", lane:"lane_gov", x:670, y:22, type:"event", title:"Tenant rules / rights", note:"Applicable scope may be provincial/municipal.", status:"Reference", valueImpact:"Medium"},
-      {id:"evidence_viewing", lane:"lane_evidence", x:430, y:22, type:"evidence", title:"Viewing + inspection record", note:"Photos, notes, lease terms, satisfaction outcome.", status:"Pending", valueImpact:"High"},
-      {id:"interrupt_price", lane:"lane_offer", x:910, y:22, type:"interrupt", title:"Interrupt: price changed", note:"Reprioritize options and simulation assumptions.", status:"Open", valueImpact:"High"}
-    ],
-    links:[
-      {from:"need_apartment", to:"finance_budget", label:"affordability", type:"normal"},
-      {from:"need_apartment", to:"offer_rental", label:"search target", type:"normal"},
-      {from:"offer_rental", to:"process_compare", label:"rank", type:"normal"},
-      {from:"biz_property", to:"offer_rental", label:"service creates offer", type:"normal"},
-      {from:"gov_rules", to:"process_compare", label:"constraint", type:"evidence"},
-      {from:"process_compare", to:"evidence_viewing", label:"records", type:"evidence"},
-      {from:"interrupt_price", to:"process_compare", label:"reprioritize", type:"interrupt"}
-    ]
-  },
-  events:[
-    {id:"evt1", priority:"high", title:"Interrupt: price changed on selected offer", source:"Offer / Listing", target:"Compare / Transact", scope:"Personal + Municipal", status:"Open", note:"A value-changing signal should trigger re-ranking and update transaction state."},
-    {id:"evt2", priority:"medium", title:"Evidence request: lease terms missing", source:"Assessment", target:"Evidence / Records", scope:"Provincial / State", status:"Queued", note:"Credit cannot improve until the required proof is attached."},
-    {id:"evt3", priority:"low", title:"Simulation output ready", source:"Business Simulator", target:"Model", scope:"Organizational", status:"Logged", note:"Demand estimate and delay risk can feed back into the model."}
-  ],
-  evidence:[
-    {id:"ev1", title:"Handoff doctrine ingested", type:"Design Evidence", status:"Accepted", note:"Master interface must not become Comparator-only."},
-    {id:"ev2", title:"Unified taxonomy rule", type:"Architecture Rule", status:"Active", note:"Budget / Standard / Premium are filters, not tree nodes."},
-    {id:"ev3", title:"Hyper-contextual principle", type:"Core Principle", status:"Active", note:"Objects gain meaning through relationships."}
-  ],
-  offers:[
-    {id:"apt1", name:"2 Bedroom Apartment - Southview", price:1425, quality:82, risk:"Medium", availability:"Now", evidence:"Photos + lease draft", transaction:"Seek / Evaluate", value:77},
-    {id:"apt2", name:"Basement Suite - Utilities Included", price:1180, quality:71, risk:"Low", availability:"July 1", evidence:"Owner verified", transaction:"Shortlist", value:84},
-    {id:"apt3", name:"Townhouse Rental - Garage", price:1725, quality:88, risk:"Medium", availability:"Now", evidence:"Viewing pending", transaction:"Plan", value:69},
-    {id:"apt4", name:"Senior-friendly Main Floor Suite", price:1295, quality:79, risk:"Low", availability:"Waitlist", evidence:"Accessibility notes", transaction:"Watch", value:73}
-  ],
-  credits:[
-    {name:"Business concept", desc:"Clear object, customer, offer, revenue logic.", score:76},
-    {name:"Customer problem evidence", desc:"Proof that the problem exists and matters.", score:58},
-    {name:"Pricing evidence", desc:"Evidence that price matches value and market behavior.", score:64},
-    {name:"Operations capability", desc:"Process, capacity, delivery, quality, staffing.", score:72},
-    {name:"Legal / compliance", desc:"Rules, permits, rights, obligations, risk controls.", score:69},
-    {name:"Evidence / records", desc:"Proof trail, attachments, outcomes, audit history.", score:81}
-  ],
-  taxonomy:{
-    "Human / Consumer": {id:"human", label:"Human / Consumer", type:"sector", children:[
-      {id:"human_shelter", label:"Shelter", type:"domain", children:[
-        {id:"human_shelter_rent", label:"Rent", type:"need_action", children:[
-          {id:"human_shelter_rent_apartments", label:"Apartments", type:"class"},
-          {id:"human_shelter_rent_basement", label:"Basement Suites", type:"class"},
-          {id:"human_shelter_rent_rooms", label:"Rooms", type:"class"},
-          {id:"human_shelter_rent_houses", label:"Houses", type:"class"},
-          {id:"human_shelter_rent_storage", label:"Storage", type:"class"},
-          {id:"human_shelter_rent_short", label:"Short-term", type:"class"},
-          {id:"human_shelter_rent_senior", label:"Senior / Assisted", type:"class"}
-        ]},
-        {id:"human_shelter_own", label:"Ownership", type:"need_action", children:[
-          {id:"human_shelter_own_condo", label:"Condo", type:"class"},
-          {id:"human_shelter_own_house", label:"House", type:"class"},
-          {id:"human_shelter_own_modular", label:"Modular", type:"class"},
-          {id:"human_shelter_own_land", label:"Land", type:"class"},
-          {id:"human_shelter_own_tiny", label:"Tiny / Modular System", type:"class"},
-          {id:"human_shelter_own_mortgage", label:"Mortgage / Financing", type:"class"},
-          {id:"human_shelter_own_insurance", label:"Insurance / Fees", type:"class"}
-        ]}
-      ]},
-      {id:"human_transport", label:"Transportation", type:"domain", children:[
-        {id:"human_transport_vehicle", label:"Vehicle Purchase", type:"need_action"},
-        {id:"human_transport_repair", label:"Repair / Maintenance", type:"need_action"},
-        {id:"human_transport_insurance", label:"Insurance", type:"need_action"}
-      ]},
-      {id:"human_income", label:"Income / Work", type:"domain", children:[
-        {id:"human_income_job", label:"Employment", type:"need_action"},
-        {id:"human_income_business", label:"Small Business", type:"need_action"},
-        {id:"human_income_training", label:"Training / Skills", type:"need_action"}
-      ]}
-    ]},
-    "Market / Exchange": {id:"market", label:"Market / Exchange", type:"sector", children:[
-      {id:"market_offers", label:"Offers / Listings", type:"domain", children:[
-        {id:"market_offers_goods", label:"Goods", type:"class"},
-        {id:"market_offers_services", label:"Services", type:"class"},
-        {id:"market_offers_contracts", label:"Contracts / Terms", type:"class"}
-      ]},
-      {id:"market_transactions", label:"Transaction States", type:"domain", children:[
-        {id:"market_want", label:"Want / Need", type:"state"},
-        {id:"market_plan", label:"Plan", type:"state"},
-        {id:"market_seek", label:"Seek", type:"state"},
-        {id:"market_evaluate", label:"Evaluate", type:"state"},
-        {id:"market_contract", label:"Contract", type:"state"},
-        {id:"market_payment", label:"Payment / Receive", type:"state"},
-        {id:"market_ownership", label:"Ownership / Outcome", type:"state"}
-      ]}
-    ]},
-    "Business / Commercial": {id:"business", label:"Business / Commercial", type:"sector", children:[
-      {id:"business_models", label:"Business Models", type:"domain", children:[
-        {id:"business_model_manufacturing", label:"Manufacturing", type:"class"},
-        {id:"business_model_service", label:"Service Business", type:"class"},
-        {id:"business_model_food", label:"Food / Hospitality", type:"class"},
-        {id:"business_model_retail", label:"Retail / Distribution", type:"class"},
-        {id:"business_model_construction", label:"Construction / Trades", type:"class"}
-      ]},
-      {id:"business_operations", label:"Operations", type:"domain", children:[
-        {id:"business_ops_sales", label:"Sales / Customer Success", type:"process"},
-        {id:"business_ops_production", label:"Production / Delivery", type:"process"},
-        {id:"business_ops_supply", label:"Supply Chain", type:"process"},
-        {id:"business_ops_quality", label:"Quality / Safety", type:"process"},
-        {id:"business_ops_finance", label:"Accounting / Finance", type:"process"}
-      ]},
-      {id:"business_evidence", label:"Evidence / Credits", type:"domain", children:[
-        {id:"business_ev_problem", label:"Customer Problem Evidence", type:"evidence"},
-        {id:"business_ev_pricing", label:"Pricing Evidence", type:"evidence"},
-        {id:"business_ev_capacity", label:"Capacity Evidence", type:"evidence"}
-      ]}
-    ]},
-    "Finance / Capital": {id:"finance", label:"Finance / Capital", type:"sector", children:[
-      {id:"finance_personal", label:"Personal Finance", type:"domain", children:[
-        {id:"finance_personal_budget", label:"Budget / Cash Flow", type:"class"},
-        {id:"finance_personal_credit", label:"Credit / Debt", type:"class"},
-        {id:"finance_personal_insurance", label:"Insurance", type:"class"}
-      ]},
-      {id:"finance_business", label:"Business Capital", type:"domain", children:[
-        {id:"finance_business_startup", label:"Startup Funding", type:"class"},
-        {id:"finance_business_working", label:"Working Capital", type:"class"},
-        {id:"finance_business_asset", label:"Asset Financing", type:"class"}
-      ]},
-      {id:"finance_measure", label:"Credit / Value Measurement", type:"domain", children:[
-        {id:"finance_measure_risk", label:"Risk Reduction Credit", type:"class"},
-        {id:"finance_measure_capability", label:"Capability Credit", type:"class"},
-        {id:"finance_measure_evidence", label:"Evidence-backed Value", type:"class"}
-      ]}
-    ]},
-    "Government / Public": {id:"gov", label:"Government / Public", type:"sector", children:[
-      {id:"gov_services", label:"Public Services", type:"domain", children:[
-        {id:"gov_services_health", label:"Health", type:"class"},
-        {id:"gov_services_housing", label:"Housing Supports", type:"class"},
-        {id:"gov_services_transport", label:"Transportation / Roads", type:"class"}
-      ]},
-      {id:"gov_rules", label:"Rules / Regulation", type:"domain", children:[
-        {id:"gov_rules_tax", label:"Tax / Fees", type:"class"},
-        {id:"gov_rules_business", label:"Business Licensing", type:"class"},
-        {id:"gov_rules_tenant", label:"Tenant / Property Rules", type:"class"}
-      ]},
-      {id:"gov_context", label:"Economy Context", type:"domain", children:[
-        {id:"gov_context_policy", label:"Policy Change", type:"event"},
-        {id:"gov_context_emergency", label:"Emergency / Disaster", type:"event"},
-        {id:"gov_context_infrastructure", label:"Infrastructure Constraint", type:"event"}
-      ]}
-    ]}
-  }
+  activeSector:"Home", activeTool:"Swimlane", activeScope:"Personal", activeOverlay:"Law / Rights / Regulation",
+  selectedTreeId:null, selectedCenterId:null, selectedCenterType:null,
+  expanded:new Set(["home_root","human_root","human_shelter","business_root","market_root","finance_root","public_root"]),
+  offersSelected:null
 };
 
-const $ = sel => document.querySelector(sel);
-const $$ = sel => [...document.querySelectorAll(sel)];
-function escapeHtml(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
-function currentTree(){return app.taxonomy[app.activeSector];}
-function findNode(id, node=currentTree(), path=[]){
-  if(!node) return null;
-  const nextPath=[...path,node.label];
-  if(node.id===id) return {...node,path:nextPath};
-  for(const child of (node.children||[])){const r=findNode(id,child,nextPath); if(r) return r;}
-  return null;
-}
-function countNodes(node){return 1+(node.children||[]).reduce((a,c)=>a+countNodes(c),0)}
-function selectedNode(){return findNode(app.selectedNodeId) || currentTree();}
-function selectedModelNode(){return app.model.nodes.find(n=>n.id===app.selectedModelNodeId) || app.model.nodes[0];}
-function selectedOffer(){return app.offers.find(o=>o.id===app.selectedOfferId) || app.offers[0];}
-function setTool(tool){app.activeTool=tool; renderAll();}
-function setSector(sector){app.activeSector=sector; app.selectedNodeId=currentTree().id; app.expanded.add(currentTree().id); renderAll();}
-function setScope(scope){app.activeScope=scope; pushEvent('low', 'Scope changed: '+scope, 'Scope Selector', 'Matrix Context', 'Context view recalculated.'); renderAll();}
-function setOverlay(overlay){app.activeOverlay=overlay; pushEvent('medium','Overlay changed: '+overlay,'Overlay Layer','Presentation Context','Cross-sector overlay applied to selected object.'); renderAll();}
-function pushEvent(priority,title,source,target,note,status='Open'){
-  app.events.unshift({id:'evt'+Date.now()+Math.random().toString(16).slice(2),priority,title,source,target,scope:app.activeScope,status,note});
-  if(app.events.length>12) app.events.pop();
-}
-function pushEvidence(title,type,note,status='Logged'){
-  app.evidence.unshift({id:'ev'+Date.now()+Math.random().toString(16).slice(2),title,type,status,note});
-  if(app.evidence.length>12) app.evidence.pop();
-}
-function renderTopBars(){
-  const sb=$('#sectorBar'); sb.innerHTML='<span class="label">Sector / Viewpoint</span>';
-  app.sectors.forEach(s=>{const b=document.createElement('button'); b.className='pill '+(s===app.activeSector?'active':''); b.textContent=s; b.onclick=()=>setSector(s); sb.appendChild(b);});
-  const tb=$('#toolBar'); tb.innerHTML='<span class="label">Activity Tool</span>';
-  app.tools.forEach(t=>{const b=document.createElement('button'); b.className='pill '+(t===app.activeTool?'active':''); b.textContent=t; b.onclick=()=>setTool(t); tb.appendChild(b);});
+const sectorMeta = {
+  "Home":{icon:"⌂",desc:"Top-level orientation view. The center panel shows the five-sector economy wheel and the inspector explains the sector buttons when nothing else is selected.",color:"#e8f1ff"},
+  "Human / Consumer":{icon:"H",desc:"The person, household, life domain, need, value judgment, purchase, ownership, and outcome viewpoint.",color:"#f7f4bd"},
+  "Market / Exchange":{icon:"M",desc:"The exchange environment where demand, supply, prices, offers, contracts, and settlement become visible.",color:"#a0f0c4"},
+  "Business / Commercial":{icon:"B",desc:"The value-creating organization: customer problem, offer, operations, staff, suppliers, revenue, evidence, and customer success.",color:"#c1b4d3"},
+  "Finance / Capital":{icon:"F",desc:"Credit, capital, risk, liquidity, savings, repayment, underwriting, funding, returns, and financial evidence.",color:"#82aee4"},
+  "Public / Government":{icon:"P",desc:"Public needs, public services, democratic authority, policy, law, infrastructure, permits, budgets, accountability, and public records.",color:"#f5bd85"}
+};
+
+const trees = {
+  "Home":[{id:"home_root",label:"Economy Home",type:"orientation",children:[
+    {id:"home_human",label:"Human / Consumer",type:"sector"},{id:"home_market",label:"Market / Exchange",type:"sector"},{id:"home_business",label:"Business / Commercial",type:"sector"},{id:"home_finance",label:"Finance / Capital",type:"sector"},{id:"home_public",label:"Public / Government",type:"sector"}
+  ]}],
+  "Human / Consumer":[{id:"human_root",label:"Human / Consumer",type:"sector",children:[
+    {id:"human_needs",label:"Needs & Life Domains",type:"domain",children:[{id:"human_shelter",label:"Shelter",type:"domain",children:[{id:"human_shelter_rent",label:"Rent",type:"action",children:[{id:"human_shelter_rent_apartments",label:"Apartments",type:"class"},{id:"human_shelter_rent_basement",label:"Basement Suites",type:"class"},{id:"human_shelter_rent_rooms",label:"Rooms",type:"class"}]},{id:"human_shelter_own",label:"Ownership",type:"action",children:[{id:"human_shelter_own_condo",label:"Condo",type:"class"},{id:"human_shelter_own_house",label:"House",type:"class"},{id:"human_shelter_own_modular",label:"Modular / Tiny",type:"class"}]}]},{id:"human_food",label:"Food",type:"domain"},{id:"human_transport",label:"Transportation",type:"domain"},{id:"human_income",label:"Income / Work",type:"domain"},{id:"human_health",label:"Health",type:"domain"}]},
+    {id:"human_purchase_chain",label:"Obtain Value Chain",type:"process",children:[{id:"human_want",label:"Want / Need",type:"stage"},{id:"human_plan",label:"Plan",type:"stage"},{id:"human_seek",label:"Seek / Find",type:"stage"},{id:"human_evaluate",label:"Evaluate",type:"stage"},{id:"human_contract",label:"Contract / Payment",type:"stage"},{id:"human_outcome",label:"Ownership / Ongoing Evaluation",type:"stage"}]}
+  ]}],
+  "Market / Exchange":[{id:"market_root",label:"Market / Exchange",type:"sector",children:[
+    {id:"market_signals",label:"Demand Signals",type:"domain",children:[{id:"market_need_signals",label:"Need Signals",type:"class"},{id:"market_search_intent",label:"Search / Intent",type:"class"},{id:"market_waitlists",label:"Waitlists / Shortages",type:"class"}]},
+    {id:"market_offers",label:"Offers / Listings",type:"domain",children:[{id:"market_products",label:"Products",type:"class"},{id:"market_services",label:"Services",type:"class"},{id:"market_bids",label:"Bids / Quotes",type:"class"}]},
+    {id:"market_price",label:"Price Discovery",type:"domain"},{id:"market_contract",label:"Contract / Settlement",type:"domain"},{id:"market_feedback",label:"Reputation / Evidence",type:"domain"}
+  ]}],
+  "Business / Commercial":[{id:"business_root",label:"Business / Commercial",type:"sector",children:[
+    {id:"business_models",label:"Business Models",type:"domain",children:[{id:"business_type",label:"Business Type",type:"class"},{id:"business_revenue_sequence",label:"Revenue Sequence",type:"class"},{id:"business_value_chain",label:"Value Chain",type:"class"}]},
+    {id:"business_customers",label:"Customers / Segments",type:"domain",children:[{id:"business_customer_problem",label:"Customer Problem Evidence",type:"class"},{id:"business_icp",label:"Ideal Customer Profile",type:"class"}]},
+    {id:"business_offers",label:"Offers / Products / Services",type:"domain"},{id:"business_operations",label:"Operations / Departments",type:"domain",children:[{id:"business_sales",label:"Sales / Marketing",type:"lane"},{id:"business_delivery",label:"Production / Delivery",type:"lane"},{id:"business_suppliers",label:"Suppliers",type:"lane"},{id:"business_quality",label:"Quality / Customer Success",type:"lane"}]},
+    {id:"business_evidence",label:"Evidence / Credits / Risk",type:"domain"}
+  ]}],
+  "Finance / Capital":[{id:"finance_root",label:"Finance / Capital",type:"sector",children:[
+    {id:"finance_sources",label:"Capital Sources",type:"domain",children:[{id:"finance_savings",label:"Savings",type:"class"},{id:"finance_loans",label:"Loans",type:"class"},{id:"finance_investment",label:"Investment",type:"class"}]},
+    {id:"finance_credit",label:"Credit / Qualification",type:"domain"},{id:"finance_risk",label:"Risk / Terms",type:"domain"},{id:"finance_payments",label:"Payment / Settlement",type:"domain"},{id:"finance_return",label:"Return / Repayment",type:"domain"}
+  ]}],
+  "Public / Government":[{id:"public_root",label:"Public / Government",type:"sector",children:[
+    {id:"public_needs",label:"Public Needs / Mandate",type:"domain",children:[{id:"public_safety",label:"Safety",type:"class"},{id:"public_health",label:"Health",type:"class"},{id:"public_shelter",label:"Shelter / Housing",type:"class"},{id:"public_infrastructure",label:"Infrastructure",type:"class"}]},
+    {id:"public_policy",label:"Policy / Law / Program",type:"domain"},{id:"public_services",label:"Service Delivery",type:"domain"},{id:"public_budget",label:"Tax / Budget / Funding",type:"domain"},{id:"public_records",label:"Accountability / Records",type:"domain"}
+  ]}]
+};
+
+const swimlanes = {
+  "Home":[
+    {id:"lane_home_human",title:"Human / Consumer",cls:"laneHuman",desc:"Need, value, personal decision, ownership, and outcome viewpoint.",objects:[{id:"obj_home_human",name:"Human value lens",type:"Sector",note:"Start from lived needs and outcomes."}]},
+    {id:"lane_home_market",title:"Market / Exchange",cls:"laneMarket",desc:"Where offers, demand, price, contract, and settlement appear.",objects:[{id:"obj_home_market",name:"Exchange lens",type:"Sector",note:"Compare offers and observe price signals."}]},
+    {id:"lane_home_business",title:"Business / Commercial",cls:"laneBusiness",desc:"Organizations that create, package, sell, and deliver value.",objects:[{id:"obj_home_business",name:"Value creation lens",type:"Sector",note:"Model customers, offers, operations, and evidence."}]},
+    {id:"lane_home_finance",title:"Finance / Capital",cls:"laneFinance",desc:"Capital, credit, savings, risk, payment, and return.",objects:[{id:"obj_home_finance",name:"Capital lens",type:"Sector",note:"Measure credit, risk, liquidity, and terms."}]},
+    {id:"lane_home_public",title:"Public / Government",cls:"lanePublic",desc:"Public purpose, service, policy, accountability, and common infrastructure.",objects:[{id:"obj_home_public",name:"Public value lens",type:"Sector",note:"Public first; government as institution/tool."}]}
+  ],
+  "Human / Consumer":[
+    {id:"lane_h_need",title:"Need / Life Context",cls:"laneHuman",desc:"What the person or household needs, values, fears, lacks, or wants to improve.",objects:[{id:"h_need",name:"Need statement",type:"Need",note:"Affordable apartment near work."},{id:"h_constraints",name:"Constraints",type:"Context",note:"Budget, transport, safety, timing."}]},
+    {id:"lane_h_search",title:"Search / Compare",cls:"laneMarket",desc:"How available options are discovered, filtered, compared, and shortlisted.",objects:[{id:"h_listing_grid",name:"Listing grid",type:"Comparator",note:"Rent, location, utilities, quality, risk."}]},
+    {id:"lane_h_decide",title:"Decision / Transaction",cls:"laneFinance",desc:"The contract, payment, bid, acceptance, rejection, or modification action.",objects:[{id:"h_bid",name:"Bid / application",type:"Transaction",note:"Offer accepted, declined, revised, or recorded."}]},
+    {id:"lane_h_own",title:"Ownership / Use",cls:"laneBusiness",desc:"What happens after the transaction: use, maintenance, satisfaction, support.",objects:[{id:"h_outcome",name:"Outcome record",type:"Evidence",note:"Did value actually arrive?"}]},
+    {id:"lane_h_feedback",title:"Evidence / Improvement",cls:"lanePublic",desc:"Records, satisfaction, problems, rights, future search learning, and VRQs.",objects:[{id:"h_vrq",name:"Raise VRQ",type:"VRQ",note:"A changed condition asks for reprioritization."}]}
+  ],
+  "Market / Exchange":[
+    {id:"lane_m_demand",title:"Demand Signals",cls:"laneHuman",desc:"Needs, searches, waitlists, RFQs, urgency, willingness to pay.",objects:[{id:"m_demand",name:"Demand signal",type:"Signal",note:"Buyer need becomes visible."}]},
+    {id:"lane_m_supply",title:"Offer Supply",cls:"laneBusiness",desc:"Products, services, listings, availability, seller promises.",objects:[{id:"m_offer",name:"Offer object",type:"Offer",note:"Price, quality, availability, evidence."}]},
+    {id:"lane_m_price",title:"Price Discovery",cls:"laneFinance",desc:"Quotes, bids, comparison, negotiated terms, scarcity signals.",objects:[{id:"m_price",name:"Price signal",type:"Market",note:"Changes by demand, supply, risk, time."}]},
+    {id:"lane_m_contract",title:"Contract / Settlement",cls:"lanePublic",desc:"Agreement, delivery, payment, receipt, obligation, dispute path.",objects:[{id:"m_settlement",name:"Settlement record",type:"Transaction",note:"Contract and payment evidence."}]},
+    {id:"lane_m_feedback",title:"Feedback / Reputation",cls:"laneMarket",desc:"Reviews, claims, defects, satisfaction, repeat behavior, trust.",objects:[{id:"m_reputation",name:"Reputation signal",type:"Evidence",note:"Market learns from outcomes."}]}
+  ],
+  "Business / Commercial":[
+    {id:"lane_b_customer",title:"Customer / Problem",cls:"laneHuman",desc:"Customer segment, problem evidence, willingness to pay, demand proof.",objects:[{id:"b_problem",name:"Customer problem",type:"Evidence",note:"Verified pain, urgency, alternatives."}]},
+    {id:"lane_b_offer",title:"Offer / Revenue",cls:"laneBusiness",desc:"Product/service definition, pricing, revenue sequence, value proposition.",objects:[{id:"b_offer",name:"Offer package",type:"Offer",note:"What value is sold and how."}]},
+    {id:"lane_b_ops",title:"Operations / Delivery",cls:"laneBusiness",desc:"Departments, staff, workflow, capacity, production, service delivery.",objects:[{id:"b_workflow",name:"Delivery workflow",type:"Process",note:"Inputs transformed into customer value."}]},
+    {id:"lane_b_supply",title:"Suppliers / Resources",cls:"laneMarket",desc:"Purchased inputs, vendors, material flow, external dependencies.",objects:[{id:"b_supplier",name:"Supplier dependency",type:"Resource",note:"Delay can raise VRQ."}]},
+    {id:"lane_b_finance",title:"Finance / Evidence",cls:"laneFinance",desc:"Cash, costs, margin, credits, risk, inspection evidence, customer success.",objects:[{id:"b_credit",name:"Assessment credit",type:"Credit",note:"Verified capability/risk reduction."}]}
+  ],
+  "Finance / Capital":[
+    {id:"lane_f_source",title:"Capital Source",cls:"laneFinance",desc:"Savings, lender, investor, grant, cash flow, or credit line.",objects:[{id:"f_source",name:"Funding source",type:"Capital",note:"Where money/capital originates."}]},
+    {id:"lane_f_qual",title:"Qualification / Credit",cls:"lanePublic",desc:"Evidence, scoring, underwriting, inspection, income, collateral, trust.",objects:[{id:"f_score",name:"Credit assessment",type:"Assessment",note:"Evidence-backed qualification."}]},
+    {id:"lane_f_terms",title:"Risk / Terms",cls:"laneFinance",desc:"Rate, term, collateral, insurance, default risk, covenants.",objects:[{id:"f_terms",name:"Terms object",type:"Contract",note:"Risk is priced and constrained."}]},
+    {id:"lane_f_fund",title:"Funding / Payment",cls:"laneMarket",desc:"Settlement, transfer, escrow, payment rail, receipt.",objects:[{id:"f_payment",name:"Payment event",type:"Transaction",note:"Value exchange completed or failed."}]},
+    {id:"lane_f_return",title:"Return / Repayment",cls:"laneBusiness",desc:"Repayment, yield, dividends, retained value, loss, outcome record.",objects:[{id:"f_return",name:"Return record",type:"Evidence",note:"Actual result feeds future credit."}]}
+  ],
+  "Public / Government":[
+    {id:"lane_p_need",title:"Public Need / Mandate",cls:"laneHuman",desc:"Need or harm that justifies public action, protection, service, or rule.",objects:[{id:"p_need",name:"Public need",type:"Mandate",note:"Common value problem."}]},
+    {id:"lane_p_policy",title:"Policy / Law / Program",cls:"lanePublic",desc:"Rule, program, rights, procedure, jurisdiction, legal authority.",objects:[{id:"p_policy",name:"Policy object",type:"Rule",note:"Defines permissions and obligations."}]},
+    {id:"lane_p_service",title:"Service Delivery",cls:"laneBusiness",desc:"Public service process, internal departments, contractors, applications.",objects:[{id:"p_service",name:"Service workflow",type:"Process",note:"Turns mandate into delivered public value."}]},
+    {id:"lane_p_funding",title:"Tax / Budget / Funding",cls:"laneFinance",desc:"Revenue, allocation, procurement, grants, program cost, public capacity.",objects:[{id:"p_budget",name:"Budget line",type:"Finance",note:"Public capacity is constrained."}]},
+    {id:"lane_p_record",title:"Accountability / Records",cls:"laneMarket",desc:"Audit, reports, evidence, outcomes, complaints, public trust.",objects:[{id:"p_record",name:"Accountability record",type:"Evidence",note:"Public value must be visible."}]}
+  ]
+};
+
+const events = [
+  {id:"vrq_001",priority:"high",title:"VRQ: Better offer appeared",meta:"Comparator → Human / Consumer → Compare / Transact",status:"Open"},
+  {id:"vrq_002",priority:"medium",title:"VRQ: Supplier delay changes delivery plan",meta:"Business / Commercial → Swimlane → Operations",status:"Queued"},
+  {id:"vrq_003",priority:"medium",title:"VRQ: Missing evidence lowers assessment confidence",meta:"Assessment → Credit / Value Measurement",status:"Review"},
+  {id:"vrq_004",priority:"low",title:"Context update: scope changed to Personal",meta:"Matrix context layer",status:"Logged"}
+];
+
+const evidence = [
+  {title:"Home wheel added",meta:"Five-sector orientation image loaded into Home center panel."},
+  {title:"Inspector hierarchy rule",meta:"Center selection overrides tree; tree overrides sector/scope/overlay; startup explains sector row."},
+  {title:"Public / Government label",meta:"Public placed first to reflect public purpose before institutional mechanism."},
+  {title:"Swimlane tool promoted",meta:"Swimlane is now first activity tool and default sector presentation."}
+];
+
+function esc(s){return String(s).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[c]));}
+function allNodes(){const out=[];function walk(arr,parent=null){arr.forEach(n=>{out.push({...n,parent}); if(n.children)walk(n.children,n.id);});} Object.values(trees).forEach(walk);return out;}
+function currentTree(){return trees[app.activeSector]||trees.Home;}
+function findNode(id, arr=currentTree()){let result=null;function walk(nodes){for(const n of nodes){if(n.id===id){result=n;return;} if(n.children)walk(n.children); if(result)return;}} walk(arr);return result;}
+function currentSwimlanes(){return swimlanes[app.activeSector]||swimlanes.Home;}
+function findCenterObject(id){for(const lane of currentSwimlanes()){for(const obj of lane.objects){if(obj.id===id)return {...obj,lane:lane.title,laneId:lane.id};}}return null;}
+
+function render(){renderBars();renderTree();renderScope();renderOverlay();renderContext();renderWorkspace();renderInspector();renderBottom();}
+function renderBars(){
+  const sb=document.getElementById('sectorBar'); sb.innerHTML='<span class="label">Sector / Viewpoint</span>'+app.sectors.map(s=>`<button class="pill ${app.activeSector===s?'active':''}" data-sector="${esc(s)}">${esc(s)}</button>`).join('');
+  sb.querySelectorAll('button').forEach(b=>b.onclick=()=>{app.activeSector=b.dataset.sector;app.activeTool='Swimlane';app.selectedTreeId=null;app.selectedCenterId=null;app.selectedCenterType=null;render();});
+  const tb=document.getElementById('toolBar'); tb.innerHTML='<span class="label">Activity Tool</span>'+app.tools.map(t=>`<button class="pill ${app.activeTool===t?'active':''}" data-tool="${esc(t)}">${esc(t)}</button>`).join('');
+  tb.querySelectorAll('button').forEach(b=>b.onclick=()=>{app.activeTool=b.dataset.tool;app.selectedCenterId=null;app.selectedCenterType=null;render();});
 }
 function renderTree(){
-  const root=currentTree(); $('#treeCount').textContent=countNodes(root)+' nodes';
-  function rec(n){
-    const has=(n.children||[]).length>0;
-    const open=app.expanded.has(n.id);
-    const line=`<div class="nodeLine ${app.selectedNodeId===n.id?'active':''}" data-node="${n.id}">
-      <span class="twisty" data-twist="${n.id}">${has?(open?'−':'+'):'·'}</span><span class="nodeText">${escapeHtml(n.label)}</span><span class="nodeMeta">${escapeHtml(n.type)}</span></div>`;
-    const kids=has&&open?`<div class="children">${n.children.map(rec).join('')}</div>`:'';
-    return line+kids;
-  }
-  $('#tree').innerHTML=rec(root);
-  $$('#tree .nodeLine').forEach(el=>{el.onclick=e=>{const id=el.dataset.node; if(e.target.dataset.twist){ if(app.expanded.has(id)) app.expanded.delete(id); else app.expanded.add(id);} app.selectedNodeId=id; app.selectedOfferId=null; pushEvent('low','Selected classification: '+(findNode(id)||{}).label,'TreeView','Matrix Context','Presentation panel changed for selected class.','Logged'); renderAll();};});
+  const tree=document.getElementById('tree'); let count=0;
+  function nodeHtml(n){count++; const has=(n.children&&n.children.length); const open=app.expanded.has(n.id); return `<div class="nodeLine ${app.selectedTreeId===n.id?'active':''}" data-node="${esc(n.id)}"><span class="twisty">${has?(open?'−':'+'):'•'}</span><span class="nodeText">${esc(n.label)}</span><span class="nodeMeta">${esc(n.type||'node')}</span></div>${has&&open?`<div class="children">${n.children.map(nodeHtml).join('')}</div>`:''}`;}
+  tree.innerHTML=currentTree().map(nodeHtml).join(''); document.getElementById('treeCount').textContent=count+' nodes';
+  tree.querySelectorAll('.nodeLine').forEach(line=>{line.onclick=(e)=>{const id=line.dataset.node;const n=findNode(id); if(n&&n.children&&e.target.classList.contains('twisty')){app.expanded.has(id)?app.expanded.delete(id):app.expanded.add(id);} else {app.selectedTreeId=id;app.selectedCenterId=null;app.selectedCenterType=null;} render();};});
 }
-function renderScopeOverlay(){
-  $('#scopeGrid').innerHTML=app.scopes.map(s=>`<button class="scopeBtn ${s===app.activeScope?'active':''}" data-scope="${s}">${s}</button>`).join('');
-  $$('#scopeGrid button').forEach(b=>b.onclick=()=>setScope(b.dataset.scope));
-  $('#overlayChips').innerHTML=app.overlays.map(o=>`<span class="chip ${o===app.activeOverlay?'active':''}" data-overlay="${o}">${o.split(' / ')[0]}</span>`).join('');
-  $$('#overlayChips .chip').forEach(c=>c.onclick=()=>setOverlay(c.dataset.overlay));
-}
-function renderContext(){
-  const n=selectedNode();
-  $('#workspaceTitle').textContent=app.activeTool+' Workspace';
-  $('#workspaceHint').textContent=n.path.join(' → ');
-  $('#contextBar').innerHTML=`
-    <span class="contextPill"><strong>Sector</strong> ${escapeHtml(app.activeSector)}</span>
-    <span class="contextPill"><strong>Tool</strong> ${escapeHtml(app.activeTool)}</span>
-    <span class="contextPill"><strong>Scope</strong> ${escapeHtml(app.activeScope)}</span>
-    <span class="contextPill"><strong>Overlay</strong> ${escapeHtml(app.activeOverlay.split(' / ')[0])}</span>
-    <span class="contextPill"><strong>Class</strong> ${escapeHtml(n.path.join(' × '))}</span>`;
-}
-function renderWorkspaceTools(){
-  let left='', right='<span class="mini">Prototype actions update the shared event bus and inspector.</span>';
-  if(app.activeTool==='Model'){
-    left=`<button class="smallBtn primary" id="addNodeBtn">Add Model Node</button><button class="smallBtn" id="addLaneBtn">Add Swimlane</button><button class="smallBtn orange" id="connectBtn">Connect Selected</button><button class="smallBtn red" id="interruptBtn">Inject Interrupt</button><button class="smallBtn" id="saveModelBtn">Save Model</button>`;
-  } else if(app.activeTool==='Simulate'){
-    left=`<button class="smallBtn primary" id="runScenarioBtn">Run Scenario</button><button class="smallBtn red" id="injectSimInterruptBtn">Inject Supplier Delay</button><button class="smallBtn" id="simToAssessBtn">Send Output to Assessment</button>`;
-  } else if(app.activeTool==='Assess'){
-    left=`<button class="smallBtn primary" id="recalcCreditBtn">Recalculate Credits</button><button class="smallBtn" id="addEvidenceBtn">Add Evidence</button><button class="smallBtn orange" id="flagGapBtn">Flag Evidence Gap</button>`;
-  } else if(app.activeTool==='Compare / Transact'){
-    left=`<button class="smallBtn primary" id="shortlistBtn">Shortlist Selected</button><button class="smallBtn" id="bidBtn">Make / Revise Bid</button><button class="smallBtn green" id="acceptBtn">Accept Offer</button><button class="smallBtn" id="recordOutcomeBtn">Record Outcome</button>`;
-  } else {
-    left=`<button class="smallBtn primary" id="newClassBtn">New Class Definition</button><button class="smallBtn" id="newFieldBtn">Add Field</button><button class="smallBtn" id="exportJsonBtn">Export JSON</button>`;
-  }
-  $('#workspaceTools').innerHTML=`<div class="toolButtons">${left}</div>${right}`;
-  attachWorkspaceToolEvents();
-}
-function attachWorkspaceToolEvents(){
-  $('#addNodeBtn')?.addEventListener('click', addModelNode);
-  $('#addLaneBtn')?.addEventListener('click', addLane);
-  $('#connectBtn')?.addEventListener('click', ()=>{app.connectFrom=app.selectedModelNodeId; pushEvent('medium','Connection mode armed','Visual Model','Graph Editor','Click another node to connect from selected node.'); renderAll();});
-  $('#interruptBtn')?.addEventListener('click', injectModelInterrupt);
-  $('#saveModelBtn')?.addEventListener('click', ()=>{localStorage.setItem('economyMasterModelV2', JSON.stringify(app.model)); $('#saveStatus').textContent='Saved'; pushEvidence('Visual model saved','Model Snapshot','Saved to browser localStorage.'); renderAll();});
-  $('#runScenarioBtn')?.addEventListener('click', runScenario);
-  $('#injectSimInterruptBtn')?.addEventListener('click', ()=>{pushEvent('high','Interrupt: supplier delay detected','Supplier Agent','Simulation Scheduler','Delay should reprioritize cash, customer promise, and alternate supplier comparison.'); renderAll();});
-  $('#simToAssessBtn')?.addEventListener('click', ()=>{pushEvidence('Simulation output sent to assessment','Simulation Evidence','Scenario results attached to assessment scoring.'); pushEvent('medium','Assessment input received from simulation','Business Simulator','Assessment','Evidence-backed score recalculation requested.'); setTool('Assess');});
-  $('#recalcCreditBtn')?.addEventListener('click', recalcCredits);
-  $('#addEvidenceBtn')?.addEventListener('click', ()=>{pushEvidence('New evidence attached','User Evidence','Prototype evidence record linked to selected object.'); pushEvent('low','Evidence added','Inspector','Assessment','Credit scores may improve after review.'); renderAll();});
-  $('#flagGapBtn')?.addEventListener('click', ()=>{pushEvent('high','Evidence gap flagged: missing proof','Assessment','Model + Comparator','Decision should be delayed or risk-adjusted until proof exists.'); renderAll();});
-  $('#shortlistBtn')?.addEventListener('click', ()=>{const o=selectedOffer(); o.transaction='Shortlist'; pushEvent('medium','Offer shortlisted: '+o.name,'Comparator','Transaction State','Listing moved to shortlist.'); renderAll();});
-  $('#bidBtn')?.addEventListener('click', showBidDialog);
-  $('#acceptBtn')?.addEventListener('click', ()=>{const o=selectedOffer(); o.transaction='Accepted'; pushEvidence('Offer accepted: '+o.name,'Transaction Record','Acceptance logged with current price and evidence state.'); pushEvent('high','Transaction accepted','Comparator','Evidence / Records','Outcome record created; model should later receive satisfaction feedback.'); renderAll();});
-  $('#recordOutcomeBtn')?.addEventListener('click', ()=>{pushEvidence('Outcome recorded','Outcome / Satisfaction','User recorded real-world result for feedback into model.'); pushEvent('medium','Outcome feeds model improvement','Comparator','Model','Actual result should change future model assumptions.'); renderAll();});
-  $('#newClassBtn')?.addEventListener('click', ()=>showJsonDialog('New Class Definition Draft', classDefinitionJson(), 'Create Definition'));
-  $('#newFieldBtn')?.addEventListener('click', ()=>{pushEvent('low','Field added to selected class template','Objects / Definitions','Schema','New field placeholder added to definition draft.'); renderAll();});
-  $('#exportJsonBtn')?.addEventListener('click', ()=>showJsonDialog('Export Unified Matrix JSON', exportJson(), 'Close'));
+function renderScope(){const el=document.getElementById('scopeGrid'); el.innerHTML=app.scopes.map(s=>`<button class="scopeBtn ${app.activeScope===s?'active':''}" data-scope="${esc(s)}">${esc(s)}</button>`).join('');el.querySelectorAll('button').forEach(b=>b.onclick=()=>{app.activeScope=b.dataset.scope; if(!app.selectedTreeId)app.selectedCenterId=null; render();});}
+function renderOverlay(){const el=document.getElementById('overlayChips'); el.innerHTML=app.overlays.map(o=>`<span class="chip ${app.activeOverlay===o?'active':''}" data-overlay="${esc(o)}">${esc(o)}</span>`).join('');el.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{app.activeOverlay=c.dataset.overlay; if(!app.selectedTreeId)app.selectedCenterId=null; render();});}
+function renderContext(){const selectedNode=app.selectedTreeId?findNode(app.selectedTreeId):null; const selectedObj=app.selectedCenterId?findCenterObject(app.selectedCenterId):null; document.getElementById('contextBar').innerHTML=`<span class="contextPill"><strong>Sector</strong> ${esc(app.activeSector)}</span><span class="contextPill"><strong>Tool</strong> ${esc(app.activeTool)}</span><span class="contextPill"><strong>Scope</strong> ${esc(app.activeScope)}</span><span class="contextPill"><strong>Overlay</strong> ${esc(app.activeOverlay)}</span>${selectedNode?`<span class="contextPill"><strong>Tree</strong> ${esc(selectedNode.label)}</span>`:''}${selectedObj?`<span class="contextPill"><strong>Center</strong> ${esc(selectedObj.name)}</span>`:''}`;}
+function renderWorkspaceTools(buttons=''){
+  document.getElementById('workspaceTools').innerHTML=`<div class="toolButtons">${buttons}</div><div class="mini">Inspector follows: center selection → tree node → sector/scope/overlay → startup</div>`;
 }
 function renderWorkspace(){
-  if(app.activeTool==='Model') renderModel();
-  else if(app.activeTool==='Simulate') renderSimulate();
-  else if(app.activeTool==='Assess') renderAssess();
-  else if(app.activeTool==='Compare / Transact') renderCompare();
-  else renderObjects();
+  document.getElementById('workspaceTitle').textContent = app.activeSector==='Home'?'Home / Economy Orientation':`${app.activeSector} — ${app.activeTool}`;
+  document.getElementById('workspaceHint').textContent = app.activeSector==='Home'?'Five-sector wheel':'Sector context workspace';
+  if(app.activeSector==='Home'){renderHome();return;}
+  if(app.activeTool==='Swimlane'){renderSwimlanes();return;}
+  if(app.activeTool==='Model'){renderModel();return;}
+  if(app.activeTool==='Simulate'){renderSimulate();return;}
+  if(app.activeTool==='Assess'){renderAssess();return;}
+  if(app.activeTool==='Compare / Transact'){renderCompare();return;}
+  renderObjects();
+}
+function renderHome(){
+  renderWorkspaceTools('<button class="smallBtn primary" id="selectWheel">Select Wheel Object</button><button class="smallBtn" id="clearSelection">Clear Selection</button>');
+  document.getElementById('workspace').innerHTML=`<div class="homeWrap"><div class="wheelCard"><img src="assets/home_five_sector_wheel.png" alt="Five-sector economy wheel"><div class="mini">Home center panel: five-sector economy orientation</div></div><div class="homeText"><div class="card"><h3>Home is not another sector</h3><p>Home is the orientation layer. It explains the sector buttons and shows the stable five-sector economy wheel.</p></div><div class="card"><h3>TreeView correspondence</h3><p>The Home TreeView mirrors the five major sector buttons: Human, Market, Business, Finance, and Public.</p></div><div class="card"><h3>Inspector startup rule</h3><p>With nothing selected, the inspector explains how the sector buttons work. Select the wheel, a tree node, or a sector to see the hierarchy change.</p></div></div></div>`;
+  document.getElementById('selectWheel').onclick=()=>{app.selectedCenterId='home_wheel';app.selectedCenterType='home_wheel';render();};
+  document.getElementById('clearSelection').onclick=()=>{app.selectedCenterId=null;app.selectedCenterType=null;app.selectedTreeId=null;render();};
+}
+function renderSwimlanes(){
+  renderWorkspaceTools('<button class="smallBtn primary" id="addObj">Add Object</button><button class="smallBtn" id="addLane">Add Swimlane</button><button class="smallBtn orange" id="raiseVRQ">Raise VRQ</button><button class="smallBtn" id="clearSelection">Clear Selection</button>');
+  const lanes=currentSwimlanes(); document.getElementById('workspace').innerHTML=`<div class="swimWrap"><div class="swimHelp"><span class="legendItem">Top-level stable swimlanes for selected sector</span><span class="legendItem">Click a lane object to drive the Inspector</span><span class="legendItem">VRQ = Value Reprioritization Request</span></div><div class="laneBoard">${lanes.map(l=>`<div class="lane ${esc(l.cls)}"><h3>${esc(l.title)}</h3><div class="laneDesc">${esc(l.desc)}</div>${l.objects.map(o=>`<div class="laneObj ${app.selectedCenterId===o.id?'selected':''}" data-center="${esc(o.id)}"><div class="type">${esc(o.type)}</div><div class="name">${esc(o.name)}</div><div class="note">${esc(o.note)}</div></div>`).join('')}</div>`).join('')}</div></div>`;
+  document.querySelectorAll('.laneObj').forEach(o=>o.onclick=()=>{app.selectedCenterId=o.dataset.center;app.selectedCenterType='swimlane_object';render();});
+  document.getElementById('addObj').onclick=()=>showDialog('Add Object','This prototype records the design intent: new objects will be inserted into a selected swimlane and become selectable inspector objects.');
+  document.getElementById('addLane').onclick=()=>showDialog('Add Swimlane','Future build: create/edit user-defined swimlanes while preserving stable top-level sector swimlanes.');
+  document.getElementById('raiseVRQ').onclick=()=>showDialog('Raise VRQ','VRQ = Value Reprioritization Request. A changed condition asks the system to reconsider priority in time.');
+  document.getElementById('clearSelection').onclick=()=>{app.selectedCenterId=null;app.selectedCenterType=null;render();};
 }
 function renderModel(){
-  const n=selectedNode();
-  $('#workspace').innerHTML=`
-    <div class="modelWrap">
-      <div class="modelLegend">
-        <span class="legendItem"><span class="dot need"></span>Need / user value</span>
-        <span class="legendItem"><span class="dot offer"></span>Offer / market object</span>
-        <span class="legendItem"><span class="dot process"></span>Process / handler</span>
-        <span class="legendItem"><span class="dot evidence"></span>Evidence / record</span>
-        <span class="legendItem"><span class="dot interrupt"></span>Interrupt / value reprioritization</span>
-        <span class="legendItem">Connect nodes across any swimlane. Current class: ${escapeHtml(n.label)}</span>
-      </div>
-      <div class="swimCanvas" id="swimCanvas">
-        <svg id="linkLayer"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6c90a6"/></marker></defs></svg>
-        ${app.model.lanes.map(l=>`<div class="lane" data-lane="${l.id}"><div class="laneLabel">${escapeHtml(l.title)}</div></div>`).join('')}
-      </div>
-    </div>`;
-  const canvas=$('#swimCanvas');
-  app.model.nodes.forEach(node=>{
-    const laneIndex=app.model.lanes.findIndex(l=>l.id===node.lane);
-    const div=document.createElement('div'); div.className='nodeCard '+node.type+(node.id===app.selectedModelNodeId?' selected':''); div.dataset.nodeid=node.id;
-    div.style.left=node.x+'px'; div.style.top=(laneIndex*122+node.y)+'px';
-    div.innerHTML=`<div class="type">${escapeHtml(node.type)} · ${escapeHtml(node.status)}</div><div class="name">${escapeHtml(node.title)}</div><div class="note">${escapeHtml(node.note)}</div>`;
-    div.onmousedown=e=>startDrag(e,node.id);
-    div.onclick=e=>{e.stopPropagation(); handleModelNodeClick(node.id);};
-    canvas.appendChild(div);
-  });
-  canvas.onclick=()=>{app.connectFrom=null;};
-  drawLinks();
-}
-function drawLinks(){
-  const svg=$('#linkLayer'); if(!svg) return;
-  const canvas=$('#swimCanvas'); const cr=canvas.getBoundingClientRect();
-  svg.setAttribute('width', canvas.scrollWidth); svg.setAttribute('height', canvas.scrollHeight);
-  [...svg.querySelectorAll('.dyn')].forEach(e=>e.remove());
-  function center(id){const el=canvas.querySelector(`[data-nodeid="${id}"]`); if(!el) return null; const r=el.getBoundingClientRect(); return {x:r.left-cr.left+canvas.scrollLeft+r.width/2, y:r.top-cr.top+canvas.scrollTop+r.height/2};}
-  app.model.links.forEach(link=>{const a=center(link.from), b=center(link.to); if(!a||!b) return; const dx=Math.max(60, Math.abs(b.x-a.x)*.45); const d=`M ${a.x} ${a.y} C ${a.x+dx} ${a.y}, ${b.x-dx} ${b.y}, ${b.x} ${b.y}`;
-    const p=document.createElementNS('http://www.w3.org/2000/svg','path'); p.setAttribute('d',d); p.setAttribute('class','dyn linkLine '+(link.type||'')); svg.appendChild(p);
-    const tx=document.createElementNS('http://www.w3.org/2000/svg','text'); tx.setAttribute('x',(a.x+b.x)/2); tx.setAttribute('y',(a.y+b.y)/2-5); tx.setAttribute('class','dyn linkLabel'); tx.textContent=link.label||'link'; svg.appendChild(tx);
-  });
-}
-function handleModelNodeClick(id){
-  if(app.connectFrom && app.connectFrom!==id){
-    app.model.links.push({from:app.connectFrom, to:id, label:'cross-lane link', type:'normal'});
-    const a=app.model.nodes.find(n=>n.id===app.connectFrom), b=app.model.nodes.find(n=>n.id===id);
-    pushEvent('medium','Cross-swimlane object link created',a?.title||'Model Node',b?.title||'Model Node','Graph can connect objects in any swimlane.');
-    app.connectFrom=null;
-  }
-  app.selectedModelNodeId=id;
-  renderAll();
-}
-function startDrag(e,id){
-  const node=app.model.nodes.find(n=>n.id===id); app.selectedModelNodeId=id;
-  const canvas=$('#swimCanvas'); const cr=canvas.getBoundingClientRect(); const laneIndex=app.model.lanes.findIndex(l=>l.id===node.lane);
-  app.drag={id, offsetX:e.clientX-(cr.left+node.x-canvas.scrollLeft), offsetY:e.clientY-(cr.top+laneIndex*122+node.y-canvas.scrollTop)};
-  document.onmousemove=dragMove; document.onmouseup=endDrag;
-}
-function dragMove(e){
-  if(!app.drag) return; const canvas=$('#swimCanvas'); const cr=canvas.getBoundingClientRect(); const node=app.model.nodes.find(n=>n.id===app.drag.id);
-  let x=e.clientX-cr.left+canvas.scrollLeft-app.drag.offsetX; let yAbs=e.clientY-cr.top+canvas.scrollTop-app.drag.offsetY;
-  x=Math.max(170, Math.min(1120,x)); let laneIndex=Math.max(0, Math.min(app.model.lanes.length-1, Math.floor(yAbs/122))); node.lane=app.model.lanes[laneIndex].id; node.x=x; node.y=Math.max(8, Math.min(52, yAbs-laneIndex*122));
-  const el=canvas.querySelector(`[data-nodeid="${node.id}"]`); if(el){el.style.left=node.x+'px'; el.style.top=(laneIndex*122+node.y)+'px';}
-  drawLinks();
-}
-function endDrag(){ if(app.drag){pushEvent('low','Model node moved','Visual Model','Swimlane Editor','Object position/lane changed.','Logged');} app.drag=null; document.onmousemove=null; document.onmouseup=null; renderInspector(); renderBottom(); }
-function addModelNode(){
-  const lane=app.model.lanes[Math.min(1,app.model.lanes.length-1)].id; const id='node_'+Date.now();
-  app.model.nodes.push({id,lane,x:220+(app.model.nodes.length%4)*190,y:22,type:'process',title:'New model object',note:'Editable placeholder connected to '+selectedNode().label+'.',status:'Draft',valueImpact:'TBD'});
-  app.selectedModelNodeId=id; pushEvent('medium','New visual model node created','Model Tool','Selected Class',selectedNode().path.join(' → ')); renderAll();
-}
-function addLane(){ const name=prompt('New swimlane name:', 'Custom Swimlane / Role'); if(!name) return; app.model.lanes.push({id:'lane_'+Date.now(), title:name}); pushEvent('medium','New swimlane created: '+name,'Model Tool','Swimlane Editor','A new role/context lane was added.'); renderAll(); }
-function injectModelInterrupt(){
-  const id='interrupt_'+Date.now(); app.model.nodes.push({id,lane:'lane_offer',x:930,y:22,type:'interrupt',title:'Interrupt: new value signal',note:'A new event changes priority in time.',status:'Open',valueImpact:'High'});
-  app.model.links.push({from:id,to:app.selectedModelNodeId,label:'reprioritize',type:'interrupt'});
-  app.selectedModelNodeId=id; pushEvent('high','Interrupt injected into model','Economic Event Bus','Visual Model','Interrupt is a first-class value reprioritization event.'); renderAll();
-}
-function runScenario(){
-  app.simulationTick++; const demand=64+((app.simulationTick*11)%25), cash=48+((app.simulationTick*17)%35), sat=70+((app.simulationTick*7)%18), risk=42+((app.simulationTick*13)%40);
-  app.lastMetrics={demand,cash,sat,risk};
-  pushEvent(risk>65?'high':'medium','Scenario run completed','Simulation Scheduler','Model + Assessment',`Demand ${demand}%, cash ${cash}%, satisfaction ${sat}%, risk ${risk}%.`,'Logged');
-  pushEvidence('Scenario result '+app.simulationTick,'Simulation Output',`Demand ${demand}; cash ${cash}; satisfaction ${sat}; risk ${risk}.`); renderAll();
-}
-function recalcCredits(){
-  app.credits.forEach(c=>c.score=Math.min(96, Math.max(34, c.score + Math.round((Math.random()*16)-6))));
-  pushEvent('medium','Credit assessment recalculated','Assessment Engine','Selected Object','Scores changed based on evidence and risk assumptions.','Logged'); pushEvidence('Assessment recalculation','Credit Record','Evidence-backed credit values recalculated.'); renderAll();
+  renderWorkspaceTools('<button class="smallBtn primary">Add Model Node</button><button class="smallBtn">Connect Nodes</button><button class="smallBtn orange">Raise VRQ</button>');
+  const cards=[['Plan object','Define intended value activity before action.'],['Graph connection','Objects can connect across lanes, sectors, scopes, and evidence.'],['Handler path','Define what happens when a VRQ changes priority.']];
+  document.getElementById('workspace').innerHTML=`<div class="cards">${cards.map((c,i)=>`<div class="card ${app.selectedCenterId==='model_'+i?'selected':''}" data-model="model_${i}"><h3>${c[0]}</h3><p>${c[1]}</p><span class="tag">Model layer</span></div>`).join('')}</div><div class="sectionTitle">Model doctrine</div><div class="jsonBox">${esc(JSON.stringify({model_layer:"under every activity tool",connections:["swimlane object","tree node","evidence record","VRQ handler","simulation input","assessment credit"],rule:"Model plans the activity; simulation tests it; assessment validates it; comparator records the real-world choice and outcome."},null,2))}</div>`;
+  document.querySelectorAll('[data-model]').forEach(c=>c.onclick=()=>{app.selectedCenterId=c.dataset.model;app.selectedCenterType='model_card';render();});
 }
 function renderSimulate(){
-  const m=app.lastMetrics||{demand:68,cash:56,sat:74,risk:52};
-  $('#workspace').innerHTML=`
-    <div class="metricGrid">
-      ${metric('Demand signal',m.demand,'%','Buyer agent response')}
-      ${metric('Cash resilience',m.cash,'%','Finance/capital constraint')}
-      ${metric('Customer satisfaction',m.sat,'%','Outcome quality proxy')}
-      ${metric('Risk pressure',m.risk,'%','Interrupt likelihood')}
-    </div>
-    <div class="split2">
-      <div class="card"><h3>Scenario Setup</h3><div class="formGrid"><div class="formField"><label>Scenario</label><select><option>Rent vs buy decision</option><option>Service business launch</option><option>Supplier delay</option></select></div><div class="formField"><label>Time horizon</label><select><option>30 days</option><option>90 days</option><option>12 months</option></select></div><div class="formField"><label>Price sensitivity</label><input value="Medium" /></div><div class="formField"><label>Evidence confidence</label><input value="Partial" /></div></div><p style="margin-top:10px">Simulation tests the model; it is not just accounting. It tests agents, assumptions, value delivery, delays, price sensitivity, credit impact, and evidence gaps.</p></div>
-      <div class="card"><h3>Agent Layer</h3><table class="gridTable"><tbody>
-        ${agentRow('Buyer Agent','Ranks need, price, risk, quality, time')}
-        ${agentRow('Seller / Business Agent','Offers value, sets price, absorbs costs')}
-        ${agentRow('Supplier Agent','Creates delay/capacity/material events')}
-        ${agentRow('Regulator Agent','Adds rules, permits, rights, obligations')}
-        ${agentRow('Market / Environment Agent','Injects context changes and shocks')}
-      </tbody></table></div>
-    </div>
-    <div class="sectionTitle">Simulation Feedback Loop</div>
-    <table class="gridTable"><thead><tr><th>Output</th><th>Meaning</th><th>Feeds</th><th>Status</th></tr></thead><tbody>
-      <tr><td>Demand</td><td>Buyer interest under current value assumptions</td><td>Model, Compare</td><td>Active</td></tr>
-      <tr><td>Capacity</td><td>Ability to deliver without waste or bottleneck</td><td>Business Model</td><td>Watch</td></tr>
-      <tr><td>Credit impact</td><td>Evidence-backed confidence improvement or drop</td><td>Assessment</td><td>Partial</td></tr>
-      <tr><td>Interrupt risk</td><td>Likelihood that value priorities change in time</td><td>Event Bus</td><td>Open</td></tr>
-    </tbody></table>`;
+  renderWorkspaceTools('<button class="smallBtn primary">Run Scenario</button><button class="smallBtn">Save Scenario</button><button class="smallBtn orange">Raise VRQ</button>');
+  document.getElementById('workspace').innerHTML=`<div class="metricGrid"><div class="metric"><div class="label">Demand</div><div class="value">74%</div><div class="progress"><div class="fill" style="width:74%"></div></div></div><div class="metric"><div class="label">Cash pressure</div><div class="value">42%</div><div class="progress"><div class="fill" style="width:42%"></div></div></div><div class="metric"><div class="label">Delivery risk</div><div class="value">31%</div><div class="progress"><div class="fill" style="width:31%"></div></div></div><div class="metric"><div class="label">Evidence confidence</div><div class="value">63%</div><div class="progress"><div class="fill" style="width:63%"></div></div></div></div><div class="split2"><div class="card" data-sim="agents"><h3>Agents</h3><p>Buyer, seller, supplier, staff, competitor, regulator, market/environment.</p></div><div class="card" data-sim="feedback"><h3>Feedback loop</h3><p>Simulation outputs become evidence, gaps, risk updates, and VRQs.</p></div></div>`;
+  document.querySelectorAll('[data-sim]').forEach(c=>c.onclick=()=>{app.selectedCenterId=c.dataset.sim;app.selectedCenterType='simulation_card';render();});
 }
-function metric(label,val,suffix,desc){return `<div class="metric"><div class="label">${label}</div><div class="value">${val}${suffix}</div><div class="progress"><div class="fill" style="width:${val}%"></div></div><div class="mini" style="margin-top:7px">${desc}</div></div>`}
-function agentRow(name,desc){return `<tr><td>${name}</td><td colspan="3">${desc}</td></tr>`}
 function renderAssess(){
-  const avg=Math.round(app.credits.reduce((a,c)=>a+c.score,0)/app.credits.length);
-  $('#workspace').innerHTML=`
-    <div class="metricGrid">
-      ${metric('Verified value',avg,'%','Evidence-backed credit')}
-      ${metric('Capability confidence',Math.min(96,avg+7),'%','Can the object deliver?')}
-      ${metric('Risk reduction',Math.max(20,avg-12),'%','Known risk controls')}
-      ${metric('Evidence completeness',Math.min(96,avg+3),'%','Proof trail strength')}
-    </div>
-    <div class="split2">
-      <div class="card"><h3>Assessment / Credit Scorecard</h3>${app.credits.map(c=>scoreRow(c)).join('')}</div>
-      <div class="card"><h3>Assessment Meaning</h3><p><strong>Credit = verified value / verified capability / verified risk reduction.</strong></p><p style="margin-top:10px">Assessment validates the model, improves it, and records confidence. It can assess a business, a product offer, a personal purchase plan, or an economy-context model.</p><div class="sectionTitle">Current Decision</div><table class="gridTable"><tbody><tr><td>Viability</td><td>Improvable</td></tr><tr><td>Fundability</td><td>Conditional</td></tr><tr><td>Evidence state</td><td>Partial but growing</td></tr><tr><td>Next action</td><td>Request missing proof and re-run simulation</td></tr></tbody></table></div>
-    </div>`;
+  renderWorkspaceTools('<button class="smallBtn primary">Recalculate</button><button class="smallBtn">Add Evidence</button><button class="smallBtn orange">Flag VRQ</button>');
+  const rows=[['Business concept','Clear offer/problem/revenue model',82,'good'],['Customer evidence','Proof that demand is real',61,'warn'],['Operations capability','Can the plan be delivered?',70,'warn'],['Financial resilience','Cash, credit, margin, risk',55,'warn'],['Legal / compliance','Rules, permits, insurance, records',44,'bad']];
+  document.getElementById('workspace').innerHTML=`<div class="card"><h3>Credit = verified value / verified capability / verified risk reduction</h3><p>Assessment validates and improves the model. Missing evidence can raise a VRQ.</p></div><div class="sectionTitle">Assessment scorecard</div>${rows.map((r,i)=>`<div class="scoreRow" data-assess="assess_${i}"><div><div class="scoreName">${r[0]}</div><div class="scoreDesc">${r[1]}</div></div><div class="scoreVal">${r[2]}</div><div class="credit ${r[3]}">${r[3]}</div></div>`).join('')}`;
+  document.querySelectorAll('[data-assess]').forEach(c=>c.onclick=()=>{app.selectedCenterId=c.dataset.assess;app.selectedCenterType='assessment_row';render();});
 }
-function scoreRow(c){let cls=c.score>=75?'good':c.score>=60?'warn':'bad'; let label=c.score>=75?'Good':c.score>=60?'Partial':'Gap'; return `<div class="scoreRow"><div><div class="scoreName">${escapeHtml(c.name)}</div><div class="scoreDesc">${escapeHtml(c.desc)}</div></div><div class="scoreVal">${c.score}</div><div class="credit ${cls}">${label}</div></div>`}
 function renderCompare(){
-  const selected=selectedOffer(); app.selectedOfferId=selected.id;
-  $('#workspace').innerHTML=`
-    <div class="card" style="margin-bottom:10px"><h3>Comparator / Transaction View</h3><p>Comparator operates over the selected class from the same unified tree. The grid below is not a separate Comparator taxonomy; it is the selected class shown as comparable offers with transaction state, evidence, risk, and value.</p></div>
-    <table class="gridTable"><thead><tr><th>Offer / Object</th><th>Price</th><th>Quality</th><th>Risk</th><th>Availability</th><th>Evidence</th><th>Transaction</th><th>Value</th></tr></thead><tbody>
-      ${app.offers.map(o=>`<tr class="dataRow ${o.id===selected.id?'selected':''}" data-offer="${o.id}"><td>${escapeHtml(o.name)}</td><td>$${o.price}</td><td>${o.quality}</td><td>${o.risk}</td><td>${o.availability}</td><td>${o.evidence}</td><td>${o.transaction}</td><td>${o.value}</td></tr>`).join('')}
-    </tbody></table>
-    <div class="split2">
-      <div class="card"><h3>Selected Offer</h3><table class="gridTable"><tbody><tr><td>Name</td><td>${escapeHtml(selected.name)}</td></tr><tr><td>Price</td><td>$${selected.price}</td></tr><tr><td>Evidence</td><td>${escapeHtml(selected.evidence)}</td></tr><tr><td>Transaction State</td><td>${escapeHtml(selected.transaction)}</td></tr></tbody></table></div>
-      <div class="card"><h3>Recovered Transaction Chain</h3><p>Want / Need → Plan → Seek → Find → Evaluate → Contract → Payment / Receive → Records → Ownership → Ongoing Evaluation</p><p style="margin-top:10px">Each step can send messages, produce evidence, trigger interrupts, and feed back into the model.</p></div>
-    </div>`;
-  $$('.dataRow').forEach(r=>r.onclick=()=>{app.selectedOfferId=r.dataset.offer; pushEvent('low','Offer selected in Comparator','Offer Grid','Inspector','Selected offer moved into inspector.','Logged'); renderAll();});
+  renderWorkspaceTools('<button class="smallBtn primary">Make Bid</button><button class="smallBtn">Shortlist</button><button class="smallBtn green">Accept Offer</button><button class="smallBtn orange">Raise VRQ</button>');
+  const rows=[['APT-102','2BR apartment','Red Deer','1450','Good','Available now'],['APT-118','Basement suite','Springbrook','1175','Fair','Utilities included'],['OFF-204','Service package','Online','299','High','Evidence attached']];
+  document.getElementById('workspace').innerHTML=`<table class="gridTable"><thead><tr><th>ID</th><th>Offer</th><th>Location</th><th>Price</th><th>Quality</th><th>Status</th></tr></thead><tbody>${rows.map(r=>`<tr class="dataRow ${app.selectedCenterId===r[0]?'selected':''}" data-offer="${r[0]}">${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table><div class="mini">Comparator is operating over the selected tree/class context, not a separate artificial Comparator tree.</div>`;
+  document.querySelectorAll('[data-offer]').forEach(r=>r.onclick=()=>{app.selectedCenterId=r.dataset.offer;app.selectedCenterType='offer_row';render();});
 }
 function renderObjects(){
-  const def=classDefinitionJson();
-  $('#workspace').innerHTML=`
-    <div class="split2">
-      <div class="card"><h3>Object / Definition Editor</h3><p>This prototype keeps class definitions, field templates, presentation rules, simulation inputs, assessment factors, transaction fields, and event hooks together.</p><div class="sectionTitle">Selected Class Template</div><div class="formGrid"><div class="formField"><label>Node ID</label><input value="${escapeHtml(def.node_id)}" /></div><div class="formField"><label>Class Type</label><input value="${escapeHtml(def.class_type)}" /></div><div class="formField"><label>Presentation</label><input value="${escapeHtml(def.presentation_type)}" /></div><div class="formField"><label>Default Scope</label><input value="${escapeHtml(def.default_scope)}" /></div><div class="formField" style="grid-column:1/-1"><label>Description</label><textarea>${escapeHtml(def.description)}</textarea></div></div></div>
-      <div class="card"><h3>Definition JSON Preview</h3><div class="jsonBox">${escapeHtml(JSON.stringify(def,null,2))}</div></div>
-    </div>
-    <div class="sectionTitle">Definition Components</div>
-    <div class="cards">
-      <div class="card"><h3>Fields</h3><p>Price, quality, availability, risk, evidence, owner, transaction state, scope, jurisdiction, source.</p></div>
-      <div class="card"><h3>Simulation Inputs</h3><p>Demand, capacity, delay, cash, price sensitivity, staff/supplier/regulator events.</p></div>
-      <div class="card"><h3>Event Hooks</h3><p>onSelect, onOfferChanged, onEvidenceAdded, onInterrupt, onTransactionAccepted.</p></div>
-    </div>`;
+  renderWorkspaceTools('<button class="smallBtn primary">New Definition</button><button class="smallBtn">Edit Template</button><button class="smallBtn">Export JSON</button>');
+  const selectedNode=app.selectedTreeId?findNode(app.selectedTreeId):null;
+  const def={sector:app.activeSector,scope:app.activeScope,overlay:app.activeOverlay,selected_tree_node:selectedNode?selectedNode.label:null,definition_layer:["node_id","parent_id","label","class_type","presentation_type","template_id","allowed_child_classes","fields","relationships","evidence_rules"]};
+  document.getElementById('workspace').innerHTML=`<div class="card"><h3>Objects / Definitions</h3><p>Every tree node and swimlane object eventually needs a definition, fields, comparable factors, simulation inputs, transaction states, and evidence rules.</p></div><div class="sectionTitle">Definition preview</div><div class="jsonBox">${esc(JSON.stringify(def,null,2))}</div>`;
 }
-function classDefinitionJson(){const n=selectedNode(); return {
-  node_id:n.id, parent_path:n.path.slice(0,-1), label:n.label, class_type:n.type, sector_viewpoint:app.activeSector, default_scope:app.activeScope, overlay:app.activeOverlay, presentation_type: app.activeTool==='Compare / Transact'?'typed_datagrid': n.type==='domain'?'dashboard':'context_workspace',
-  description:'Unified class definition used by Model, Simulate, Assess, Compare/Transact, and Objects/Definitions.',
-  standard_fields:['name','description','price_or_cost','quality','availability','risk','evidence_state','transaction_state','scope','owner','source'],
-  comparable_fields:['price_or_cost','quality','availability','risk','distance_or_time','evidence_state'],
-  simulation_inputs:['demand','capacity','delay_probability','price_sensitivity','cash_constraint','interrupt_rate'],
-  scoring_factors:['verified_value','capability_confidence','risk_reduction','evidence_completeness'],
-  transaction_fields:['want_need','plan','seek','evaluate','contract','payment_receive','records','ownership','ongoing_evaluation'],
-  event_hooks:['on_message','on_interrupt','on_evidence_added','on_assessment_changed','on_transaction_state_changed']
-}}
-function exportJson(){return {version:'2.0-prototype', doctrine:'Hyper-contextual Economy', matrix:{sector:app.activeSector, tool:app.activeTool, scope:app.activeScope, overlay:app.activeOverlay, selected_class:selectedNode().path}, selected_class_definition:classDefinitionJson(), model:app.model, events:app.events, evidence:app.evidence};}
+function inspectorContext(){
+  if(app.selectedCenterId){
+    if(app.selectedCenterId==='home_wheel')return {source:'Center selection',level:1,title:'Five-sector economy wheel',desc:'The selected center object is the Home orientation wheel. It represents the stable top-level economy sectors used by the Sector row and Home TreeView.',fields:{Object:'home_five_sector_wheel',Sector:'Home',Tool:app.activeTool,Meaning:'Top-level orientation image',Priority:'Highest context because it is selected in the center panel'}};
+    const obj=findCenterObject(app.selectedCenterId); if(obj)return {source:'Center selection',level:1,title:obj.name,desc:obj.note,fields:{Object_ID:obj.id,Type:obj.type,Lane:obj.lane,Sector:app.activeSector,Scope:app.activeScope,Overlay:app.activeOverlay,ContextRule:'Center object overrides TreeView'}};
+    return {source:'Center selection',level:1,title:'Selected workspace object',desc:'A center-panel item is selected. This is the most specific inspector context.',fields:{Object_ID:app.selectedCenterId,Object_Type:app.selectedCenterType,Sector:app.activeSector,Tool:app.activeTool}};
+  }
+  if(app.selectedTreeId){const n=findNode(app.selectedTreeId);return {source:'TreeView node',level:2,title:n?n.label:'Tree node',desc:'No center object is selected, so the inspector uses the selected TreeView node as context.',fields:{Node_ID:app.selectedTreeId,Node_Type:n?n.type:'node',Sector:app.activeSector,Tool:app.activeTool,Scope:app.activeScope,Overlay:app.activeOverlay,ContextRule:'Tree node used because center selection is empty'}};}
+  if(app.activeSector!=='Home')return {source:'Sector / Scope / Overlay',level:3,title:app.activeSector,desc:sectorMeta[app.activeSector].desc,fields:{Sector:app.activeSector,Activity_Tool:app.activeTool,Primary_Scope:app.activeScope,Cross_Sector_Overlay:app.activeOverlay,ContextRule:'Sector context used because no center object or tree node is selected'}};
+  return {source:'Startup / Sector buttons',level:4,title:'Sector button orientation',desc:'Nothing is selected yet. The inspector explains the top-level Sector row. Select a sector, TreeView node, or center-panel object to move down the context hierarchy.',fields:{Leftmost_Button:'Home',Sector_Buttons:'Human / Consumer | Market / Exchange | Business / Commercial | Finance / Capital | Public / Government',Purpose:'Choose the viewpoint before choosing the activity tool',Startup_Context:'Top-level explanation'}};
+}
 function renderInspector(){
-  const n=selectedNode(); let title=n.label, desc=`${app.activeTool} view of ${n.path.join(' → ')}.`; let fields={Sector:app.activeSector,Tool:app.activeTool,Scope:app.activeScope,Overlay:app.activeOverlay,ClassType:n.type,Path:n.path.join(' > ')};
-  if(app.activeTool==='Model'){const mn=selectedModelNode(); title=mn.title; desc=mn.note; fields={NodeID:mn.id,Type:mn.type,Lane:(app.model.lanes.find(l=>l.id===mn.lane)||{}).title,Status:mn.status,ValueImpact:mn.valueImpact,ConnectedLinks:app.model.links.filter(l=>l.from===mn.id||l.to===mn.id).length,Class:n.path.join(' > ')};}
-  if(app.activeTool==='Compare / Transact'){const o=selectedOffer(); title=o.name; desc='Comparable offer row with transaction state, evidence, risk, and value score.'; fields={OfferID:o.id,Price:'$'+o.price,Quality:o.quality,Risk:o.risk,Availability:o.availability,Evidence:o.evidence,Transaction:o.transaction,ValueScore:o.value};}
-  if(app.activeTool==='Assess'){fields={...fields, CreditDefinition:'Verified value / capability / risk reduction', AverageCredit:Math.round(app.credits.reduce((a,c)=>a+c.score,0)/app.credits.length), EvidenceRecords:app.evidence.length, OpenEvents:app.events.filter(e=>e.status==='Open').length};}
-  if(app.activeTool==='Simulate'){fields={...fields, ScenarioRuns:app.simulationTick, Agents:'Buyer, Seller, Supplier, Staff, Regulator, Market', LastOutput:app.lastMetrics?JSON.stringify(app.lastMetrics):'Not run'};}
-  $('#inspectorDesc').innerHTML=`<h3>${escapeHtml(title)}</h3><p>${escapeHtml(desc)}</p>`;
-  $('#fieldGrid').innerHTML=Object.entries(fields).map(([k,v])=>`<div class="field"><div class="k">${escapeHtml(k)}</div><div class="v">${escapeHtml(v)}</div></div>`).join('');
+  const ctx=inspectorContext(); document.getElementById('contextSourceBadge').textContent=ctx.source;
+  const steps=['Center selection','TreeView node','Sector / Scope / Overlay','Startup / Sector buttons'];
+  document.getElementById('hierarchyBox').innerHTML=`<h3>Inspector Context Hierarchy</h3><div class="hierarchySteps">${steps.map((s,i)=>`<div class="step ${ctx.level===i+1?'active':''}">${i+1}. ${s}</div>`).join('')}</div>`;
+  document.getElementById('inspectorDesc').innerHTML=`<h3>${esc(ctx.title)}</h3><p>${esc(ctx.desc)}</p>`;
+  document.getElementById('fieldGrid').innerHTML=Object.entries(ctx.fields).map(([k,v])=>`<div class="field"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join('');
 }
 function renderBottom(){
-  const n=selectedNode();
-  $('#summaryList').innerHTML=`
-    <div class="cards" style="grid-template-columns:repeat(3,1fr)">
-      <div class="card"><h3>Matrix Position</h3><div class="big">${app.activeTool.split(' ')[0]}</div><p>${escapeHtml(app.activeSector)} × ${escapeHtml(app.activeScope)}</p></div>
-      <div class="card"><h3>Selected Class</h3><div class="big">${escapeHtml(n.type)}</div><p>${escapeHtml(n.path.join(' → '))}</p></div>
-      <div class="card"><h3>Open Events</h3><div class="big">${app.events.filter(e=>e.status==='Open').length}</div><p>Value-changing messages needing attention</p></div>
-    </div>`;
-  $('#eventQueue').innerHTML=app.events.map(e=>`<div class="eventRow"><div class="priority ${e.priority}">${e.priority.toUpperCase()}</div><div><div class="eventTitle">${escapeHtml(e.title)}</div><div class="eventMeta">${escapeHtml(e.source)} → ${escapeHtml(e.target)}<br>${escapeHtml(e.scope)} · ${escapeHtml(e.note)}</div></div><div class="status">${escapeHtml(e.status)}</div></div>`).join('');
-  $('#evidenceList').innerHTML=app.evidence.map(e=>`<div class="eventRow"><div class="priority low">${escapeHtml(e.type.split(' ')[0]).toUpperCase()}</div><div><div class="eventTitle">${escapeHtml(e.title)}</div><div class="eventMeta">${escapeHtml(e.note)}</div></div><div class="status">${escapeHtml(e.status)}</div></div>`).join('');
+  const ctx=inspectorContext();
+  document.getElementById('summaryList').innerHTML=`<div class="cards"><div class="card"><h3>Current source</h3><p>${esc(ctx.source)}</p><div class="big">${ctx.level}</div><span class="tag">Hierarchy level</span></div><div class="card"><h3>Active sector</h3><p>${esc(app.activeSector)}</p><span class="tag">${esc(app.activeScope)}</span></div><div class="card"><h3>Active tool</h3><p>${esc(app.activeTool)}</p><span class="tag">${esc(app.activeOverlay)}</span></div></div>`;
+  document.getElementById('eventQueue').innerHTML=events.map(e=>`<div class="eventRow"><div class="priority ${e.priority}">${e.priority.toUpperCase()}</div><div><div class="eventTitle">${esc(e.title)}</div><div class="eventMeta">${esc(e.meta)}</div></div><div class="status">${esc(e.status)}</div></div>`).join('');
+  document.getElementById('evidenceList').innerHTML=evidence.map(e=>`<div class="eventRow"><div class="priority low">REC</div><div><div class="eventTitle">${esc(e.title)}</div><div class="eventMeta">${esc(e.meta)}</div></div><div class="status">Saved</div></div>`).join('');
 }
-function showBidDialog(){const o=selectedOffer(); showDialog('Make / Revise Bid', `<div class="formGrid"><div class="formField"><label>Offer</label><input value="${escapeHtml(o.name)}" /></div><div class="formField"><label>Current price</label><input value="$${o.price}" /></div><div class="formField"><label>Bid amount</label><input value="$${Math.round(o.price*.95)}" /></div><div class="formField"><label>Conditions</label><input value="Subject to viewing and evidence review" /></div><div class="formField" style="grid-column:1/-1"><label>Message</label><textarea>Please consider this bid based on current evidence, timing, and risk.</textarea></div></div>`, `<button class="smallBtn" onclick="closeDialog()">Cancel</button><button class="smallBtn primary" onclick="acceptBid()">Add Bid Event</button>`);}
-function acceptBid(){const o=selectedOffer(); o.transaction='Bid / Revise'; pushEvent('medium','Bid event added: '+o.name,'Comparator','Transaction Dialog','Bid/revision entered and attached to offer record.'); pushEvidence('Bid record: '+o.name,'Transaction Evidence','Bid terms captured in prototype transaction chain.'); closeDialog(); renderAll();}
-function showJsonDialog(title,obj,button){showDialog(title,`<div class="jsonBox">${escapeHtml(JSON.stringify(obj,null,2))}</div>`,`<button class="smallBtn primary" onclick="closeDialog()">${button||'Close'}</button>`)}
-function showDialog(title,body,foot){$('#dialogTitle').textContent=title; $('#dialogBody').innerHTML=body; $('#dialogFoot').innerHTML=foot; $('#dialogMask').style.display='flex';}
-function closeDialog(){$('#dialogMask').style.display='none';}
-window.closeDialog=closeDialog; window.acceptBid=acceptBid;
-$('#closeDialog').onclick=closeDialog; $('#dialogMask').onclick=e=>{if(e.target.id==='dialogMask') closeDialog();};
-function attachInspectorActions(){
-  $$('.act').forEach(b=>b.onclick=()=>{const a=b.dataset.action; if(a==='simulate') setTool('Simulate'); else if(a==='assess') setTool('Assess'); else if(a==='document'){pushEvidence('Document generated from selected context','Document Stub','A future version will export a PDF/markdown report for this object.'); renderAll();} else if(a==='save'){localStorage.setItem('economyMasterStateV2', JSON.stringify({model:app.model,events:app.events,evidence:app.evidence})); $('#saveStatus').textContent='Saved'; pushEvent('low','Workspace saved locally','Inspector','Local State','Prototype state saved to browser localStorage.','Logged'); renderAll();} else {pushEvent('low','Inspector action: '+a.toUpperCase(),'Inspector','Selected Object','Prototype action placeholder invoked.','Logged'); renderAll();}});
-  $('#moreBtn').onclick=()=>showJsonDialog('Selected Context JSON', exportJson(), 'Close'); $('#jsonBtn').onclick=()=>showJsonDialog('Selected Class Definition JSON', classDefinitionJson(), 'Close');
-}
-function loadLocal(){try{const saved=localStorage.getItem('economyMasterModelV2'); if(saved) app.model=JSON.parse(saved);}catch(e){}}
-function renderAll(){ renderTopBars(); renderTree(); renderScopeOverlay(); renderContext(); renderWorkspaceTools(); renderWorkspace(); renderInspector(); renderBottom(); attachInspectorActions(); }
-loadLocal(); renderAll();
+function showDialog(title,body){document.getElementById('dialogTitle').textContent=title;document.getElementById('dialogBody').innerHTML=`<p>${esc(body)}</p>`;document.getElementById('dialogFoot').innerHTML='<button class="smallBtn primary" id="okDialog">OK</button>';document.getElementById('dialogMask').style.display='flex';document.getElementById('okDialog').onclick=closeDialog;}
+function closeDialog(){document.getElementById('dialogMask').style.display='none';}
+document.getElementById('closeDialog').onclick=closeDialog;document.getElementById('dialogMask').onclick=e=>{if(e.target.id==='dialogMask')closeDialog();};
+document.querySelectorAll('.act').forEach(b=>b.onclick=()=>showDialog(b.textContent,`${b.textContent} action will operate on the current inspector context: ${inspectorContext().title}`));
+document.getElementById('moreBtn').onclick=()=>showDialog('Custom Editor',`Open a specialized editor for: ${inspectorContext().title}`);
+document.getElementById('jsonBtn').onclick=()=>showDialog('Current Context JSON',`\n${JSON.stringify(inspectorContext(),null,2)}`);
+render();
 </script>
 </body>
 </html>

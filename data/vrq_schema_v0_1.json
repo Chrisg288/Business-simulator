@@ -1,0 +1,7 @@
+{
+  "version": "0.1",
+  "term": "VRQ",
+  "expansion": "Value Reprioritization Request",
+  "definition": "A changed condition, signal, event, opportunity, risk, or demand requesting that the system reconsider what matters most right now.",
+  "fields": ["vrq_id", "source_object", "target_object", "sector", "scope", "overlay", "priority", "handler", "evidence_link", "status"]
+}

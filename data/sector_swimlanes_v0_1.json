@@ -1,0 +1,10 @@
+{
+  "version": "0.1",
+  "sectors": {
+    "Human / Consumer": ["Need / Life Context", "Search / Compare", "Decision / Transaction", "Ownership / Use", "Evidence / Improvement"],
+    "Market / Exchange": ["Demand Signals", "Offer Supply", "Price Discovery", "Contract / Settlement", "Feedback / Reputation"],
+    "Business / Commercial": ["Customer / Problem", "Offer / Revenue", "Operations / Delivery", "Suppliers / Resources", "Finance / Evidence"],
+    "Finance / Capital": ["Capital Source", "Qualification / Credit", "Risk / Terms", "Funding / Payment", "Return / Repayment"],
+    "Public / Government": ["Public Need / Mandate", "Policy / Law / Program", "Service Delivery", "Tax / Budget / Funding", "Accountability / Records"]
+  }
+}
