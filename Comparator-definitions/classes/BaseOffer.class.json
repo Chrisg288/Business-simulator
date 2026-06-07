@@ -1,0 +1,88 @@
+{
+  "class_id": "BaseOffer",
+  "label": "Base Offer",
+  "inherits_from": null,
+  "purpose": "Common fields for any comparable offer/listing row.",
+  "standard_fields": [
+    {
+      "name": "offer_id",
+      "type": "text",
+      "required": true,
+      "grid": true
+    },
+    {
+      "name": "title",
+      "type": "text",
+      "required": true,
+      "grid": true
+    },
+    {
+      "name": "provider",
+      "type": "entity_ref",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "price",
+      "type": "currency",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "availability",
+      "type": "enum",
+      "values": [
+        "available",
+        "limited",
+        "watch",
+        "expired",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "location",
+      "type": "text",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "evidence_status",
+      "type": "enum",
+      "values": [
+        "none",
+        "claimed",
+        "linked",
+        "verified"
+      ],
+      "grid": true
+    },
+    {
+      "name": "risk",
+      "type": "enum",
+      "values": [
+        "low",
+        "medium",
+        "high",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "cvu_score",
+      "type": "number",
+      "required": false,
+      "grid": true
+    }
+  ],
+  "comparison_factors": [
+    "need_fit",
+    "availability",
+    "comparative_cost",
+    "comparative_quality",
+    "time_value",
+    "risk_value",
+    "system_value",
+    "evidence_strength"
+  ]
+}

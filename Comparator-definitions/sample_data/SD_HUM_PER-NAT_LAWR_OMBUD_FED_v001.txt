@@ -1,0 +1,13 @@
+# sample_data_code: SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001
+# label: Personal/National Law-Rights Federal Ombudsman Complaint Paths
+# class_id: OmbudsmanComplaintPath
+# view: HUM
+# primary_scope: PER
+# applicable_scope: NAT
+# domain: LAWR
+# class: OMBUD
+# leaf: FED
+offer_id	title	provider	price	availability	location	evidence_status	risk	cvu_score	jurisdiction	complaint_area	eligibility	requires_prior_steps	expected_time_days	contact_method
+OMB-001	Federal Service Complaint Path	Federal Agency Example	0	available	Canada	claimed	medium	72	national	federal service delay	must first contact department	True	60	web form / phone
+OMB-002	Banking Complaint Escalation Path	Financial Complaint Body Example	0	available	Canada	claimed	medium	74	national	banking / credit / service	must complete bank internal complaint process	True	90	online complaint
+OMB-003	Telecom Complaint Path	Telecom Complaint Body Example	0	available	Canada	claimed	low	70	national	phone / internet billing or service	customer complaint with provider first	True	45	online complaint

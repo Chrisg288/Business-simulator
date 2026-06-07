@@ -1,0 +1,5 @@
+code	label	class_id	view	primary_scope	applicable_scope	domain	class	leaf	json_file	text_file
+SD_HUM_PER-MUN_SHEL_RENT_APT_v001	Personal/Municipal Shelter Rent Apartment Listings	ApartmentRentalOffer	HUM	PER	MUN	SHEL	RENT	APT	sample_data/SD_HUM_PER-MUN_SHEL_RENT_APT_v001.json	sample_data/SD_HUM_PER-MUN_SHEL_RENT_APT_v001.txt
+SD_HUM_PER-REG_TRAN_VEH_PASS_v001	Personal/Regional Transportation Passenger Vehicle Listings	PassengerVehicleOffer	HUM	PER	REG	TRAN	VEH	PASS	sample_data/SD_HUM_PER-REG_TRAN_VEH_PASS_v001.json	sample_data/SD_HUM_PER-REG_TRAN_VEH_PASS_v001.txt
+SD_BUS_ORG-MUN_SECU_SERV_CAMI_v001	Business/Municipal Security Camera Installer Services	SecurityCameraInstallerService	BUS	ORG	MUN	SECU	SERV	CAMI	sample_data/SD_BUS_ORG-MUN_SECU_SERV_CAMI_v001.json	sample_data/SD_BUS_ORG-MUN_SECU_SERV_CAMI_v001.txt
+SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001	Personal/National Law-Rights Federal Ombudsman Complaint Paths	OmbudsmanComplaintPath	HUM	PER	NAT	LAWR	OMBUD	FED	sample_data/SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001.json	sample_data/SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001.txt

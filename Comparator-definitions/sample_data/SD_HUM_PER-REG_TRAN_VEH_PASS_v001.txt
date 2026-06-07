@@ -1,0 +1,14 @@
+# sample_data_code: SD_HUM_PER-REG_TRAN_VEH_PASS_v001
+# label: Personal/Regional Transportation Passenger Vehicle Listings
+# class_id: PassengerVehicleOffer
+# view: HUM
+# primary_scope: PER
+# applicable_scope: REG
+# domain: TRAN
+# class: VEH
+# leaf: PASS
+offer_id	title	provider	price	availability	location	evidence_status	risk	cvu_score	year	make	model	odometer_km	body_style	fuel_type	inspection_status	repair_estimate
+VEH-001	2007 Dodge Grand Caravan	Private Seller	3200	available	Red Deer Region	claimed	medium	73	2007	Dodge	Grand Caravan	248000	van	gas	none	1200
+VEH-002	2012 Toyota Sienna	Dealer Example	9600	available	Calgary Region	linked	low	80	2012	Toyota	Sienna	198000	van	gas	recent	500
+VEH-003	2010 Honda Odyssey	Private Seller	7200	watch	Edmonton Region	claimed	medium	75	2010	Honda	Odyssey	220000	van	gas	claimed	900
+VEH-004	2015 Ford Transit Connect	Dealer Example	14500	limited	Central Alberta	linked	medium	77	2015	Ford	Transit Connect	175000	van	gas	recent	750

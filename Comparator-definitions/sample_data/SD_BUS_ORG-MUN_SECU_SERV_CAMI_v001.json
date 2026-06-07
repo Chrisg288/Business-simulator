@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "sample_data_code": "SD_BUS_ORG-MUN_SECU_SERV_CAMI_v001",
+    "label": "Business/Municipal Security Camera Installer Services",
+    "class_id": "SecurityCameraInstallerService",
+    "view": "BUS",
+    "primary_scope": "ORG",
+    "applicable_scope": "MUN",
+    "domain": "SECU",
+    "class": "SERV",
+    "leaf": "CAMI",
+    "version": "v001",
+    "note": "Fictional sample data for prototype grids. Replace with server-side database records in real operation."
+  },
+  "rows": [
+    {
+      "offer_id": "SEC-001",
+      "title": "Small Business Camera Install Package",
+      "provider": "Example Security Installers",
+      "price": 1800,
+      "availability": "available",
+      "location": "Red Deer",
+      "evidence_status": "claimed",
+      "risk": "low",
+      "cvu_score": 82,
+      "service_area": "Red Deer / Central Alberta",
+      "install_type": "commercial",
+      "licensed": true,
+      "insurance_confirmed": true,
+      "warranty_months": 24,
+      "estimated_response_days": 5
+    },
+    {
+      "offer_id": "SEC-002",
+      "title": "Farmyard Camera System",
+      "provider": "Sample Rural Tech",
+      "price": 2400,
+      "availability": "available",
+      "location": "Central Alberta",
+      "evidence_status": "linked",
+      "risk": "medium",
+      "cvu_score": 79,
+      "service_area": "Rural Central Alberta",
+      "install_type": "farm",
+      "licensed": true,
+      "insurance_confirmed": false,
+      "warranty_months": 12,
+      "estimated_response_days": 10
+    },
+    {
+      "offer_id": "SEC-003",
+      "title": "Residential Doorbell + Perimeter Cameras",
+      "provider": "Example Home Security",
+      "price": 950,
+      "availability": "limited",
+      "location": "Red Deer",
+      "evidence_status": "claimed",
+      "risk": "low",
+      "cvu_score": 76,
+      "service_area": "Red Deer",
+      "install_type": "residential",
+      "licensed": false,
+      "insurance_confirmed": true,
+      "warranty_months": 12,
+      "estimated_response_days": 3
+    }
+  ]
+}

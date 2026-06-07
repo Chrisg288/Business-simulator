@@ -1,0 +1,77 @@
+{
+  "class_id": "PassengerVehicleOffer",
+  "label": "Passenger Vehicle Offer",
+  "inherits_from": "BaseOffer",
+  "sector_view": "HUM",
+  "primary_scope": "PER",
+  "applicable_scope": "REG",
+  "domain": "TRAN",
+  "class": "VEH",
+  "leaf": "PASS",
+  "presentation_type": "datagrid",
+  "additional_fields": [
+    {
+      "name": "year",
+      "type": "integer",
+      "grid": true
+    },
+    {
+      "name": "make",
+      "type": "text",
+      "grid": true
+    },
+    {
+      "name": "model",
+      "type": "text",
+      "grid": true
+    },
+    {
+      "name": "odometer_km",
+      "type": "number",
+      "unit": "km",
+      "grid": true
+    },
+    {
+      "name": "body_style",
+      "type": "enum",
+      "values": [
+        "car",
+        "van",
+        "truck",
+        "suv",
+        "wagon",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "fuel_type",
+      "type": "enum",
+      "values": [
+        "gas",
+        "diesel",
+        "hybrid",
+        "electric",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "inspection_status",
+      "type": "enum",
+      "values": [
+        "none",
+        "claimed",
+        "recent",
+        "mechanic_verified"
+      ],
+      "grid": true
+    },
+    {
+      "name": "repair_estimate",
+      "type": "currency",
+      "unit": "CAD",
+      "grid": false
+    }
+  ]
+}

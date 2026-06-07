@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "sample_data_code": "SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001",
+    "label": "Personal/National Law-Rights Federal Ombudsman Complaint Paths",
+    "class_id": "OmbudsmanComplaintPath",
+    "view": "HUM",
+    "primary_scope": "PER",
+    "applicable_scope": "NAT",
+    "domain": "LAWR",
+    "class": "OMBUD",
+    "leaf": "FED",
+    "version": "v001",
+    "note": "Fictional sample data for prototype grids. Replace with server-side database records in real operation."
+  },
+  "rows": [
+    {
+      "offer_id": "OMB-001",
+      "title": "Federal Service Complaint Path",
+      "provider": "Federal Agency Example",
+      "price": 0,
+      "availability": "available",
+      "location": "Canada",
+      "evidence_status": "claimed",
+      "risk": "medium",
+      "cvu_score": 72,
+      "jurisdiction": "national",
+      "complaint_area": "federal service delay",
+      "eligibility": "must first contact department",
+      "requires_prior_steps": true,
+      "expected_time_days": 60,
+      "contact_method": "web form / phone"
+    },
+    {
+      "offer_id": "OMB-002",
+      "title": "Banking Complaint Escalation Path",
+      "provider": "Financial Complaint Body Example",
+      "price": 0,
+      "availability": "available",
+      "location": "Canada",
+      "evidence_status": "claimed",
+      "risk": "medium",
+      "cvu_score": 74,
+      "jurisdiction": "national",
+      "complaint_area": "banking / credit / service",
+      "eligibility": "must complete bank internal complaint process",
+      "requires_prior_steps": true,
+      "expected_time_days": 90,
+      "contact_method": "online complaint"
+    },
+    {
+      "offer_id": "OMB-003",
+      "title": "Telecom Complaint Path",
+      "provider": "Telecom Complaint Body Example",
+      "price": 0,
+      "availability": "available",
+      "location": "Canada",
+      "evidence_status": "claimed",
+      "risk": "low",
+      "cvu_score": 70,
+      "jurisdiction": "national",
+      "complaint_area": "phone / internet billing or service",
+      "eligibility": "customer complaint with provider first",
+      "requires_prior_steps": true,
+      "expected_time_days": 45,
+      "contact_method": "online complaint"
+    }
+  ]
+}

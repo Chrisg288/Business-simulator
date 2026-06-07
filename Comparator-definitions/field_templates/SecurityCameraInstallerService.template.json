@@ -1,0 +1,142 @@
+{
+  "template_id": "SecurityCameraInstallerService",
+  "class_id": "SecurityCameraInstallerService",
+  "inherits_from": "BaseOffer",
+  "presentation_type": "datagrid",
+  "fields": [
+    {
+      "name": "offer_id",
+      "type": "text",
+      "required": true,
+      "grid": true
+    },
+    {
+      "name": "title",
+      "type": "text",
+      "required": true,
+      "grid": true
+    },
+    {
+      "name": "provider",
+      "type": "entity_ref",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "price",
+      "type": "currency",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "availability",
+      "type": "enum",
+      "values": [
+        "available",
+        "limited",
+        "watch",
+        "expired",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "location",
+      "type": "text",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "evidence_status",
+      "type": "enum",
+      "values": [
+        "none",
+        "claimed",
+        "linked",
+        "verified"
+      ],
+      "grid": true
+    },
+    {
+      "name": "risk",
+      "type": "enum",
+      "values": [
+        "low",
+        "medium",
+        "high",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "cvu_score",
+      "type": "number",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "service_area",
+      "type": "text",
+      "grid": true
+    },
+    {
+      "name": "install_type",
+      "type": "enum",
+      "values": [
+        "residential",
+        "commercial",
+        "farm",
+        "industrial",
+        "mixed"
+      ],
+      "grid": true
+    },
+    {
+      "name": "licensed",
+      "type": "boolean",
+      "grid": true
+    },
+    {
+      "name": "insurance_confirmed",
+      "type": "boolean",
+      "grid": true
+    },
+    {
+      "name": "warranty_months",
+      "type": "integer",
+      "grid": true
+    },
+    {
+      "name": "estimated_response_days",
+      "type": "number",
+      "grid": true
+    }
+  ],
+  "default_grid_columns": [
+    "offer_id",
+    "title",
+    "provider",
+    "price",
+    "availability",
+    "location",
+    "evidence_status",
+    "risk",
+    "cvu_score",
+    "service_area",
+    "install_type",
+    "licensed",
+    "insurance_confirmed",
+    "warranty_months",
+    "estimated_response_days"
+  ],
+  "comparison_factors": [
+    "need_fit",
+    "availability",
+    "comparative_cost",
+    "comparative_quality",
+    "time_value",
+    "risk_value",
+    "system_value",
+    "evidence_strength"
+  ]
+}

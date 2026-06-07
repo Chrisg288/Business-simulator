@@ -1,0 +1,99 @@
+{
+  "class_id": "ApartmentRentalOffer",
+  "label": "Apartment Rental Offer",
+  "inherits_from": "BaseOffer",
+  "sector_view": "HUM",
+  "primary_scope": "PER",
+  "applicable_scope": "MUN",
+  "domain": "SHEL",
+  "class": "RENT",
+  "leaf": "APT",
+  "presentation_type": "datagrid",
+  "additional_fields": [
+    {
+      "name": "monthly_rent",
+      "type": "currency",
+      "unit": "CAD/month",
+      "grid": true
+    },
+    {
+      "name": "bedrooms",
+      "type": "number",
+      "grid": true
+    },
+    {
+      "name": "bathrooms",
+      "type": "number",
+      "grid": true
+    },
+    {
+      "name": "utilities",
+      "type": "enum",
+      "values": [
+        "included",
+        "partial",
+        "extra",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "pets",
+      "type": "enum",
+      "values": [
+        "yes",
+        "no",
+        "ask",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "transit",
+      "type": "enum",
+      "values": [
+        "excellent",
+        "good",
+        "fair",
+        "low",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "condition",
+      "type": "enum",
+      "values": [
+        "excellent",
+        "good",
+        "fair",
+        "poor",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "lease_term",
+      "type": "text",
+      "grid": false
+    },
+    {
+      "name": "deposit",
+      "type": "currency",
+      "unit": "CAD",
+      "grid": false
+    },
+    {
+      "name": "contact_status",
+      "type": "enum",
+      "values": [
+        "not_started",
+        "messaged",
+        "viewing_scheduled",
+        "applied",
+        "rejected"
+      ],
+      "grid": true
+    }
+  ]
+}

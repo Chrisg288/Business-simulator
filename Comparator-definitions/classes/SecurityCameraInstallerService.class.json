@@ -1,0 +1,51 @@
+{
+  "class_id": "SecurityCameraInstallerService",
+  "label": "Security Camera Installer Service",
+  "inherits_from": "BaseOffer",
+  "sector_view": "BUS",
+  "primary_scope": "ORG",
+  "applicable_scope": "MUN",
+  "domain": "SECU",
+  "class": "SERV",
+  "leaf": "CAMI",
+  "presentation_type": "datagrid",
+  "additional_fields": [
+    {
+      "name": "service_area",
+      "type": "text",
+      "grid": true
+    },
+    {
+      "name": "install_type",
+      "type": "enum",
+      "values": [
+        "residential",
+        "commercial",
+        "farm",
+        "industrial",
+        "mixed"
+      ],
+      "grid": true
+    },
+    {
+      "name": "licensed",
+      "type": "boolean",
+      "grid": true
+    },
+    {
+      "name": "insurance_confirmed",
+      "type": "boolean",
+      "grid": true
+    },
+    {
+      "name": "warranty_months",
+      "type": "integer",
+      "grid": true
+    },
+    {
+      "name": "estimated_response_days",
+      "type": "number",
+      "grid": true
+    }
+  ]
+}

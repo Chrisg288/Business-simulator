@@ -1,0 +1,192 @@
+{
+  "template_id": "ApartmentRentalOffer",
+  "class_id": "ApartmentRentalOffer",
+  "inherits_from": "BaseOffer",
+  "presentation_type": "datagrid",
+  "fields": [
+    {
+      "name": "offer_id",
+      "type": "text",
+      "required": true,
+      "grid": true
+    },
+    {
+      "name": "title",
+      "type": "text",
+      "required": true,
+      "grid": true
+    },
+    {
+      "name": "provider",
+      "type": "entity_ref",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "price",
+      "type": "currency",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "availability",
+      "type": "enum",
+      "values": [
+        "available",
+        "limited",
+        "watch",
+        "expired",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "location",
+      "type": "text",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "evidence_status",
+      "type": "enum",
+      "values": [
+        "none",
+        "claimed",
+        "linked",
+        "verified"
+      ],
+      "grid": true
+    },
+    {
+      "name": "risk",
+      "type": "enum",
+      "values": [
+        "low",
+        "medium",
+        "high",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "cvu_score",
+      "type": "number",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "monthly_rent",
+      "type": "currency",
+      "unit": "CAD/month",
+      "grid": true
+    },
+    {
+      "name": "bedrooms",
+      "type": "number",
+      "grid": true
+    },
+    {
+      "name": "bathrooms",
+      "type": "number",
+      "grid": true
+    },
+    {
+      "name": "utilities",
+      "type": "enum",
+      "values": [
+        "included",
+        "partial",
+        "extra",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "pets",
+      "type": "enum",
+      "values": [
+        "yes",
+        "no",
+        "ask",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "transit",
+      "type": "enum",
+      "values": [
+        "excellent",
+        "good",
+        "fair",
+        "low",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "condition",
+      "type": "enum",
+      "values": [
+        "excellent",
+        "good",
+        "fair",
+        "poor",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "lease_term",
+      "type": "text",
+      "grid": false
+    },
+    {
+      "name": "deposit",
+      "type": "currency",
+      "unit": "CAD",
+      "grid": false
+    },
+    {
+      "name": "contact_status",
+      "type": "enum",
+      "values": [
+        "not_started",
+        "messaged",
+        "viewing_scheduled",
+        "applied",
+        "rejected"
+      ],
+      "grid": true
+    }
+  ],
+  "default_grid_columns": [
+    "offer_id",
+    "title",
+    "provider",
+    "price",
+    "availability",
+    "location",
+    "evidence_status",
+    "risk",
+    "cvu_score",
+    "monthly_rent",
+    "bedrooms",
+    "bathrooms",
+    "utilities",
+    "pets",
+    "transit",
+    "condition",
+    "contact_status"
+  ],
+  "comparison_factors": [
+    "need_fit",
+    "availability",
+    "comparative_cost",
+    "comparative_quality",
+    "time_value",
+    "risk_value",
+    "system_value",
+    "evidence_strength"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "version": "0.1",
+  "nodes": [
+    {
+      "node_id": "HUM",
+      "parent_id": null,
+      "label": "Human / Consumer",
+      "class_type": "Sector"
+    },
+    {
+      "node_id": "HUM_SHEL",
+      "parent_id": "HUM",
+      "label": "Shelter",
+      "class_type": "LifeDomain"
+    },
+    {
+      "node_id": "HUM_SHEL_RENT",
+      "parent_id": "HUM_SHEL",
+      "label": "Rent",
+      "class_type": "NeedClass"
+    },
+    {
+      "node_id": "HUM_SHEL_RENT_APT",
+      "parent_id": "HUM_SHEL_RENT",
+      "label": "Apartments",
+      "class_type": "ApartmentRentalOffer",
+      "sample_data_code": "SD_HUM_PER-MUN_SHEL_RENT_APT_v001"
+    },
+    {
+      "node_id": "HUM_TRAN",
+      "parent_id": "HUM",
+      "label": "Transportation",
+      "class_type": "LifeDomain"
+    },
+    {
+      "node_id": "HUM_TRAN_VEH",
+      "parent_id": "HUM_TRAN",
+      "label": "Vehicle",
+      "class_type": "NeedClass"
+    },
+    {
+      "node_id": "HUM_TRAN_VEH_PASS",
+      "parent_id": "HUM_TRAN_VEH",
+      "label": "Passenger Vehicle",
+      "class_type": "PassengerVehicleOffer",
+      "sample_data_code": "SD_HUM_PER-REG_TRAN_VEH_PASS_v001"
+    },
+    {
+      "node_id": "BUS",
+      "parent_id": null,
+      "label": "Business / Commercial",
+      "class_type": "Sector"
+    },
+    {
+      "node_id": "BUS_SECU",
+      "parent_id": "BUS",
+      "label": "Security",
+      "class_type": "CrossBoundaryDomain"
+    },
+    {
+      "node_id": "BUS_SECU_SERV_CAMI",
+      "parent_id": "BUS_SECU",
+      "label": "Security Camera Installers",
+      "class_type": "SecurityCameraInstallerService",
+      "sample_data_code": "SD_BUS_ORG-MUN_SECU_SERV_CAMI_v001"
+    },
+    {
+      "node_id": "HUM_LAWR",
+      "parent_id": "HUM",
+      "label": "Law / Rights",
+      "class_type": "CrossBoundaryDomain"
+    },
+    {
+      "node_id": "HUM_LAWR_OMBUD_FED",
+      "parent_id": "HUM_LAWR",
+      "label": "Federal Ombudsman / Complaint Path",
+      "class_type": "OmbudsmanComplaintPath",
+      "sample_data_code": "SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001"
+    }
+  ]
+}

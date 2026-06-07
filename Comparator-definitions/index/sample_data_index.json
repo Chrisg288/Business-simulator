@@ -1,0 +1,58 @@
+{
+  "version": "0.1",
+  "filename_pattern": "SD_<VIEW>_<PRIMARYSCOPE>-<APPLICABLESCOPE>_<DOMAIN>_<CLASS>_<LEAF>_v###.<ext>",
+  "datasets": [
+    {
+      "code": "SD_HUM_PER-MUN_SHEL_RENT_APT_v001",
+      "label": "Personal/Municipal Shelter Rent Apartment Listings",
+      "class_id": "ApartmentRentalOffer",
+      "view": "HUM",
+      "primary_scope": "PER",
+      "applicable_scope": "MUN",
+      "domain": "SHEL",
+      "class": "RENT",
+      "leaf": "APT",
+      "json_file": "sample_data/SD_HUM_PER-MUN_SHEL_RENT_APT_v001.json",
+      "text_file": "sample_data/SD_HUM_PER-MUN_SHEL_RENT_APT_v001.txt"
+    },
+    {
+      "code": "SD_HUM_PER-REG_TRAN_VEH_PASS_v001",
+      "label": "Personal/Regional Transportation Passenger Vehicle Listings",
+      "class_id": "PassengerVehicleOffer",
+      "view": "HUM",
+      "primary_scope": "PER",
+      "applicable_scope": "REG",
+      "domain": "TRAN",
+      "class": "VEH",
+      "leaf": "PASS",
+      "json_file": "sample_data/SD_HUM_PER-REG_TRAN_VEH_PASS_v001.json",
+      "text_file": "sample_data/SD_HUM_PER-REG_TRAN_VEH_PASS_v001.txt"
+    },
+    {
+      "code": "SD_BUS_ORG-MUN_SECU_SERV_CAMI_v001",
+      "label": "Business/Municipal Security Camera Installer Services",
+      "class_id": "SecurityCameraInstallerService",
+      "view": "BUS",
+      "primary_scope": "ORG",
+      "applicable_scope": "MUN",
+      "domain": "SECU",
+      "class": "SERV",
+      "leaf": "CAMI",
+      "json_file": "sample_data/SD_BUS_ORG-MUN_SECU_SERV_CAMI_v001.json",
+      "text_file": "sample_data/SD_BUS_ORG-MUN_SECU_SERV_CAMI_v001.txt"
+    },
+    {
+      "code": "SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001",
+      "label": "Personal/National Law-Rights Federal Ombudsman Complaint Paths",
+      "class_id": "OmbudsmanComplaintPath",
+      "view": "HUM",
+      "primary_scope": "PER",
+      "applicable_scope": "NAT",
+      "domain": "LAWR",
+      "class": "OMBUD",
+      "leaf": "FED",
+      "json_file": "sample_data/SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001.json",
+      "text_file": "sample_data/SD_HUM_PER-NAT_LAWR_OMBUD_FED_v001.txt"
+    }
+  ]
+}

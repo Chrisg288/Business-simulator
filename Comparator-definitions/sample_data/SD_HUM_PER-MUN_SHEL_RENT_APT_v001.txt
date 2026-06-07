@@ -1,0 +1,15 @@
+# sample_data_code: SD_HUM_PER-MUN_SHEL_RENT_APT_v001
+# label: Personal/Municipal Shelter Rent Apartment Listings
+# class_id: ApartmentRentalOffer
+# view: HUM
+# primary_scope: PER
+# applicable_scope: MUN
+# domain: SHEL
+# class: RENT
+# leaf: APT
+offer_id	title	provider	price	availability	location	evidence_status	risk	cvu_score	monthly_rent	bedrooms	bathrooms	utilities	pets	transit	condition	lease_term	deposit	contact_status
+APT-001	1 Bedroom Apartment - Red Deer South	Example Property Co.	1250	available	Red Deer	claimed	low	78	1250	1	1	partial	ask	good	good	12 months	1250	not_started
+APT-002	2 Bedroom Apartment - Springbrook	Sample Rentals Ltd.	1400	available	Springbrook	linked	medium	81	1400	2	1	extra	yes	fair	good	12 months	1400	messaged
+APT-003	Room Rental - Red Deer	Private Landlord	975	watch	Red Deer	none	medium	69	975	0	1	included	no	good	unknown	month-to-month	500	not_started
+APT-004	2 Bedroom Main Floor - Penhold	Example Landlord	1650	available	Penhold	claimed	low	74	1650	2	1	extra	ask	low	excellent	12 months	1650	viewing_scheduled
+APT-005	1 Bedroom Older Unit - Red Deer North	Example Apartments	1100	expired	Red Deer	claimed	high	61	1100	1	1	partial	no	good	fair	unknown	1100	not_started

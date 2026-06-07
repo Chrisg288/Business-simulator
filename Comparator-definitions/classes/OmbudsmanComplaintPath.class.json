@@ -1,0 +1,50 @@
+{
+  "class_id": "OmbudsmanComplaintPath",
+  "label": "Ombudsman / Complaint Path",
+  "inherits_from": "BaseOffer",
+  "sector_view": "HUM",
+  "primary_scope": "PER",
+  "applicable_scope": "NAT",
+  "domain": "LAWR",
+  "class": "OMBUD",
+  "leaf": "FED",
+  "presentation_type": "datagrid",
+  "additional_fields": [
+    {
+      "name": "jurisdiction",
+      "type": "enum",
+      "values": [
+        "national",
+        "provincial",
+        "municipal",
+        "organizational"
+      ],
+      "grid": true
+    },
+    {
+      "name": "complaint_area",
+      "type": "text",
+      "grid": true
+    },
+    {
+      "name": "eligibility",
+      "type": "text",
+      "grid": true
+    },
+    {
+      "name": "requires_prior_steps",
+      "type": "boolean",
+      "grid": true
+    },
+    {
+      "name": "expected_time_days",
+      "type": "integer",
+      "grid": true
+    },
+    {
+      "name": "contact_method",
+      "type": "text",
+      "grid": true
+    }
+  ]
+}

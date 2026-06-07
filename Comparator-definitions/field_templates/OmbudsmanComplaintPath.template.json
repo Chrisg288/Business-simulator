@@ -1,0 +1,141 @@
+{
+  "template_id": "OmbudsmanComplaintPath",
+  "class_id": "OmbudsmanComplaintPath",
+  "inherits_from": "BaseOffer",
+  "presentation_type": "datagrid",
+  "fields": [
+    {
+      "name": "offer_id",
+      "type": "text",
+      "required": true,
+      "grid": true
+    },
+    {
+      "name": "title",
+      "type": "text",
+      "required": true,
+      "grid": true
+    },
+    {
+      "name": "provider",
+      "type": "entity_ref",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "price",
+      "type": "currency",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "availability",
+      "type": "enum",
+      "values": [
+        "available",
+        "limited",
+        "watch",
+        "expired",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "location",
+      "type": "text",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "evidence_status",
+      "type": "enum",
+      "values": [
+        "none",
+        "claimed",
+        "linked",
+        "verified"
+      ],
+      "grid": true
+    },
+    {
+      "name": "risk",
+      "type": "enum",
+      "values": [
+        "low",
+        "medium",
+        "high",
+        "unknown"
+      ],
+      "grid": true
+    },
+    {
+      "name": "cvu_score",
+      "type": "number",
+      "required": false,
+      "grid": true
+    },
+    {
+      "name": "jurisdiction",
+      "type": "enum",
+      "values": [
+        "national",
+        "provincial",
+        "municipal",
+        "organizational"
+      ],
+      "grid": true
+    },
+    {
+      "name": "complaint_area",
+      "type": "text",
+      "grid": true
+    },
+    {
+      "name": "eligibility",
+      "type": "text",
+      "grid": true
+    },
+    {
+      "name": "requires_prior_steps",
+      "type": "boolean",
+      "grid": true
+    },
+    {
+      "name": "expected_time_days",
+      "type": "integer",
+      "grid": true
+    },
+    {
+      "name": "contact_method",
+      "type": "text",
+      "grid": true
+    }
+  ],
+  "default_grid_columns": [
+    "offer_id",
+    "title",
+    "provider",
+    "price",
+    "availability",
+    "location",
+    "evidence_status",
+    "risk",
+    "cvu_score",
+    "jurisdiction",
+    "complaint_area",
+    "eligibility",
+    "requires_prior_steps",
+    "expected_time_days",
+    "contact_method"
+  ],
+  "comparison_factors": [
+    "need_fit",
+    "availability",
+    "comparative_cost",
+    "comparative_quality",
+    "time_value",
+    "risk_value",
+    "system_value",
+    "evidence_strength"
+  ]
+}
