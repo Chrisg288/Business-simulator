@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.4</title>
+<title>Economy Master Interface v2.4.1</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -28,7 +28,7 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.4</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>New</strong> persistent Activity Tool</span><span class="badge"><strong>Grid</strong> dense + resizable columns</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
+  <div class="title"><h1>Economy Master Interface v2.4.1</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>New</strong> persistent Activity Tool</span><span class="badge"><strong>Grid</strong> dense + resizable columns</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
   <div class="principle"><strong>Context hierarchy:</strong> center selection → tree node → sector/scope/overlay → startup. The interface is the workshop; the large library comes later.</div>
 </header>
 <div class="ribbon">
@@ -83,9 +83,9 @@ const classLeaves=['Records','Offers','Models','Evidence','VRQs'];
 function makeNode(id,label,type,sector,children=[]){return {id,label,type,sector,children,description:`${label} ${type} in ${sector}.`}}
 function buildTaxonomy(){const trees={};sectors.filter(s=>s!=='Home').forEach(sec=>{const root=makeNode(slug(sec)+'_root',sec,'sector',sec,[]);(baseTaxonomy[sec]||[]).forEach(([domain,groups])=>{const d=makeNode(slug(sec+' '+domain),domain,'domain',sec,[]);Object.entries(groups).forEach(([group,cats])=>{const g=makeNode(slug(sec+' '+domain+' '+group),group,'category',sec,[]);cats.forEach(cat=>{const c=makeNode(slug(sec+' '+domain+' '+group+' '+cat),cat,'class',sec,[]);classLeaves.forEach(leaf=>{c.children.push(makeNode(slug(sec+' '+domain+' '+group+' '+cat+' '+leaf),leaf,'object-set',sec,[]))});g.children.push(c)});d.children.push(g)});root.children.push(d)});trees[sec]=root});
 const home=makeNode('home_root','Economy Home','orientation','Home',sectors.filter(s=>s!=='Home').map(s=>makeNode(slug(s)+'_home',s,'sector-link','Home',[])));trees.Home=home;return trees}
-let trees=buildTaxonomy();
+let trees={};
 function attachCustomNodes(){trees=buildTaxonomy();app.customNodes.forEach(n=>{const parent=findNode(n.parent);if(parent)parent.children.push({...n,children:n.children||[]})})}
-attachCustomNodes();
+// Initial taxonomy build is intentionally delayed until after the v2.4 Comparator tree overrides are loaded.
 function allNodes(root,arr=[]){arr.push(root);(root.children||[]).forEach(c=>allNodes(c,arr));return arr}
 function currentRoot(){return trees[app.activeSector]||trees.Home}
 function findNode(id,root){root=root||currentRoot();if(!id)return null;if(root.id===id)return root;for(const c of root.children||[]){const f=findNode(id,c);if(f)return f}return null}
