@@ -1,0 +1,69 @@
+{
+  "version": "0.2-prototype",
+  "doctrine": "Hyper-contextual Economy",
+  "matrix": [
+    "sector_viewpoint",
+    "activity_tool",
+    "scope",
+    "classification_tree",
+    "selected_object",
+    "overlay",
+    "evidence",
+    "transaction_state",
+    "event_message"
+  ],
+  "sectors": [
+    "Human / Consumer",
+    "Market / Exchange",
+    "Business / Commercial",
+    "Finance / Capital",
+    "Government / Public"
+  ],
+  "activity_tools": [
+    "Model",
+    "Simulate",
+    "Assess",
+    "Compare / Transact",
+    "Objects / Definitions"
+  ],
+  "scopes": [
+    "International",
+    "National",
+    "Provincial / State",
+    "Municipal",
+    "Organizational",
+    "Personal"
+  ],
+  "overlays": [
+    "Law / Rights / Regulation",
+    "Security / Defense / Intelligence",
+    "Infrastructure / Logistics",
+    "Resources / Environment",
+    "Information / Communication / Records",
+    "Risk / Safety / Emergency"
+  ],
+  "taxonomy_principles": [
+    "One unified classification/matrix source.",
+    "Comparator operates over the selected taxonomy node.",
+    "Budget/Standard/Premium are filters or rankings, not taxonomy leaves.",
+    "Boundary-crossing systems are overlays/layers/classes, not forced into one flat tree."
+  ],
+  "sample_path": [
+    "Human / Consumer",
+    "Shelter",
+    "Rent",
+    "Apartments"
+  ],
+  "transaction_chain": [
+    "Want / Need",
+    "Plan",
+    "Seek",
+    "Find",
+    "Evaluate",
+    "Contract",
+    "Payment / Receive",
+    "Records",
+    "Ownership",
+    "Ongoing Evaluation"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_name": "Modeling / Swimlane / Visual Graph Schema v0.1",
+  "principle": "Visual graph models must connect to objects in any swimlane.",
+  "model_fields": [
+    "model_id",
+    "name",
+    "sector_viewpoint",
+    "activity_tool",
+    "scope",
+    "selected_class",
+    "version",
+    "created_at",
+    "updated_at"
+  ],
+  "lane_fields": [
+    "lane_id",
+    "title",
+    "role_type",
+    "scope",
+    "allowed_node_types"
+  ],
+  "node_fields": [
+    "node_id",
+    "lane_id",
+    "node_type",
+    "title",
+    "description",
+    "status",
+    "value_impact",
+    "risk_impact",
+    "evidence_state",
+    "linked_object_id"
+  ],
+  "edge_fields": [
+    "edge_id",
+    "from_node_id",
+    "to_node_id",
+    "edge_type",
+    "label",
+    "message_type",
+    "event_trigger",
+    "evidence_link"
+  ],
+  "node_types": [
+    "need",
+    "offer",
+    "process",
+    "decision",
+    "event",
+    "interrupt",
+    "evidence",
+    "simulation_trigger",
+    "assessment_trigger",
+    "transaction_trigger"
+  ],
+  "edge_types": [
+    "normal",
+    "message",
+    "constraint",
+    "evidence",
+    "interrupt",
+    "feedback",
+    "transaction"
+  ]
+}

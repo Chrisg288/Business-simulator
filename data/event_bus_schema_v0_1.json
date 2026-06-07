@@ -1,0 +1,93 @@
+{
+  "schema_name": "Economic Event Bus Schema v0.1",
+  "doctrine": "An interrupt is a reprioritization of value in time.",
+  "event_fields": [
+    {
+      "name": "event_id",
+      "type": "string"
+    },
+    {
+      "name": "priority",
+      "type": "enum",
+      "values": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    {
+      "name": "event_type",
+      "type": "enum",
+      "values": [
+        "message",
+        "request",
+        "update",
+        "interrupt",
+        "evidence_added",
+        "transaction_state_changed",
+        "simulation_output",
+        "assessment_gap"
+      ]
+    },
+    {
+      "name": "source_object_id",
+      "type": "string"
+    },
+    {
+      "name": "target_object_id",
+      "type": "string"
+    },
+    {
+      "name": "source_tool",
+      "type": "string"
+    },
+    {
+      "name": "target_tool",
+      "type": "string"
+    },
+    {
+      "name": "sector_viewpoint",
+      "type": "string"
+    },
+    {
+      "name": "primary_scope",
+      "type": "string"
+    },
+    {
+      "name": "applicable_scope",
+      "type": "string"
+    },
+    {
+      "name": "value_impact",
+      "type": "number"
+    },
+    {
+      "name": "time_impact",
+      "type": "number"
+    },
+    {
+      "name": "risk_impact",
+      "type": "number"
+    },
+    {
+      "name": "evidence_links",
+      "type": "array"
+    },
+    {
+      "name": "handler",
+      "type": "string"
+    },
+    {
+      "name": "status",
+      "type": "enum",
+      "values": [
+        "open",
+        "queued",
+        "handled",
+        "logged",
+        "closed"
+      ]
+    }
+  ]
+}
