@@ -1,11 +1,11 @@
-# Economy Master Overview v1.6 GitHub Upload Package
+# Economy Master Overview v1.7 GitHub Upload Package
 
-Upload/merge this package into the root of the `Economy-Master-Overview` repository.
+Upload/merge into the root of `Economy-Master-Overview`.
 
 Contents:
-- `index.html` — live master interface v1.6
-- `Prototypes/Economy_v1_6/` — archived copy
-- `Comparator-definitions/taxonomy/legacy_comparator_tree_full_v0_1.json`
-- `Comparator-definitions/taxonomy/legacy_comparator_tree_full_v0_1.txt`
+- `index.html` — live master interface v1.7
+- `Prototypes/Economy_v1_7/` — archived copy
+- `Comparator-definitions/taxonomy/active_comparator_tree_1000_nodes_v0_1.*`
+- `Comparator-definitions/sample_data/active_comparator_5000_offer_rows_v0_1.*`
 
-v1.6 adds the recovered full legacy Comparator tree: 652 nodes across 18 root categories.
+v1.7 adds exactly 1000 active Comparator nodes and 5000 generated offer rows. The Make Bid popup loads the selected record from the active grid.

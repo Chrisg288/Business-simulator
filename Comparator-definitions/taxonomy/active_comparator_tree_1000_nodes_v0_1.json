@@ -1,0 +1,5255 @@
+{
+  "node_id": "ACT0991_COMPARATOR_ACTIVE_TREE_1000_",
+  "text": "Comparator Active Tree - 1000 Nodes",
+  "type": "CrossSystemTool",
+  "icon": "\u224b",
+  "children": [
+    {
+      "node_id": "ACT0055_FOOD",
+      "text": "Food",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0009_FRUIT",
+          "text": "Fruit",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0001_APPLES",
+              "text": "Apples",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0002_BANANAS",
+              "text": "Bananas",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0003_BERRIES",
+              "text": "Berries",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0004_CITRUS",
+              "text": "Citrus",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0005_GRAPES",
+              "text": "Grapes",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0006_MELONS",
+              "text": "Melons",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0007_PEARS",
+              "text": "Pears",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0008_STONE_FRUIT",
+              "text": "Stone Fruit",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0992_ORGANIC_FRUIT_BOX",
+              "text": "Organic Fruit Box",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0993_LOCAL_ORCHARD",
+              "text": "Local Orchard",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0994_BULK_APPLES",
+              "text": "Bulk Apples",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0995_FROZEN_BERRIES",
+              "text": "Frozen Berries",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0996_FRUIT_DELIVERY",
+              "text": "Fruit Delivery",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0997_SEASONAL_FRUIT",
+              "text": "Seasonal Fruit",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0998_IMPORTED_FRUIT",
+              "text": "Imported Fruit",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0999_DISCOUNT_PRODUCE",
+              "text": "Discount Produce",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT1000_PREMIUM_PRODUCE",
+              "text": "Premium Produce",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0018_VEGETABLES",
+          "text": "Vegetables",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0010_TUBERS",
+              "text": "Tubers",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0011_LEAFY_GREENS",
+              "text": "Leafy Greens",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0012_ROOTS",
+              "text": "Roots",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0013_PEPPERS",
+              "text": "Peppers",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0014_ONIONS",
+              "text": "Onions",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0015_MUSHROOMS",
+              "text": "Mushrooms",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0016_TOMATOES",
+              "text": "Tomatoes",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0017_FROZEN_VEGETABLES",
+              "text": "Frozen Vegetables",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0027_MEAT_PROTEIN",
+          "text": "Meat / Protein",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0019_BEEF",
+              "text": "Beef",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0020_POULTRY",
+              "text": "Poultry",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0021_PORK",
+              "text": "Pork",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0022_SEAFOOD",
+              "text": "Seafood",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0023_EGGS",
+              "text": "Eggs",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0024_BEANS",
+              "text": "Beans",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0025_TOFU",
+              "text": "Tofu",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0026_PREPARED_PROTEIN",
+              "text": "Prepared Protein",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0036_DAIRY",
+          "text": "Dairy",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0028_MILK",
+              "text": "Milk",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0029_CHEESE",
+              "text": "Cheese",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0030_YOGURT",
+              "text": "Yogurt",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0031_BUTTER",
+              "text": "Butter",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0032_CREAM",
+              "text": "Cream",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0033_LACTOSE_FREE",
+              "text": "Lactose Free",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0034_DAIRY_ALTERNATIVES",
+              "text": "Dairy Alternatives",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0035_BULK_DAIRY",
+              "text": "Bulk Dairy",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0045_BAKED_PREPARED",
+          "text": "Baked / Prepared",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0037_BREAD",
+              "text": "Bread",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0038_BAGELS",
+              "text": "Bagels",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0039_PIZZA",
+              "text": "Pizza",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0040_BURGERS",
+              "text": "Burgers",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0041_PREPARED_MEALS",
+              "text": "Prepared Meals",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0042_DESSERTS",
+              "text": "Desserts",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0043_MEAL_KITS",
+              "text": "Meal Kits",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0044_BAKERY_SERVICES",
+              "text": "Bakery Services",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0054_FROZEN_PRESERVED",
+          "text": "Frozen / Preserved",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0046_FROZEN_MEALS",
+              "text": "Frozen Meals",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0047_CANNED_FRUIT",
+              "text": "Canned Fruit",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0048_PICKLES",
+              "text": "Pickles",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0049_SAUCES",
+              "text": "Sauces",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0050_JAM",
+              "text": "Jam",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0051_DRY_GOODS",
+              "text": "Dry Goods",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0052_DEHYDRATED_FOODS",
+              "text": "Dehydrated Foods",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0053_SHELF_STABLE_MEALS",
+              "text": "Shelf Stable Meals",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0110_CLOTHING",
+      "text": "Clothing",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0064_MEN",
+          "text": "Men",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0056_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0057_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0058_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0059_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0060_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0061_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0062_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0063_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0073_WOMEN",
+          "text": "Women",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0065_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0066_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0067_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0068_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0069_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0070_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0071_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0072_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0082_CHILDREN",
+          "text": "Children",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0074_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0075_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0076_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0077_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0078_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0079_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0080_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0081_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0091_FOOTWEAR",
+          "text": "Footwear",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0083_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0084_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0085_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0086_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0087_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0088_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0089_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0090_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0100_OUTERWEAR",
+          "text": "Outerwear",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0092_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0093_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0094_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0095_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0096_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0097_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0098_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0099_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0109_ACCESSORIES",
+          "text": "Accessories",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0101_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0102_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0103_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0104_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0105_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0106_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0107_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0108_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0165_SHELTER",
+      "text": "Shelter",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0119_RENTALS",
+          "text": "Rentals",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0111_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0112_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0113_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0114_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0115_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0116_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0117_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0118_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0128_OWNERSHIP",
+          "text": "Ownership",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0120_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0121_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0122_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0123_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0124_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0125_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0126_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0127_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0137_CONSTRUCTION_MATERIALS",
+          "text": "Construction Materials",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0129_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0130_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0131_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0132_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0133_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0134_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0135_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0136_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0146_TRADES",
+          "text": "Trades",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0138_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0139_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0140_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0141_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0142_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0143_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0144_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0145_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0155_UTILITIES",
+          "text": "Utilities",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0147_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0148_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0149_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0150_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0151_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0152_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0153_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0154_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0164_REAL_ESTATE_SERVICES",
+          "text": "Real Estate Services",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0156_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0157_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0158_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0159_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0160_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0161_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0162_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0163_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0220_SECURITY",
+      "text": "Security",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0174_PERSONAL_SAFETY",
+          "text": "Personal Safety",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0166_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0167_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0168_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0169_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0170_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0171_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0172_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0173_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0183_HOME_SECURITY",
+          "text": "Home Security",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0175_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0176_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0177_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0178_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0179_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0180_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0181_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0182_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0192_BUSINESS_SECURITY",
+          "text": "Business Security",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0184_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0185_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0186_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0187_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0188_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0189_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0190_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0191_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0201_CYBERSECURITY",
+          "text": "Cybersecurity",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0193_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0194_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0195_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0196_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0197_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0198_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0199_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0200_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0210_DEFENSE_RESTRICTED",
+          "text": "Defense / Restricted",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0202_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0203_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0204_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0205_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0206_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0207_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0208_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0209_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0219_EMERGENCY_PREPAREDNESS",
+          "text": "Emergency Preparedness",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0211_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0212_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0213_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0214_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0215_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0216_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0217_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0218_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0275_SPIRITUAL",
+      "text": "Spiritual",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0229_COMMUNITY",
+          "text": "Community",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0221_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0222_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0223_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0224_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0225_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0226_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0227_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0228_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0238_PRACTICE",
+          "text": "Practice",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0230_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0231_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0232_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0233_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0234_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0235_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0236_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0237_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0247_TEACHING",
+          "text": "Teaching",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0239_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0240_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0241_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0242_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0243_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0244_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0245_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0246_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0256_CEREMONY",
+          "text": "Ceremony",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0248_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0249_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0250_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0251_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0252_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0253_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0254_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0255_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0265_TEXTS_MEDIA",
+          "text": "Texts / Media",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0257_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0258_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0259_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0260_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0261_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0262_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0263_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0264_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0274_SUPPORT_SERVICES",
+          "text": "Support Services",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0266_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0267_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0268_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0269_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0270_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0271_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0272_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0273_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0330_CONSUMER_PRODUCTS",
+      "text": "Consumer Products",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0284_HOME_GOODS",
+          "text": "Home Goods",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0276_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0277_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0278_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0279_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0280_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0281_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0282_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0283_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0293_APPLIANCES",
+          "text": "Appliances",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0285_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0286_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0287_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0288_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0289_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0290_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0291_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0292_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0302_ELECTRONICS",
+          "text": "Electronics",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0294_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0295_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0296_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0297_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0298_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0299_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0300_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0301_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0311_TOOLS",
+          "text": "Tools",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0303_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0304_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0305_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0306_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0307_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0308_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0309_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0310_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0320_FURNITURE",
+          "text": "Furniture",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0312_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0313_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0314_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0315_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0316_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0317_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0318_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0319_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0329_PERSONAL_ITEMS",
+          "text": "Personal Items",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0321_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0322_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0323_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0324_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0325_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0326_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0327_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0328_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0385_HEALTH_NON_NUTRUTIONAL",
+      "text": "Health (Non Nutrutional)",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0339_MEDICAL_SERVICES",
+          "text": "Medical Services",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0331_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0332_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0333_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0334_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0335_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0336_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0337_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0338_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0348_DENTAL",
+          "text": "Dental",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0340_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0341_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0342_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0343_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0344_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0345_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0346_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0347_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0357_VISION",
+          "text": "Vision",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0349_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0350_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0351_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0352_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0353_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0354_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0355_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0356_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0366_MOBILITY",
+          "text": "Mobility",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0358_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0359_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0360_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0361_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0362_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0363_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0364_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0365_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0375_FITNESS",
+          "text": "Fitness",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0367_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0368_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0369_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0370_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0371_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0372_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0373_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0374_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0384_PERSONAL_CARE",
+          "text": "Personal Care",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0376_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0377_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0378_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0379_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0380_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0381_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0382_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0383_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0440_WEALTH",
+      "text": "Wealth",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0394_SAVINGS",
+          "text": "Savings",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0386_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0387_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0388_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0389_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0390_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0391_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0392_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0393_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0403_INVESTMENT",
+          "text": "Investment",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0395_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0396_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0397_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0398_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0399_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0400_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0401_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0402_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0412_INSURANCE",
+          "text": "Insurance",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0404_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0405_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0406_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0407_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0408_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0409_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0410_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0411_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0421_DEBT",
+          "text": "Debt",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0413_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0414_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0415_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0416_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0417_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0418_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0419_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0420_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0430_INCOME_ASSETS",
+          "text": "Income Assets",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0422_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0423_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0424_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0425_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0426_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0427_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0428_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0429_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0439_RETIREMENT",
+          "text": "Retirement",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0431_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0432_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0433_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0434_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0435_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0436_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0437_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0438_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0495_TRANSPORTATION",
+      "text": "Transportation",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0449_ROAD_VEHICLES",
+          "text": "Road Vehicles",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0441_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0442_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0443_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0444_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0445_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0446_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0447_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0448_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0458_VEHICLE_SERVICES",
+          "text": "Vehicle Services",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0450_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0451_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0452_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0453_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0454_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0455_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0456_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0457_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0467_TRANSIT",
+          "text": "Transit",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0459_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0460_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0461_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0462_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0463_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0464_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0465_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0466_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0476_WATERCRAFT",
+          "text": "Watercraft",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0468_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0469_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0470_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0471_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0472_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0473_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0474_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0475_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0485_AIRCRAFT",
+          "text": "Aircraft",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0477_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0478_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0479_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0480_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0481_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0482_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0483_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0484_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0494_FUEL_ENERGY",
+          "text": "Fuel / Energy",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0486_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0487_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0488_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0489_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0490_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0491_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0492_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0493_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0550_COMMUNICATIONS",
+      "text": "Communications",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0504_INTERNET",
+          "text": "Internet",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0496_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0497_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0498_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0499_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0500_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0501_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0502_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0503_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0513_PHONE",
+          "text": "Phone",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0505_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0506_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0507_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0508_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0509_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0510_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0511_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0512_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0522_MEDIA",
+          "text": "Media",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0514_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0515_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0516_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0517_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0518_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0519_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0520_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0521_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0531_PUBLISHING",
+          "text": "Publishing",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0523_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0524_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0525_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0526_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0527_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0528_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0529_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0530_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0540_MARKETING",
+          "text": "Marketing",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0532_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0533_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0534_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0535_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0536_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0537_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0538_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0539_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0549_RECORDS",
+          "text": "Records",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0541_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0542_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0543_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0544_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0545_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0546_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0547_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0548_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0605_EMPLOYMENT_AND_CONTRACT",
+      "text": "Employment And Contract",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0559_JOBS",
+          "text": "Jobs",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0551_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0552_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0553_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0554_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0555_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0556_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0557_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0558_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0568_CONTRACT_WORK",
+          "text": "Contract Work",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0560_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0561_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0562_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0563_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0564_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0565_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0566_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0567_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0577_TRAINING",
+          "text": "Training",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0569_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0570_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0571_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0572_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0573_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0574_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0575_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0576_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0586_RECRUITING",
+          "text": "Recruiting",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0578_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0579_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0580_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0581_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0582_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0583_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0584_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0585_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0595_WORK_TOOLS",
+          "text": "Work Tools",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0587_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0588_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0589_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0590_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0591_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0592_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0593_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0594_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0604_COMPLIANCE",
+          "text": "Compliance",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0596_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0597_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0598_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0599_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0600_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0601_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0602_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0603_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0660_ENERGY",
+      "text": "Energy",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0614_ELECTRICITY",
+          "text": "Electricity",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0606_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0607_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0608_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0609_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0610_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0611_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0612_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0613_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0623_NATURAL_GAS",
+          "text": "Natural Gas",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0615_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0616_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0617_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0618_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0619_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0620_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0621_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0622_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0632_FUEL",
+          "text": "Fuel",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0624_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0625_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0626_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0627_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0628_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0629_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0630_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0631_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0641_SOLAR",
+          "text": "Solar",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0633_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0634_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0635_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0636_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0637_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0638_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0639_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0640_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0650_BATTERY_STORAGE",
+          "text": "Battery Storage",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0642_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0643_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0644_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0645_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0646_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0647_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0648_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0649_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0659_EFFICIENCY",
+          "text": "Efficiency",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0651_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0652_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0653_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0654_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0655_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0656_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0657_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0658_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0715_KNOWLEDGE_AND_EDUCATION",
+      "text": "Knowledge And Education",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0669_SCHOOLS",
+          "text": "Schools",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0661_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0662_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0663_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0664_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0665_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0666_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0667_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0668_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0678_COURSES",
+          "text": "Courses",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0670_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0671_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0672_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0673_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0674_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0675_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0676_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0677_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0687_BOOKS",
+          "text": "Books",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0679_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0680_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0681_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0682_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0683_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0684_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0685_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0686_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0696_TESTING",
+          "text": "Testing",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0688_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0689_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0690_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0691_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0692_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0693_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0694_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0695_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0705_SKILLS",
+          "text": "Skills",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0697_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0698_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0699_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0700_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0701_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0702_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0703_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0704_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0714_RESEARCH",
+          "text": "Research",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0706_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0707_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0708_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0709_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0710_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0711_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0712_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0713_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0770_ENTERTAINMENT",
+      "text": "Entertainment",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0724_EVENTS",
+          "text": "Events",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0716_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0717_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0718_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0719_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0720_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0721_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0722_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0723_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0733_SPORTS",
+          "text": "Sports",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0725_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0726_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0727_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0728_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0729_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0730_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0731_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0732_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0742_TRAVEL",
+          "text": "Travel",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0734_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0735_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0736_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0737_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0738_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0739_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0740_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0741_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0751_MEDIA",
+          "text": "Media",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0743_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0744_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0745_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0746_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0747_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0748_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0749_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0750_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0760_GAMES",
+          "text": "Games",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0752_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0753_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0754_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0755_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0756_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0757_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0758_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0759_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0769_HOBBIES",
+          "text": "Hobbies",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0761_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0762_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0763_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0764_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0765_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0766_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0767_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0768_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0825_GOVERNMENT",
+      "text": "Government",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0779_PUBLIC_SERVICES",
+          "text": "Public Services",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0771_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0772_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0773_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0774_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0775_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0776_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0777_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0778_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0788_LICENSES",
+          "text": "Licenses",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0780_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0781_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0782_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0783_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0784_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0785_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0786_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0787_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0797_BENEFITS",
+          "text": "Benefits",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0789_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0790_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0791_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0792_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0793_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0794_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0795_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0796_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0806_TAXATION",
+          "text": "Taxation",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0798_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0799_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0800_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0801_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0802_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0803_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0804_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0805_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0815_EMERGENCY_SERVICES",
+          "text": "Emergency Services",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0807_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0808_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0809_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0810_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0811_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0812_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0813_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0814_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0824_PUBLIC_RECORDS",
+          "text": "Public Records",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0816_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0817_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0818_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0819_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0820_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0821_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0822_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0823_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0880_LEGAL",
+      "text": "Legal",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0834_CONSUMER_RIGHTS",
+          "text": "Consumer Rights",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0826_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0827_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0828_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0829_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0830_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0831_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0832_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0833_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0843_BUSINESS_LAW",
+          "text": "Business Law",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0835_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0836_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0837_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0838_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0839_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0840_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0841_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0842_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0852_TORTS",
+          "text": "Torts",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0844_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0845_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0846_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0847_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0848_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0849_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0850_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0851_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0861_CONTRACTS",
+          "text": "Contracts",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0853_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0854_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0855_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0856_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0857_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0858_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0859_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0860_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0870_DISPUTE_RESOLUTION",
+          "text": "Dispute Resolution",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0862_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0863_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0864_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0865_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0866_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0867_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0868_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0869_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0879_COMPLIANCE",
+          "text": "Compliance",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0871_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0872_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0873_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0874_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0875_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0876_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0877_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0878_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0935_BUSINESS_INDUSTRY",
+      "text": "Business & Industry",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0889_MANUFACTURING",
+          "text": "Manufacturing",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0881_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0882_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0883_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0884_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0885_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0886_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0887_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0888_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0898_TRADES",
+          "text": "Trades",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0890_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0891_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0892_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0893_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0894_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0895_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0896_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0897_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0907_RETAIL",
+          "text": "Retail",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0899_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0900_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0901_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0902_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0903_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0904_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0905_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0906_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0916_PROFESSIONAL_SERVICES",
+          "text": "Professional Services",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0908_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0909_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0910_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0911_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0912_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0913_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0914_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0915_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0925_HOSPITALITY",
+          "text": "Hospitality",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0917_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0918_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0919_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0920_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0921_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0922_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0923_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0924_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0934_LOGISTICS",
+          "text": "Logistics",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0926_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0927_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0928_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0929_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0930_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0931_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0932_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0933_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "ACT0990_HELP",
+      "text": "Help",
+      "type": "ComparatorCategory",
+      "children": [
+        {
+          "node_id": "ACT0944_GUIDES",
+          "text": "Guides",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0936_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0937_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0938_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0939_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0940_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0941_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0942_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0943_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0953_SUPPORT",
+          "text": "Support",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0945_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0946_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0947_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0948_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0949_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0950_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0951_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0952_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0962_FAQ",
+          "text": "FAQ",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0954_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0955_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0956_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0957_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0958_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0959_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0960_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0961_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0971_TUTORIALS",
+          "text": "Tutorials",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0963_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0964_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0965_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0966_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0967_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0968_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0969_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0970_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0980_EXAMPLES",
+          "text": "Examples",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0972_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0973_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0974_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0975_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0976_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0977_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0978_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0979_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        },
+        {
+          "node_id": "ACT0989_SYSTEM_TOOLS",
+          "text": "System Tools",
+          "type": "ComparatorClass",
+          "children": [
+            {
+              "node_id": "ACT0981_BUDGET_OPTION",
+              "text": "Budget Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0982_STANDARD_OPTION",
+              "text": "Standard Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0983_PREMIUM_OPTION",
+              "text": "Premium Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0984_LOCAL_PROVIDER",
+              "text": "Local Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0985_REGIONAL_PROVIDER",
+              "text": "Regional Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0986_ONLINE_PROVIDER",
+              "text": "Online Provider",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0987_EMERGENCY_OPTION",
+              "text": "Emergency Option",
+              "type": "ComparatorLeaf"
+            },
+            {
+              "node_id": "ACT0988_VERIFIED_PROVIDER",
+              "text": "Verified Provider",
+              "type": "ComparatorLeaf"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

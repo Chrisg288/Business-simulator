@@ -1,0 +1,7 @@
+{
+  "version": "0.1",
+  "node_count": 1000,
+  "offer_count": 5000,
+  "tree_file": "taxonomy/active_comparator_tree_1000_nodes_v0_1.json",
+  "offer_file": "sample_data/active_comparator_5000_offer_rows_v0_1.json"
+}
