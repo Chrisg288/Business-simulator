@@ -1,0 +1,33 @@
+{
+  "version": "0.2",
+  "datasets": [
+    {
+      "code": "SD_HUM_PER-MUN_SHEL_RENT_APT_BULK_v002",
+      "label": "Bulk Personal/Municipal Shelter Rent Apartment Listings",
+      "json_file": "sample_data/SD_HUM_PER-MUN_SHEL_RENT_APT_BULK_v002.json",
+      "text_file": "sample_data/SD_HUM_PER-MUN_SHEL_RENT_APT_BULK_v002.txt",
+      "rows": 320
+    },
+    {
+      "code": "SD_HUM_PER-REG_TRAN_VEH_PASS_BULK_v002",
+      "label": "Bulk Personal/Regional Passenger Vehicle Listings",
+      "json_file": "sample_data/SD_HUM_PER-REG_TRAN_VEH_PASS_BULK_v002.json",
+      "text_file": "sample_data/SD_HUM_PER-REG_TRAN_VEH_PASS_BULK_v002.txt",
+      "rows": 420
+    },
+    {
+      "code": "SD_HUM_PER-MUN_SHEL_OWN_HOME_BULK_v002",
+      "label": "Bulk Personal/Municipal Shelter Ownership Options",
+      "json_file": "sample_data/SD_HUM_PER-MUN_SHEL_OWN_HOME_BULK_v002.json",
+      "text_file": "sample_data/SD_HUM_PER-MUN_SHEL_OWN_HOME_BULK_v002.txt",
+      "rows": 160
+    },
+    {
+      "code": "SD_BUS_ORG-MUN_SECU_SERV_CAMI_BULK_v002",
+      "label": "Bulk Business/Municipal Security Camera Installer Services",
+      "json_file": "sample_data/SD_BUS_ORG-MUN_SECU_SERV_CAMI_BULK_v002.json",
+      "text_file": "sample_data/SD_BUS_ORG-MUN_SECU_SERV_CAMI_BULK_v002.txt",
+      "rows": 150
+    }
+  ]
+}

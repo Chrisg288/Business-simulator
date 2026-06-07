@@ -1,0 +1,323 @@
+# sample_data_code: SD_HUM_PER-MUN_SHEL_RENT_APT_BULK_v002
+# label: Bulk Personal/Municipal Shelter Rent Apartment Listings
+item	status	posted	rent	bedrooms	location	utilities	transit	pets	condition	risk	cvu
+001	Available	1d	1230	1	Springbrook	partial	Fair	No	good	medium	77
+002	Available	2d	1260	1	Penhold	extra	Low	Ask	good	medium	78
+003	Available	Today	1540	2	Sylvan Lake	unknown	Excellent	Unknown	fair	high	77
+004	Available	4d	1570	2	Lacombe	included	Good	Yes	unknown	low	78
+005	Available	5d	1850	3	Blackfalds	partial	Fair	No	excellent	medium	77
+006	Available	Today	1010	Room	Innisfail	extra	Low	Ask	good	medium	83
+007	Available	7d	1410	1	Calgary Region	unknown	Excellent	Unknown	good	high	82
+008	Available	8d	1440	1	Edmonton Region	included	Good	Yes	fair	low	82
+009	Watch	Today	1720	2	Red Deer	partial	Fair	No	unknown	medium	82
+010	Available	10d	1750	2	Springbrook	extra	Low	Ask	excellent	medium	82
+011	Available	11d	2030	3	Penhold	unknown	Excellent	Unknown	good	high	70
+012	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	good	low	79
+013	Available	13d	1200	1	Lacombe	partial	Fair	No	fair	medium	78
+014	Available	0d	1230	1	Blackfalds	extra	Low	Ask	unknown	medium	79
+015	Available	Today	1510	2	Innisfail	unknown	Excellent	Unknown	excellent	high	78
+016	Available	2d	1540	2	Calgary Region	included	Good	Yes	good	low	79
+017	Expired	3d	1820	3	Edmonton Region	partial	Fair	No	good	medium	78
+018	Watch	Today	800	Room	Red Deer	extra	Low	Ask	fair	medium	86
+019	Available	5d	1380	1	Springbrook	unknown	Excellent	Unknown	unknown	high	83
+020	Available	6d	1410	1	Penhold	included	Good	Yes	excellent	low	84
+021	Available	Today	1690	2	Sylvan Lake	partial	Fair	No	good	medium	83
+022	Available	8d	1720	2	Lacombe	extra	Low	Ask	good	medium	73
+023	Available	9d	2000	3	Blackfalds	unknown	Excellent	Unknown	fair	high	72
+024	Available	Today	1010	Room	Innisfail	included	Good	Yes	unknown	low	79
+025	Available	11d	1560	1	Calgary Region	partial	Fair	No	excellent	medium	77
+026	Available	12d	1200	1	Edmonton Region	extra	Low	Ask	good	medium	80
+027	Watch	Today	1480	2	Red Deer	unknown	Excellent	Unknown	good	high	79
+028	Available	0d	1510	2	Springbrook	included	Good	Yes	fair	low	80
+029	Available	1d	1790	3	Penhold	partial	Fair	No	unknown	medium	79
+030	Available	Today	905	Room	Sylvan Lake	extra	Low	Ask	excellent	medium	86
+031	Available	3d	1350	1	Lacombe	unknown	Excellent	Unknown	good	high	84
+032	Available	4d	1380	1	Blackfalds	included	Good	Yes	good	low	85
+033	Available	Today	1660	2	Innisfail	partial	Fair	No	fair	medium	73
+034	Expired	6d	1690	2	Calgary Region	extra	Low	Ask	unknown	medium	74
+035	Available	7d	1970	3	Edmonton Region	unknown	Excellent	Unknown	excellent	high	73
+036	Watch	Today	800	Room	Red Deer	included	Good	Yes	good	low	82
+037	Available	9d	1530	1	Springbrook	partial	Fair	No	good	medium	78
+038	Available	10d	1560	1	Penhold	extra	Low	Ask	fair	medium	79
+039	Available	Today	1450	2	Sylvan Lake	unknown	Excellent	Unknown	unknown	high	80
+040	Available	12d	1480	2	Lacombe	included	Good	Yes	excellent	low	81
+041	Available	13d	1760	3	Blackfalds	partial	Fair	No	good	medium	80
+042	Available	Today	1010	Room	Innisfail	extra	Low	Ask	good	medium	86
+043	Available	1d	1320	1	Calgary Region	unknown	Excellent	Unknown	fair	high	85
+044	Available	2d	1350	1	Edmonton Region	included	Good	Yes	unknown	low	75
+045	Watch	Today	1630	2	Red Deer	partial	Fair	No	excellent	medium	74
+046	Available	4d	1660	2	Springbrook	extra	Low	Ask	good	medium	75
+047	Available	5d	1940	3	Penhold	unknown	Excellent	Unknown	good	high	74
+048	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	fair	low	82
+049	Available	7d	1500	1	Lacombe	partial	Fair	No	unknown	medium	79
+050	Available	8d	1530	1	Blackfalds	extra	Low	Ask	excellent	medium	80
+051	Expired	Today	1810	2	Innisfail	unknown	Excellent	Unknown	good	high	79
+052	Available	10d	1450	2	Calgary Region	included	Good	Yes	good	low	82
+053	Available	11d	1730	3	Edmonton Region	partial	Fair	No	fair	medium	81
+054	Watch	Today	800	Room	Red Deer	extra	Low	Ask	unknown	medium	89
+055	Available	13d	1290	1	Springbrook	unknown	Excellent	Unknown	excellent	high	75
+056	Available	0d	1320	1	Penhold	included	Good	Yes	good	low	76
+057	Available	Today	1600	2	Sylvan Lake	partial	Fair	No	good	medium	75
+058	Available	2d	1630	2	Lacombe	extra	Low	Ask	fair	medium	76
+059	Available	3d	1910	3	Blackfalds	unknown	Excellent	Unknown	unknown	high	75
+060	Available	Today	1010	Room	Innisfail	included	Good	Yes	excellent	low	82
+061	Available	5d	1470	1	Calgary Region	partial	Fair	No	good	medium	80
+062	Available	6d	1500	1	Edmonton Region	extra	Low	Ask	good	medium	81
+063	Watch	Today	1780	2	Red Deer	unknown	Excellent	Unknown	fair	high	80
+064	Available	8d	1810	2	Springbrook	included	Good	Yes	unknown	low	81
+065	Available	9d	1700	3	Penhold	partial	Fair	No	excellent	medium	83
+066	Available	Today	905	Room	Sylvan Lake	extra	Low	Ask	good	medium	78
+067	Available	11d	1260	1	Lacombe	unknown	Excellent	Unknown	good	high	77
+068	Expired	12d	1290	1	Blackfalds	included	Good	Yes	fair	low	77
+069	Available	Today	1570	2	Innisfail	partial	Fair	No	unknown	medium	77
+070	Available	0d	1600	2	Calgary Region	extra	Low	Ask	excellent	medium	77
+071	Available	1d	1880	3	Edmonton Region	unknown	Excellent	Unknown	good	high	76
+072	Watch	Today	800	Room	Red Deer	included	Good	Yes	good	low	85
+073	Available	3d	1440	1	Springbrook	partial	Fair	No	fair	medium	81
+074	Available	4d	1470	1	Penhold	extra	Low	Ask	unknown	medium	82
+075	Available	Today	1750	2	Sylvan Lake	unknown	Excellent	Unknown	excellent	high	81
+076	Available	6d	1780	2	Lacombe	included	Good	Yes	good	low	82
+077	Available	7d	2060	3	Blackfalds	partial	Fair	No	good	medium	70
+078	Available	Today	1010	Room	Innisfail	extra	Low	Ask	fair	medium	78
+079	Available	9d	1230	1	Calgary Region	unknown	Excellent	Unknown	unknown	high	78
+080	Available	10d	1260	1	Edmonton Region	included	Good	Yes	excellent	low	79
+081	Watch	Today	1540	2	Red Deer	partial	Fair	No	good	medium	78
+082	Available	12d	1570	2	Springbrook	extra	Low	Ask	good	medium	79
+083	Available	13d	1850	3	Penhold	unknown	Excellent	Unknown	fair	high	78
+084	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	unknown	low	85
+085	Expired	1d	1410	1	Lacombe	partial	Fair	No	excellent	medium	83
+086	Available	2d	1440	1	Blackfalds	extra	Low	Ask	good	medium	83
+087	Available	Today	1720	2	Innisfail	unknown	Excellent	Unknown	good	high	83
+088	Available	4d	1750	2	Calgary Region	included	Good	Yes	fair	low	72
+089	Available	5d	2030	3	Edmonton Region	partial	Fair	No	unknown	medium	71
+090	Watch	Today	800	Room	Red Deer	extra	Low	Ask	excellent	medium	81
+091	Available	7d	1200	1	Springbrook	unknown	Excellent	Unknown	good	high	79
+092	Available	8d	1230	1	Penhold	included	Good	Yes	good	low	80
+093	Available	Today	1510	2	Sylvan Lake	partial	Fair	No	fair	medium	79
+094	Available	10d	1540	2	Lacombe	extra	Low	Ask	unknown	medium	80
+095	Available	11d	1820	3	Blackfalds	unknown	Excellent	Unknown	excellent	high	79
+096	Available	Today	1010	Room	Innisfail	included	Good	Yes	good	low	85
+097	Available	13d	1380	1	Calgary Region	partial	Fair	No	good	medium	84
+098	Available	0d	1410	1	Edmonton Region	extra	Low	Ask	fair	medium	85
+099	Watch	Today	1690	2	Red Deer	unknown	Excellent	Unknown	unknown	high	73
+100	Available	2d	1720	2	Springbrook	included	Good	Yes	excellent	low	74
+101	Available	3d	2000	3	Penhold	partial	Fair	No	good	medium	73
+102	Expired	Today	905	Room	Sylvan Lake	extra	Low	Ask	good	medium	81
+103	Available	5d	1560	1	Lacombe	unknown	Excellent	Unknown	fair	high	78
+104	Available	6d	1200	1	Blackfalds	included	Good	Yes	unknown	low	81
+105	Available	Today	1480	2	Innisfail	partial	Fair	No	excellent	medium	80
+106	Available	8d	1510	2	Calgary Region	extra	Low	Ask	good	medium	81
+107	Available	9d	1790	3	Edmonton Region	unknown	Excellent	Unknown	good	high	80
+108	Watch	Today	800	Room	Red Deer	included	Good	Yes	fair	low	88
+109	Available	11d	1350	1	Springbrook	partial	Fair	No	unknown	medium	85
+110	Available	12d	1380	1	Penhold	extra	Low	Ask	excellent	medium	75
+111	Available	Today	1660	2	Sylvan Lake	unknown	Excellent	Unknown	good	high	74
+112	Available	0d	1690	2	Lacombe	included	Good	Yes	good	low	75
+113	Available	1d	1970	3	Blackfalds	partial	Fair	No	fair	medium	74
+114	Available	Today	1010	Room	Innisfail	extra	Low	Ask	unknown	medium	81
+115	Available	3d	1530	1	Calgary Region	unknown	Excellent	Unknown	excellent	high	79
+116	Available	4d	1560	1	Edmonton Region	included	Good	Yes	good	low	80
+117	Watch	Today	1450	2	Red Deer	partial	Fair	No	good	medium	81
+118	Available	6d	1480	2	Springbrook	extra	Low	Ask	fair	medium	82
+119	Expired	7d	1760	3	Penhold	unknown	Excellent	Unknown	unknown	high	81
+120	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	excellent	low	88
+121	Available	9d	1320	1	Lacombe	partial	Fair	No	good	medium	75
+122	Available	10d	1350	1	Blackfalds	extra	Low	Ask	good	medium	76
+123	Available	Today	1630	2	Innisfail	unknown	Excellent	Unknown	fair	high	75
+124	Available	12d	1660	2	Calgary Region	included	Good	Yes	unknown	low	76
+125	Available	13d	1940	3	Edmonton Region	partial	Fair	No	excellent	medium	75
+126	Watch	Today	800	Room	Red Deer	extra	Low	Ask	good	medium	84
+127	Available	1d	1500	1	Springbrook	unknown	Excellent	Unknown	good	high	80
+128	Available	2d	1530	1	Penhold	included	Good	Yes	fair	low	81
+129	Available	Today	1810	2	Sylvan Lake	partial	Fair	No	unknown	medium	80
+130	Available	4d	1450	2	Lacombe	extra	Low	Ask	excellent	medium	83
+131	Available	5d	1730	3	Blackfalds	unknown	Excellent	Unknown	good	high	82
+132	Available	Today	1010	Room	Innisfail	included	Good	Yes	good	low	77
+133	Available	7d	1290	1	Calgary Region	partial	Fair	No	fair	medium	76
+134	Available	8d	1320	1	Edmonton Region	extra	Low	Ask	unknown	medium	77
+135	Watch	Today	1600	2	Red Deer	unknown	Excellent	Unknown	excellent	high	76
+136	Expired	10d	1630	2	Springbrook	included	Good	Yes	good	low	77
+137	Available	11d	1910	3	Penhold	partial	Fair	No	good	medium	76
+138	Available	Today	905	Room	Sylvan Lake	extra	Low	Ask	fair	medium	84
+139	Available	13d	1470	1	Lacombe	unknown	Excellent	Unknown	unknown	high	81
+140	Available	0d	1500	1	Blackfalds	included	Good	Yes	excellent	low	82
+141	Available	Today	1780	2	Innisfail	partial	Fair	No	good	medium	81
+142	Available	2d	1810	2	Calgary Region	extra	Low	Ask	good	medium	82
+143	Available	3d	1700	3	Edmonton Region	unknown	Excellent	Unknown	fair	high	73
+144	Watch	Today	800	Room	Red Deer	included	Good	Yes	unknown	low	80
+145	Available	5d	1260	1	Springbrook	partial	Fair	No	excellent	medium	78
+146	Available	6d	1290	1	Penhold	extra	Low	Ask	good	medium	78
+147	Available	Today	1570	2	Sylvan Lake	unknown	Excellent	Unknown	good	high	78
+148	Available	8d	1600	2	Lacombe	included	Good	Yes	fair	low	78
+149	Available	9d	1880	3	Blackfalds	partial	Fair	No	unknown	medium	77
+150	Available	Today	1010	Room	Innisfail	extra	Low	Ask	excellent	medium	84
+151	Available	11d	1440	1	Calgary Region	unknown	Excellent	Unknown	good	high	82
+152	Available	12d	1470	1	Edmonton Region	included	Good	Yes	good	low	83
+153	Expired	Today	1750	2	Red Deer	partial	Fair	No	fair	medium	82
+154	Available	0d	1780	2	Springbrook	extra	Low	Ask	unknown	medium	72
+155	Available	1d	2060	3	Penhold	unknown	Excellent	Unknown	excellent	high	71
+156	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	good	low	80
+157	Available	3d	1230	1	Lacombe	partial	Fair	No	good	medium	79
+158	Available	4d	1260	1	Blackfalds	extra	Low	Ask	fair	medium	80
+159	Available	Today	1540	2	Innisfail	unknown	Excellent	Unknown	unknown	high	79
+160	Available	6d	1570	2	Calgary Region	included	Good	Yes	excellent	low	80
+161	Available	7d	1850	3	Edmonton Region	partial	Fair	No	good	medium	79
+162	Watch	Today	800	Room	Red Deer	extra	Low	Ask	good	medium	87
+163	Available	9d	1410	1	Springbrook	unknown	Excellent	Unknown	fair	high	84
+164	Available	10d	1440	1	Penhold	included	Good	Yes	unknown	low	84
+165	Available	Today	1720	2	Sylvan Lake	partial	Fair	No	excellent	medium	73
+166	Available	12d	1750	2	Lacombe	extra	Low	Ask	good	medium	73
+167	Available	13d	2030	3	Blackfalds	unknown	Excellent	Unknown	good	high	72
+168	Available	Today	1010	Room	Innisfail	included	Good	Yes	fair	low	80
+169	Available	1d	1200	1	Calgary Region	partial	Fair	No	unknown	medium	80
+170	Expired	2d	1230	1	Edmonton Region	extra	Low	Ask	excellent	medium	81
+171	Watch	Today	1510	2	Red Deer	unknown	Excellent	Unknown	good	high	80
+172	Available	4d	1540	2	Springbrook	included	Good	Yes	good	low	81
+173	Available	5d	1820	3	Penhold	partial	Fair	No	fair	medium	80
+174	Available	Today	905	Room	Sylvan Lake	extra	Low	Ask	unknown	medium	87
+175	Available	7d	1380	1	Lacombe	unknown	Excellent	Unknown	excellent	high	85
+176	Available	8d	1410	1	Blackfalds	included	Good	Yes	good	low	75
+177	Available	Today	1690	2	Innisfail	partial	Fair	No	good	medium	74
+178	Available	10d	1720	2	Calgary Region	extra	Low	Ask	fair	medium	75
+179	Available	11d	2000	3	Edmonton Region	unknown	Excellent	Unknown	unknown	high	74
+180	Watch	Today	800	Room	Red Deer	included	Good	Yes	excellent	low	83
+181	Available	13d	1560	1	Springbrook	partial	Fair	No	good	medium	79
+182	Available	0d	1200	1	Penhold	extra	Low	Ask	good	medium	82
+183	Available	Today	1480	2	Sylvan Lake	unknown	Excellent	Unknown	fair	high	81
+184	Available	2d	1510	2	Lacombe	included	Good	Yes	unknown	low	82
+185	Available	3d	1790	3	Blackfalds	partial	Fair	No	excellent	medium	81
+186	Available	Today	1010	Room	Innisfail	extra	Low	Ask	good	medium	87
+187	Expired	5d	1350	1	Calgary Region	unknown	Excellent	Unknown	good	high	75
+188	Available	6d	1380	1	Edmonton Region	included	Good	Yes	fair	low	76
+189	Watch	Today	1660	2	Red Deer	partial	Fair	No	unknown	medium	75
+190	Available	8d	1690	2	Springbrook	extra	Low	Ask	excellent	medium	76
+191	Available	9d	1970	3	Penhold	unknown	Excellent	Unknown	good	high	75
+192	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	good	low	83
+193	Available	11d	1530	1	Lacombe	partial	Fair	No	fair	medium	80
+194	Available	12d	1560	1	Blackfalds	extra	Low	Ask	unknown	medium	81
+195	Available	Today	1450	2	Innisfail	unknown	Excellent	Unknown	excellent	high	82
+196	Available	0d	1480	2	Calgary Region	included	Good	Yes	good	low	83
+197	Available	1d	1760	3	Edmonton Region	partial	Fair	No	good	medium	82
+198	Watch	Today	800	Room	Red Deer	extra	Low	Ask	fair	medium	79
+199	Available	3d	1320	1	Springbrook	unknown	Excellent	Unknown	unknown	high	76
+200	Available	4d	1350	1	Penhold	included	Good	Yes	excellent	low	77
+201	Available	Today	1630	2	Sylvan Lake	partial	Fair	No	good	medium	76
+202	Available	6d	1660	2	Lacombe	extra	Low	Ask	good	medium	77
+203	Available	7d	1940	3	Blackfalds	unknown	Excellent	Unknown	fair	high	76
+204	Expired	Today	1010	Room	Innisfail	included	Good	Yes	unknown	low	83
+205	Available	9d	1500	1	Calgary Region	partial	Fair	No	excellent	medium	81
+206	Available	10d	1530	1	Edmonton Region	extra	Low	Ask	good	medium	82
+207	Watch	Today	1810	2	Red Deer	unknown	Excellent	Unknown	good	high	81
+208	Available	12d	1450	2	Springbrook	included	Good	Yes	fair	low	84
+209	Available	13d	1730	3	Penhold	partial	Fair	No	unknown	medium	72
+210	Available	Today	905	Room	Sylvan Lake	extra	Low	Ask	excellent	medium	79
+211	Available	1d	1290	1	Lacombe	unknown	Excellent	Unknown	good	high	77
+212	Available	2d	1320	1	Blackfalds	included	Good	Yes	good	low	78
+213	Available	Today	1600	2	Innisfail	partial	Fair	No	fair	medium	77
+214	Available	4d	1630	2	Calgary Region	extra	Low	Ask	unknown	medium	78
+215	Available	5d	1910	3	Edmonton Region	unknown	Excellent	Unknown	excellent	high	77
+216	Watch	Today	800	Room	Red Deer	included	Good	Yes	good	low	86
+217	Available	7d	1470	1	Springbrook	partial	Fair	No	good	medium	82
+218	Available	8d	1500	1	Penhold	extra	Low	Ask	fair	medium	83
+219	Available	Today	1780	2	Sylvan Lake	unknown	Excellent	Unknown	unknown	high	82
+220	Available	10d	1810	2	Lacombe	included	Good	Yes	excellent	low	72
+221	Expired	11d	1700	3	Blackfalds	partial	Fair	No	good	medium	74
+222	Available	Today	1010	Room	Innisfail	extra	Low	Ask	good	medium	79
+223	Available	13d	1260	1	Calgary Region	unknown	Excellent	Unknown	fair	high	79
+224	Available	0d	1290	1	Edmonton Region	included	Good	Yes	unknown	low	79
+225	Watch	Today	1570	2	Red Deer	partial	Fair	No	excellent	medium	79
+226	Available	2d	1600	2	Springbrook	extra	Low	Ask	good	medium	79
+227	Available	3d	1880	3	Penhold	unknown	Excellent	Unknown	good	high	78
+228	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	fair	low	86
+229	Available	5d	1440	1	Lacombe	partial	Fair	No	unknown	medium	83
+230	Available	6d	1470	1	Blackfalds	extra	Low	Ask	excellent	medium	84
+231	Available	Today	1750	2	Innisfail	unknown	Excellent	Unknown	good	high	72
+232	Available	8d	1780	2	Calgary Region	included	Good	Yes	good	low	73
+233	Available	9d	2060	3	Edmonton Region	partial	Fair	No	fair	medium	72
+234	Watch	Today	800	Room	Red Deer	extra	Low	Ask	unknown	medium	82
+235	Available	11d	1230	1	Springbrook	unknown	Excellent	Unknown	excellent	high	80
+236	Available	12d	1260	1	Penhold	included	Good	Yes	good	low	81
+237	Available	Today	1540	2	Sylvan Lake	partial	Fair	No	good	medium	80
+238	Expired	0d	1570	2	Lacombe	extra	Low	Ask	fair	medium	81
+239	Available	1d	1850	3	Blackfalds	unknown	Excellent	Unknown	unknown	high	80
+240	Available	Today	1010	Room	Innisfail	included	Good	Yes	excellent	low	86
+241	Available	3d	1410	1	Calgary Region	partial	Fair	No	good	medium	85
+242	Available	4d	1440	1	Edmonton Region	extra	Low	Ask	good	medium	74
+243	Watch	Today	1720	2	Red Deer	unknown	Excellent	Unknown	fair	high	74
+244	Available	6d	1750	2	Springbrook	included	Good	Yes	unknown	low	74
+245	Available	7d	2030	3	Penhold	partial	Fair	No	excellent	medium	73
+246	Available	Today	905	Room	Sylvan Lake	extra	Low	Ask	good	medium	82
+247	Available	9d	1200	1	Lacombe	unknown	Excellent	Unknown	good	high	81
+248	Available	10d	1230	1	Blackfalds	included	Good	Yes	fair	low	82
+249	Available	Today	1510	2	Innisfail	partial	Fair	No	unknown	medium	81
+250	Available	12d	1540	2	Calgary Region	extra	Low	Ask	excellent	medium	82
+251	Available	13d	1820	3	Edmonton Region	unknown	Excellent	Unknown	good	high	81
+252	Watch	Today	800	Room	Red Deer	included	Good	Yes	good	low	89
+253	Available	1d	1380	1	Springbrook	partial	Fair	No	fair	medium	75
+254	Available	2d	1410	1	Penhold	extra	Low	Ask	unknown	medium	76
+255	Expired	Today	1690	2	Sylvan Lake	unknown	Excellent	Unknown	excellent	high	75
+256	Available	4d	1720	2	Lacombe	included	Good	Yes	good	low	76
+257	Available	5d	2000	3	Blackfalds	partial	Fair	No	good	medium	75
+258	Available	Today	1010	Room	Innisfail	extra	Low	Ask	fair	medium	82
+259	Available	7d	1560	1	Calgary Region	unknown	Excellent	Unknown	unknown	high	80
+260	Available	8d	1200	1	Edmonton Region	included	Good	Yes	excellent	low	83
+261	Watch	Today	1480	2	Red Deer	partial	Fair	No	good	medium	82
+262	Available	10d	1510	2	Springbrook	extra	Low	Ask	good	medium	83
+263	Available	11d	1790	3	Penhold	unknown	Excellent	Unknown	fair	high	82
+264	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	unknown	low	78
+265	Available	13d	1350	1	Lacombe	partial	Fair	No	excellent	medium	76
+266	Available	0d	1380	1	Blackfalds	extra	Low	Ask	good	medium	77
+267	Available	Today	1660	2	Innisfail	unknown	Excellent	Unknown	good	high	76
+268	Available	2d	1690	2	Calgary Region	included	Good	Yes	fair	low	77
+269	Available	3d	1970	3	Edmonton Region	partial	Fair	No	unknown	medium	76
+270	Watch	Today	800	Room	Red Deer	extra	Low	Ask	excellent	medium	85
+271	Available	5d	1530	1	Springbrook	unknown	Excellent	Unknown	good	high	81
+272	Expired	6d	1560	1	Penhold	included	Good	Yes	good	low	82
+273	Available	Today	1450	2	Sylvan Lake	partial	Fair	No	fair	medium	83
+274	Available	8d	1480	2	Lacombe	extra	Low	Ask	unknown	medium	84
+275	Available	9d	1760	3	Blackfalds	unknown	Excellent	Unknown	excellent	high	72
+276	Available	Today	1010	Room	Innisfail	included	Good	Yes	good	low	78
+277	Available	11d	1320	1	Calgary Region	partial	Fair	No	good	medium	77
+278	Available	12d	1350	1	Edmonton Region	extra	Low	Ask	fair	medium	78
+279	Watch	Today	1630	2	Red Deer	unknown	Excellent	Unknown	unknown	high	77
+280	Available	0d	1660	2	Springbrook	included	Good	Yes	excellent	low	78
+281	Available	1d	1940	3	Penhold	partial	Fair	No	good	medium	77
+282	Available	Today	905	Room	Sylvan Lake	extra	Low	Ask	good	medium	85
+283	Available	3d	1500	1	Lacombe	unknown	Excellent	Unknown	fair	high	82
+284	Available	4d	1530	1	Blackfalds	included	Good	Yes	unknown	low	83
+285	Available	Today	1810	2	Innisfail	partial	Fair	No	excellent	medium	82
+286	Available	6d	1450	2	Calgary Region	extra	Low	Ask	good	medium	74
+287	Available	7d	1730	3	Edmonton Region	unknown	Excellent	Unknown	good	high	73
+288	Watch	Today	800	Room	Red Deer	included	Good	Yes	fair	low	81
+289	Expired	9d	1290	1	Springbrook	partial	Fair	No	unknown	medium	78
+290	Available	10d	1320	1	Penhold	extra	Low	Ask	excellent	medium	79
+291	Available	Today	1600	2	Sylvan Lake	unknown	Excellent	Unknown	good	high	78
+292	Available	12d	1630	2	Lacombe	included	Good	Yes	good	low	79
+293	Available	13d	1910	3	Blackfalds	partial	Fair	No	fair	medium	78
+294	Available	Today	1010	Room	Innisfail	extra	Low	Ask	unknown	medium	85
+295	Available	1d	1470	1	Calgary Region	unknown	Excellent	Unknown	excellent	high	83
+296	Available	2d	1500	1	Edmonton Region	included	Good	Yes	good	low	84
+297	Watch	Today	1780	2	Red Deer	partial	Fair	No	good	medium	72
+298	Available	4d	1810	2	Springbrook	extra	Low	Ask	fair	medium	73
+299	Available	5d	1700	3	Penhold	unknown	Excellent	Unknown	unknown	high	75
+300	Available	Today	905	Room	Sylvan Lake	included	Good	Yes	excellent	low	81
+301	Available	7d	1260	1	Lacombe	partial	Fair	No	good	medium	80
+302	Available	8d	1290	1	Blackfalds	extra	Low	Ask	good	medium	80
+303	Available	Today	1570	2	Innisfail	unknown	Excellent	Unknown	fair	high	80
+304	Available	10d	1600	2	Calgary Region	included	Good	Yes	unknown	low	80
+305	Available	11d	1880	3	Edmonton Region	partial	Fair	No	excellent	medium	79
+306	Expired	Today	800	Room	Red Deer	extra	Low	Ask	good	medium	88
+307	Available	13d	1440	1	Springbrook	unknown	Excellent	Unknown	good	high	84
+308	Available	0d	1470	1	Penhold	included	Good	Yes	fair	low	74
+309	Available	Today	1750	2	Sylvan Lake	partial	Fair	No	unknown	medium	73
+310	Available	2d	1780	2	Lacombe	extra	Low	Ask	excellent	medium	74
+311	Available	3d	2060	3	Blackfalds	unknown	Excellent	Unknown	good	high	73
+312	Available	Today	1010	Room	Innisfail	included	Good	Yes	good	low	81
+313	Available	5d	1230	1	Calgary Region	partial	Fair	No	fair	medium	81
+314	Available	6d	1260	1	Edmonton Region	extra	Low	Ask	unknown	medium	82
+315	Watch	Today	1540	2	Red Deer	unknown	Excellent	Unknown	excellent	high	81
+316	Available	8d	1570	2	Springbrook	included	Good	Yes	good	low	82
+317	Available	9d	1850	3	Penhold	partial	Fair	No	good	medium	81
+318	Available	Today	905	Room	Sylvan Lake	extra	Low	Ask	fair	medium	88
+319	Available	11d	1410	1	Lacombe	unknown	Excellent	Unknown	unknown	high	75
+320	Available	12d	1440	1	Blackfalds	included	Good	Yes	excellent	low	75

@@ -1,0 +1,163 @@
+# sample_data_code: SD_HUM_PER-MUN_SHEL_OWN_HOME_BULK_v002
+# label: Bulk Personal/Municipal Shelter Ownership Options
+item	status	type	price	down	monthly	location	fees	condition	risk	cvu
+001	Available	Modular	148500	29700	808	Springbrook	condo fees	fair	medium	79
+002	Available	House	227000	45400	1235	Penhold	lot rent	unknown	medium	77
+003	Available	Land	80500	16100	438	Sylvan Lake	taxes	excellent	high	83
+004	Available	Townhouse	234000	46800	1273	Lacombe	none	good	low	79
+005	Available	Condo	112500	22500	612	Blackfalds	condo fees	fair	medium	84
+006	Available	Modular	166000	33200	903	Innisfail	lot rent	unknown	medium	83
+007	Available	House	244500	48900	1330	Calgary Region	taxes	excellent	high	82
+008	Available	Land	98000	19600	533	Edmonton Region	none	good	low	87
+009	Available	Townhouse	251500	50300	1368	Red Deer	condo fees	fair	medium	83
+010	Watch	Condo	130000	26000	707	Springbrook	lot rent	unknown	medium	88
+011	Available	Modular	183500	36700	998	Penhold	taxes	excellent	high	87
+012	Available	House	262000	52400	1425	Sylvan Lake	none	good	low	86
+013	Available	Land	115500	23100	628	Lacombe	condo fees	fair	medium	79
+014	Available	Townhouse	269000	53800	1463	Blackfalds	lot rent	unknown	medium	75
+015	Available	Condo	147500	29500	802	Innisfail	taxes	excellent	high	80
+016	Available	Modular	201000	40200	1093	Calgary Region	none	good	low	79
+017	Available	House	279500	55900	1520	Edmonton Region	condo fees	fair	medium	78
+018	Available	Land	133000	26600	724	Red Deer	lot rent	unknown	medium	83
+019	Available	Townhouse	286500	57300	1559	Springbrook	taxes	excellent	high	79
+020	Watch	Condo	165000	33000	898	Penhold	none	good	low	84
+021	Available	Modular	218500	43700	1189	Sylvan Lake	condo fees	fair	medium	83
+022	Available	House	297000	59400	1616	Lacombe	lot rent	unknown	medium	82
+023	Available	Land	150500	30100	819	Blackfalds	taxes	excellent	high	87
+024	Available	Townhouse	304000	60800	1654	Innisfail	none	good	low	84
+025	Available	Condo	182500	36500	993	Calgary Region	condo fees	fair	medium	88
+026	Available	Modular	236000	47200	1284	Edmonton Region	lot rent	unknown	medium	75
+027	Available	House	314500	62900	1711	Red Deer	taxes	excellent	high	73
+028	Available	Land	168000	33600	914	Springbrook	none	good	low	79
+029	Available	Townhouse	321500	64300	1749	Penhold	condo fees	fair	medium	75
+030	Watch	Condo	200000	40000	1088	Sylvan Lake	lot rent	unknown	medium	80
+031	Available	Modular	253500	50700	1379	Lacombe	taxes	excellent	high	79
+032	Available	House	332000	66400	1806	Blackfalds	none	good	low	78
+033	Available	Land	185500	37100	1009	Innisfail	condo fees	fair	medium	83
+034	Available	Townhouse	339000	67800	1844	Calgary Region	lot rent	unknown	medium	80
+035	Available	Condo	217500	43500	1183	Edmonton Region	taxes	excellent	high	84
+036	Available	Modular	271000	54200	1474	Red Deer	none	good	low	84
+037	Available	House	220000	44000	1197	Springbrook	condo fees	fair	medium	86
+038	Available	Land	73500	14700	400	Penhold	lot rent	unknown	medium	92
+039	Available	Townhouse	227000	45400	1235	Sylvan Lake	taxes	excellent	high	75
+040	Watch	Condo	105500	21100	574	Lacombe	none	good	low	80
+041	Available	Modular	159000	31800	865	Blackfalds	condo fees	fair	medium	79
+042	Available	House	237500	47500	1292	Innisfail	lot rent	unknown	medium	78
+043	Available	Land	91000	18200	495	Calgary Region	taxes	excellent	high	83
+044	Available	Townhouse	244500	48900	1330	Edmonton Region	none	good	low	80
+045	Available	Condo	123000	24600	669	Red Deer	condo fees	fair	medium	84
+046	Available	Modular	176500	35300	960	Springbrook	lot rent	unknown	medium	84
+047	Available	House	255000	51000	1387	Penhold	taxes	excellent	high	82
+048	Available	Land	108500	21700	590	Sylvan Lake	none	good	low	88
+049	Available	Townhouse	262000	52400	1425	Lacombe	condo fees	fair	medium	84
+050	Watch	Condo	140500	28100	764	Blackfalds	lot rent	unknown	medium	89
+051	Available	Modular	194000	38800	1055	Innisfail	taxes	excellent	high	88
+052	Available	House	272500	54500	1482	Calgary Region	none	good	low	74
+053	Available	Land	126000	25200	685	Edmonton Region	condo fees	fair	medium	79
+054	Available	Townhouse	279500	55900	1520	Red Deer	lot rent	unknown	medium	76
+055	Available	Condo	158000	31600	860	Springbrook	taxes	excellent	high	80
+056	Available	Modular	211500	42300	1151	Penhold	none	good	low	80
+057	Available	House	290000	58000	1578	Sylvan Lake	condo fees	fair	medium	78
+058	Available	Land	143500	28700	781	Lacombe	lot rent	unknown	medium	84
+059	Available	Townhouse	297000	59400	1616	Blackfalds	taxes	excellent	high	80
+060	Watch	Condo	175500	35100	955	Innisfail	none	good	low	85
+061	Available	Modular	229000	45800	1246	Calgary Region	condo fees	fair	medium	84
+062	Available	House	307500	61500	1673	Edmonton Region	lot rent	unknown	medium	83
+063	Available	Land	161000	32200	876	Red Deer	taxes	excellent	high	88
+064	Available	Townhouse	314500	62900	1711	Springbrook	none	good	low	84
+065	Available	Condo	193000	38600	1050	Penhold	condo fees	fair	medium	76
+066	Available	Modular	246500	49300	1341	Sylvan Lake	lot rent	unknown	medium	76
+067	Available	House	325000	65000	1768	Lacombe	taxes	excellent	high	74
+068	Available	Land	178500	35700	971	Blackfalds	none	good	low	80
+069	Available	Townhouse	332000	66400	1806	Innisfail	condo fees	fair	medium	76
+070	Watch	Condo	210500	42100	1145	Calgary Region	lot rent	unknown	medium	81
+071	Available	Modular	264000	52800	1436	Edmonton Region	taxes	excellent	high	80
+072	Available	House	342500	68500	1863	Red Deer	none	good	low	79
+073	Available	Land	196000	39200	1066	Springbrook	condo fees	fair	medium	84
+074	Available	Townhouse	220000	44000	1197	Penhold	lot rent	unknown	medium	84
+075	Available	Condo	98500	19700	536	Sylvan Lake	taxes	excellent	high	89
+076	Available	Modular	152000	30400	827	Lacombe	none	good	low	88
+077	Available	House	230500	46100	1254	Blackfalds	condo fees	fair	medium	87
+078	Available	Land	84000	16800	457	Innisfail	lot rent	unknown	medium	79
+079	Available	Townhouse	237500	47500	1292	Calgary Region	taxes	excellent	high	76
+080	Watch	Condo	116000	23200	631	Edmonton Region	none	good	low	80
+081	Available	Modular	169500	33900	922	Red Deer	condo fees	fair	medium	80
+082	Available	House	248000	49600	1349	Springbrook	lot rent	unknown	medium	79
+083	Available	Land	101500	20300	552	Penhold	taxes	excellent	high	84
+084	Available	Townhouse	255000	51000	1387	Sylvan Lake	none	good	low	80
+085	Available	Condo	133500	26700	726	Lacombe	condo fees	fair	medium	85
+086	Available	Modular	187000	37400	1017	Blackfalds	lot rent	unknown	medium	84
+087	Available	House	265500	53100	1444	Innisfail	taxes	excellent	high	83
+088	Available	Land	119000	23800	647	Calgary Region	none	good	low	88
+089	Available	Townhouse	272500	54500	1482	Edmonton Region	condo fees	fair	medium	85
+090	Watch	Condo	151000	30200	821	Red Deer	lot rent	unknown	medium	89
+091	Available	Modular	204500	40900	1112	Springbrook	taxes	excellent	high	76
+092	Available	House	283000	56600	1540	Penhold	none	good	low	74
+093	Available	Land	136500	27300	743	Sylvan Lake	condo fees	fair	medium	80
+094	Available	Townhouse	290000	58000	1578	Lacombe	lot rent	unknown	medium	76
+095	Available	Condo	168500	33700	917	Blackfalds	taxes	excellent	high	81
+096	Available	Modular	222000	44400	1208	Innisfail	none	good	low	80
+097	Available	House	300500	60100	1635	Calgary Region	condo fees	fair	medium	79
+098	Available	Land	154000	30800	838	Edmonton Region	lot rent	unknown	medium	84
+099	Available	Townhouse	307500	61500	1673	Red Deer	taxes	excellent	high	81
+100	Watch	Condo	186000	37200	1012	Springbrook	none	good	low	85
+101	Available	Modular	239500	47900	1303	Penhold	condo fees	fair	medium	85
+102	Available	House	318000	63600	1730	Sylvan Lake	lot rent	unknown	medium	83
+103	Available	Land	171500	34300	933	Lacombe	taxes	excellent	high	89
+104	Available	Townhouse	325000	65000	1768	Blackfalds	none	good	low	72
+105	Available	Condo	203500	40700	1107	Innisfail	condo fees	fair	medium	77
+106	Available	Modular	257000	51400	1398	Calgary Region	lot rent	unknown	medium	76
+107	Available	House	335500	67100	1825	Edmonton Region	taxes	excellent	high	75
+108	Available	Land	189000	37800	1028	Red Deer	none	good	low	80
+109	Available	Townhouse	342500	68500	1863	Springbrook	condo fees	fair	medium	77
+110	Watch	Condo	221000	44200	1202	Penhold	lot rent	unknown	medium	81
+111	Available	Modular	145000	29000	789	Sylvan Lake	taxes	excellent	high	85
+112	Available	House	223500	44700	1216	Lacombe	none	good	low	83
+113	Available	Land	77000	15400	419	Blackfalds	condo fees	fair	medium	89
+114	Available	Townhouse	230500	46100	1254	Innisfail	lot rent	unknown	medium	85
+115	Available	Condo	109000	21800	593	Calgary Region	taxes	excellent	high	90
+116	Available	Modular	162500	32500	884	Edmonton Region	none	good	low	89
+117	Available	House	241000	48200	1311	Red Deer	condo fees	fair	medium	75
+118	Available	Land	94500	18900	514	Springbrook	lot rent	unknown	medium	80
+119	Available	Townhouse	248000	49600	1349	Penhold	taxes	excellent	high	77
+120	Watch	Condo	126500	25300	688	Sylvan Lake	none	good	low	81
+121	Available	Modular	180000	36000	979	Lacombe	condo fees	fair	medium	81
+122	Available	House	258500	51700	1406	Blackfalds	lot rent	unknown	medium	79
+123	Available	Land	112000	22400	609	Innisfail	taxes	excellent	high	85
+124	Available	Townhouse	265500	53100	1444	Calgary Region	none	good	low	81
+125	Available	Condo	144000	28800	783	Edmonton Region	condo fees	fair	medium	86
+126	Available	Modular	197500	39500	1074	Red Deer	lot rent	unknown	medium	85
+127	Available	House	276000	55200	1501	Springbrook	taxes	excellent	high	84
+128	Available	Land	129500	25900	704	Penhold	none	good	low	89
+129	Available	Townhouse	283000	56600	1540	Sylvan Lake	condo fees	fair	medium	85
+130	Watch	Condo	161500	32300	879	Lacombe	lot rent	unknown	medium	77
+131	Available	Modular	215000	43000	1170	Blackfalds	taxes	excellent	high	76
+132	Available	House	293500	58700	1597	Innisfail	none	good	low	75
+133	Available	Land	147000	29400	800	Calgary Region	condo fees	fair	medium	81
+134	Available	Townhouse	300500	60100	1635	Edmonton Region	lot rent	unknown	medium	77
+135	Available	Condo	179000	35800	974	Red Deer	taxes	excellent	high	82
+136	Available	Modular	232500	46500	1265	Springbrook	none	good	low	81
+137	Available	House	311000	62200	1692	Penhold	condo fees	fair	medium	80
+138	Available	Land	164500	32900	895	Sylvan Lake	lot rent	unknown	medium	85
+139	Available	Townhouse	318000	63600	1730	Lacombe	taxes	excellent	high	81
+140	Watch	Condo	196500	39300	1069	Blackfalds	none	good	low	86
+141	Available	Modular	250000	50000	1360	Innisfail	condo fees	fair	medium	85
+142	Available	House	328500	65700	1787	Calgary Region	lot rent	unknown	medium	84
+143	Available	Land	182000	36400	990	Edmonton Region	taxes	excellent	high	76
+144	Available	Townhouse	335500	67100	1825	Red Deer	none	good	low	73
+145	Available	Condo	214000	42800	1164	Springbrook	condo fees	fair	medium	78
+146	Available	Modular	267500	53500	1455	Penhold	lot rent	unknown	medium	77
+147	Available	House	346000	69200	1882	Sylvan Lake	taxes	excellent	high	76
+148	Available	Land	70000	14000	381	Lacombe	none	good	low	85
+149	Available	Townhouse	223500	44700	1216	Blackfalds	condo fees	fair	medium	81
+150	Watch	Condo	102000	20400	555	Innisfail	lot rent	unknown	medium	86
+151	Available	Modular	155500	31100	846	Calgary Region	taxes	excellent	high	85
+152	Available	House	234000	46800	1273	Edmonton Region	none	good	low	84
+153	Available	Land	87500	17500	476	Red Deer	condo fees	fair	medium	89
+154	Available	Townhouse	241000	48200	1311	Springbrook	lot rent	unknown	medium	86
+155	Available	Condo	119500	23900	650	Penhold	taxes	excellent	high	90
+156	Available	Modular	173000	34600	941	Sylvan Lake	none	good	low	77
+157	Available	House	251500	50300	1368	Lacombe	condo fees	fair	medium	75
+158	Available	Land	105000	21000	571	Blackfalds	lot rent	unknown	medium	81
+159	Available	Townhouse	258500	51700	1406	Innisfail	taxes	excellent	high	77
+160	Watch	Condo	137000	27400	745	Calgary Region	none	good	low	82

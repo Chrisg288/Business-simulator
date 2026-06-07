@@ -1,0 +1,423 @@
+# sample_data_code: SD_HUM_PER-REG_TRAN_VEH_PASS_BULK_v002
+# label: Bulk Personal/Regional Passenger Vehicle Listings
+item	status	posted	ask_price	year	make	model	body_style	odometer_km	condition	cert	risk	cvu
+001	FS	1d	5049	2005	Honda	Odyssey	suv	92193	fair	-	low	83
+002	FS	2d	5223	2006	Dodge	Grand Caravan	car	99386	unknown	-	low	84
+003	FS	3d	5397	2007	Ford	Transit Connect	truck	106579	excellent	-	low	85
+004	FS	4d	5571	2008	Chevrolet	Express	wagon	113772	good	-	low	86
+005	FS	5d	5746	2009	GMC	Savana	van	120965	fair	Yes	low	87
+006	FS	6d	5920	2010	Hyundai	Elantra	suv	128158	unknown	-	low	88
+007	FS	7d	6094	2011	Kia	Sedona	car	135351	excellent	-	low	89
+008	FS	8d	6268	2012	Mazda	Mazda5	truck	142544	good	-	low	90
+009	FS	9d	6442	2013	Volkswagen	Golf	wagon	149737	fair	-	low	82
+010	FS	10d	6617	2014	Subaru	Outback	van	156930	unknown	Yes	low	83
+011	FS	11d	6791	2015	Nissan	Rogue	suv	164123	excellent	-	low	84
+012	Watch	12d	6965	2016	Toyota	Sienna	car	171316	good	-	low	85
+013	FS	13d	7139	2017	Honda	Odyssey	truck	178509	fair	-	low	86
+014	FS	14d	7314	2018	Dodge	Grand Caravan	wagon	185702	unknown	-	low	87
+015	FS	15d	7488	2019	Ford	Transit Connect	van	192895	excellent	Yes	medium	88
+016	FS	16d	7662	2020	Chevrolet	Express	suv	200088	good	-	medium	89
+017	FS	17d	7836	2021	GMC	Savana	car	207281	fair	-	medium	90
+018	FS	18d	8010	2022	Hyundai	Elantra	truck	214474	unknown	-	medium	82
+019	FS	19d	8185	2023	Kia	Sedona	wagon	221667	excellent	-	medium	83
+020	FS	20d	5859	2004	Mazda	Mazda5	van	228860	good	Yes	medium	80
+021	FS	0d	6033	2005	Volkswagen	Golf	suv	236053	fair	-	medium	81
+022	FS	1d	6207	2006	Subaru	Outback	car	243246	unknown	-	medium	82
+023	FS	2d	2242	2007	Nissan	Rogue	truck	250439	excellent	-	medium	86
+024	Watch	3d	2416	2008	Toyota	Sienna	wagon	257632	good	-	medium	87
+025	FS	4d	2590	2009	Honda	Odyssey	van	264825	fair	Yes	medium	88
+026	FS	5d	2764	2010	Dodge	Grand Caravan	suv	272018	unknown	-	high	79
+027	FS	6d	2938	2011	Ford	Transit Connect	car	279211	excellent	-	high	71
+028	FS	7d	3113	2012	Chevrolet	Express	truck	286404	good	-	high	72
+029	FS	8d	3287	2013	GMC	Savana	wagon	293597	fair	-	high	73
+030	FS	9d	3461	2014	Hyundai	Elantra	van	300790	unknown	Yes	high	74
+031	FS	10d	3635	2015	Kia	Sedona	suv	307983	excellent	-	high	75
+032	FS	11d	3809	2016	Mazda	Mazda5	car	315176	good	-	high	76
+033	FS	12d	3984	2017	Volkswagen	Golf	truck	322369	fair	-	high	78
+034	FS	13d	4158	2018	Subaru	Outback	wagon	329562	unknown	-	high	79
+035	FS	14d	4332	2019	Nissan	Rogue	van	336755	excellent	Yes	high	80
+036	Watch	15d	4506	2020	Toyota	Sienna	suv	343948	good	-	high	72
+037	FS	16d	9408	2021	Honda	Odyssey	car	91141	fair	-	low	84
+038	FS	17d	9582	2022	Dodge	Grand Caravan	truck	98334	unknown	-	low	85
+039	FS	18d	9756	2023	Ford	Transit Connect	wagon	105527	excellent	-	low	87
+040	FS	19d	7431	2004	Chevrolet	Express	van	112720	good	Yes	low	83
+041	FS	20d	7605	2005	GMC	Savana	suv	119913	fair	-	low	84
+042	FS	0d	7779	2006	Hyundai	Elantra	car	127106	unknown	-	low	85
+043	FS	1d	7953	2007	Kia	Sedona	truck	134299	excellent	-	low	86
+044	FS	2d	8127	2008	Mazda	Mazda5	wagon	141492	good	-	low	87
+045	FS	3d	8302	2009	Volkswagen	Golf	van	148685	fair	Yes	low	79
+046	FS	4d	4336	2010	Subaru	Outback	suv	155878	unknown	-	low	84
+047	FS	5d	4510	2011	Nissan	Rogue	car	163071	excellent	-	low	85
+048	Watch	6d	4684	2012	Toyota	Sienna	truck	170264	good	-	low	86
+049	FS	7d	4858	2013	Honda	Odyssey	wagon	177457	fair	-	low	87
+050	FS	8d	5033	2014	Dodge	Grand Caravan	van	184650	unknown	Yes	low	88
+051	FS	9d	5207	2015	Ford	Transit Connect	suv	191843	excellent	-	medium	89
+052	FS	10d	5381	2016	Chevrolet	Express	car	199036	good	-	medium	90
+053	FS	11d	5555	2017	GMC	Savana	truck	206229	fair	-	medium	91
+054	FS	12d	5730	2018	Hyundai	Elantra	wagon	213422	unknown	-	medium	83
+055	FS	13d	5904	2019	Kia	Sedona	van	220615	excellent	Yes	medium	84
+056	FS	14d	6078	2020	Mazda	Mazda5	suv	227808	good	-	medium	85
+057	FS	15d	6252	2021	Volkswagen	Golf	car	235001	fair	-	medium	86
+058	FS	16d	6426	2022	Subaru	Outback	truck	242194	unknown	-	medium	87
+059	FS	17d	6601	2023	Nissan	Rogue	wagon	249387	excellent	-	medium	88
+060	Watch	18d	4275	2004	Toyota	Sienna	van	256580	good	Yes	medium	84
+061	FS	19d	4449	2005	Honda	Odyssey	suv	263773	fair	-	medium	85
+062	FS	20d	4623	2006	Dodge	Grand Caravan	car	270966	unknown	-	high	76
+063	FS	0d	4798	2007	Ford	Transit Connect	truck	278159	excellent	-	high	68
+064	FS	1d	4972	2008	Chevrolet	Express	wagon	285352	good	-	high	70
+065	FS	2d	5146	2009	GMC	Savana	van	292545	fair	Yes	high	71
+066	FS	3d	5320	2010	Hyundai	Elantra	suv	299738	unknown	-	high	72
+067	FS	4d	5494	2011	Kia	Sedona	car	306931	excellent	-	high	73
+068	FS	5d	5669	2012	Mazda	Mazda5	truck	314124	good	-	high	74
+069	FS	6d	1703	2013	Volkswagen	Golf	wagon	321317	fair	-	high	78
+070	FS	7d	1877	2014	Subaru	Outback	van	328510	unknown	Yes	high	79
+071	FS	8d	2051	2015	Nissan	Rogue	suv	335703	excellent	-	high	80
+072	Watch	9d	2225	2016	Toyota	Sienna	car	342896	good	-	high	72
+073	FS	10d	7127	2017	Honda	Odyssey	truck	90089	fair	-	low	85
+074	FS	11d	7301	2018	Dodge	Grand Caravan	wagon	97282	unknown	-	low	86
+075	FS	12d	7475	2019	Ford	Transit Connect	van	104475	excellent	Yes	low	87
+076	FS	13d	7650	2020	Chevrolet	Express	suv	111668	good	-	low	88
+077	FS	14d	7824	2021	GMC	Savana	car	118861	fair	-	low	89
+078	FS	15d	7998	2022	Hyundai	Elantra	truck	126054	unknown	-	low	90
+079	FS	16d	8172	2023	Kia	Sedona	wagon	133247	excellent	-	low	91
+080	FS	17d	5847	2004	Mazda	Mazda5	van	140440	good	Yes	low	88
+081	FS	18d	6021	2005	Volkswagen	Golf	suv	147633	fair	-	low	80
+082	FS	19d	6195	2006	Subaru	Outback	car	154826	unknown	-	low	81
+083	FS	20d	6369	2007	Nissan	Rogue	truck	162019	excellent	-	low	82
+084	Watch	0d	6543	2008	Toyota	Sienna	wagon	169212	good	-	low	83
+085	FS	1d	6718	2009	Honda	Odyssey	van	176405	fair	Yes	low	84
+086	FS	2d	6892	2010	Dodge	Grand Caravan	suv	183598	unknown	-	low	85
+087	FS	3d	7066	2011	Ford	Transit Connect	car	190791	excellent	-	medium	86
+088	FS	4d	7240	2012	Chevrolet	Express	truck	197984	good	-	medium	87
+089	FS	5d	7414	2013	GMC	Savana	wagon	205177	fair	-	medium	88
+090	FS	6d	7589	2014	Hyundai	Elantra	van	212370	unknown	Yes	medium	80
+091	FS	7d	7763	2015	Kia	Sedona	suv	219563	excellent	-	medium	81
+092	FS	8d	3797	2016	Mazda	Mazda5	car	226756	good	-	medium	85
+093	FS	9d	3971	2017	Volkswagen	Golf	truck	233949	fair	-	medium	86
+094	FS	10d	4146	2018	Subaru	Outback	wagon	241142	unknown	-	medium	88
+095	FS	11d	4320	2019	Nissan	Rogue	van	248335	excellent	Yes	medium	89
+096	Watch	12d	4494	2020	Toyota	Sienna	suv	255528	good	-	medium	90
+097	FS	13d	4668	2021	Honda	Odyssey	car	262721	fair	-	medium	91
+098	FS	14d	4842	2022	Dodge	Grand Caravan	truck	269914	unknown	-	medium	92
+099	FS	15d	5017	2023	Ford	Transit Connect	wagon	277107	excellent	-	high	74
+100	FS	16d	2691	2004	Chevrolet	Express	van	284300	good	Yes	high	70
+101	FS	17d	2865	2005	GMC	Savana	suv	291493	fair	-	high	71
+102	FS	18d	3039	2006	Hyundai	Elantra	car	298686	unknown	-	high	72
+103	FS	19d	3214	2007	Kia	Sedona	truck	305879	excellent	-	high	73
+104	FS	20d	3388	2008	Mazda	Mazda5	wagon	313072	good	-	high	74
+105	FS	0d	3562	2009	Volkswagen	Golf	van	320265	fair	Yes	high	75
+106	FS	1d	3736	2010	Subaru	Outback	suv	327458	unknown	-	high	76
+107	FS	2d	3910	2011	Nissan	Rogue	car	334651	excellent	-	high	77
+108	Watch	3d	4085	2012	Toyota	Sienna	truck	341844	good	-	high	69
+109	FS	4d	8986	2013	Honda	Odyssey	wagon	89037	fair	-	low	82
+110	FS	5d	9160	2014	Dodge	Grand Caravan	van	96230	unknown	Yes	low	83
+111	FS	6d	9335	2015	Ford	Transit Connect	suv	103423	excellent	-	low	84
+112	FS	7d	9509	2016	Chevrolet	Express	car	110616	good	-	low	85
+113	FS	8d	9683	2017	GMC	Savana	truck	117809	fair	-	low	86
+114	FS	9d	9857	2018	Hyundai	Elantra	wagon	125002	unknown	-	low	87
+115	FS	10d	5891	2019	Kia	Sedona	van	132195	excellent	Yes	low	92
+116	FS	11d	6066	2020	Mazda	Mazda5	suv	139388	good	-	low	93
+117	FS	12d	6240	2021	Volkswagen	Golf	car	146581	fair	-	low	85
+118	FS	13d	6414	2022	Subaru	Outback	truck	153774	unknown	-	low	86
+119	FS	14d	6588	2023	Nissan	Rogue	wagon	160967	excellent	-	low	87
+120	Watch	15d	4263	2004	Toyota	Sienna	van	168160	good	Yes	low	83
+121	FS	16d	4437	2005	Honda	Odyssey	suv	175353	fair	-	low	84
+122	FS	17d	4611	2006	Dodge	Grand Caravan	car	182546	unknown	-	low	85
+123	FS	18d	4785	2007	Ford	Transit Connect	truck	189739	excellent	-	low	86
+124	FS	19d	4959	2008	Chevrolet	Express	wagon	196932	good	-	medium	87
+125	FS	20d	5134	2009	GMC	Savana	van	204125	fair	Yes	medium	89
+126	FS	0d	5308	2010	Hyundai	Elantra	suv	211318	unknown	-	medium	81
+127	FS	1d	5482	2011	Kia	Sedona	car	218511	excellent	-	medium	82
+128	FS	2d	5656	2012	Mazda	Mazda5	truck	225704	good	-	medium	83
+129	FS	3d	5830	2013	Volkswagen	Golf	wagon	232897	fair	-	medium	84
+130	FS	4d	6005	2014	Subaru	Outback	van	240090	unknown	Yes	medium	85
+131	FS	5d	6179	2015	Nissan	Rogue	suv	247283	excellent	-	medium	86
+132	Watch	6d	6353	2016	Toyota	Sienna	car	254476	good	-	medium	87
+133	FS	7d	6527	2017	Honda	Odyssey	truck	261669	fair	-	medium	88
+134	FS	8d	6702	2018	Dodge	Grand Caravan	wagon	268862	unknown	-	medium	89
+135	FS	9d	6876	2019	Ford	Transit Connect	van	276055	excellent	Yes	high	71
+136	FS	10d	7050	2020	Chevrolet	Express	suv	283248	good	-	high	72
+137	FS	11d	7224	2021	GMC	Savana	car	290441	fair	-	high	73
+138	FS	12d	3258	2022	Hyundai	Elantra	truck	297634	unknown	-	high	77
+139	FS	13d	3433	2023	Kia	Sedona	wagon	304827	excellent	-	high	78
+140	FS	14d	1107	2004	Mazda	Mazda5	van	312020	good	Yes	high	75
+141	FS	15d	1281	2005	Volkswagen	Golf	suv	319213	fair	-	high	76
+142	FS	16d	1455	2006	Subaru	Outback	car	326406	unknown	-	high	77
+143	FS	17d	1630	2007	Nissan	Rogue	truck	333599	excellent	-	high	78
+144	Watch	18d	1804	2008	Toyota	Sienna	wagon	340792	good	-	high	70
+145	FS	19d	6705	2009	Honda	Odyssey	van	87985	fair	Yes	low	83
+146	FS	20d	6879	2010	Dodge	Grand Caravan	suv	95178	unknown	-	low	84
+147	FS	0d	7054	2011	Ford	Transit Connect	car	102371	excellent	-	low	85
+148	FS	1d	7228	2012	Chevrolet	Express	truck	109564	good	-	low	86
+149	FS	2d	7402	2013	GMC	Savana	wagon	116757	fair	-	low	87
+150	FS	3d	7576	2014	Hyundai	Elantra	van	123950	unknown	Yes	low	88
+151	FS	4d	7751	2015	Kia	Sedona	suv	131143	excellent	-	low	89
+152	FS	5d	7925	2016	Mazda	Mazda5	car	138336	good	-	low	90
+153	FS	6d	8099	2017	Volkswagen	Golf	truck	145529	fair	-	low	82
+154	FS	7d	8273	2018	Subaru	Outback	wagon	152722	unknown	-	low	83
+155	FS	8d	8447	2019	Nissan	Rogue	van	159915	excellent	Yes	low	84
+156	Watch	9d	8622	2020	Toyota	Sienna	suv	167108	good	-	low	85
+157	FS	10d	8796	2021	Honda	Odyssey	car	174301	fair	-	low	86
+158	FS	11d	8970	2022	Dodge	Grand Caravan	truck	181494	unknown	-	low	87
+159	FS	12d	9144	2023	Ford	Transit Connect	wagon	188687	excellent	-	low	88
+160	FS	13d	6819	2004	Chevrolet	Express	van	195880	good	Yes	medium	85
+161	FS	14d	2853	2005	GMC	Savana	suv	203073	fair	-	medium	89
+162	FS	15d	3027	2006	Hyundai	Elantra	car	210266	unknown	-	medium	81
+163	FS	16d	3201	2007	Kia	Sedona	truck	217459	excellent	-	medium	82
+164	FS	17d	3375	2008	Mazda	Mazda5	wagon	224652	good	-	medium	83
+165	FS	18d	3550	2009	Volkswagen	Golf	van	231845	fair	Yes	medium	84
+166	FS	19d	3724	2010	Subaru	Outback	suv	239038	unknown	-	medium	85
+167	FS	20d	3898	2011	Nissan	Rogue	car	246231	excellent	-	medium	86
+168	Watch	0d	4072	2012	Toyota	Sienna	truck	253424	good	-	medium	87
+169	FS	1d	4246	2013	Honda	Odyssey	wagon	260617	fair	-	medium	88
+170	FS	2d	4421	2014	Dodge	Grand Caravan	van	267810	unknown	Yes	medium	89
+171	FS	3d	4595	2015	Ford	Transit Connect	suv	275003	excellent	-	high	71
+172	FS	4d	4769	2016	Chevrolet	Express	car	282196	good	-	high	72
+173	FS	5d	4943	2017	GMC	Savana	truck	289389	fair	-	high	73
+174	FS	6d	5118	2018	Hyundai	Elantra	wagon	296582	unknown	-	high	74
+175	FS	7d	5292	2019	Kia	Sedona	van	303775	excellent	Yes	high	76
+176	FS	8d	5466	2020	Mazda	Mazda5	suv	310968	good	-	high	77
+177	FS	9d	5640	2021	Volkswagen	Golf	car	318161	fair	-	high	78
+178	FS	10d	5814	2022	Subaru	Outback	truck	325354	unknown	-	high	79
+179	FS	11d	5989	2023	Nissan	Rogue	wagon	332547	excellent	-	high	80
+180	Watch	12d	3663	2004	Toyota	Sienna	van	339740	good	Yes	high	67
+181	FS	13d	8564	2005	Honda	Odyssey	suv	86933	fair	-	low	80
+182	FS	14d	8739	2006	Dodge	Grand Caravan	car	94126	unknown	-	low	81
+183	FS	15d	8913	2007	Ford	Transit Connect	truck	101319	excellent	-	low	82
+184	FS	16d	4947	2008	Chevrolet	Express	wagon	108512	good	-	low	86
+185	FS	17d	5121	2009	GMC	Savana	van	115705	fair	Yes	low	87
+186	FS	18d	5295	2010	Hyundai	Elantra	suv	122898	unknown	-	low	89
+187	FS	19d	5470	2011	Kia	Sedona	car	130091	excellent	-	low	90
+188	FS	20d	5644	2012	Mazda	Mazda5	truck	137284	good	-	low	91
+189	FS	0d	5818	2013	Volkswagen	Golf	wagon	144477	fair	-	low	83
+190	FS	1d	5992	2014	Subaru	Outback	van	151670	unknown	Yes	low	84
+191	FS	2d	6167	2015	Nissan	Rogue	suv	158863	excellent	-	low	85
+192	Watch	3d	6341	2016	Toyota	Sienna	car	166056	good	-	low	86
+193	FS	4d	6515	2017	Honda	Odyssey	truck	173249	fair	-	low	87
+194	FS	5d	6689	2018	Dodge	Grand Caravan	wagon	180442	unknown	-	low	88
+195	FS	6d	6863	2019	Ford	Transit Connect	van	187635	excellent	Yes	low	89
+196	FS	7d	7038	2020	Chevrolet	Express	suv	194828	good	-	medium	90
+197	FS	8d	7212	2021	GMC	Savana	car	202021	fair	-	medium	91
+198	FS	9d	7386	2022	Hyundai	Elantra	truck	209214	unknown	-	medium	83
+199	FS	10d	7560	2023	Kia	Sedona	wagon	216407	excellent	-	medium	84
+200	FS	11d	5235	2004	Mazda	Mazda5	van	223600	good	Yes	medium	80
+201	FS	12d	5409	2005	Volkswagen	Golf	suv	230793	fair	-	medium	81
+202	FS	13d	5583	2006	Subaru	Outback	car	237986	unknown	-	medium	82
+203	FS	14d	5757	2007	Nissan	Rogue	truck	245179	excellent	-	medium	83
+204	Watch	15d	5931	2008	Toyota	Sienna	wagon	252372	good	-	medium	84
+205	FS	16d	6106	2009	Honda	Odyssey	van	259565	fair	Yes	medium	85
+206	FS	17d	6280	2010	Dodge	Grand Caravan	suv	266758	unknown	-	medium	87
+207	FS	18d	2314	2011	Ford	Transit Connect	car	273951	excellent	-	high	72
+208	FS	19d	2488	2012	Chevrolet	Express	truck	281144	good	-	high	73
+209	FS	20d	2662	2013	GMC	Savana	wagon	288337	fair	-	high	74
+210	FS	0d	2837	2014	Hyundai	Elantra	van	295530	unknown	Yes	high	75
+211	FS	1d	3011	2015	Kia	Sedona	suv	302723	excellent	-	high	76
+212	FS	2d	3185	2016	Mazda	Mazda5	car	309916	good	-	high	77
+213	FS	3d	3359	2017	Volkswagen	Golf	truck	317109	fair	-	high	78
+214	FS	4d	3534	2018	Subaru	Outback	wagon	324302	unknown	-	high	79
+215	FS	5d	3708	2019	Nissan	Rogue	van	331495	excellent	Yes	high	80
+216	Watch	6d	3882	2020	Toyota	Sienna	suv	338688	good	-	high	72
+217	FS	7d	8783	2021	Honda	Odyssey	car	85881	fair	-	low	85
+218	FS	8d	8958	2022	Dodge	Grand Caravan	truck	93074	unknown	-	low	86
+219	FS	9d	9132	2023	Ford	Transit Connect	wagon	100267	excellent	-	low	87
+220	FS	10d	6806	2004	Chevrolet	Express	van	107460	good	Yes	low	84
+221	FS	11d	6980	2005	GMC	Savana	suv	114653	fair	-	low	85
+222	FS	12d	7155	2006	Hyundai	Elantra	car	121846	unknown	-	low	86
+223	FS	13d	7329	2007	Kia	Sedona	truck	129039	excellent	-	low	87
+224	FS	14d	7503	2008	Mazda	Mazda5	wagon	136232	good	-	low	88
+225	FS	15d	7677	2009	Volkswagen	Golf	van	143425	fair	Yes	low	80
+226	FS	16d	7851	2010	Subaru	Outback	suv	150618	unknown	-	low	81
+227	FS	17d	8026	2011	Nissan	Rogue	car	157811	excellent	-	low	82
+228	Watch	18d	8200	2012	Toyota	Sienna	truck	165004	good	-	low	83
+229	FS	19d	8374	2013	Honda	Odyssey	wagon	172197	fair	-	low	84
+230	FS	20d	4408	2014	Dodge	Grand Caravan	van	179390	unknown	Yes	low	88
+231	FS	0d	4583	2015	Ford	Transit Connect	suv	186583	excellent	-	low	89
+232	FS	1d	4757	2016	Chevrolet	Express	car	193776	good	-	medium	90
+233	FS	2d	4931	2017	GMC	Savana	truck	200969	fair	-	medium	91
+234	FS	3d	5105	2018	Hyundai	Elantra	wagon	208162	unknown	-	medium	83
+235	FS	4d	5279	2019	Kia	Sedona	van	215355	excellent	Yes	medium	84
+236	FS	5d	5454	2020	Mazda	Mazda5	suv	222548	good	-	medium	86
+237	FS	6d	5628	2021	Volkswagen	Golf	car	229741	fair	-	medium	87
+238	FS	7d	5802	2022	Subaru	Outback	truck	236934	unknown	-	medium	88
+239	FS	8d	5976	2023	Nissan	Rogue	wagon	244127	excellent	-	medium	89
+240	Watch	9d	3651	2004	Toyota	Sienna	van	251320	good	Yes	medium	85
+241	FS	10d	3825	2005	Honda	Odyssey	suv	258513	fair	-	medium	86
+242	FS	11d	3999	2006	Dodge	Grand Caravan	car	265706	unknown	-	medium	87
+243	FS	12d	4173	2007	Ford	Transit Connect	truck	272899	excellent	-	high	69
+244	FS	13d	4347	2008	Chevrolet	Express	wagon	280092	good	-	high	70
+245	FS	14d	4522	2009	GMC	Savana	van	287285	fair	Yes	high	71
+246	FS	15d	4696	2010	Hyundai	Elantra	suv	294478	unknown	-	high	72
+247	FS	16d	4870	2011	Kia	Sedona	car	301671	excellent	-	high	73
+248	FS	17d	5044	2012	Mazda	Mazda5	truck	308864	good	-	high	74
+249	FS	18d	5218	2013	Volkswagen	Golf	wagon	316057	fair	-	high	75
+250	FS	19d	5393	2014	Subaru	Outback	van	323250	unknown	Yes	high	76
+251	FS	20d	5567	2015	Nissan	Rogue	suv	330443	excellent	-	high	77
+252	Watch	0d	5741	2016	Toyota	Sienna	car	337636	good	-	high	69
+253	FS	1d	1775	2017	Honda	Odyssey	truck	344829	fair	-	high	74
+254	FS	2d	6677	2018	Dodge	Grand Caravan	wagon	92022	unknown	-	low	87
+255	FS	3d	6851	2019	Ford	Transit Connect	van	99215	excellent	Yes	low	88
+256	FS	4d	7025	2020	Chevrolet	Express	suv	106408	good	-	low	89
+257	FS	5d	7199	2021	GMC	Savana	car	113601	fair	-	low	90
+258	FS	6d	7374	2022	Hyundai	Elantra	truck	120794	unknown	-	low	91
+259	FS	7d	7548	2023	Kia	Sedona	wagon	127987	excellent	-	low	92
+260	FS	8d	5222	2004	Mazda	Mazda5	van	135180	good	Yes	low	88
+261	FS	9d	5396	2005	Volkswagen	Golf	suv	142373	fair	-	low	80
+262	FS	10d	5571	2006	Subaru	Outback	car	149566	unknown	-	low	81
+263	FS	11d	5745	2007	Nissan	Rogue	truck	156759	excellent	-	low	82
+264	Watch	12d	5919	2008	Toyota	Sienna	wagon	163952	good	-	low	83
+265	FS	13d	6093	2009	Honda	Odyssey	van	171145	fair	Yes	low	84
+266	FS	14d	6267	2010	Dodge	Grand Caravan	suv	178338	unknown	-	low	85
+267	FS	15d	6442	2011	Ford	Transit Connect	car	185531	excellent	-	low	87
+268	FS	16d	6616	2012	Chevrolet	Express	truck	192724	good	-	medium	88
+269	FS	17d	6790	2013	GMC	Savana	wagon	199917	fair	-	medium	89
+270	FS	18d	6964	2014	Hyundai	Elantra	van	207110	unknown	Yes	medium	81
+271	FS	19d	7139	2015	Kia	Sedona	suv	214303	excellent	-	medium	82
+272	FS	20d	7313	2016	Mazda	Mazda5	car	221496	good	-	medium	83
+273	FS	0d	7487	2017	Volkswagen	Golf	truck	228689	fair	-	medium	84
+274	FS	1d	7661	2018	Subaru	Outback	wagon	235882	unknown	-	medium	85
+275	FS	2d	7835	2019	Nissan	Rogue	van	243075	excellent	Yes	medium	86
+276	Watch	3d	3870	2020	Toyota	Sienna	suv	250268	good	-	medium	90
+277	FS	4d	4044	2021	Honda	Odyssey	car	257461	fair	-	medium	91
+278	FS	5d	4218	2022	Dodge	Grand Caravan	truck	264654	unknown	-	medium	92
+279	FS	6d	4392	2023	Ford	Transit Connect	wagon	271847	excellent	-	high	74
+280	FS	7d	2067	2004	Chevrolet	Express	van	279040	good	Yes	high	71
+281	FS	8d	2241	2005	GMC	Savana	suv	286233	fair	-	high	72
+282	FS	9d	2415	2006	Hyundai	Elantra	car	293426	unknown	-	high	73
+283	FS	10d	2589	2007	Kia	Sedona	truck	300619	excellent	-	high	74
+284	FS	11d	2763	2008	Mazda	Mazda5	wagon	307812	good	-	high	75
+285	FS	12d	2938	2009	Volkswagen	Golf	van	315005	fair	Yes	high	76
+286	FS	13d	3112	2010	Subaru	Outback	suv	322198	unknown	-	high	77
+287	FS	14d	3286	2011	Nissan	Rogue	car	329391	excellent	-	high	78
+288	Watch	15d	3460	2012	Toyota	Sienna	truck	336584	good	-	high	70
+289	FS	16d	3634	2013	Honda	Odyssey	wagon	343777	fair	-	high	71
+290	FS	17d	8536	2014	Dodge	Grand Caravan	van	90970	unknown	Yes	low	84
+291	FS	18d	8710	2015	Ford	Transit Connect	suv	98163	excellent	-	low	85
+292	FS	19d	8884	2016	Chevrolet	Express	car	105356	good	-	low	86
+293	FS	20d	9059	2017	GMC	Savana	truck	112549	fair	-	low	87
+294	FS	0d	9233	2018	Hyundai	Elantra	wagon	119742	unknown	-	low	88
+295	FS	1d	9407	2019	Kia	Sedona	van	126935	excellent	Yes	low	89
+296	FS	2d	9581	2020	Mazda	Mazda5	suv	134128	good	-	low	90
+297	FS	3d	9755	2021	Volkswagen	Golf	car	141321	fair	-	low	82
+298	FS	4d	9930	2022	Subaru	Outback	truck	148514	unknown	-	low	83
+299	FS	5d	5964	2023	Nissan	Rogue	wagon	155707	excellent	-	low	88
+300	Watch	6d	3638	2004	Toyota	Sienna	van	162900	good	Yes	low	84
+301	FS	7d	3812	2005	Honda	Odyssey	suv	170093	fair	-	low	85
+302	FS	8d	3987	2006	Dodge	Grand Caravan	car	177286	unknown	-	low	86
+303	FS	9d	4161	2007	Ford	Transit Connect	truck	184479	excellent	-	low	87
+304	FS	10d	4335	2008	Chevrolet	Express	wagon	191672	good	-	medium	88
+305	FS	11d	4509	2009	GMC	Savana	van	198865	fair	Yes	medium	89
+306	FS	12d	4683	2010	Hyundai	Elantra	suv	206058	unknown	-	medium	81
+307	FS	13d	4858	2011	Kia	Sedona	car	213251	excellent	-	medium	82
+308	FS	14d	5032	2012	Mazda	Mazda5	truck	220444	good	-	medium	83
+309	FS	15d	5206	2013	Volkswagen	Golf	wagon	227637	fair	-	medium	84
+310	FS	16d	5380	2014	Subaru	Outback	van	234830	unknown	Yes	medium	85
+311	FS	17d	5555	2015	Nissan	Rogue	suv	242023	excellent	-	medium	86
+312	Watch	18d	5729	2016	Toyota	Sienna	car	249216	good	-	medium	87
+313	FS	19d	5903	2017	Honda	Odyssey	truck	256409	fair	-	medium	88
+314	FS	20d	6077	2018	Dodge	Grand Caravan	wagon	263602	unknown	-	medium	89
+315	FS	0d	6251	2019	Ford	Transit Connect	van	270795	excellent	Yes	high	71
+316	FS	1d	6426	2020	Chevrolet	Express	suv	277988	good	-	high	72
+317	FS	2d	6600	2021	GMC	Savana	car	285181	fair	-	high	73
+318	FS	3d	6774	2022	Hyundai	Elantra	truck	292374	unknown	-	high	75
+319	FS	4d	6948	2023	Kia	Sedona	wagon	299567	excellent	-	high	76
+320	FS	5d	4623	2004	Mazda	Mazda5	van	306760	good	Yes	high	72
+321	FS	6d	4797	2005	Volkswagen	Golf	suv	313953	fair	-	high	73
+322	FS	7d	831	2006	Subaru	Outback	car	321146	unknown	-	high	78
+323	FS	8d	1005	2007	Nissan	Rogue	truck	328339	excellent	-	high	79
+324	Watch	9d	1179	2008	Toyota	Sienna	wagon	335532	good	-	high	71
+325	FS	10d	1354	2009	Honda	Odyssey	van	342725	fair	Yes	high	72
+326	FS	11d	6255	2010	Dodge	Grand Caravan	suv	89918	unknown	-	low	84
+327	FS	12d	6429	2011	Ford	Transit Connect	car	97111	excellent	-	low	85
+328	FS	13d	6604	2012	Chevrolet	Express	truck	104304	good	-	low	87
+329	FS	14d	6778	2013	GMC	Savana	wagon	111497	fair	-	low	88
+330	FS	15d	6952	2014	Hyundai	Elantra	van	118690	unknown	Yes	low	89
+331	FS	16d	7126	2015	Kia	Sedona	suv	125883	excellent	-	low	90
+332	FS	17d	7300	2016	Mazda	Mazda5	car	133076	good	-	low	91
+333	FS	18d	7475	2017	Volkswagen	Golf	truck	140269	fair	-	low	83
+334	FS	19d	7649	2018	Subaru	Outback	wagon	147462	unknown	-	low	84
+335	FS	20d	7823	2019	Nissan	Rogue	van	154655	excellent	Yes	low	85
+336	Watch	0d	7997	2020	Toyota	Sienna	suv	161848	good	-	low	86
+337	FS	1d	8171	2021	Honda	Odyssey	car	169041	fair	-	low	87
+338	FS	2d	8346	2022	Dodge	Grand Caravan	truck	176234	unknown	-	low	88
+339	FS	3d	8520	2023	Ford	Transit Connect	wagon	183427	excellent	-	low	89
+340	FS	4d	6194	2004	Chevrolet	Express	van	190620	good	Yes	medium	85
+341	FS	5d	6368	2005	GMC	Savana	suv	197813	fair	-	medium	86
+342	FS	6d	6543	2006	Hyundai	Elantra	car	205006	unknown	-	medium	78
+343	FS	7d	6717	2007	Kia	Sedona	truck	212199	excellent	-	medium	79
+344	FS	8d	6891	2008	Mazda	Mazda5	wagon	219392	good	-	medium	80
+345	FS	9d	2925	2009	Volkswagen	Golf	van	226585	fair	Yes	medium	85
+346	FS	10d	3099	2010	Subaru	Outback	suv	233778	unknown	-	medium	86
+347	FS	11d	3274	2011	Nissan	Rogue	car	240971	excellent	-	medium	87
+348	Watch	12d	3448	2012	Toyota	Sienna	truck	248164	good	-	medium	88
+349	FS	13d	3622	2013	Honda	Odyssey	wagon	255357	fair	-	medium	89
+350	FS	14d	3796	2014	Dodge	Grand Caravan	van	262550	unknown	Yes	medium	90
+351	FS	15d	3971	2015	Ford	Transit Connect	suv	269743	excellent	-	medium	82
+352	FS	16d	4145	2016	Chevrolet	Express	car	276936	good	-	high	73
+353	FS	17d	4319	2017	GMC	Savana	truck	284129	fair	-	high	74
+354	FS	18d	4493	2018	Hyundai	Elantra	wagon	291322	unknown	-	high	75
+355	FS	19d	4667	2019	Kia	Sedona	van	298515	excellent	Yes	high	76
+356	FS	20d	4842	2020	Mazda	Mazda5	suv	305708	good	-	high	77
+357	FS	0d	5016	2021	Volkswagen	Golf	car	312901	fair	-	high	78
+358	FS	1d	5190	2022	Subaru	Outback	truck	320094	unknown	-	high	79
+359	FS	2d	5364	2023	Nissan	Rogue	wagon	327287	excellent	-	high	80
+360	Watch	3d	3039	2004	Toyota	Sienna	van	334480	good	Yes	high	68
+361	FS	4d	3213	2005	Honda	Odyssey	suv	341673	fair	-	high	69
+362	FS	5d	8114	2006	Dodge	Grand Caravan	car	88866	unknown	-	low	82
+363	FS	6d	8288	2007	Ford	Transit Connect	truck	96059	excellent	-	low	83
+364	FS	7d	8463	2008	Chevrolet	Express	wagon	103252	good	-	low	84
+365	FS	8d	8637	2009	GMC	Savana	van	110445	fair	Yes	low	85
+366	FS	9d	8811	2010	Hyundai	Elantra	suv	117638	unknown	-	low	86
+367	FS	10d	8985	2011	Kia	Sedona	car	124831	excellent	-	low	87
+368	FS	11d	5020	2012	Mazda	Mazda5	truck	132024	good	-	low	91
+369	FS	12d	5194	2013	Volkswagen	Golf	wagon	139217	fair	-	low	83
+370	FS	13d	5368	2014	Subaru	Outback	van	146410	unknown	Yes	low	84
+371	FS	14d	5542	2015	Nissan	Rogue	suv	153603	excellent	-	low	85
+372	Watch	15d	5716	2016	Toyota	Sienna	car	160796	good	-	low	86
+373	FS	16d	5891	2017	Honda	Odyssey	truck	167989	fair	-	low	87
+374	FS	17d	6065	2018	Dodge	Grand Caravan	wagon	175182	unknown	-	low	88
+375	FS	18d	6239	2019	Ford	Transit Connect	van	182375	excellent	Yes	low	89
+376	FS	19d	6413	2020	Chevrolet	Express	suv	189568	good	-	low	90
+377	FS	20d	6587	2021	GMC	Savana	car	196761	fair	-	medium	91
+378	FS	0d	6762	2022	Hyundai	Elantra	truck	203954	unknown	-	medium	83
+379	FS	1d	6936	2023	Kia	Sedona	wagon	211147	excellent	-	medium	85
+380	FS	2d	4610	2004	Mazda	Mazda5	van	218340	good	Yes	medium	81
+381	FS	3d	4784	2005	Volkswagen	Golf	suv	225533	fair	-	medium	82
+382	FS	4d	4959	2006	Subaru	Outback	car	232726	unknown	-	medium	83
+383	FS	5d	5133	2007	Nissan	Rogue	truck	239919	excellent	-	medium	84
+384	Watch	6d	5307	2008	Toyota	Sienna	wagon	247112	good	-	medium	85
+385	FS	7d	5481	2009	Honda	Odyssey	van	254305	fair	Yes	medium	86
+386	FS	8d	5655	2010	Dodge	Grand Caravan	suv	261498	unknown	-	medium	87
+387	FS	9d	5830	2011	Ford	Transit Connect	car	268691	excellent	-	medium	79
+388	FS	10d	6004	2012	Chevrolet	Express	truck	275884	good	-	high	70
+389	FS	11d	6178	2013	GMC	Savana	wagon	283077	fair	-	high	71
+390	FS	12d	6352	2014	Hyundai	Elantra	van	290270	unknown	Yes	high	72
+391	FS	13d	2387	2015	Kia	Sedona	suv	297463	excellent	-	high	77
+392	FS	14d	2561	2016	Mazda	Mazda5	car	304656	good	-	high	78
+393	FS	15d	2735	2017	Volkswagen	Golf	truck	311849	fair	-	high	79
+394	FS	16d	2909	2018	Subaru	Outback	wagon	319042	unknown	-	high	80
+395	FS	17d	3083	2019	Nissan	Rogue	van	326235	excellent	Yes	high	81
+396	Watch	18d	3258	2020	Toyota	Sienna	suv	333428	good	-	high	73
+397	FS	19d	3432	2021	Honda	Odyssey	car	340621	fair	-	high	74
+398	FS	20d	8333	2022	Dodge	Grand Caravan	truck	87814	unknown	-	low	87
+399	FS	0d	8508	2023	Ford	Transit Connect	wagon	95007	excellent	-	low	88
+400	FS	1d	6182	2004	Chevrolet	Express	van	102200	good	Yes	low	84
+401	FS	2d	6356	2005	GMC	Savana	suv	109393	fair	-	low	85
+402	FS	3d	6530	2006	Hyundai	Elantra	car	116586	unknown	-	low	86
+403	FS	4d	6704	2007	Kia	Sedona	truck	123779	excellent	-	low	87
+404	FS	5d	6879	2008	Mazda	Mazda5	wagon	130972	good	-	low	88
+405	FS	6d	7053	2009	Volkswagen	Golf	van	138165	fair	Yes	low	80
+406	FS	7d	7227	2010	Subaru	Outback	suv	145358	unknown	-	low	81
+407	FS	8d	7401	2011	Nissan	Rogue	car	152551	excellent	-	low	82
+408	Watch	9d	7576	2012	Toyota	Sienna	truck	159744	good	-	low	83
+409	FS	10d	7750	2013	Honda	Odyssey	wagon	166937	fair	-	low	84
+410	FS	11d	7924	2014	Dodge	Grand Caravan	van	174130	unknown	Yes	low	86
+411	FS	12d	8098	2015	Ford	Transit Connect	suv	181323	excellent	-	low	87
+412	FS	13d	8272	2016	Chevrolet	Express	car	188516	good	-	low	88
+413	FS	14d	8447	2017	GMC	Savana	truck	195709	fair	-	medium	89
+414	FS	15d	4481	2018	Hyundai	Elantra	wagon	202902	unknown	-	medium	84
+415	FS	16d	4655	2019	Kia	Sedona	van	210095	excellent	Yes	medium	85
+416	FS	17d	4829	2020	Mazda	Mazda5	suv	217288	good	-	medium	86
+417	FS	18d	5003	2021	Volkswagen	Golf	car	224481	fair	-	medium	87
+418	FS	19d	5178	2022	Subaru	Outback	truck	231674	unknown	-	medium	88
+419	FS	20d	5352	2023	Nissan	Rogue	wagon	238867	excellent	-	medium	89
+420	Watch	0d	3026	2004	Toyota	Sienna	van	246060	good	Yes	medium	86

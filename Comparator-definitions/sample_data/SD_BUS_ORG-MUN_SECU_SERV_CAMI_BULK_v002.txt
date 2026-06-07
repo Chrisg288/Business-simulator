@@ -1,0 +1,153 @@
+# sample_data_code: SD_BUS_ORG-MUN_SECU_SERV_CAMI_BULK_v002
+# label: Bulk Business/Municipal Security Camera Installer Services
+item	status	posted	service	provider	price	service_area	install_type	licensed	insurance	warranty_months	risk	cvu
+001	Available	1d	Camera Install	Prairie Cameras	825	Springbrook	commercial	Yes	Confirmed	12	low	78
+002	Available	2d	Camera Install	SafeSite Central	1000	Penhold	farm	Yes	Confirmed	24	low	79
+003	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	industrial	Yes	Confirmed	36	low	80
+004	Available	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	mixed	No	Confirmed	6	low	80
+005	Available	5d	Camera Install	SecureView Services	1525	Blackfalds	residential	Yes	Unconfirmed	12	medium	81
+006	Available	6d	Camera Install	Example Security Installers	1700	Innisfail	commercial	Yes	Confirmed	24	low	82
+007	Available	7d	Camera Install	Prairie Cameras	1875	Calgary Region	farm	Yes	Confirmed	36	low	83
+008	Available	8d	Camera Install	SafeSite Central	2050	Edmonton Region	industrial	No	Confirmed	6	low	84
+009	Available	9d	Camera Install	Rural Tech Security	2225	Red Deer	mixed	Yes	Confirmed	12	low	85
+010	Available	10d	Camera Install	Alarm & Vision Co.	2400	Springbrook	residential	Yes	Unconfirmed	24	medium	85
+011	Limited	11d	Camera Install	SecureView Services	2575	Penhold	commercial	Yes	Confirmed	36	low	86
+012	Available	12d	Camera Install	Example Security Installers	2750	Sylvan Lake	farm	No	Confirmed	6	low	87
+013	Available	13d	Camera Install	Prairie Cameras	2925	Lacombe	industrial	Yes	Confirmed	12	low	88
+014	Available	14d	Camera Install	SafeSite Central	3100	Blackfalds	mixed	Yes	Confirmed	24	low	75
+015	Available	15d	Camera Install	Rural Tech Security	3275	Innisfail	residential	Yes	Unconfirmed	36	medium	75
+016	Available	16d	Camera Install	Alarm & Vision Co.	3450	Calgary Region	commercial	No	Confirmed	6	low	76
+017	Available	17d	Camera Install	SecureView Services	3625	Edmonton Region	farm	Yes	Confirmed	12	low	77
+018	Available	0d	Camera Install	Example Security Installers	650	Red Deer	industrial	Yes	Confirmed	24	low	81
+019	Available	1d	Camera Install	Prairie Cameras	825	Springbrook	mixed	Yes	Confirmed	36	low	82
+020	Available	2d	Camera Install	SafeSite Central	1000	Penhold	residential	No	Unconfirmed	6	medium	83
+021	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	commercial	Yes	Confirmed	12	low	84
+022	Limited	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	farm	Yes	Confirmed	24	low	84
+023	Available	5d	Camera Install	SecureView Services	1525	Blackfalds	industrial	Yes	Confirmed	36	low	85
+024	Available	6d	Camera Install	Example Security Installers	1700	Innisfail	mixed	No	Confirmed	6	low	86
+025	Available	7d	Camera Install	Prairie Cameras	1875	Calgary Region	residential	Yes	Unconfirmed	12	medium	87
+026	Available	8d	Camera Install	SafeSite Central	2050	Edmonton Region	commercial	Yes	Confirmed	24	low	88
+027	Available	9d	Camera Install	Rural Tech Security	2225	Red Deer	farm	Yes	Confirmed	36	low	89
+028	Available	10d	Camera Install	Alarm & Vision Co.	2400	Springbrook	industrial	No	Confirmed	6	low	75
+029	Available	11d	Camera Install	SecureView Services	2575	Penhold	mixed	Yes	Confirmed	12	low	76
+030	Available	12d	Camera Install	Example Security Installers	2750	Sylvan Lake	residential	Yes	Unconfirmed	24	medium	77
+031	Available	13d	Camera Install	Prairie Cameras	2925	Lacombe	commercial	Yes	Confirmed	36	low	78
+032	Available	14d	Camera Install	SafeSite Central	3100	Blackfalds	farm	No	Confirmed	6	low	79
+033	Limited	15d	Camera Install	Rural Tech Security	3275	Innisfail	industrial	Yes	Confirmed	12	low	79
+034	Available	16d	Camera Install	Alarm & Vision Co.	3450	Calgary Region	mixed	Yes	Confirmed	24	low	80
+035	Available	17d	Camera Install	SecureView Services	3625	Edmonton Region	residential	Yes	Unconfirmed	36	medium	81
+036	Available	0d	Camera Install	Example Security Installers	650	Red Deer	commercial	No	Confirmed	6	low	85
+037	Available	1d	Camera Install	Prairie Cameras	825	Springbrook	farm	Yes	Confirmed	12	low	86
+038	Available	2d	Camera Install	SafeSite Central	1000	Penhold	industrial	Yes	Confirmed	24	low	87
+039	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	mixed	Yes	Confirmed	36	low	88
+040	Available	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	residential	No	Unconfirmed	6	medium	88
+041	Available	5d	Camera Install	SecureView Services	1525	Blackfalds	commercial	Yes	Confirmed	12	low	89
+042	Available	6d	Camera Install	Example Security Installers	1700	Innisfail	farm	Yes	Confirmed	24	low	76
+043	Available	7d	Camera Install	Prairie Cameras	1875	Calgary Region	industrial	Yes	Confirmed	36	low	77
+044	Limited	8d	Camera Install	SafeSite Central	2050	Edmonton Region	mixed	No	Confirmed	6	low	78
+045	Available	9d	Camera Install	Rural Tech Security	2225	Red Deer	residential	Yes	Unconfirmed	12	medium	79
+046	Available	10d	Camera Install	Alarm & Vision Co.	2400	Springbrook	commercial	Yes	Confirmed	24	low	79
+047	Available	11d	Camera Install	SecureView Services	2575	Penhold	farm	Yes	Confirmed	36	low	80
+048	Available	12d	Camera Install	Example Security Installers	2750	Sylvan Lake	industrial	No	Confirmed	6	low	81
+049	Available	13d	Camera Install	Prairie Cameras	2925	Lacombe	mixed	Yes	Confirmed	12	low	82
+050	Available	14d	Camera Install	SafeSite Central	3100	Blackfalds	residential	Yes	Unconfirmed	24	medium	83
+051	Available	15d	Camera Install	Rural Tech Security	3275	Innisfail	commercial	Yes	Confirmed	36	low	83
+052	Available	16d	Camera Install	Alarm & Vision Co.	3450	Calgary Region	farm	No	Confirmed	6	low	84
+053	Available	17d	Camera Install	SecureView Services	3625	Edmonton Region	industrial	Yes	Confirmed	12	low	85
+054	Available	0d	Camera Install	Example Security Installers	650	Red Deer	mixed	Yes	Confirmed	24	low	89
+055	Limited	1d	Camera Install	Prairie Cameras	825	Springbrook	residential	Yes	Unconfirmed	36	medium	90
+056	Available	2d	Camera Install	SafeSite Central	1000	Penhold	commercial	No	Confirmed	6	low	77
+057	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	farm	Yes	Confirmed	12	low	78
+058	Available	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	industrial	Yes	Confirmed	24	low	78
+059	Available	5d	Camera Install	SecureView Services	1525	Blackfalds	mixed	Yes	Confirmed	36	low	79
+060	Available	6d	Camera Install	Example Security Installers	1700	Innisfail	residential	No	Unconfirmed	6	medium	80
+061	Available	7d	Camera Install	Prairie Cameras	1875	Calgary Region	commercial	Yes	Confirmed	12	low	81
+062	Available	8d	Camera Install	SafeSite Central	2050	Edmonton Region	farm	Yes	Confirmed	24	low	82
+063	Available	9d	Camera Install	Rural Tech Security	2225	Red Deer	industrial	Yes	Confirmed	36	low	83
+064	Available	10d	Camera Install	Alarm & Vision Co.	2400	Springbrook	mixed	No	Confirmed	6	low	83
+065	Available	11d	Camera Install	SecureView Services	2575	Penhold	residential	Yes	Unconfirmed	12	medium	84
+066	Limited	12d	Camera Install	Example Security Installers	2750	Sylvan Lake	commercial	Yes	Confirmed	24	low	85
+067	Available	13d	Camera Install	Prairie Cameras	2925	Lacombe	farm	Yes	Confirmed	36	low	86
+068	Available	14d	Camera Install	SafeSite Central	3100	Blackfalds	industrial	No	Confirmed	6	low	87
+069	Available	15d	Camera Install	Rural Tech Security	3275	Innisfail	mixed	Yes	Confirmed	12	low	87
+070	Available	16d	Camera Install	Alarm & Vision Co.	3450	Calgary Region	residential	Yes	Unconfirmed	24	medium	74
+071	Available	17d	Camera Install	SecureView Services	3625	Edmonton Region	commercial	Yes	Confirmed	36	low	75
+072	Available	0d	Camera Install	Example Security Installers	650	Red Deer	farm	No	Confirmed	6	low	79
+073	Available	1d	Camera Install	Prairie Cameras	825	Springbrook	industrial	Yes	Confirmed	12	low	80
+074	Available	2d	Camera Install	SafeSite Central	1000	Penhold	mixed	Yes	Confirmed	24	low	81
+075	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	residential	Yes	Unconfirmed	36	medium	82
+076	Available	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	commercial	No	Confirmed	6	low	82
+077	Limited	5d	Camera Install	SecureView Services	1525	Blackfalds	farm	Yes	Confirmed	12	low	83
+078	Available	6d	Camera Install	Example Security Installers	1700	Innisfail	industrial	Yes	Confirmed	24	low	84
+079	Available	7d	Camera Install	Prairie Cameras	1875	Calgary Region	mixed	Yes	Confirmed	36	low	85
+080	Available	8d	Camera Install	SafeSite Central	2050	Edmonton Region	residential	No	Unconfirmed	6	medium	86
+081	Available	9d	Camera Install	Rural Tech Security	2225	Red Deer	commercial	Yes	Confirmed	12	low	87
+082	Available	10d	Camera Install	Alarm & Vision Co.	2400	Springbrook	farm	Yes	Confirmed	24	low	87
+083	Available	11d	Camera Install	SecureView Services	2575	Penhold	industrial	Yes	Confirmed	36	low	88
+084	Available	12d	Camera Install	Example Security Installers	2750	Sylvan Lake	mixed	No	Confirmed	6	low	75
+085	Available	13d	Camera Install	Prairie Cameras	2925	Lacombe	residential	Yes	Unconfirmed	12	medium	76
+086	Available	14d	Camera Install	SafeSite Central	3100	Blackfalds	commercial	Yes	Confirmed	24	low	77
+087	Available	15d	Camera Install	Rural Tech Security	3275	Innisfail	farm	Yes	Confirmed	36	low	77
+088	Limited	16d	Camera Install	Alarm & Vision Co.	3450	Calgary Region	industrial	No	Confirmed	6	low	78
+089	Available	17d	Camera Install	SecureView Services	3625	Edmonton Region	mixed	Yes	Confirmed	12	low	79
+090	Available	0d	Camera Install	Example Security Installers	650	Red Deer	residential	Yes	Unconfirmed	24	medium	83
+091	Available	1d	Camera Install	Prairie Cameras	825	Springbrook	commercial	Yes	Confirmed	36	low	84
+092	Available	2d	Camera Install	SafeSite Central	1000	Penhold	farm	No	Confirmed	6	low	85
+093	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	industrial	Yes	Confirmed	12	low	86
+094	Available	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	mixed	Yes	Confirmed	24	low	86
+095	Available	5d	Camera Install	SecureView Services	1525	Blackfalds	residential	Yes	Unconfirmed	36	medium	87
+096	Available	6d	Camera Install	Example Security Installers	1700	Innisfail	commercial	No	Confirmed	6	low	88
+097	Available	7d	Camera Install	Prairie Cameras	1875	Calgary Region	farm	Yes	Confirmed	12	low	89
+098	Available	8d	Camera Install	SafeSite Central	2050	Edmonton Region	industrial	Yes	Confirmed	24	low	76
+099	Limited	9d	Camera Install	Rural Tech Security	2225	Red Deer	mixed	Yes	Confirmed	36	low	77
+100	Available	10d	Camera Install	Alarm & Vision Co.	2400	Springbrook	residential	No	Unconfirmed	6	medium	77
+101	Available	11d	Camera Install	SecureView Services	2575	Penhold	commercial	Yes	Confirmed	12	low	78
+102	Available	12d	Camera Install	Example Security Installers	2750	Sylvan Lake	farm	Yes	Confirmed	24	low	79
+103	Available	13d	Camera Install	Prairie Cameras	2925	Lacombe	industrial	Yes	Confirmed	36	low	80
+104	Available	14d	Camera Install	SafeSite Central	3100	Blackfalds	mixed	No	Confirmed	6	low	81
+105	Available	15d	Camera Install	Rural Tech Security	3275	Innisfail	residential	Yes	Unconfirmed	12	medium	81
+106	Available	16d	Camera Install	Alarm & Vision Co.	3450	Calgary Region	commercial	Yes	Confirmed	24	low	82
+107	Available	17d	Camera Install	SecureView Services	3625	Edmonton Region	farm	Yes	Confirmed	36	low	83
+108	Available	0d	Camera Install	Example Security Installers	650	Red Deer	industrial	No	Confirmed	6	low	87
+109	Available	1d	Camera Install	Prairie Cameras	825	Springbrook	mixed	Yes	Confirmed	12	low	88
+110	Limited	2d	Camera Install	SafeSite Central	1000	Penhold	residential	Yes	Unconfirmed	24	medium	89
+111	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	commercial	Yes	Confirmed	36	low	90
+112	Available	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	farm	No	Confirmed	6	low	76
+113	Available	5d	Camera Install	SecureView Services	1525	Blackfalds	industrial	Yes	Confirmed	12	low	77
+114	Available	6d	Camera Install	Example Security Installers	1700	Innisfail	mixed	Yes	Confirmed	24	low	78
+115	Available	7d	Camera Install	Prairie Cameras	1875	Calgary Region	residential	Yes	Unconfirmed	36	medium	79
+116	Available	8d	Camera Install	SafeSite Central	2050	Edmonton Region	commercial	No	Confirmed	6	low	80
+117	Available	9d	Camera Install	Rural Tech Security	2225	Red Deer	farm	Yes	Confirmed	12	low	81
+118	Available	10d	Camera Install	Alarm & Vision Co.	2400	Springbrook	industrial	Yes	Confirmed	24	low	81
+119	Available	11d	Camera Install	SecureView Services	2575	Penhold	mixed	Yes	Confirmed	36	low	82
+120	Available	12d	Camera Install	Example Security Installers	2750	Sylvan Lake	residential	No	Unconfirmed	6	medium	83
+121	Limited	13d	Camera Install	Prairie Cameras	2925	Lacombe	commercial	Yes	Confirmed	12	low	84
+122	Available	14d	Camera Install	SafeSite Central	3100	Blackfalds	farm	Yes	Confirmed	24	low	85
+123	Available	15d	Camera Install	Rural Tech Security	3275	Innisfail	industrial	Yes	Confirmed	36	low	85
+124	Available	16d	Camera Install	Alarm & Vision Co.	3450	Calgary Region	mixed	No	Confirmed	6	low	86
+125	Available	17d	Camera Install	SecureView Services	3625	Edmonton Region	residential	Yes	Unconfirmed	12	medium	87
+126	Available	0d	Camera Install	Example Security Installers	650	Red Deer	commercial	Yes	Confirmed	24	low	77
+127	Available	1d	Camera Install	Prairie Cameras	825	Springbrook	farm	Yes	Confirmed	36	low	78
+128	Available	2d	Camera Install	SafeSite Central	1000	Penhold	industrial	No	Confirmed	6	low	79
+129	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	mixed	Yes	Confirmed	12	low	80
+130	Available	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	residential	Yes	Unconfirmed	24	medium	80
+131	Available	5d	Camera Install	SecureView Services	1525	Blackfalds	commercial	Yes	Confirmed	36	low	81
+132	Limited	6d	Camera Install	Example Security Installers	1700	Innisfail	farm	No	Confirmed	6	low	82
+133	Available	7d	Camera Install	Prairie Cameras	1875	Calgary Region	industrial	Yes	Confirmed	12	low	83
+134	Available	8d	Camera Install	SafeSite Central	2050	Edmonton Region	mixed	Yes	Confirmed	24	low	84
+135	Available	9d	Camera Install	Rural Tech Security	2225	Red Deer	residential	Yes	Unconfirmed	36	medium	85
+136	Available	10d	Camera Install	Alarm & Vision Co.	2400	Springbrook	commercial	No	Confirmed	6	low	85
+137	Available	11d	Camera Install	SecureView Services	2575	Penhold	farm	Yes	Confirmed	12	low	86
+138	Available	12d	Camera Install	Example Security Installers	2750	Sylvan Lake	industrial	Yes	Confirmed	24	low	87
+139	Available	13d	Camera Install	Prairie Cameras	2925	Lacombe	mixed	Yes	Confirmed	36	low	88
+140	Available	14d	Camera Install	SafeSite Central	3100	Blackfalds	residential	No	Unconfirmed	6	medium	75
+141	Available	15d	Camera Install	Rural Tech Security	3275	Innisfail	commercial	Yes	Confirmed	12	low	75
+142	Available	16d	Camera Install	Alarm & Vision Co.	3450	Calgary Region	farm	Yes	Confirmed	24	low	76
+143	Limited	17d	Camera Install	SecureView Services	3625	Edmonton Region	industrial	Yes	Confirmed	36	low	77
+144	Available	0d	Camera Install	Example Security Installers	650	Red Deer	mixed	No	Confirmed	6	low	81
+145	Available	1d	Camera Install	Prairie Cameras	825	Springbrook	residential	Yes	Unconfirmed	12	medium	82
+146	Available	2d	Camera Install	SafeSite Central	1000	Penhold	commercial	Yes	Confirmed	24	low	83
+147	Available	3d	Camera Install	Rural Tech Security	1175	Sylvan Lake	farm	Yes	Confirmed	36	low	84
+148	Available	4d	Camera Install	Alarm & Vision Co.	1350	Lacombe	industrial	No	Confirmed	6	low	84
+149	Available	5d	Camera Install	SecureView Services	1525	Blackfalds	mixed	Yes	Confirmed	12	low	85
+150	Available	6d	Camera Install	Example Security Installers	1700	Innisfail	residential	Yes	Unconfirmed	24	medium	86
