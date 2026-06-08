@@ -1,15 +1,37 @@
-# Economy Master Overview v2.4.1 — GitHub-ready Prototype
+# Economy Master Interface v2.5 — GitHub-ready Prototype
 
-Date: 2026-06-07
+Date: 2026-06-08
 
-Narrow bugfix to v2.4. This version restores the Sector buttons, Activity Tool buttons, Home tree, and populated TreeView by delaying taxonomy initialization until after the v2.4 Comparator tree overrides are loaded.
+This package integrates the five external sector TreeView JSON data sources into the existing Economy / Comparator / Business Simulation master interface.
 
-Preserved from v2.3.2/v2.4:
-- Home wheel and clickable sector regions
+## Start
+
+Open `index.html`, or upload the full folder contents to the root of the GitHub Pages repository.
+
+GitHub Pages URL after upload:
+
+`https://chrisg288.github.io/Economy-Master-Overview/`
+
+## Main change
+
+Sector buttons now use external data files under `/data/`:
+
+- `comparator_tree_human_consumer_v0_2.json`
+- `tree_market_exchange_v0_1.json`
+- `tree_business_commercial_v0_1.json`
+- `tree_finance_capital_v0_1.json`
+- `tree_public_government_v0_1.json`
+
+A companion local startup file, `data/sector_trees_embedded.js`, contains the same data so the prototype can open locally without browser fetch restrictions.
+
+## Preserved behavior
+
+- Existing modern/fresh layout
+- Home wheel orientation
+- Dense legacy-style datagrid
+- Resizable datagrid columns
+- Three-state header sorting: ascending, descending, original/order-added
 - Activity Tool persistence
-- Dense legacy Comparator-style datagrid
-- Resizable columns
-- Three-state column sort: original / ascending / descending
-- Simplified Comparator object-set tree: Offers / Listings, Bids, Records
-- Records children for Bid Records and Transaction Records
-- Class-specific datagrid templates
+- Inspector context hierarchy
+- One-line VRQ/event streams
+- Object editor / custom object workflow
