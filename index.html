@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.5</title>
+<title>Economy Master Interface v2.6</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -28,7 +28,7 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.5</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>New</strong> persistent Activity Tool</span><span class="badge"><strong>Grid</strong> dense + resizable columns</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
+  <div class="title"><h1>Economy Master Interface v2.6</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>New</strong> persistent Activity Tool</span><span class="badge"><strong>Grid</strong> template-aware + dense</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
   <div class="principle"><strong>Context hierarchy:</strong> center selection → tree node → sector/scope/overlay → startup. The interface is the workshop; the large library comes later.</div>
 </header>
 <div class="ribbon">
@@ -386,6 +386,235 @@ attachCustomNodes();
 app.evidence.unshift('REC | v2.5 loads five external sector TreeView JSON data sources; virtual object folders generated from templates | Saved');
 // ---------------- end v2.5 external sector tree integration ----------------
 
+
+
+// ---------------- v2.6 template-aware datagrid rendering ----------------
+// Narrow update: leave external sector TreeViews alone, but stop using one generic
+// offer/bid/sold transaction grid for every sector. The dense grid now reads the
+// selected sector + class + object folder + datagrid template before choosing fields.
+function selectedFolder(){
+  const p=selectedPath();
+  for(let i=p.length-1;i>=0;i--){
+    const n=p[i];
+    const role=String(n.node_role||n.class_type||n.type||'').toLowerCase();
+    if(n.virtual || role==='objectfolder' || role==='recordtype' || String(n.type||'').toLowerCase()==='objectfolder') return n;
+  }
+  return null;
+}
+function folderToken(){
+  const f=selectedFolder();
+  return String((f&&(f.folder_type||f.record_type||f.label))||'class').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+}
+function activeTemplateId(){
+  const c=selectedClass();
+  return (c&&c.datagrid_template_id)||'DGT_GENERIC';
+}
+function templateId(){return activeTemplateId();}
+function contextProfile(){
+  const sec=app.activeSector;
+  const c=selectedClass();
+  const f=selectedFolder();
+  const token=folderToken();
+  const classText=String(c?c.label:contextTitle()).toLowerCase();
+  const template=activeTemplateId();
+  let family='template';
+  let kind='template';
+  let relationship='template-only';
+  if(sec==='Human / Consumer'){
+    family='consumer-comparator';
+    if(/bid/.test(token)){kind='bid';relationship='consumer-bid';}
+    else if(/record|sold|declined|withdrawn|counter|transaction|ownership|receipt|invoice|attachment/.test(token)){kind='transaction';relationship='consumer-transaction-record';}
+    else {kind='offer';relationship='consumer-offer-listing';}
+  }else if(sec==='Market / Exchange'){
+    family='market-exchange';
+    if(/bid|proposal/.test(token)){kind='bid';relationship='market-bid-proposal';}
+    else if(/settlement|award|contract|record|transaction|dispute|outcome/.test(token)){kind='transaction';relationship='market-outcome-record';}
+    else {kind='offer';relationship='market-listing-offer';}
+  }else if(sec==='Public / Government'){
+    family='public-government';
+    if(/registry|source_record|filing|amendment/.test(token) || /record|registry|title|registration|filing/.test(classText)){kind='registry';relationship='public-record-registry';}
+    else if(/application|request|service|portal|counter|appointment/.test(token)){kind='service-case';relationship='public-service-case';}
+    else if(/permit|licence|license|inspection|renewal|enforcement/.test(token)){kind='permission';relationship='public-permission-enforcement';}
+    else if(/complaint|appeal|review|decision|remedy|case/.test(token)){kind='remedy';relationship='public-remedy-case';}
+    else if(/opportunit|bid|proposal|award|contract|performance/.test(token)){kind='procurement';relationship='public-procurement';}
+    else {kind='public-record';relationship='public-template';}
+  }else if(sec==='Finance / Capital'){
+    family='finance-capital';
+    if(/application|request/.test(token)){kind='finance-application';relationship='finance-application';}
+    else if(/payment|transaction|settlement|default|claim|record|account|statement/.test(token)){kind='finance-record';relationship='finance-record';}
+    else {kind='finance-instrument';relationship='finance-template';}
+  }else if(sec==='Business / Commercial'){
+    family='business-commercial';
+    if(/lead|estimate|quote|bid|proposal/.test(token)){kind='commercial-opportunity';relationship='business-opportunity';}
+    else if(/job|order|invoice|payment|record|customer|delivery|performance/.test(token)){kind='commercial-record';relationship='business-record';}
+    else {kind='business-class';relationship='business-template';}
+  }
+  return {sector:sec,family,kind,relationship,template,folder:f,classNode:c,classLabel:c?c.label:contextTitle(),folderLabel:f?f.label:'Class rows'};
+}
+function contextKind(){return contextProfile().kind;}
+function templateObject(){
+  const data=selectedSectorData();
+  const id=activeTemplateId();
+  return (data.datagrid_templates && id && data.datagrid_templates[id]) || null;
+}
+function templateColumnsFromJSON(t){
+  if(!t)return [];
+  const raw=t.columns || t.fields || [];
+  return raw.map(x=>typeof x==='string'?x:(x.field||x.label||'FIELD')).map(x=>String(x).toUpperCase().replace(/[^A-Z0-9]+/g,'_').replace(/^_|_$/g,''));
+}
+function relationshipColumns(profile){
+  // Only Consumer and Market are allowed to add explicit offer/bid/sold transaction
+  // relationship fields. Public/Finance/Business use their own sector templates.
+  if(profile.sector==='Human / Consumer'){
+    if(profile.kind==='bid') return ['ITEM','UID','STATUS','SOURCE_OFFER_ID','BUYER_ID','SELLER_ID','BID_AMOUNT','BID_TERMS','BID_STATUS','BID_DATE','RESPONSE_DATE'];
+    if(profile.kind==='transaction') return ['ITEM','UID','RECORD_TYPE','STATUS','SOURCE_OFFER_ID','SOURCE_BID_ID','SOURCE_TRANSACTION_ID','BUYER_ID','SELLER_ID','OUTCOME_TYPE','OUTCOME_DATE','AMOUNT','PAYMENT_STATUS','DELIVERY_STATUS','OUTCOME_STATUS'];
+    return [];
+  }
+  if(profile.sector==='Market / Exchange'){
+    if(profile.kind==='bid') return ['ITEM','UID','STATUS','OFFER_ID','BID_ID','BUYER_REF','SELLER_REF','BID_AMOUNT','BID_TERMS','BID_DATE','RESPONSE_STATUS'];
+    if(profile.kind==='transaction') return ['ITEM','UID','RECORD_TYPE','STATUS','OFFER_ID','BID_ID','TRANSACTION_ID','PARTIES','OUTCOME_TYPE','OUTCOME_DATE','SETTLEMENT_STATUS'];
+    return [];
+  }
+  return [];
+}
+function classSpecificColumns(profile){
+  const txt=String(profile.classLabel||'').toLowerCase();
+  const sec=profile.sector;
+  let extra=[];
+  if(sec==='Public / Government'){
+    if(/land title/.test(txt)) extra=['TITLE_ID','PARCEL_ID','PROPERTY_ADDRESS','LEGAL_DESCRIPTION','OWNER_REF','ENCUMBRANCES','LIENS'];
+    else if(/vehicle registration/.test(txt)) extra=['REGISTRATION_ID','VIN','PLATE_NUMBER','YEAR','MAKE','MODEL','OWNER_REF','EXPIRY_DATE'];
+    else if(/birth registration|death registration|name change|citizenship/.test(txt)) extra=['PERSON_REF','EVENT_DATE','CERTIFICATE_NUMBER','ISSUING_OFFICE','PRIVACY_LEVEL'];
+    else if(/permit|licence|license/.test(txt)) extra=['APPLICATION_ID','APPLICANT_REF','PERMIT_NUMBER','ISSUE_DATE','EXPIRY_DATE','CONDITIONS'];
+    else if(/court|tribunal|appeal|complaint|case/.test(txt)) extra=['CASE_ID','PARTY_A','PARTY_B','INTAKE_DATE','HEARING_DATE','DECISION_SUMMARY','APPEAL_STATUS'];
+  }else if(sec==='Finance / Capital'){
+    if(/mortgage|loan|credit/.test(txt)) extra=['APPLICATION_ID','BORROWER_REF','PRINCIPAL','INTEREST_RATE','APR','TERM','PAYMENT_AMOUNT','COLLATERAL','LTV'];
+    else if(/insurance|policy|claim/.test(txt)) extra=['POLICY_ID','INSURED_REF','PREMIUM','DEDUCTIBLE','COVERAGE_LIMIT','CLAIM_ID','CLAIM_STATUS'];
+  }else if(sec==='Business / Commercial'){
+    if(/repair|service|shop|contractor/.test(txt)) extra=['BUSINESS_ID','SERVICE_AREA','HOURLY_RATE','CAPACITY','CERTIFICATION','LEAD_TIME','WARRANTY'];
+    else if(/manufactur|supplier|wholesale/.test(txt)) extra=['BUSINESS_ID','PRODUCT_CLASS','MOQ','LEAD_TIME','UNIT_COST','CAPACITY','QUALITY_SYSTEM'];
+  }else if(sec==='Human / Consumer' || sec==='Market / Exchange'){
+    if(/passenger vehicle|vehicle/.test(txt)) extra=['YEAR','MAKE','MODEL','TRIM','VIN','ODOMETER','ENGINE','TRANSMISSION','BODY','CERTIFIED','ACCIDENT_HISTORY'];
+    else if(/apartment|rental|rent/.test(txt)) extra=['RENTAL_TYPE','BEDROOMS','BATHROOMS','SQUARE_FEET','UTILITIES_INCLUDED','LEASE_TERM','PETS_ALLOWED','PARKING','DAMAGE_DEPOSIT','AVAILABLE_DATE'];
+    else if(/refrigerator/.test(txt)) extra=['BRAND','MODEL','TYPE','CAPACITY','WIDTH','HEIGHT','DEPTH','ENERGY_RATING','FREEZER_LOCATION','ICE_MAKER','WARRANTY'];
+  }
+  return extra;
+}
+function gridColumns(){
+  const profile=contextProfile();
+  const base=templateColumnsFromJSON(templateObject());
+  const cols=relationshipColumns(profile).concat(base).concat(classSpecificColumns(profile));
+  return uniqueColumns(cols.length?cols:['ITEM','UID','TITLE','STATUS','NOTES']).slice(0,42);
+}
+function contextSpecificGridNote(profile){
+  if(profile.sector==='Public / Government') return 'Public-sector grid: registry, service-case, permit/licence, procurement, remedy, or public-record fields are selected from the node template. It does not use marketplace bid/sold fields unless the selected public template actually calls for procurement.';
+  if(profile.sector==='Finance / Capital') return 'Finance-sector grid: instrument, account, payment, credit, insurance, collateral, rating, default, or settlement fields come from the selected finance template.';
+  if(profile.sector==='Business / Commercial') return 'Business-sector grid: business type, offer, lead, quote, job/order, procurement, workforce, asset, quality, risk, or commercial-record fields come from the selected business template.';
+  if(profile.sector==='Market / Exchange') return 'Market-sector grid: exchange objects, listings, bids, auctions, settlements, trust/evidence, disputes, and outcome records are rendered from the market template.';
+  return 'Consumer Comparator grid: offers/listings, bids, and transaction outcome records use Comparator relationship fields plus the selected class template.';
+}
+function rowBase(i){
+  const profile=contextProfile();
+  const label=profile.classLabel;
+  const uidPrefix=slug(label).replace(/_/g,'').slice(0,4).toUpperCase() || 'ITEM';
+  const folder=profile.folderLabel;
+  return {
+    __id:`row_${slug(app.activeSector)}_${slug(label)}_${slug(folder)}_${i}`,
+    ITEM:String(i).padStart(3,'0'), ITEM_ID:String(i).padStart(3,'0'), UID:`${uidPrefix}-${String(i).padStart(4,'0')}`,
+    TITLE:`${label} ${folder} ${String.fromCharCode(64+i)}`, NAME:`${label} ${String.fromCharCode(64+i)}`,
+    STATUS:['Open','Review','Pending','Active','Archived'][i-1], SCOPE:app.activeScope, OVERLAY:app.activeOverlay,
+    SELLER:['Dealer 1001','Private 1002','Online 1003','Local 1004','Provider 1005'][i-1], SELLER_ID:`SEL-${String(i).padStart(4,'0')}`, SELLER_TYPE:['Dealer','Private','Marketplace','Local','Provider'][i-1],
+    BUYER_ID:'BUY-0001', BUYER_REF:'BUY-0001', SELLER_REF:`SEL-${String(i).padStart(4,'0')}`,
+    SOURCE_OFFER_ID:`OFF-${String(i).padStart(4,'0')}`, SOURCE_BID_ID:`BID-${String(i).padStart(4,'0')}`, SOURCE_TRANSACTION_ID:`TX-${String(i).padStart(4,'0')}`,
+    OFFER_ID:`OFF-${String(i).padStart(4,'0')}`, BID_ID:`BID-${String(i).padStart(4,'0')}`, TRANSACTION_ID:`TX-${String(i).padStart(4,'0')}`,
+    RECORD_TYPE:['Sold','Bid Declined','Bid Withdrawn','Counter-Offer','Counter-Bid'][i-1], OUTCOME_TYPE:['Sold','Declined','Withdrawn','Counter-Offer','Counter-Bid'][i-1],
+    BID_AMOUNT:'$'+(750+i*760).toLocaleString(), BID_TERMS:['Subject to inspection','Cash / pickup','Finance approval','Counter requested','Hold pending records'][i-1], BID_STATUS:['Submitted','Countered','Declined','Draft','Accepted'][i-1], BID_DATE:`2026-06-${String(10+i).padStart(2,'0')}`,
+    RESPONSE_DATE:`2026-06-${String(12+i).padStart(2,'0')}`, RESPONSE_STATUS:['Open','Accepted','Declined','Countered','Expired'][i-1],
+    OUTCOME_DATE:`2026-06-${String(15+i).padStart(2,'0')}`, PAYMENT_STATUS:['Paid','Deposit','Pending','Refunded','Scheduled'][i-1], DELIVERY_STATUS:['Received','Pickup booked','Inspection pending','Delivered','Closed'][i-1], OUTCOME_STATUS:['Accepted','In progress','Rejected','Completed','Problem noted'][i-1],
+    ASK_PRICE:'$'+(900+i*825).toLocaleString(), MIN_BID:'$'+(700+i*720).toLocaleString(), PRICE:'$'+(900+i*825).toLocaleString(), AMOUNT:'$'+(900+i*825).toLocaleString(), VALUE:'$'+(900+i*825).toLocaleString(),
+    LOCATION:['Red Deer','Calgary','Edmonton','Springbrook','Online'][i-1], JURISDICTION:['Municipal','Provincial','Federal','Regional','Public'][i-1], RISK:['Low','Medium','Review','Low','High'][i-1], RISK_LEVEL:['Low','Medium','High','Review','Urgent'][i-1], RISK_OR_PRIORITY:['Low','Medium','High','Review','Urgent'][i-1], EVIDENCE_STATUS:['Photo','Reference','Inspection','Receipt','Missing'][i-1], NOTES:'prototype sample'
+  };
+}
+function sampleValue(c,i,j){
+  const direct={
+    // Public registry / government records
+    RECORD_ID:`REC-${String(i).padStart(4,'0')}`, RECORD_TYPE:['Registry Item','Source Record','Filing','Decision','Amendment'][i-1], REGISTRY:['Land Titles','Motor Vehicles','Corporate Registry','Vital Statistics','Open Data'][i-1], PUBLIC_BODY:['Registry Office','Service Alberta','Municipality','Court Registry','Public Agency'][i-1], SUBJECT:['Parcel record','Vehicle owner record','Corporate filing','Citizen record','Service case'][i-1], ACCESS_LEVEL:['Public','Restricted','Private','Public abstract','Permissioned'][i-1], AMENDMENT_HISTORY:['None','Transfer 2024','Correction pending','Amended','Archived'][i-1], SOURCE_RECORD:`SRC-${String(i).padStart(4,'0')}`, VERIFICATION_LEVEL:['Verified','Pending','Certified','Review','Unverified'][i-1], REQUEST_OR_SEARCH_LINK:`search-${i}`,
+    TITLE_ID:`LT-${String(42000+i)}`, PARCEL_ID:`PCL-${String(88000+i)}`, PROPERTY_ADDRESS:['12 Main St','44 River Rd','81 Prairie Ave','7 Industrial Way','19 Lakeview Dr'][i-1], LEGAL_DESCRIPTION:[`Plan ${1000+i} Block ${i} Lot ${i+2}`,'NE-14-38-27-W4','Condo Plan 9920001 Unit '+i,'Lot '+i+' Block 7 Plan 2310','SW-22-38-28-W4'][i-1], OWNER_REF:`OWNER-${String(i).padStart(4,'0')}`, ENCUMBRANCES:['None','Utility easement','Mortgage registered','Caveat','Right of way'][i-1], LIENS:['None','None','Builder lien','Tax lien','Discharged'][i-1],
+    REGISTRATION_ID:`REG-${String(3000+i)}`, PLATE_NUMBER:`ABC-${100+i}`, CERTIFICATE_NUMBER:`CERT-${String(7000+i)}`, ISSUING_OFFICE:['Red Deer','Calgary','Edmonton','Ottawa','Online'][i-1], PRIVACY_LEVEL:['Public abstract','Restricted','Private','Public','Permissioned'][i-1],
+    APPLICATION_ID:`APP-${String(i).padStart(4,'0')}`, APPLICANT_REF:`APPL-${String(i).padStart(4,'0')}`, PERMIT_NUMBER:`PER-${String(9000+i)}`, CONDITIONS:['Standard','Inspection required','Conditional','Renewal required','None'][i-1],
+    CASE_ID:`CASE-${String(i).padStart(4,'0')}`, PARTY_A:['Applicant','Tenant','Citizen','Business','Agency'][i-1], PARTY_B:['Agency','Landlord','Respondent','Regulator','Public Body'][i-1], DECISION_SUMMARY:['Approved','Denied','Pending','Counter order','Referred'][i-1], APPEAL_STATUS:['Available','Filed','Expired','N/A','Under review'][i-1],
+    // Consumer / vehicle / apartment
+    YEAR:String(2012+i), MAKE:['Honda','Toyota','Ford','Dodge','Chevrolet'][i-1], MODEL:['Civic','Corolla','F-150','Grand Caravan','Silverado'][i-1], TRIM:['LX','CE','XLT','SE','LT'][i-1], VIN:`VIN-SAMPLE-${i}${j}`, ODOMETER:(90+i*23)+'K', ENGINE:['2.0L','1.8L','3.5L','3.3L','5.3L'][i-1], TRANSMISSION:['CVT','Auto','Auto','Auto','Auto'][i-1], BODY:['Sedan','Sedan','Truck','Van','Truck'][i-1], CERTIFIED:i%2?'YES':'-', CONDITION:['Good','Fair','Excellent','Review','Good'][i-1], ACCIDENT_HISTORY:['None','Unknown','Minor','None','Repair record'][i-1],
+    RENTAL_TYPE:['Apartment','Basement suite','Room','House','Short term'][i-1], BEDROOMS:String(i), BATHROOMS:String(Math.max(1,Math.min(3,i-1))), SQUARE_FEET:String(500+i*120), UTILITIES_INCLUDED:i%2?'Yes':'No', LEASE_TERM:['12 mo','6 mo','Month','12 mo','Flexible'][i-1], PETS_ALLOWED:i%2?'Yes':'No', PARKING:['Street','Driveway','Underground','None','Garage'][i-1], DAMAGE_DEPOSIT:'$'+(600+i*150), AVAILABLE_DATE:`2026-07-0${i}`,
+    BRAND:['Acme','North','Prairie','Atlas','Civic'][i-1], PROVIDER:['Provider A','Provider B','Provider C','Provider D','Provider E'][i-1], AGENCY:['Agency A','Agency B','Agency C','Agency D','Agency E'][i-1], PROGRAM:['Program A','Program B','Program C','Program D','Program E'][i-1], DEADLINE:`2026-07-${String(10+i).padStart(2,'0')}`,
+    // Finance / business
+    APR:(5+i/2).toFixed(2)+'%', TERM:(12*i)+' mo', COLLATERAL:['None','Vehicle','Property','Inventory','Receivable'][i-1], CREDIT_SCORE:String(560+i*25), LTV:(60+i*5)+'%', PRINCIPAL:'$'+(10000*i).toLocaleString(), INTEREST_RATE:(4.5+i/2).toFixed(2)+'%', PAYMENT_AMOUNT:'$'+(300+i*75), INSTITUTION:['RBC','ATB','Credit Union','BMO','Online Lender'][i-1], ACCOUNT_ID:`ACCT-${String(i).padStart(4,'0')}`,
+    BUSINESS_ID:`BUS-${String(i).padStart(4,'0')}`, BUSINESS_TYPE:['Service','Retail','Manufacturing','Contractor','Professional'][i-1], INDUSTRY_GROUP:['Automotive','Food','Construction','Finance','Education'][i-1], SERVICE_AREA:['Local','Regional','Provincial','Online','National'][i-1], HOURLY_RATE:'$'+(55+i*15), CAPACITY:String(2+i)+' jobs/day', CERTIFICATION:['Licensed','Certified','Insured','Pending','N/A'][i-1], LEAD_TIME:(i*3)+' days', WARRANTY:['30 days','90 days','1 year','None','Manufacturer'][i-1]
+  };
+  if(direct[c]!==undefined)return direct[c];
+  if(c.includes('DATE')||c.includes('DEADLINE')||c.includes('POSTED')||c.includes('CLOSES')||c.includes('EFFECTIVE')||c.includes('EXPIRY')||c.includes('FILING')||c.includes('HEARING')||c.includes('INTAKE'))return `2026-06-${String(10+i+j).padStart(2,'0')}`;
+  if(c.includes('PRICE')||c.includes('PAYMENT')||c.includes('FEE')||c.includes('AMOUNT')||c.includes('COST')||c.includes('VALUE')||c.includes('BUDGET')||c.includes('RATE')||c.includes('PREMIUM')||c.includes('DEDUCTIBLE')||c.includes('LIMIT'))return '$'+(100*i+25*j).toLocaleString();
+  if(c.includes('STATUS'))return ['Open','Review','Pending','Active','Closed'][i-1];
+  if(c.endsWith('_ID')||c.includes(' ID')||c.includes('ID'))return `${c.slice(0,4)}-${String(i).padStart(4,'0')}`;
+  if(c.includes('LOCATION')||c.includes('AREA')||c.includes('JURISDICTION'))return ['Red Deer','Calgary','Edmonton','Springbrook','Federal'][i-1];
+  if(c.includes('RISK')||c.includes('PRIORITY'))return ['Low','Medium','High','Review','Urgent'][i-1];
+  if(c.includes('SCOPE'))return app.activeScope;
+  if(c.includes('OVERLAY'))return app.activeOverlay;
+  if(c.includes('NOTES'))return 'sample';
+  if(c.includes('LINK'))return 'record-link-'+i;
+  if(c.includes('TYPE'))return ['Type A','Type B','Type C','Type D','Type E'][i-1];
+  if(c.includes('NAME')||c.includes('TITLE'))return `${contextProfile().classLabel} ${String.fromCharCode(64+i)}`;
+  return `${c}_${i}`;
+}
+function getGridRows(){
+  const cols=gridColumns();
+  const rows=[];
+  for(let i=1;i<=5;i++){
+    const r=rowBase(i);
+    cols.forEach((c,j)=>{ if(r[c]===undefined) r[c]=sampleValue(c,i,j); });
+    rows.push({...r,__id:`row_${slug(app.activeSector)}_${slug(selectedPath().map(n=>n.label).join('_')||classLabel())}_${slug(contextKind())}_${i}`});
+  }
+  return rows;
+}
+function defaultGridWidths(cols){
+  const preset={ITEM:38,ITEM_ID:48,UID:82,STATUS:72,TITLE:160,NAME:140,SELLER:95,BUYER_ID:82,SELLER_ID:82,BUYER_REF:82,SELLER_REF:82,SOURCE_OFFER_ID:98,SOURCE_BID_ID:88,SOURCE_TRANSACTION_ID:116,OFFER_ID:74,BID_ID:70,TRANSACTION_ID:100,RECORD_TYPE:92,OUTCOME_TYPE:92,BID_AMOUNT:78,BID_TERMS:120,BID_STATUS:82,BID_DATE:72,RESPONSE_DATE:88,RESPONSE_STATUS:90,OUTCOME_DATE:84,PAYMENT_STATUS:92,DELIVERY_STATUS:96,OUTCOME_STATUS:110,ASK_PRICE:78,MIN_BID:76,PRICE:72,AMOUNT:72,LOCATION:78,JURISDICTION:94,RISK:56,RISK_LEVEL:72,SCOPE:70,OVERLAY:118,YEAR:48,MAKE:70,MODEL:90,VIN:120,ODOMETER:70,CONDITION:75,NOTES:120,RECORD_ID:88,REGISTRY:105,PUBLIC_BODY:120,SUBJECT:130,ACCESS_LEVEL:86,SOURCE_RECORD:92,REQUEST_OR_SEARCH_LINK:130,TITLE_ID:82,PARCEL_ID:90,PROPERTY_ADDRESS:145,LEGAL_DESCRIPTION:170,OWNER_REF:92,ENCUMBRANCES:120,LIENS:90,CASE_ID:90,APPLICATION_ID:94,PERMIT_NUMBER:94};
+  return Object.fromEntries(cols.map(c=>[c,preset[c]||92]));
+}
+function renderDatagrid(){
+  const profile=contextProfile();
+  const rows=sortedRows(getGridRows()),cols=gridColumns();
+  const key='dense_v26_'+app.activeSector+'_'+templateId()+'_'+slug(profile.kind)+'_'+folderToken();
+  if(!app.gridWidths[key])app.gridWidths[key]=defaultGridWidths(cols);
+  cols.forEach(c=>{if(!app.gridWidths[key][c])app.gridWidths[key][c]=defaultGridWidths([c])[c];});
+  const tmpl=templateObject();
+  const source=selectedSectorData().metadata?.name || app.activeSector;
+  const tmplLabel=(tmpl&&tmpl.label)||templateId();
+  document.getElementById('workspace').innerHTML=`<div class="callout"><h3>Dense Datagrid — ${esc(contextTitle())}</h3><p>${esc(contextSpecificGridNote(profile))} Five sample rows are generated for prototype testing. Header click cycles: ascending ▲ → descending ▼ → original/order-added.</p><p><b>${esc(sortLabel())}</b> <button class="miniBtn" onclick="clearGridSort()">Original Order</button> <span class="mini">Source: ${esc(source)}; Template: ${esc(tmplLabel)}; Context: ${esc(profile.kind)}; Folder: ${esc(profile.folderLabel)}</span></p></div><div class="gridShell"><table class="denseGrid" id="denseGrid"><colgroup>${cols.map(c=>`<col style="width:${app.gridWidths[key][c]}px">`).join('')}</colgroup><thead><tr>${cols.map(c=>`<th data-col="${esc(c)}" title="Click: ascending → descending → original order"><div class="thWrap">${esc(c)}${sortMark(c)}<span class="resizeHandle" data-resize="${esc(c)}"></span></div></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr class="${app.selectedCenterId===r.__id?'selected':''}" data-id="${esc(r.__id)}">${cols.map(c=>`<td>${esc(r[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  document.querySelectorAll('.denseGrid th[data-col]').forEach(th=>th.onclick=e=>{if(e.target.closest('.resizeHandle'))return;setGridSort(th.dataset.col)});
+  document.querySelectorAll('.denseGrid tbody tr').forEach(tr=>tr.onclick=()=>{app.selectedCenterId=tr.dataset.id;app.selectedCenterType='gridRow';render()});
+  initColumnResize(key,cols);
+}
+function renderCompare(){renderDatagrid();const h=document.querySelector('.callout h3'),p=document.querySelector('.callout p');if(h)h.textContent='Compare / Transact — '+contextTitle();if(p)p.textContent='Compare/Transact uses the same template-aware grid engine, but the meaning changes by sector: consumer offer/bid/transaction, market exchange flow, business job/order, finance settlement, or public procurement/remedy record.';}
+function renderDefinitions(){
+  const data=selectedSectorData(), n=selectedNode();
+  const meta=data.metadata||{};
+  const c=selectedClass();
+  const f=selectedFolder();
+  const tmpl=templateObject();
+  const profile=contextProfile();
+  document.getElementById('workspace').innerHTML=`<div class="callout"><h3>Objects / Definitions — ${esc(contextTitle())}</h3><p>Sector JSON file: <b>${esc(sectorDataFile[app.activeSector]||'home')}</b>. Flat nodes are converted at startup into this TreeView. Comparable classes use virtual object-folder templates. Datagrids are now template-aware.</p></div><div class="cards"><div class="card"><h3>Sector data</h3><p>${esc(meta.name||app.activeSector)}<br>${esc(meta.generated_node_count||nodeCount())} source nodes</p><span class="tag">${esc(meta.version||'v0')}</span></div><div class="card"><h3>Selected node</h3><p>${esc(n?n.label:'none')}<br>${esc(n?n.type:'')}</p><span class="tag">${esc(n&&n.comparable?'Comparable':'Navigation')}</span></div><div class="card"><h3>Datagrid context</h3><p>${esc((tmpl&&tmpl.label)||templateId())}<br>${gridColumns().length} columns<br>${esc(profile.kind)}${f?' / '+esc(f.label):''}</p><span class="tag">${esc(templateId())}</span></div></div>`;
+}
+function findCenterObject(id){
+  if(!id)return null;
+  if(app.selectedCenterType==='gridRow'){
+    const row=getGridRows().find(r=>r.__id===id);
+    return row?{...row,name:(row.TITLE||row.NAME||row.ITEM||id),description:'Selected template-aware dense datagrid row'}:null;
+  }
+  for(const lane of currentSwimlanes())for(const o of lane.objects)if(o.id===id)return o;
+  return app.customObjects[id]||null;
+}
+app.evidence.unshift('REC | v2.6 adds template-aware datagrid rendering; external TreeViews left unchanged | Saved');
+// ---------------- end v2.6 template-aware datagrid rendering ----------------
 
 defaultSelectForSector();wireButtons();render();
 </script>

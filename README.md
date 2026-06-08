@@ -1,4 +1,4 @@
-# Economy Master Interface v2.5 — GitHub-ready Prototype
+# Economy Master Interface v2.6 — GitHub-ready Prototype
 
 Date: 2026-06-08
 
@@ -35,3 +35,16 @@ A companion local startup file, `data/sector_trees_embedded.js`, contains the sa
 - Inspector context hierarchy
 - One-line VRQ/event streams
 - Object editor / custom object workflow
+
+
+## v2.6 change
+
+The dense datagrid renderer is now template-aware. The TreeViews are unchanged, but the grid now considers:
+
+- Sector / viewpoint
+- Selected comparable class
+- Selected virtual object folder
+- `datagrid_template_id`
+- `object_folder_template_id`
+
+This prevents Public / Government registry records such as Land Title Record from using marketplace-style bid/sold fields. Public registry/case/permit/procurement grids now use the public-sector template columns plus limited class-specific extensions. Consumer and Market contexts still support offer/bid/transaction relationship fields where they make sense.
