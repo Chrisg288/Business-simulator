@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.7.1</title>
+<title>Economy Master Interface v2.8 Experimental</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -22,6 +22,9 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 .swimWrap{display:grid;gap:8px}.swimHelp{display:flex;gap:5px;flex-wrap:wrap}.legendItem{font-size:9px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:3px 6px;color:#536d7f}.laneBoard{display:grid;grid-template-columns:repeat(3,minmax(210px,1fr));gap:8px}.lane{background:#fff;border:1px solid var(--line);border-radius:14px;min-height:150px;padding:8px;box-shadow:0 6px 14px rgba(35,61,81,.05)}.lane h3{font-size:11px;margin:0 0 5px;color:#3e5a6d;text-transform:uppercase;letter-spacing:.06em}.lane p{margin:0 0 6px;color:#607284;font-size:10px;line-height:1.28}.laneHuman{border-top:3px solid #fff9aa}.laneMarket{border-top:3px solid #8ff0bd}.laneBusiness{border-top:3px solid #c0b0d3}.laneFinance{border-top:3px solid #73a3dc}.lanePublic{border-top:3px solid #f6b278}.laneObj{border:1px solid #e1edf4;background:#fbfdff;border-radius:9px;padding:6px;margin-top:6px;cursor:pointer}.laneObj.selected{border-color:#6aa7ff;background:#eef6ff}.laneObj h4{font-size:11px;margin:0 0 2px}.laneObj p{font-size:9px;margin:0}.callout{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:7px}.callout h3{margin:0 0 3px;font-size:13px}.callout p{margin:0;color:var(--muted);font-size:11px;line-height:1.3}
 .gridShell{border:1px solid #8f9eaa;background:#fff;overflow:auto;max-height:calc(100vh - 350px);min-height:260px;box-shadow:inset 0 0 0 1px #fff}.denseGrid{border-collapse:collapse;table-layout:fixed;width:max-content;min-width:100%;font-family:"MS Sans Serif",Segoe UI,Tahoma,Arial,sans-serif;font-size:8pt;line-height:1.05;color:#111;background:#fff}.denseGrid th,.denseGrid td{border:1px solid #aeb8bf;padding:1px 3px;height:17px;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:left}.denseGrid th{background:linear-gradient(#f0f0f0,#d8d8d8);font-weight:700;position:sticky;top:0;z-index:2;color:#111;box-shadow:inset 1px 1px #fff;cursor:pointer}.sortMark{float:right;font-size:8px;margin-left:3px;color:#0756ad}.denseGrid tbody tr:nth-child(even){background:#fbfbfb}.denseGrid tbody tr:hover{background:#dcf0ff}.denseGrid tbody tr.selected{background:#b9f7b9!important}.thWrap{position:relative;height:100%;min-height:14px;padding-right:6px}.resizeHandle{position:absolute;right:-4px;top:-2px;width:8px;height:20px;cursor:col-resize;z-index:3}.resizeHandle:hover{background:rgba(38,119,255,.18)}
 .graphArea{height:420px;position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}.graphNode{position:absolute;width:165px;min-height:76px;border:1px solid #b7cee0;background:#fbfdff;border-radius:14px;padding:10px;box-shadow:0 8px 20px rgba(35,61,81,.08)}.graphNode h3{margin:0 0 5px;font-size:12px}.graphNode p{margin:0;color:var(--muted);font-size:10px}.connector{position:absolute;height:2px;background:#9cb6c8;transform-origin:left center}.scoreWrap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.score{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}.score h3{margin:0 0 7px;font-size:12px}.meter{height:10px;border-radius:99px;background:#edf3f7;overflow:hidden}.meter span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green))}.codeBox{font-family:var(--mono);font-size:11px;background:#0f1720;color:#dbeafe;border-radius:14px;padding:12px;overflow:auto;white-space:pre;max-height:460px}
+
+.sharedMethodGrid{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:8px;margin-bottom:8px}.methodCard{background:#fff;border:1px solid var(--line);border-radius:13px;padding:9px;box-shadow:0 6px 14px rgba(35,61,81,.05)}.methodCard h3{margin:0 0 5px;font-size:12px}.methodCard p{margin:0;color:var(--muted);font-size:10px;line-height:1.32}.methodSection{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;margin-bottom:8px;box-shadow:0 6px 14px rgba(35,61,81,.04)}.methodSection h3{margin:0 0 6px;font-size:12px;color:#3e5a6d}.methodCode{font-family:var(--mono);font-size:10px;white-space:pre-wrap;background:#f7fbfd;border:1px solid #e0edf4;border-radius:10px;padding:8px;color:#263c4d}.tinyTableNote{font-size:10px;color:var(--muted);line-height:1.3;margin:0 0 6px}.sampleTag{display:inline-flex;border:1px solid #cfe2ee;background:#f7fbfd;border-radius:999px;padding:2px 6px;margin-right:4px;font-size:9px;color:#456175;font-weight:900}
+
 .modalShade{position:fixed;inset:0;background:rgba(15,26,37,.35);display:none;align-items:center;justify-content:center;z-index:30}.modal{width:min(820px,90vw);max-height:86vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 90px rgba(15,26,37,.32)}.modalHead{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:12px 14px}.modalHead h2{font-size:16px;margin:0}.editorGrid{display:grid;grid-template-columns:150px 1fr;gap:7px;padding:14px}.editorGrid label{font-size:11px;font-weight:900;color:#456175;padding-top:7px}.editorGrid input,.editorGrid textarea,.editorGrid select{font:12px var(--font);border:1px solid var(--line2);border-radius:8px;padding:7px;background:#fbfdff}.editorGrid textarea{height:110px;font-family:var(--mono)}.modalFoot{display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--line);padding:12px 14px;background:#fbfdff}.hiddenFile{display:none}
 
 /* v2.7 node builder + datagrid proposal */
@@ -41,7 +44,7 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 </div>
 <div class="main">
   <section class="panel leftPanel"><div class="panelHead"><h2>Contextual TreeView</h2><span class="mini" id="nodeCount">0 nodes</span></div><div class="tree" id="tree"></div><div class="leftControls"><div class="controlTitle">Primary Scope — where the user/system is standing</div><div class="scopeGrid" id="scopeGrid"></div><div class="controlTitle">Cross-sector Overlay — relationship layer</div><div class="overlayChips" id="overlayChips"></div></div></section>
-  <section class="panel centerPanel"><div class="panelHead"><h2 id="centerTitle">Home / Economy Orientation</h2><span class="mini" id="centerSource">clickable five-sector wheel</span></div><div class="contextBar" id="contextBar"></div><div class="workspaceTools"><div class="toolButtons"><button class="smallBtn primary" id="newObjBtn">Add Object</button><button class="smallBtn" id="editObjBtn">Edit Object</button><button class="smallBtn green" id="saveAllBtn">Save Local</button><button class="smallBtn orange" id="raiseVRQBtn">Raise VRQ</button><button class="smallBtn" id="clearBtn">Clear Selection</button></div><span class="mini">Tree node × Activity Tool drives the center workspace</span></div><div class="workspace" id="workspace"></div></section>
+  <section class="panel centerPanel"><div class="panelHead"><h2 id="centerTitle">Home / Economy Orientation</h2><span class="mini" id="centerSource">clickable five-sector wheel</span></div><div class="contextBar" id="contextBar"></div><div class="workspaceTools"><div class="toolButtons"><button class="smallBtn primary" id="newObjBtn">Add Object</button><button class="smallBtn" id="canonicalSampleBtn">Shared Data Sample</button><button class="smallBtn" id="editObjBtn">Edit Object</button><button class="smallBtn green" id="saveAllBtn">Save Local</button><button class="smallBtn orange" id="raiseVRQBtn">Raise VRQ</button><button class="smallBtn" id="clearBtn">Clear Selection</button></div><span class="mini">Tree node × Activity Tool drives the center workspace</span></div><div class="workspace" id="workspace"></div></section>
   <section class="panel inspector"><div class="panelHead"><h2>Selected Item Inspector</h2><span class="mini" id="inspectorSource">Startup</span></div><div class="actionGrid"><button class="act" id="actNew">NEW</button><button class="act" id="actOpen">OPEN</button><button class="act" id="actEdit">EDIT</button><button class="act" id="actSave">SAVE</button></div><div class="actionGrid second"><button class="act" id="actSim">SIMULATE</button><button class="act" id="actAssess">ASSESS</button><button class="act" id="actDoc">DOCUMENT</button></div><div class="hierarchyBox"><h3>Inspector Context Hierarchy</h3><div id="hierarchySteps"></div></div><div class="desc" id="desc"></div><div class="fieldGrid" id="fieldGrid"></div><div class="moreBox"><button class="smallBtn primary" id="moreEditor">More / Custom Editor</button><button class="smallBtn" id="exportBtn">Export JSON</button><button class="smallBtn" id="importBtn">Import</button><input id="importFile" type="file" accept="application/json" class="hiddenFile"></div></section>
 </div>
 <div class="bottom">
@@ -635,6 +638,80 @@ function findCenterObject(id){
 }
 app.evidence.unshift('REC | v2.6 adds template-aware datagrid rendering; external TreeViews left unchanged | Saved');
 // ---------------- end v2.6 template-aware datagrid rendering ----------------
+
+
+
+// ---------------- v2.8 experimental shared canonical data method sample ----------------
+// This is intentionally additive and reversible. It does not rewrite the external TreeViews.
+const canonicalSampleRows = [
+  {UID:'100000001',OBJECT_TYPE:'Commercial Vehicle',YEAR:'2021',MAKE:'Ford',MODEL:'F-550',BODY_TYPE:'Cab & Chassis',GVWR_LB:'19500',PAYLOAD_LB:'10350',FUEL:'Diesel',TRANSMISSION:'Auto',WHEELBASE:'169 in',VIN:'SAMPLEVIN000001',CONDITION:'Good'},
+  {UID:'100000002',OBJECT_TYPE:'Commercial Vehicle',YEAR:'2020',MAKE:'Ram',MODEL:'5500',BODY_TYPE:'Flatdeck',GVWR_LB:'19500',PAYLOAD_LB:'9800',FUEL:'Diesel',TRANSMISSION:'Auto',WHEELBASE:'173 in',VIN:'SAMPLEVIN000002',CONDITION:'Fair'},
+  {UID:'100000003',OBJECT_TYPE:'Commercial Vehicle',YEAR:'2022',MAKE:'Chevrolet',MODEL:'Silverado 3500HD',BODY_TYPE:'Service Body',GVWR_LB:'14000',PAYLOAD_LB:'6200',FUEL:'Gas',TRANSMISSION:'Auto',WHEELBASE:'172 in',VIN:'SAMPLEVIN000003',CONDITION:'Excellent'},
+  {UID:'100000004',OBJECT_TYPE:'Commercial Vehicle',YEAR:'2019',MAKE:'Freightliner',MODEL:'M2 106',BODY_TYPE:'Box Truck',GVWR_LB:'26000',PAYLOAD_LB:'14500',FUEL:'Diesel',TRANSMISSION:'Auto',WHEELBASE:'210 in',VIN:'SAMPLEVIN000004',CONDITION:'Review'},
+  {UID:'100000005',OBJECT_TYPE:'Commercial Vehicle',YEAR:'2023',MAKE:'Isuzu',MODEL:'NPR-HD',BODY_TYPE:'Cube Van',GVWR_LB:'14500',PAYLOAD_LB:'6800',FUEL:'Gas',TRANSMISSION:'Auto',WHEELBASE:'150 in',VIN:'SAMPLEVIN000005',CONDITION:'Good'}
+];
+const canonicalSampleViews = {
+  buyer:{DATAGRID_UID:'200000101',VIEW_NAME:'Consumer / Business Fleet Buyer View',TREE_PATH:'Human / Consumer > Transportation and Business / Commercial > Fleet / Assets',CONTEXT:'Buying / sourcing vehicle value'},
+  seller:{DATAGRID_UID:'200000201',VIEW_NAME:'Dealer / Seller Offer View',TREE_PATH:'Business / Commercial > Dealer / Seller and Market / Exchange > Offers',CONTEXT:'Selling / offering vehicle value'}
+};
+function canonicalBuyerRows(){
+  const source=['Penhold Truck Sales','Bob and Joanne Fleet Farm','Red Deer Commercial Auto','Prairie Work Trucks','Central Alberta Isuzu'];
+  return canonicalSampleRows.map((r,i)=>({DATAGRID_UID:canonicalSampleViews.buyer.DATAGRID_UID,ITEM:String(i+1).padStart(3,'0'),UID:r.UID,DISPLAY_CODE:'CV-'+r.YEAR+'-'+String(i+1).padStart(3,'0'),SOURCE_PROVIDER:source[i],MAKE:r.MAKE,MODEL:r.MODEL,BODY_TYPE:r.BODY_TYPE,GVWR_LB:r.GVWR_LB,PAYLOAD_LB:r.PAYLOAD_LB,ASK_PRICE:'$'+[57900,51500,68900,74200,63900][i].toLocaleString(),NEED_FIT:['High','Medium','High','Review','Medium'][i],DISTANCE_KM:[18,42,12,96,35][i],AVAILABILITY:['Now','7 days','Now','Inspection','14 days'][i],VALUE_SCORE:[84,72,88,66,78][i]}));
+}
+function canonicalSellerRows(){
+  const source=['Penhold Truck Sales','Bob and Joanne Fleet Farm','Red Deer Commercial Auto','Prairie Work Trucks','Central Alberta Isuzu'];
+  return canonicalSampleRows.map((r,i)=>({DATAGRID_UID:canonicalSampleViews.seller.DATAGRID_UID,ITEM:String(i+1).padStart(3,'0'),UID:r.UID,DISPLAY_CODE:'OFFER-'+String(3000+i),SOURCE_PROVIDER:source[i],STOCK_NO:'STK-'+String(900+i),YEAR:r.YEAR,MAKE:r.MAKE,MODEL:r.MODEL,VIN:r.VIN,ASK_PRICE:'$'+[57900,51500,68900,74200,63900][i].toLocaleString(),WARRANTY:['90 days','As-is','1 year','30 days','Factory remaining'][i],FINANCING_AVAILABLE:i%2?'No':'Yes',SALES_STATUS:['Listed','Listed','Hold','Listed','Pending'][i]}));
+}
+function canonicalMembershipRows(){
+  return canonicalBuyerRows().map((r,i)=>({DATAGRID_UID:r.DATAGRID_UID,ITEM:r.ITEM,UID:r.UID,VIEW_ROLE:'buyer/value comparison',TREE_CONTEXT:'Human / Consumer + Business Fleet'}))
+  .concat(canonicalSellerRows().map((r,i)=>({DATAGRID_UID:r.DATAGRID_UID,ITEM:r.ITEM,UID:r.UID,VIEW_ROLE:'seller/offer listing',TREE_CONTEXT:'Business / Commercial + Market / Exchange'})));
+}
+function tableHTML(rows, cols){
+  return `<div class="gridShell" style="max-height:220px;min-height:120px;margin-bottom:8px"><table class="denseGrid"><colgroup>${cols.map(c=>`<col style="width:${c==='UID'||c==='DATAGRID_UID'?86:c==='ITEM'?38:92}px">`).join('')}</colgroup><thead><tr>${cols.map(c=>`<th><div class="thWrap">${esc(c)}</div></th>`).join('')}</tr></thead><tbody>${rows.map((r,idx)=>`<tr data-id="${esc(r.DATAGRID_UID||'canonical')}_${esc(r.UID)}_${idx}" class="${app.selectedCenterId===(r.DATAGRID_UID||'canonical')+'_'+r.UID+'_'+idx?'selected':''}">${cols.map(c=>`<td>${esc(r[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function renderCanonicalSample(){
+  document.getElementById('centerTitle').textContent='Experimental Shared Data Method';
+  document.getElementById('centerSource').textContent='v2.8 reversible sample';
+  const canonCols=['UID','OBJECT_TYPE','YEAR','MAKE','MODEL','BODY_TYPE','GVWR_LB','PAYLOAD_LB','FUEL','TRANSMISSION','VIN','CONDITION'];
+  const buyerCols=['DATAGRID_UID','ITEM','UID','DISPLAY_CODE','SOURCE_PROVIDER','MAKE','MODEL','BODY_TYPE','ASK_PRICE','NEED_FIT','DISTANCE_KM','AVAILABILITY','VALUE_SCORE'];
+  const sellerCols=['DATAGRID_UID','ITEM','UID','DISPLAY_CODE','SOURCE_PROVIDER','STOCK_NO','YEAR','MAKE','MODEL','VIN','ASK_PRICE','WARRANTY','FINANCING_AVAILABLE','SALES_STATUS'];
+  const memberCols=['DATAGRID_UID','ITEM','UID','VIEW_ROLE','TREE_CONTEXT'];
+  const methodJson={
+    CanonicalClass:{CLASS_UID:'300000010',name:'Commercial Vehicle',stores:'shared comparative vehicle facts once'},
+    DatagridViews:[canonicalSampleViews.buyer,canonicalSampleViews.seller],
+    RowIdentityRule:'DATAGRID_UID + ITEM gives original view order. UID identifies the shared object. DISPLAY_CODE is optional human-readable context.',
+    UpdateRule:'Edit canonical vehicle field once; buyer, seller, finance, public, and assessment views should refresh from the shared UID.'
+  };
+  document.getElementById('workspace').innerHTML=`
+    <div class="callout"><h3>Shared Canonical Data Method — Commercial Vehicle sample</h3><p>This is a reversible experiment layered on top of v2.7.1. The TreeViews are not rewritten. The sample shows how Consumer, Business, Market, Finance, and Public can point to one shared object instead of duplicating class data.</p><p><span class="sampleTag">UID = object identity</span><span class="sampleTag">DATAGRID_UID = view/table identity</span><span class="sampleTag">ITEM = original row order in that view</span><span class="sampleTag">DISPLAY_CODE = optional human label</span></p><button class="miniBtn" onclick="exportCanonicalSample()">Export shared-method sample JSON</button> <button class="miniBtn" onclick="app.canonicalSampleMode=false;render()">Return to normal v2.7.1 view</button></div>
+    <div class="sharedMethodGrid">
+      <div class="methodCard"><h3>1. Canonical object/class</h3><p>Commercial vehicle facts live once under neutral UID. Make/model/GVWR/VIN are not duplicated per sector.</p></div>
+      <div class="methodCard"><h3>2. Datagrid views</h3><p>Consumer buyer view and dealer seller view have different DATAGRID_UID values and columns, but reference the same vehicle UIDs.</p></div>
+      <div class="methodCard"><h3>3. Membership/order</h3><p>Each view has its own ITEM order. The same UID can appear in multiple trees and datagrids without becoming a duplicate object.</p></div>
+    </div>
+    <div class="methodSection"><h3>Canonical Commercial Vehicle records — shared base fields</h3><p class="tinyTableNote">These are the fields most sectors should share when they are talking about the same vehicle class/object.</p>${tableHTML(canonicalSampleRows,canonCols)}</div>
+    <div class="methodSection"><h3>Datagrid View 200000101 — Buyer / need-fit view</h3><p class="tinyTableNote">Consumer or business buyer context adds source/provider, asking price, need fit, distance, availability, and value score.</p>${tableHTML(canonicalBuyerRows(),buyerCols)}</div>
+    <div class="methodSection"><h3>Datagrid View 200000201 — Dealer / seller-offer view</h3><p class="tinyTableNote">Dealer/business/market context adds stock number, warranty, financing availability, and sales status, while reusing the same UID.</p>${tableHTML(canonicalSellerRows(),sellerCols)}</div>
+    <div class="methodSection"><h3>View membership table — what belongs in which datagrid</h3><p class="tinyTableNote">This is the layer that prevents UID from being confused with row order. The same UID can be row 001 in one datagrid and row 004 in another.</p>${tableHTML(canonicalMembershipRows(),memberCols)}</div>
+    <div class="methodSection"><h3>Idealized method JSON</h3><div class="methodCode">${esc(JSON.stringify(methodJson,null,2))}</div></div>
+  `;
+}
+function exportCanonicalSample(){
+  const payload={version:'v2.8_experimental_shared_data_method',exported_at:new Date().toISOString(),canonical_rows:canonicalSampleRows,datagrid_views:canonicalSampleViews,buyer_view_rows:canonicalBuyerRows(),seller_view_rows:canonicalSellerRows(),view_membership:canonicalMembershipRows()};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='shared_canonical_datagrid_method_sample_v2_8.json';a.click();URL.revokeObjectURL(url);
+}
+const __oldRenderWorkspace=renderWorkspace;
+renderWorkspace=function(){ if(app.canonicalSampleMode){renderCanonicalSample();return;} __oldRenderWorkspace(); };
+const __oldSwitchSector=switchSector;
+switchSector=function(sec){app.canonicalSampleMode=false;__oldSwitchSector(sec);};
+const __oldSwitchTool=switchTool;
+switchTool=function(t){app.canonicalSampleMode=false;__oldSwitchTool(t);};
+const __oldWireButtons=wireButtons;
+wireButtons=function(){__oldWireButtons();const b=document.getElementById('canonicalSampleBtn');if(b)b.onclick=()=>{app.canonicalSampleMode=true;app.selectedCenterId=null;app.selectedCenterType=null;render();};};
+app.evidence.unshift('REC | v2.8 experimental shared canonical data method sample added without rewriting TreeViews | Reversible');
+// ---------------- end v2.8 experimental shared canonical data method sample ----------------
+
 
 defaultSelectForSector();wireButtons();render();
 </script>

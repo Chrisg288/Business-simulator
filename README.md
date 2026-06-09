@@ -1,31 +1,22 @@
-# Economy Master Overview v2.7.1 — Local Node Delete + No Auto Child Folders
+# Economy Master Overview v2.8 Experimental
 
-Date: 2026-06-09
+This is a reversible experiment built on top of v2.7.1.
 
-This version preserves the v2.7 Tree node builder and v2.6 external sector TreeViews, then makes a narrow correction to local node behavior.
+## Purpose
 
-## What changed from v2.7
+Adds a **Shared Data Sample** button that demonstrates the idealized high-efficiency method discussed in chat:
 
-- New locally-created TreeView nodes no longer auto-create visible child folders.
-- Recommended object folders are kept in the generated datagrid proposal metadata only.
-- Added a `Delete Local Node` button.
-- Delete has confirmation.
-- Delete is permission-limited to local browser-created nodes only.
-- Permanent external sector JSON nodes are locked from deletion in the prototype.
+- TreeViews are viewpoints, not duplicated databases.
+- Shared objects have neutral `UID` values.
+- Datagrid views have their own `DATAGRID_UID` values.
+- `ITEM` preserves original row/order-added order inside a specific datagrid.
+- `DISPLAY_CODE` is optional and human-friendly, not the primary identity.
+- The same UID can appear in Consumer, Business, Market, Finance, Public, Assessment, and Simulation contexts.
 
-## Preserved
+## Revert note
 
-- Five external sector tree JSON files in `/data/`.
-- Home wheel.
-- Dense datagrid style.
-- Resizable columns.
-- Three-state sorting.
-- Activity Tool persistence.
-- Template-aware datagrid rendering.
-- Tree node builder.
-- Grid proposal generator.
-- Five dummy rows for generated node grids.
+No external TreeView JSON files were rewritten in this experiment. To revert, use v2.7.1.
 
-## Notes
+## Quick start
 
-Locally-created nodes are stored in browser localStorage and can be exported through the existing Export JSON button. They are not automatically written back into the permanent sector JSON files.
+Open `index.html` locally or upload the whole folder to GitHub Pages.
