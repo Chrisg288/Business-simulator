@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.8 Experimental</title>
+<title>Economy Master Interface v2.8.1 Experimental</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -35,7 +35,7 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.7.1</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>Fix</strong> local node delete + no auto child folders</span><span class="badge"><strong>Grid</strong> template-aware + node-generated</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
+  <div class="title"><h1>Economy Master Interface v2.8.1 Experimental</h1><div class="badges"><span class="badge"><strong>Experiment</strong> shared data method</span><span class="badge"><strong>UID</strong> neutral object identity</span><span class="badge"><strong>Datagrid UID</strong> view/table identity</span><span class="badge"><strong>Reversible</strong> v2.7.1 method preserved</span></div></div>
   <div class="principle"><strong>Context hierarchy:</strong> center selection → tree node → sector/scope/overlay → startup. The interface is the workshop; the large library comes later.</div>
 </header>
 <div class="ribbon">
@@ -56,7 +56,7 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 <div class="modalShade" id="modalShade"><div class="modal"><div class="modalHead"><h2 id="modalTitle">Object Editor</h2><button class="smallBtn" id="closeModal">Close</button></div><div class="editorGrid"><label>ID</label><input id="edId"><label>Label</label><input id="edLabel"><label>Type</label><input id="edType"><label>Parent</label><input id="edParent"><label>Sector</label><input id="edSector"><label>Description</label><input id="edDesc"><label>JSON Fields</label><textarea id="edJson"></textarea></div><div class="modalFoot"><button class="smallBtn" id="deleteObj">Delete Custom Object</button><button class="smallBtn primary" id="saveObj">Save Object</button></div></div></div>
 
 <div class="modalShade" id="nodeBuilderShade"><div class="modal builderModal"><div class="modalHead"><h2>Tree Node Builder + Datagrid Proposal</h2><button class="smallBtn" id="closeNodeBuilder">Close</button></div>
-  <div class="builderMini">Create a local TreeView node under the selected parent, describe the real-world context, then generate a contextual datagrid template, 5 dummy rows, and an AI handoff prompt. Saved nodes live in browser storage until exported. v2.7.1 stores recommended object folders in the proposal only; it does not automatically add visible child folders under the new node.</div>
+  <div class="builderMini">Create a local TreeView node under the selected parent, describe the real-world context, then generate a contextual datagrid template, 5 dummy rows, and an AI handoff prompt. Saved nodes live in browser storage until exported. v2.8.1 preserves the v2.7.1 local-node rule: recommended object folders stay in proposal metadata and are not automatically added as visible child folders.</div>
   <div class="builderGrid">
     <label>Node Label</label><input id="nbLabel" placeholder="e.g. Mineral Rights Title Record">
     <label>Node Role</label><select id="nbRole"><option>ComparableClass</option><option>Category</option><option>Group</option><option>Domain</option></select>
@@ -301,8 +301,8 @@ function gridColumns(){
   const kind=contextKind();
   const base=templateColumnsFromJSON(templateObject());
   let relationship=[];
-  if(kind==='bid') relationship=['ITEM','UID','STATUS','SOURCE_OFFER_ID','BUYER_ID','SELLER_ID','BID_AMOUNT','BID_TERMS','BID_STATUS','BID_DATE','RESPONSE_DATE'];
-  else if(kind==='transaction') relationship=['ITEM','UID','RECORD_TYPE','STATUS','SOURCE_OFFER_ID','SOURCE_BID_ID','SOURCE_TRANSACTION_ID','BUYER_ID','SELLER_ID','SOLD_PRICE','SOLD_DATE','PAYMENT_STATUS','DELIVERY_STATUS','OUTCOME_STATUS'];
+  if(kind==='bid') relationship=['ITEM','UID','STATUS','SOURCE_OFFER_UID','BUYER_UID','SELLER_UID','BID_AMOUNT','BID_TERMS','BID_STATUS','BID_DATE','RESPONSE_DATE'];
+  else if(kind==='transaction') relationship=['ITEM','UID','RECORD_TYPE','STATUS','SOURCE_OFFER_UID','SOURCE_BID_UID','SOURCE_TRANSACTION_UID','BUYER_UID','SELLER_UID','SOLD_PRICE','SOLD_DATE','PAYMENT_STATUS','DELIVERY_STATUS','OUTCOME_STATUS'];
   else relationship=commonColumns();
   return uniqueColumns(relationship.concat(base)).slice(0,34);
 }
@@ -313,17 +313,17 @@ function rowBase(i){
     __id:`row_${slug(app.activeSector)}_${slug(label)}_${contextKind()}_${i}`,
     ITEM:String(i).padStart(3,'0'),
     ITEM_ID:String(i).padStart(3,'0'),
-    UID:`${uidPrefix}-${String(i).padStart(4,'0')}`,
+    UID:neutralUid('object|'+uidSeed),
     TITLE:`${label} sample ${String.fromCharCode(64+i)}`,
     NAME:`${label} sample ${String.fromCharCode(64+i)}`,
     STATUS:['Open','Review','Shortlist','Compare','Saved'][i-1],
     SELLER:['Dealer 1001','Private 1002','Online 1003','Local 1004','Public 1005'][i-1],
-    SELLER_ID:`SEL-${String(i).padStart(4,'0')}`,
+    SELLER_UID:neutralUid('seller|'+i),
     SELLER_TYPE:['Dealer','Private','Marketplace','Local','Public'][i-1],
-    BUYER_ID:'BUY-0001',
-    SOURCE_OFFER_ID:`OFF-${String(i).padStart(4,'0')}`,
-    SOURCE_BID_ID:`BID-${String(i).padStart(4,'0')}`,
-    SOURCE_TRANSACTION_ID:`TX-${String(i).padStart(4,'0')}`,
+    BUYER_UID:neutralUid('buyer|primary'),
+    SOURCE_OFFER_UID:neutralUid('offer|'+i),
+    SOURCE_BID_UID:neutralUid('bid|'+i),
+    SOURCE_TRANSACTION_UID:neutralUid('transaction|'+i),
     RECORD_TYPE:contextKind()==='transaction'?['Sold','Bid Declined','Bid Withdrawn','Counter-Offer','Counter-Bid'][i-1]:'Offer',
     BID_AMOUNT:'$'+(750+i*760).toLocaleString(),
     BID_TERMS:['Subject to inspection','Cash / pickup','Finance approval','Counter requested','Hold pending records'][i-1],
@@ -380,7 +380,7 @@ function getGridRows(){
   return rows;
 }
 function defaultGridWidths(cols){
-  const preset={ITEM:38,ITEM_ID:48,UID:82,STATUS:72,TITLE:140,NAME:130,SELLER:95,BUYER_ID:82,SELLER_ID:82,SOURCE_OFFER_ID:98,SOURCE_BID_ID:88,SOURCE_TRANSACTION_ID:116,RECORD_TYPE:92,BID_AMOUNT:78,BID_TERMS:120,BID_STATUS:82,BID_DATE:72,RESPONSE_DATE:88,SOLD_PRICE:78,SOLD_DATE:72,PAYMENT_STATUS:92,DELIVERY_STATUS:96,OUTCOME_STATUS:110,ASK_PRICE:78,MIN_BID:76,LOCATION:78,JURISDICTION:94,RISK:56,SCOPE:70,OVERLAY:118,YEAR:48,MAKE:70,MODEL:90,VIN:120,ODOMETER:70,CONDITION:75,NOTES:110};
+  const preset={ITEM:38,ITEM_ID:48,UID:82,STATUS:72,TITLE:140,NAME:130,SELLER:95,BUYER_UID:82,SELLER_UID:82,SOURCE_OFFER_UID:98,SOURCE_BID_UID:88,SOURCE_TRANSACTION_UID:116,RECORD_TYPE:92,BID_AMOUNT:78,BID_TERMS:120,BID_STATUS:82,BID_DATE:72,RESPONSE_DATE:88,SOLD_PRICE:78,SOLD_DATE:72,PAYMENT_STATUS:92,DELIVERY_STATUS:96,OUTCOME_STATUS:110,ASK_PRICE:78,MIN_BID:76,LOCATION:78,JURISDICTION:94,RISK:56,SCOPE:70,OVERLAY:118,YEAR:48,MAKE:70,MODEL:90,VIN:120,ODOMETER:70,CONDITION:75,NOTES:110};
   return Object.fromEntries(cols.map(c=>[c,preset[c]||88]));
 }
 function renderDatagrid(){
@@ -489,13 +489,13 @@ function relationshipColumns(profile){
   // Only Consumer and Market are allowed to add explicit offer/bid/sold transaction
   // relationship fields. Public/Finance/Business use their own sector templates.
   if(profile.sector==='Human / Consumer'){
-    if(profile.kind==='bid') return ['ITEM','UID','STATUS','SOURCE_OFFER_ID','BUYER_ID','SELLER_ID','BID_AMOUNT','BID_TERMS','BID_STATUS','BID_DATE','RESPONSE_DATE'];
-    if(profile.kind==='transaction') return ['ITEM','UID','RECORD_TYPE','STATUS','SOURCE_OFFER_ID','SOURCE_BID_ID','SOURCE_TRANSACTION_ID','BUYER_ID','SELLER_ID','OUTCOME_TYPE','OUTCOME_DATE','AMOUNT','PAYMENT_STATUS','DELIVERY_STATUS','OUTCOME_STATUS'];
+    if(profile.kind==='bid') return ['ITEM','UID','STATUS','SOURCE_OFFER_UID','BUYER_UID','SELLER_UID','BID_AMOUNT','BID_TERMS','BID_STATUS','BID_DATE','RESPONSE_DATE'];
+    if(profile.kind==='transaction') return ['ITEM','UID','RECORD_TYPE','STATUS','SOURCE_OFFER_UID','SOURCE_BID_UID','SOURCE_TRANSACTION_UID','BUYER_UID','SELLER_UID','OUTCOME_TYPE','OUTCOME_DATE','AMOUNT','PAYMENT_STATUS','DELIVERY_STATUS','OUTCOME_STATUS'];
     return [];
   }
   if(profile.sector==='Market / Exchange'){
-    if(profile.kind==='bid') return ['ITEM','UID','STATUS','OFFER_ID','BID_ID','BUYER_REF','SELLER_REF','BID_AMOUNT','BID_TERMS','BID_DATE','RESPONSE_STATUS'];
-    if(profile.kind==='transaction') return ['ITEM','UID','RECORD_TYPE','STATUS','OFFER_ID','BID_ID','TRANSACTION_ID','PARTIES','OUTCOME_TYPE','OUTCOME_DATE','SETTLEMENT_STATUS'];
+    if(profile.kind==='bid') return ['ITEM','UID','STATUS','OFFER_UID','BID_UID','BUYER_REF','SELLER_REF','BID_AMOUNT','BID_TERMS','BID_DATE','RESPONSE_STATUS'];
+    if(profile.kind==='transaction') return ['ITEM','UID','RECORD_TYPE','STATUS','OFFER_UID','BID_UID','TRANSACTION_UID','PARTIES','OUTCOME_TYPE','OUTCOME_DATE','SETTLEMENT_STATUS'];
     return [];
   }
   return [];
@@ -536,20 +536,29 @@ function contextSpecificGridNote(profile){
   if(profile.sector==='Market / Exchange') return 'Market-sector grid: exchange objects, listings, bids, auctions, settlements, trust/evidence, disputes, and outcome records are rendered from the market template.';
   return 'Consumer Comparator grid: offers/listings, bids, and transaction outcome records use Comparator relationship fields plus the selected class template.';
 }
+
+function neutralUid(seed, offset=0){
+  // Stable numeric demo UID. It is intentionally not semantic: category/sector lives in fields, not in the UID.
+  const text=String(seed||'uid')+':'+String(offset||0);
+  let h=2166136261;
+  for(let i=0;i<text.length;i++){h^=text.charCodeAt(i); h=Math.imul(h,16777619)>>>0;}
+  return String(100000000000 + (h % 8999999999));
+}
+
 function rowBase(i){
   const profile=contextProfile();
   const label=profile.classLabel;
-  const uidPrefix=slug(label).replace(/_/g,'').slice(0,4).toUpperCase() || 'ITEM';
   const folder=profile.folderLabel;
+  const uidSeed=slug(app.activeSector)+'|'+slug(label)+'|'+slug(folder)+'|'+i;
   return {
     __id:`row_${slug(app.activeSector)}_${slug(label)}_${slug(folder)}_${i}`,
-    ITEM:String(i).padStart(3,'0'), ITEM_ID:String(i).padStart(3,'0'), UID:`${uidPrefix}-${String(i).padStart(4,'0')}`,
+    ITEM:String(i).padStart(3,'0'), ITEM_ID:String(i).padStart(3,'0'), UID:neutralUid('object|'+uidSeed),
     TITLE:`${label} ${folder} ${String.fromCharCode(64+i)}`, NAME:`${label} ${String.fromCharCode(64+i)}`,
     STATUS:['Open','Review','Pending','Active','Archived'][i-1], SCOPE:app.activeScope, OVERLAY:app.activeOverlay,
-    SELLER:['Dealer 1001','Private 1002','Online 1003','Local 1004','Provider 1005'][i-1], SELLER_ID:`SEL-${String(i).padStart(4,'0')}`, SELLER_TYPE:['Dealer','Private','Marketplace','Local','Provider'][i-1],
-    BUYER_ID:'BUY-0001', BUYER_REF:'BUY-0001', SELLER_REF:`SEL-${String(i).padStart(4,'0')}`,
-    SOURCE_OFFER_ID:`OFF-${String(i).padStart(4,'0')}`, SOURCE_BID_ID:`BID-${String(i).padStart(4,'0')}`, SOURCE_TRANSACTION_ID:`TX-${String(i).padStart(4,'0')}`,
-    OFFER_ID:`OFF-${String(i).padStart(4,'0')}`, BID_ID:`BID-${String(i).padStart(4,'0')}`, TRANSACTION_ID:`TX-${String(i).padStart(4,'0')}`,
+    SELLER:['Dealer 1001','Private 1002','Online 1003','Local 1004','Provider 1005'][i-1], SELLER_UID:neutralUid('seller|'+i), SELLER_TYPE:['Dealer','Private','Marketplace','Local','Provider'][i-1],
+    BUYER_UID:neutralUid('buyer|primary'), BUYER_REF:neutralUid('buyer|primary'), SELLER_REF:neutralUid('seller|'+i),
+    SOURCE_OFFER_UID:neutralUid('offer|'+i), SOURCE_BID_UID:neutralUid('bid|'+i), SOURCE_TRANSACTION_UID:neutralUid('transaction|'+i),
+    OFFER_UID:neutralUid('offer|'+i), BID_UID:neutralUid('bid|'+i), TRANSACTION_UID:neutralUid('transaction|'+i),
     RECORD_TYPE:['Sold','Bid Declined','Bid Withdrawn','Counter-Offer','Counter-Bid'][i-1], OUTCOME_TYPE:['Sold','Declined','Withdrawn','Counter-Offer','Counter-Bid'][i-1],
     BID_AMOUNT:'$'+(750+i*760).toLocaleString(), BID_TERMS:['Subject to inspection','Cash / pickup','Finance approval','Counter requested','Hold pending records'][i-1], BID_STATUS:['Submitted','Countered','Declined','Draft','Accepted'][i-1], BID_DATE:`2026-06-${String(10+i).padStart(2,'0')}`,
     RESPONSE_DATE:`2026-06-${String(12+i).padStart(2,'0')}`, RESPONSE_STATUS:['Open','Accepted','Declined','Countered','Expired'][i-1],
@@ -578,6 +587,7 @@ function sampleValue(c,i,j){
   if(c.includes('DATE')||c.includes('DEADLINE')||c.includes('POSTED')||c.includes('CLOSES')||c.includes('EFFECTIVE')||c.includes('EXPIRY')||c.includes('FILING')||c.includes('HEARING')||c.includes('INTAKE'))return `2026-06-${String(10+i+j).padStart(2,'0')}`;
   if(c.includes('PRICE')||c.includes('PAYMENT')||c.includes('FEE')||c.includes('AMOUNT')||c.includes('COST')||c.includes('VALUE')||c.includes('BUDGET')||c.includes('RATE')||c.includes('PREMIUM')||c.includes('DEDUCTIBLE')||c.includes('LIMIT'))return '$'+(100*i+25*j).toLocaleString();
   if(c.includes('STATUS'))return ['Open','Review','Pending','Active','Closed'][i-1];
+  if(c==='UID'||c.endsWith('_UID')||c.includes(' UID'))return neutralUid(c+'|'+contextTitle()+'|'+i+'|'+j);
   if(c.endsWith('_ID')||c.includes(' ID')||c.includes('ID'))return `${c.slice(0,4)}-${String(i).padStart(4,'0')}`;
   if(c.includes('LOCATION')||c.includes('AREA')||c.includes('JURISDICTION'))return ['Red Deer','Calgary','Edmonton','Springbrook','Federal'][i-1];
   if(c.includes('RISK')||c.includes('PRIORITY'))return ['Low','Medium','High','Review','Urgent'][i-1];
@@ -600,7 +610,7 @@ function getGridRows(){
   return rows;
 }
 function defaultGridWidths(cols){
-  const preset={ITEM:38,ITEM_ID:48,UID:82,STATUS:72,TITLE:160,NAME:140,SELLER:95,BUYER_ID:82,SELLER_ID:82,BUYER_REF:82,SELLER_REF:82,SOURCE_OFFER_ID:98,SOURCE_BID_ID:88,SOURCE_TRANSACTION_ID:116,OFFER_ID:74,BID_ID:70,TRANSACTION_ID:100,RECORD_TYPE:92,OUTCOME_TYPE:92,BID_AMOUNT:78,BID_TERMS:120,BID_STATUS:82,BID_DATE:72,RESPONSE_DATE:88,RESPONSE_STATUS:90,OUTCOME_DATE:84,PAYMENT_STATUS:92,DELIVERY_STATUS:96,OUTCOME_STATUS:110,ASK_PRICE:78,MIN_BID:76,PRICE:72,AMOUNT:72,LOCATION:78,JURISDICTION:94,RISK:56,RISK_LEVEL:72,SCOPE:70,OVERLAY:118,YEAR:48,MAKE:70,MODEL:90,VIN:120,ODOMETER:70,CONDITION:75,NOTES:120,RECORD_ID:88,REGISTRY:105,PUBLIC_BODY:120,SUBJECT:130,ACCESS_LEVEL:86,SOURCE_RECORD:92,REQUEST_OR_SEARCH_LINK:130,TITLE_ID:82,PARCEL_ID:90,PROPERTY_ADDRESS:145,LEGAL_DESCRIPTION:170,OWNER_REF:92,ENCUMBRANCES:120,LIENS:90,CASE_ID:90,APPLICATION_ID:94,PERMIT_NUMBER:94};
+  const preset={ITEM:38,ITEM_ID:48,UID:82,STATUS:72,TITLE:160,NAME:140,SELLER:95,BUYER_UID:82,SELLER_UID:82,BUYER_REF:82,SELLER_REF:82,SOURCE_OFFER_UID:98,SOURCE_BID_UID:88,SOURCE_TRANSACTION_UID:116,OFFER_UID:74,BID_UID:70,TRANSACTION_UID:100,RECORD_TYPE:92,OUTCOME_TYPE:92,BID_AMOUNT:78,BID_TERMS:120,BID_STATUS:82,BID_DATE:72,RESPONSE_DATE:88,RESPONSE_STATUS:90,OUTCOME_DATE:84,PAYMENT_STATUS:92,DELIVERY_STATUS:96,OUTCOME_STATUS:110,ASK_PRICE:78,MIN_BID:76,PRICE:72,AMOUNT:72,LOCATION:78,JURISDICTION:94,RISK:56,RISK_LEVEL:72,SCOPE:70,OVERLAY:118,YEAR:48,MAKE:70,MODEL:90,VIN:120,ODOMETER:70,CONDITION:75,NOTES:120,RECORD_ID:88,REGISTRY:105,PUBLIC_BODY:120,SUBJECT:130,ACCESS_LEVEL:86,SOURCE_RECORD:92,REQUEST_OR_SEARCH_LINK:130,TITLE_ID:82,PARCEL_ID:90,PROPERTY_ADDRESS:145,LEGAL_DESCRIPTION:170,OWNER_REF:92,ENCUMBRANCES:120,LIENS:90,CASE_ID:90,APPLICATION_ID:94,PERMIT_NUMBER:94};
   return Object.fromEntries(cols.map(c=>[c,preset[c]||92]));
 }
 function renderDatagrid(){
@@ -612,7 +622,8 @@ function renderDatagrid(){
   const tmpl=templateObject();
   const source=selectedSectorData().metadata?.name || app.activeSector;
   const tmplLabel=(tmpl&&tmpl.label)||templateId();
-  document.getElementById('workspace').innerHTML=`<div class="callout"><h3>Dense Datagrid — ${esc(contextTitle())}</h3><p>${esc(contextSpecificGridNote(profile))} Five sample rows are generated for prototype testing. Header click cycles: ascending ▲ → descending ▼ → original/order-added.</p><p><b>${esc(sortLabel())}</b> <button class="miniBtn" onclick="clearGridSort()">Original Order</button> <span class="mini">Source: ${esc(source)}; Template: ${esc(tmplLabel)}; Context: ${esc(profile.kind)}; Folder: ${esc(profile.folderLabel)}</span></p></div><div class="gridShell"><table class="denseGrid" id="denseGrid"><colgroup>${cols.map(c=>`<col style="width:${app.gridWidths[key][c]}px">`).join('')}</colgroup><thead><tr>${cols.map(c=>`<th data-col="${esc(c)}" title="Click: ascending → descending → original order"><div class="thWrap">${esc(c)}${sortMark(c)}<span class="resizeHandle" data-resize="${esc(c)}"></span></div></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr class="${app.selectedCenterId===r.__id?'selected':''}" data-id="${esc(r.__id)}">${cols.map(c=>`<td>${esc(r[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  const datagridUid=neutralUid('datagrid|'+app.activeSector+'|'+templateId()+'|'+profile.kind+'|'+folderToken());
+  document.getElementById('workspace').innerHTML=`<div class="callout"><h3>Dense Datagrid — ${esc(contextTitle())}</h3><p>${esc(contextSpecificGridNote(profile))} Five sample rows are generated for prototype testing. Header click cycles: ascending ▲ → descending ▼ → original/order-added. ITEM preserves view order; UID is neutral object identity.</p><p><b>${esc(sortLabel())}</b> <button class="miniBtn" onclick="clearGridSort()">Original Order</button> <span class="mini">DATAGRID_UID: ${esc(datagridUid)}; Source: ${esc(source)}; Template: ${esc(tmplLabel)}; Context: ${esc(profile.kind)}; Folder: ${esc(profile.folderLabel)}</span></p></div><div class="gridShell"><table class="denseGrid" id="denseGrid"><colgroup>${cols.map(c=>`<col style="width:${app.gridWidths[key][c]}px">`).join('')}</colgroup><thead><tr>${cols.map(c=>`<th data-col="${esc(c)}" title="Click: ascending → descending → original order"><div class="thWrap">${esc(c)}${sortMark(c)}<span class="resizeHandle" data-resize="${esc(c)}"></span></div></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr class="${app.selectedCenterId===r.__id?'selected':''}" data-id="${esc(r.__id)}">${cols.map(c=>`<td>${esc(r[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
   document.querySelectorAll('.denseGrid th[data-col]').forEach(th=>th.onclick=e=>{if(e.target.closest('.resizeHandle'))return;setGridSort(th.dataset.col)});
   document.querySelectorAll('.denseGrid tbody tr').forEach(tr=>tr.onclick=()=>{app.selectedCenterId=tr.dataset.id;app.selectedCenterType='gridRow';render()});
   initColumnResize(key,cols);
@@ -683,7 +694,7 @@ function renderCanonicalSample(){
     UpdateRule:'Edit canonical vehicle field once; buyer, seller, finance, public, and assessment views should refresh from the shared UID.'
   };
   document.getElementById('workspace').innerHTML=`
-    <div class="callout"><h3>Shared Canonical Data Method — Commercial Vehicle sample</h3><p>This is a reversible experiment layered on top of v2.7.1. The TreeViews are not rewritten. The sample shows how Consumer, Business, Market, Finance, and Public can point to one shared object instead of duplicating class data.</p><p><span class="sampleTag">UID = object identity</span><span class="sampleTag">DATAGRID_UID = view/table identity</span><span class="sampleTag">ITEM = original row order in that view</span><span class="sampleTag">DISPLAY_CODE = optional human label</span></p><button class="miniBtn" onclick="exportCanonicalSample()">Export shared-method sample JSON</button> <button class="miniBtn" onclick="app.canonicalSampleMode=false;render()">Return to normal v2.7.1 view</button></div>
+    <div class="callout"><h3>Shared Canonical Data Method — Commercial Vehicle sample</h3><p>This is a reversible experiment layered on top of v2.7.1, with neutral UID behavior visible in the normal datagrid and in the shared-data sample. The TreeViews are not rewritten. The sample shows how Consumer, Business, Market, Finance, and Public can point to one shared object instead of duplicating class data.</p><p><span class="sampleTag">UID = object identity</span><span class="sampleTag">DATAGRID_UID = view/table identity</span><span class="sampleTag">ITEM = original row order in that view</span><span class="sampleTag">DISPLAY_CODE = optional human label</span></p><button class="miniBtn" onclick="exportCanonicalSample()">Export shared-method sample JSON</button> <button class="miniBtn" onclick="app.canonicalSampleMode=false;render()">Return to normal template view</button></div>
     <div class="sharedMethodGrid">
       <div class="methodCard"><h3>1. Canonical object/class</h3><p>Commercial vehicle facts live once under neutral UID. Make/model/GVWR/VIN are not duplicated per sector.</p></div>
       <div class="methodCard"><h3>2. Datagrid views</h3><p>Consumer buyer view and dealer seller view have different DATAGRID_UID values and columns, but reference the same vehicle UIDs.</p></div>
@@ -709,7 +720,7 @@ const __oldSwitchTool=switchTool;
 switchTool=function(t){app.canonicalSampleMode=false;__oldSwitchTool(t);};
 const __oldWireButtons=wireButtons;
 wireButtons=function(){__oldWireButtons();const b=document.getElementById('canonicalSampleBtn');if(b)b.onclick=()=>{app.canonicalSampleMode=true;app.selectedCenterId=null;app.selectedCenterType=null;render();};};
-app.evidence.unshift('REC | v2.8 experimental shared canonical data method sample added without rewriting TreeViews | Reversible');
+app.evidence.unshift('REC | v2.8.1 experimental shared data method: neutral UID + datagrid UID sample; TreeViews preserved | Reversible');
 // ---------------- end v2.8 experimental shared canonical data method sample ----------------
 
 

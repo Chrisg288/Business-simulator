@@ -1,6 +1,6 @@
-# Economy Master Overview v2.8 Experimental
+# Economy Master Overview v2.8.1 Experimental
 
-This is a reversible experiment built on top of v2.7.1.
+This is a reversible experiment built on top of v2.7.1. It fixes the visible title/version and makes neutral UID behavior visible in normal datagrid rows, not only in the shared-data sample.
 
 ## Purpose
 
@@ -20,3 +20,12 @@ No external TreeView JSON files were rewritten in this experiment. To revert, us
 ## Quick start
 
 Open `index.html` locally or upload the whole folder to GitHub Pages.
+
+
+## v2.8.1 fix
+
+- Header now displays v2.8.1 Experimental.
+- Normal generated datagrids use neutral numeric `UID` values instead of semantic codes like `PASS-0001`.
+- Relationship references use `*_UID` names where practical in the prototype.
+- The normal datagrid header now shows a generated `DATAGRID_UID`.
+- `ITEM` remains the original/order-added row sequence for the current datagrid view.
