@@ -1,4 +1,4 @@
-// Economy Master Interface v2.7 — local Tree node builder + datagrid proposal
+// Economy Master Interface v2.7.1 — local Tree node builder + datagrid proposal
 // This file deliberately leaves the external sector TreeViews unchanged.
 (function(){
 function selectedParentForNewNode(){const n=selectedNode();return n?n.id:currentRoot().id;}
@@ -111,7 +111,7 @@ function proposalForNode(label,meaning,kindForced,role,fieldHints){
   const comparable=role==='ComparableClass';
   const cols=uniqueColumns(baseFieldsForKind(kind).concat(classExtensionFields(label,meaning)).concat(parseFieldHints(fieldHints))).slice(0,42);
   const confidence=(kindForced&&kindForced!=='auto')?'High':'Medium';
-  return {proposal_version:'v2.7',generated_at:new Date().toISOString(),sector,scope:app.activeScope,overlay:app.activeOverlay,parent_node_id:document.getElementById('nbParent')?.value||selectedParentForNewNode(),parent_path:currentNodeContextText(),node_label:label,node_role:role,comparable,inferred_kind:kind,template_confidence:confidence,real_world_meaning:meaning,recommended_object_folders:objectFoldersForKind(kind,comparable).map(f=>f.label),columns:cols,field_types:Object.fromEntries(cols.map(c=>[c,inferFieldType(c)])),sample_rows:sampleRowsForColumns(cols,kind,label),ai_review_notes:'Review inherited template, remove irrelevant fields, add context-specific fields, and confirm object-folder meanings before promoting to permanent sector JSON.'};
+  return {proposal_version:'v2.7.1',generated_at:new Date().toISOString(),sector,scope:app.activeScope,overlay:app.activeOverlay,parent_node_id:document.getElementById('nbParent')?.value||selectedParentForNewNode(),parent_path:currentNodeContextText(),node_label:label,node_role:role,comparable,inferred_kind:kind,template_confidence:confidence,real_world_meaning:meaning,recommended_object_folders:objectFoldersForKind(kind,comparable).map(f=>f.label),columns:cols,field_types:Object.fromEntries(cols.map(c=>[c,inferFieldType(c)])),sample_rows:sampleRowsForColumns(cols,kind,label),ai_review_notes:'Review inherited template, remove irrelevant fields, add context-specific fields, and confirm object-folder meanings before promoting to permanent sector JSON.'};
 }
 function promptForProposal(p){return `I am continuing the Economy / Comparator / Business Simulation project.\n\nPlease review and refine this proposed TreeView node and datagrid template. Preserve the current external TreeView schema and do not build UI code. Return a clean JSON-ready node/template proposal and 5 sample rows.\n\nContext:\nSector: ${p.sector}\nScope: ${p.scope}\nOverlay: ${p.overlay}\nParent path: ${p.parent_path}\nParent node id: ${p.parent_node_id}\nNew node label: ${p.node_label}\nNode role: ${p.node_role}\nInferred object kind: ${p.inferred_kind}\nReal-world meaning: ${p.real_world_meaning}\n\nCurrent proposed columns:\n${p.columns.join(', ')}\n\nRecommended object folders:\n${p.recommended_object_folders.join(', ')}\n\nPlease improve the columns based on this exact context, keeping only fields that make sense for rows of this type. Include field types, sort/filter recommendations, and 5 realistic dummy rows.\n\nProposal JSON:\n${JSON.stringify(p,null,2)}`;}
 function openNodeBuilder(){
@@ -143,12 +143,31 @@ function saveNodeWithGrid(){
   let p=currentBuilderProposal(); if(!p)p=generateNodeProposal();
   const parent=document.getElementById('nbParent').value.trim()||selectedParentForNewNode();
   const id=slug(parent+'_'+p.node_label+'_'+Date.now()).slice(0,110);
-  const folders=objectFoldersForKind(p.inferred_kind,p.comparable).map(f=>({...f,id:id+'__'+slug(f.label),parent_class_id:id,sector:app.activeSector,datagrid_template_id:id+'_grid'}));
-  const node={id,label:p.node_label,type:p.node_role,sector:app.activeSector,parent,description:p.real_world_meaning,children:folders,node_role:p.node_role,class_type:p.node_role,comparable:p.comparable,datagrid_template_id:id+'_grid',object_folder_template_id:'LOCAL_'+slug(p.inferred_kind).toUpperCase(),notes:p.real_world_meaning,custom:true};
+  // v2.7.1 correction: do not automatically add visible child folders under the new node.
+  // Recommended object folders remain stored inside the datagrid proposal so the user/AI can review them.
+  const node={
+    id,
+    label:p.node_label,
+    type:p.node_role,
+    sector:app.activeSector,
+    parent,
+    description:p.real_world_meaning,
+    children:[],
+    node_role:p.node_role,
+    class_type:p.node_role,
+    comparable:p.comparable,
+    datagrid_template_id:id+'_grid',
+    object_folder_template_id:'LOCAL_'+slug(p.inferred_kind).toUpperCase(),
+    recommended_object_folders:p.recommended_object_folders||[],
+    generated_child_folders:false,
+    notes:p.real_world_meaning,
+    custom:true
+  };
   app.customNodes.push(node);
-  app.customObjects[id]={id,label:p.node_label,type:p.node_role,parent,sector:app.activeSector,description:p.real_world_meaning,datagrid_proposal:p,created_with:'v2.7 Tree Node Builder'};
+  app.customObjects[id]={id,label:p.node_label,type:p.node_role,parent,sector:app.activeSector,description:p.real_world_meaning,datagrid_proposal:p,recommended_object_folders:p.recommended_object_folders||[],created_with:'v2.7.1 Tree Node Builder'};
   saveAll();attachCustomNodes();app.selectedNodeId=id;app.expanded.add(parent);document.getElementById('nodeBuilderShade').style.display='none';render();
 }
+
 function exportNodeProposal(){const p=currentBuilderProposal()||generateNodeProposal();const blob=new Blob([JSON.stringify(p,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='datagrid_proposal_'+slug(p.node_label)+'.json';a.click();URL.revokeObjectURL(url);}
 function copyNodePrompt(){const txt=document.getElementById('nbPrompt').value||promptForProposal(generateNodeProposal());navigator.clipboard?.writeText(txt).then(()=>alert('AI handoff prompt copied.')).catch(()=>{document.getElementById('nbPrompt').select();document.execCommand('copy');alert('AI handoff prompt copied.');});}
 function customProposalForClassNode(n){return n&&app.customObjects[n.id]&&app.customObjects[n.id].datagrid_proposal;}
@@ -163,13 +182,46 @@ classSpecificColumns=function(profile){const c=selectedClass();const p=customPro
 const prevRenderDefinitions=renderDefinitions;
 renderDefinitions=function(){const c=selectedClass();const p=customProposalForClassNode(c);if(!p){prevRenderDefinitions();return;}document.getElementById('workspace').innerHTML=`<div class="callout"><h3>Objects / Definitions — ${esc(contextTitle())}</h3><p>This is a locally-created TreeView node with a generated contextual datagrid proposal. Use Export Proposal JSON or Export JSON to move it into the permanent sector data later.</p></div><div class="cards"><div class="card"><h3>Generated node</h3><p>${esc(p.node_label)}<br>${esc(p.inferred_kind)}</p><span class="tag">${esc(p.template_confidence)} confidence</span></div><div class="card"><h3>Columns</h3><p>${p.columns.length} proposed columns<br>${esc(p.columns.slice(0,8).join(', '))}${p.columns.length>8?'...':''}</p><span class="tag">local template</span></div><div class="card"><h3>Object folders</h3><p>${esc(p.recommended_object_folders.join(', '))}</p><span class="tag">generated</span></div></div>`;};
 const prevInspectorContext=inspectorContext;
-inspectorContext=function(){const base=prevInspectorContext();if(base.level===2&&selectedClass()){const c=selectedClass();const p=customProposalForClassNode(c);if(p)return {level:2,title:c.label,desc:`Locally-created node. Generated datagrid kind: ${p.inferred_kind}. ${p.columns.length} columns and ${p.sample_rows.length} dummy rows are available.`,fields:{node_id:c.id,parent:c.parent,sector:c.sector,kind:p.inferred_kind,template_confidence:p.template_confidence,columns:p.columns.join(', '),object_folders:p.recommended_object_folders.join(', '),meaning:p.real_world_meaning},source:'Local Tree Node'};}if(base.level===2){const n=selectedNode();return {level:2,title:base.title,desc:base.desc,fields:{node_id:n?.id,type:n?.type,class_type:n?.class_type,node_role:n?.node_role,comparable:!!n?.comparable,datagrid_template_id:n?.datagrid_template_id,object_folder_template_id:n?.object_folder_template_id,description:n?.description},source:base.source};}return base;};
+inspectorContext=function(){const base=prevInspectorContext();if(base.level===2&&selectedClass()){const c=selectedClass();const p=customProposalForClassNode(c);if(p)return {level:2,title:c.label,desc:`Locally-created node. Generated datagrid kind: ${p.inferred_kind}. ${p.columns.length} columns and ${p.sample_rows.length} dummy rows are available.`,fields:{node_id:c.id,parent:c.parent,sector:c.sector,kind:p.inferred_kind,template_confidence:p.template_confidence,columns:p.columns.join(', '),object_folders:(p.recommended_object_folders||[]).join(', '),visible_child_folders:'No — stored as proposal metadata only in v2.7.1',meaning:p.real_world_meaning},source:'Local Tree Node'};}if(base.level===2){const n=selectedNode();return {level:2,title:base.title,desc:base.desc,fields:{node_id:n?.id,type:n?.type,class_type:n?.class_type,node_role:n?.node_role,comparable:!!n?.comparable,datagrid_template_id:n?.datagrid_template_id,object_folder_template_id:n?.object_folder_template_id,description:n?.description},source:base.source};}return base;};
+function selectedLocalRoot(){
+  const p=selectedPath();
+  for(let i=p.length-1;i>=0;i--){
+    const n=p[i];
+    if(n && (n.custom || app.customObjects[n.id] || app.customNodes.some(c=>c.id===n.id))) return n;
+  }
+  return null;
+}
+function deleteSelectedLocalNode(){
+  const n=selectedNode();
+  if(!n){alert('Select a local TreeView node to delete.');return;}
+  const local=selectedLocalRoot();
+  if(!local){
+    alert('Permission denied: this prototype only deletes local nodes created in this browser. External sector JSON nodes are locked so the main TreeViews cannot be accidentally damaged.');
+    return;
+  }
+  const isDirect=local.id===n.id;
+  const msg=isDirect
+    ? `Delete local TreeView node "${local.label}" and its generated grid/proposal from browser storage?`
+    : `"${n.label}" is inside local node "${local.label}". Delete the parent local node and its generated grid/proposal from browser storage?`;
+  if(!confirm(msg+'\n\nThis cannot delete permanent external JSON tree nodes.'))return;
+  const parent=local.parent || currentRoot().id;
+  app.customNodes=app.customNodes.filter(c=>c.id!==local.id);
+  delete app.customObjects[local.id];
+  saveAll();
+  attachCustomNodes();
+  app.selectedNodeId=parent;
+  app.selectedCenterId=null;
+  app.expanded.add(parent);
+  app.evidence.unshift('REC | Deleted local TreeView node: '+local.label+' | Saved');
+  render();
+}
 function installButtons(){
   const tools=document.querySelector('.workspaceTools .toolButtons');
   if(tools&&!document.getElementById('addTreeNodeBtn')){
     const b=document.createElement('button');b.className='smallBtn';b.id='addTreeNodeBtn';b.textContent='Add Tree Node';b.onclick=openNodeBuilder;
     const g=document.createElement('button');g.className='smallBtn';g.id='gridProposalBtn';g.textContent='Grid Proposal';g.onclick=()=>{openNodeBuilder();const n=selectedNode();if(n){document.getElementById('nbLabel').value=(n.label||'')+' Variant';document.getElementById('nbMeaning').value=`Based on selected context: ${currentNodeContextText()}\nCreate/refine a datagrid for this context.`;}generateNodeProposal();};
-    tools.insertBefore(g,tools.firstChild);tools.insertBefore(b,tools.firstChild);
+    const d=document.createElement('button');d.className='smallBtn danger';d.id='deleteTreeNodeBtn';d.textContent='Delete Local Node';d.onclick=deleteSelectedLocalNode;
+    tools.insertBefore(d,tools.firstChild);tools.insertBefore(g,tools.firstChild);tools.insertBefore(b,tools.firstChild);
   }
   document.getElementById('closeNodeBuilder').onclick=()=>document.getElementById('nodeBuilderShade').style.display='none';
   document.getElementById('genNodeGrid').onclick=generateNodeProposal;
@@ -178,6 +230,6 @@ function installButtons(){
   document.getElementById('copyNodePrompt').onclick=copyNodePrompt;
 }
 installButtons();
-app.evidence.unshift('REC | v2.7 adds local Tree node builder, contextual datagrid proposal, AI handoff prompt, and 5 dummy rows | Saved');
+app.evidence.unshift('REC | v2.7.1 adds local-node delete permissions and stops auto-creating child folders | Saved');
 render();
 })();
