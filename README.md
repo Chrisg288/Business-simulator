@@ -1,31 +1,20 @@
-# Economy Master Overview v2.8.1 Experimental
+# Economy Master Overview v2.8.2 Experimental
 
-This is a reversible experiment built on top of v2.7.1. It fixes the visible title/version and makes neutral UID behavior visible in normal datagrid rows, not only in the shared-data sample.
+Reversible experimental build based on v2.8.1.
 
-## Purpose
+## Main change
 
-Adds a **Shared Data Sample** button that demonstrates the idealized high-efficiency method discussed in chat:
+Non-leaf TreeView nodes now show a branch overview in the center workspace in every activity mode. This prevents category/navigation nodes from generating fake record grids.
 
-- TreeViews are viewpoints, not duplicated databases.
-- Shared objects have neutral `UID` values.
-- Datagrid views have their own `DATAGRID_UID` values.
-- `ITEM` preserves original row/order-added order inside a specific datagrid.
-- `DISPLAY_CODE` is optional and human-friendly, not the primary identity.
-- The same UID can appear in Consumer, Business, Market, Finance, Public, Assessment, and Simulation contexts.
+## Preserved
 
-## Revert note
+- v2.7.1 local node builder and delete rules
+- v2.8.1 neutral UID and DATAGRID_UID sample
+- external sector TreeView JSON behavior embedded in the prototype
+- dense datagrid style, column resizing, and original-order ITEM concept
 
-No external TreeView JSON files were rewritten in this experiment. To revert, use v2.7.1.
+## Rule
 
-## Quick start
-
-Open `index.html` locally or upload the whole folder to GitHub Pages.
-
-
-## v2.8.1 fix
-
-- Header now displays v2.8.1 Experimental.
-- Normal generated datagrids use neutral numeric `UID` values instead of semantic codes like `PASS-0001`.
-- Relationship references use `*_UID` names where practical in the prototype.
-- The normal datagrid header now shows a generated `DATAGRID_UID`.
-- `ITEM` remains the original/order-added row sequence for the current datagrid view.
+- Node has children: show branch overview of what is below it.
+- Leaf/comparable node: show contextual datagrid/template behavior.
+- Object folder / leaf: show folder or class-specific records.

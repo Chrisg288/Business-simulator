@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.8.1 Experimental</title>
+<title>Economy Master Interface v2.8.2 Experimental</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -25,6 +25,9 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 
 .sharedMethodGrid{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:8px;margin-bottom:8px}.methodCard{background:#fff;border:1px solid var(--line);border-radius:13px;padding:9px;box-shadow:0 6px 14px rgba(35,61,81,.05)}.methodCard h3{margin:0 0 5px;font-size:12px}.methodCard p{margin:0;color:var(--muted);font-size:10px;line-height:1.32}.methodSection{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;margin-bottom:8px;box-shadow:0 6px 14px rgba(35,61,81,.04)}.methodSection h3{margin:0 0 6px;font-size:12px;color:#3e5a6d}.methodCode{font-family:var(--mono);font-size:10px;white-space:pre-wrap;background:#f7fbfd;border:1px solid #e0edf4;border-radius:10px;padding:8px;color:#263c4d}.tinyTableNote{font-size:10px;color:var(--muted);line-height:1.3;margin:0 0 6px}.sampleTag{display:inline-flex;border:1px solid #cfe2ee;background:#f7fbfd;border-radius:999px;padding:2px 6px;margin-right:4px;font-size:9px;color:#456175;font-weight:900}
 
+
+.branchGridShell{max-height:240px;min-height:160px}.branchOutline{margin:4px 0 0 16px;padding:0;border-left:1px dashed #d4e2eb}.branchOutline li{list-style:none;margin:2px 0;padding:2px 0 2px 8px;font-size:10px;color:#536d7f}.branchLink{border:1px solid var(--line);background:#fbfdff;border-radius:7px;padding:2px 6px;margin-right:5px;font-size:10px;font-weight:900;color:#274c66;cursor:pointer}.branchLink:hover{background:#eef6ff;border-color:#9ac4ff}.branchOutline span{font-size:9px;color:#8ba1b1;margin-right:5px}.branchOutline em{font-style:normal;font-size:9px;color:#607284}
+
 .modalShade{position:fixed;inset:0;background:rgba(15,26,37,.35);display:none;align-items:center;justify-content:center;z-index:30}.modal{width:min(820px,90vw);max-height:86vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 90px rgba(15,26,37,.32)}.modalHead{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:12px 14px}.modalHead h2{font-size:16px;margin:0}.editorGrid{display:grid;grid-template-columns:150px 1fr;gap:7px;padding:14px}.editorGrid label{font-size:11px;font-weight:900;color:#456175;padding-top:7px}.editorGrid input,.editorGrid textarea,.editorGrid select{font:12px var(--font);border:1px solid var(--line2);border-radius:8px;padding:7px;background:#fbfdff}.editorGrid textarea{height:110px;font-family:var(--mono)}.modalFoot{display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--line);padding:12px 14px;background:#fbfdff}.hiddenFile{display:none}
 
 /* v2.7 node builder + datagrid proposal */
@@ -35,7 +38,7 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.8.1 Experimental</h1><div class="badges"><span class="badge"><strong>Experiment</strong> shared data method</span><span class="badge"><strong>UID</strong> neutral object identity</span><span class="badge"><strong>Datagrid UID</strong> view/table identity</span><span class="badge"><strong>Reversible</strong> v2.7.1 method preserved</span></div></div>
+  <div class="title"><h1>Economy Master Interface v2.8.2 Experimental</h1><div class="badges"><span class="badge"><strong>Experiment</strong> shared data method</span><span class="badge"><strong>UID</strong> neutral object identity</span><span class="badge"><strong>Datagrid UID</strong> view/table identity</span><span class="badge"><strong>Reversible</strong> v2.7.1 method preserved</span></div></div>
   <div class="principle"><strong>Context hierarchy:</strong> center selection → tree node → sector/scope/overlay → startup. The interface is the workshop; the large library comes later.</div>
 </header>
 <div class="ribbon">
@@ -56,7 +59,7 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 <div class="modalShade" id="modalShade"><div class="modal"><div class="modalHead"><h2 id="modalTitle">Object Editor</h2><button class="smallBtn" id="closeModal">Close</button></div><div class="editorGrid"><label>ID</label><input id="edId"><label>Label</label><input id="edLabel"><label>Type</label><input id="edType"><label>Parent</label><input id="edParent"><label>Sector</label><input id="edSector"><label>Description</label><input id="edDesc"><label>JSON Fields</label><textarea id="edJson"></textarea></div><div class="modalFoot"><button class="smallBtn" id="deleteObj">Delete Custom Object</button><button class="smallBtn primary" id="saveObj">Save Object</button></div></div></div>
 
 <div class="modalShade" id="nodeBuilderShade"><div class="modal builderModal"><div class="modalHead"><h2>Tree Node Builder + Datagrid Proposal</h2><button class="smallBtn" id="closeNodeBuilder">Close</button></div>
-  <div class="builderMini">Create a local TreeView node under the selected parent, describe the real-world context, then generate a contextual datagrid template, 5 dummy rows, and an AI handoff prompt. Saved nodes live in browser storage until exported. v2.8.1 preserves the v2.7.1 local-node rule: recommended object folders stay in proposal metadata and are not automatically added as visible child folders.</div>
+  <div class="builderMini">Create a local TreeView node under the selected parent, describe the real-world context, then generate a contextual datagrid template, 5 dummy rows, and an AI handoff prompt. Saved nodes live in browser storage until exported. v2.8.2 preserves the v2.7.1 local-node rule: recommended object folders stay in proposal metadata and are not automatically added as visible child folders.</div>
   <div class="builderGrid">
     <label>Node Label</label><input id="nbLabel" placeholder="e.g. Mineral Rights Title Record">
     <label>Node Role</label><select id="nbRole"><option>ComparableClass</option><option>Category</option><option>Group</option><option>Domain</option></select>
@@ -720,9 +723,89 @@ const __oldSwitchTool=switchTool;
 switchTool=function(t){app.canonicalSampleMode=false;__oldSwitchTool(t);};
 const __oldWireButtons=wireButtons;
 wireButtons=function(){__oldWireButtons();const b=document.getElementById('canonicalSampleBtn');if(b)b.onclick=()=>{app.canonicalSampleMode=true;app.selectedCenterId=null;app.selectedCenterType=null;render();};};
-app.evidence.unshift('REC | v2.8.1 experimental shared data method: neutral UID + datagrid UID sample; TreeViews preserved | Reversible');
+app.evidence.unshift('REC | v2.8.2 experimental: non-leaf nodes show branch overview in every activity mode; shared UID/datagrid UID sample preserved | Reversible');
 // ---------------- end v2.8 experimental shared canonical data method sample ----------------
 
+
+
+// ---------------- v2.8.2 universal branch overview rule ----------------
+// Rule: when the selected TreeView node has children, the center panel shows what is below it.
+// This is true in Datagrid, Swimlane, Model, Simulate, Assess, Compare, and Definitions modes.
+// Leaf/comparable nodes continue to use the existing v2.7.1/v2.8.1 template/datagrid method.
+function branchDescendantStats(node){
+  const stats={children:(node&&node.children?node.children.length:0),descendants:0,leafClasses:0,comparableClasses:0};
+  function walk(n){
+    const kids=n.children||[];
+    stats.descendants += kids.length;
+    if(!kids.length && nodeIsComparable(n)) stats.leafClasses += 1;
+    if(nodeIsComparable(n)) stats.comparableClasses += 1;
+    kids.forEach(walk);
+  }
+  (node.children||[]).forEach(walk);
+  return stats;
+}
+function branchPathLabel(node){
+  const p=pathToNode(node.id)||[node];
+  return p.map(x=>x.label).join(' > ');
+}
+function branchRows(node){
+  return (node.children||[]).map((child,idx)=>{
+    const st=branchDescendantStats(child);
+    const tmpl=child.datagrid_template_id || child.default_template_id || child.template_id || '';
+    const folders=child.object_folder_template_id || child.folder_template_id || '';
+    return {
+      ITEM:String(idx+1).padStart(3,'0'),
+      UID:neutralUid('treeNode|'+child.id),
+      NODE_NAME:child.label||'',
+      NODE_TYPE:child.type||child.node_role||'',
+      CHILDREN:String(st.children),
+      DESCENDANTS:String(st.descendants),
+      LEAF_CLASSES:String(st.leafClasses),
+      COMPARABLE:nodeIsComparable(child)?'YES':'',
+      TEMPLATE:tmpl,
+      OBJECT_FOLDERS:folders,
+      PATH:branchPathLabel(child),
+      __nodeId:child.id
+    };
+  });
+}
+function branchOutlineHTML(node,depth=0,maxDepth=3){
+  if(!node || depth>=maxDepth)return '';
+  const kids=node.children||[];
+  if(!kids.length)return '';
+  return `<ul class="branchOutline depth${depth}">${kids.map(k=>{
+    const st=branchDescendantStats(k);
+    return `<li><button class="branchLink" data-branch-node="${esc(k.id)}">${esc(k.label)}</button><span>${esc(k.type||'node')}</span><em>${st.children} child / ${st.descendants} below</em>${branchOutlineHTML(k,depth+1,maxDepth)}</li>`;
+  }).join('')}</ul>`;
+}
+function renderBranchOverview(){
+  const node=selectedNode()||currentRoot();
+  const rows=branchRows(node);
+  const cols=['ITEM','UID','NODE_NAME','NODE_TYPE','CHILDREN','DESCENDANTS','LEAF_CLASSES','COMPARABLE','TEMPLATE','OBJECT_FOLDERS','PATH'];
+  const datagridUid=neutralUid('branchView|'+app.activeSector+'|'+node.id+'|'+app.activeTool+'|'+app.activeScope+'|'+app.activeOverlay);
+  const st=branchDescendantStats(node);
+  const key='branch_v282_'+app.activeSector+'_'+node.id;
+  if(!app.gridWidths[key])app.gridWidths[key]={ITEM:38,UID:86,NODE_NAME:170,NODE_TYPE:98,CHILDREN:62,DESCENDANTS:76,LEAF_CLASSES:76,COMPARABLE:70,TEMPLATE:120,OBJECT_FOLDERS:130,PATH:320};
+  document.getElementById('workspace').innerHTML=`
+    <div class="callout"><h3>Branch Overview — ${esc(node.label||app.activeSector)}</h3>
+      <p>This node has children, so the center panel shows the TreeView branch below it instead of inventing fake class records. This rule applies in every activity mode. Select a leaf/comparable class to show a contextual record datagrid.</p>
+      <p><span class="sampleTag">Current tool requested: ${esc(app.activeTool)}</span><span class="sampleTag">DATAGRID_UID: ${esc(datagridUid)}</span><span class="sampleTag">ITEM = tree order</span><span class="sampleTag">UID = neutral node identity</span><span class="sampleTag">${st.children} direct children / ${st.descendants} descendants</span></p>
+    </div>
+    <div class="gridShell branchGridShell"><table class="denseGrid" id="branchGrid"><colgroup>${cols.map(c=>`<col style="width:${app.gridWidths[key][c]||92}px">`).join('')}</colgroup><thead><tr>${cols.map(c=>`<th><div class="thWrap">${esc(c)}<span class="resizeHandle" data-resize="${esc(c)}"></span></div></th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr data-branch-node="${esc(r.__nodeId)}">${cols.map(c=>`<td>${esc(r[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+    <div class="methodSection"><h3>Tree branch outline</h3><p class="tinyTableNote">This is the same branch expressed as an outline. Click a child to select it in the TreeView.</p>${branchOutlineHTML(node,0,3) || '<p class="tinyTableNote">No child nodes below this selection.</p>'}</div>
+  `;
+  document.querySelectorAll('[data-branch-node]').forEach(el=>el.onclick=()=>{app.selectedNodeId=el.dataset.branchNode;app.selectedCenterId=null;app.selectedCenterType=null;app.expanded.add(node.id);render();});
+  initColumnResize(key,cols);
+}
+const __branchOldRenderWorkspace=renderWorkspace;
+renderWorkspace=function(){
+  if(app.canonicalSampleMode){renderCanonicalSample();return;}
+  const n=selectedNode();
+  if(app.activeSector!=='Home' && n && (n.children||[]).length>0){renderBranchOverview();return;}
+  __branchOldRenderWorkspace();
+};
+app.evidence.unshift('REC | v2.8.2 branch rule: non-leaf TreeView nodes show below-tree overview in all activity modes | Reversible');
+// ---------------- end v2.8.2 universal branch overview rule ----------------
 
 defaultSelectForSector();wireButtons();render();
 </script>
