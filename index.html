@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.6</title>
+<title>Economy Master Interface v2.7</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -23,12 +23,16 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 .gridShell{border:1px solid #8f9eaa;background:#fff;overflow:auto;max-height:calc(100vh - 350px);min-height:260px;box-shadow:inset 0 0 0 1px #fff}.denseGrid{border-collapse:collapse;table-layout:fixed;width:max-content;min-width:100%;font-family:"MS Sans Serif",Segoe UI,Tahoma,Arial,sans-serif;font-size:8pt;line-height:1.05;color:#111;background:#fff}.denseGrid th,.denseGrid td{border:1px solid #aeb8bf;padding:1px 3px;height:17px;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:left}.denseGrid th{background:linear-gradient(#f0f0f0,#d8d8d8);font-weight:700;position:sticky;top:0;z-index:2;color:#111;box-shadow:inset 1px 1px #fff;cursor:pointer}.sortMark{float:right;font-size:8px;margin-left:3px;color:#0756ad}.denseGrid tbody tr:nth-child(even){background:#fbfbfb}.denseGrid tbody tr:hover{background:#dcf0ff}.denseGrid tbody tr.selected{background:#b9f7b9!important}.thWrap{position:relative;height:100%;min-height:14px;padding-right:6px}.resizeHandle{position:absolute;right:-4px;top:-2px;width:8px;height:20px;cursor:col-resize;z-index:3}.resizeHandle:hover{background:rgba(38,119,255,.18)}
 .graphArea{height:420px;position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}.graphNode{position:absolute;width:165px;min-height:76px;border:1px solid #b7cee0;background:#fbfdff;border-radius:14px;padding:10px;box-shadow:0 8px 20px rgba(35,61,81,.08)}.graphNode h3{margin:0 0 5px;font-size:12px}.graphNode p{margin:0;color:var(--muted);font-size:10px}.connector{position:absolute;height:2px;background:#9cb6c8;transform-origin:left center}.scoreWrap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.score{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}.score h3{margin:0 0 7px;font-size:12px}.meter{height:10px;border-radius:99px;background:#edf3f7;overflow:hidden}.meter span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--green))}.codeBox{font-family:var(--mono);font-size:11px;background:#0f1720;color:#dbeafe;border-radius:14px;padding:12px;overflow:auto;white-space:pre;max-height:460px}
 .modalShade{position:fixed;inset:0;background:rgba(15,26,37,.35);display:none;align-items:center;justify-content:center;z-index:30}.modal{width:min(820px,90vw);max-height:86vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 90px rgba(15,26,37,.32)}.modalHead{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:12px 14px}.modalHead h2{font-size:16px;margin:0}.editorGrid{display:grid;grid-template-columns:150px 1fr;gap:7px;padding:14px}.editorGrid label{font-size:11px;font-weight:900;color:#456175;padding-top:7px}.editorGrid input,.editorGrid textarea,.editorGrid select{font:12px var(--font);border:1px solid var(--line2);border-radius:8px;padding:7px;background:#fbfdff}.editorGrid textarea{height:110px;font-family:var(--mono)}.modalFoot{display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--line);padding:12px 14px;background:#fbfdff}.hiddenFile{display:none}
+
+/* v2.7 node builder + datagrid proposal */
+.builderModal{width:min(980px,94vw)}
+.builderGrid{display:grid;grid-template-columns:170px 1fr 170px 1fr;gap:8px 10px;padding:14px}.builderGrid label{font-size:11px;font-weight:900;color:#456175;padding-top:7px}.builderGrid input,.builderGrid textarea,.builderGrid select{font:12px var(--font);border:1px solid var(--line2);border-radius:8px;padding:7px;background:#fbfdff;min-width:0}.builderGrid textarea{height:84px;font-family:var(--mono);grid-column:span 3}.proposalSplit{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 14px}.proposalBox{border:1px solid var(--line);border-radius:12px;background:#fbfdff;overflow:hidden}.proposalBox h3{margin:0;padding:8px 10px;background:#fff;border-bottom:1px solid var(--line);font-size:12px}.proposalBox textarea{width:100%;height:160px;border:0;padding:9px;font:11px var(--mono);background:#fbfdff;resize:vertical}.builderMini{font-size:10px;color:var(--muted);line-height:1.35;padding:0 14px 10px}.field .v{white-space:normal;word-break:break-word}.miniBtn{border:1px solid var(--line);background:#fff;border-radius:6px;padding:2px 5px;font-size:9px;font-weight:900;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.6</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>New</strong> persistent Activity Tool</span><span class="badge"><strong>Grid</strong> template-aware + dense</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
+  <div class="title"><h1>Economy Master Interface v2.7</h1><div class="badges"><span class="badge"><strong>Focus</strong> hierarchy + object workshop</span><span class="badge"><strong>New</strong> Tree node builder + grid proposal</span><span class="badge"><strong>Grid</strong> template-aware + node-generated</span><span class="badge"><strong>VRQ</strong> Value Reprioritization Request</span></div></div>
   <div class="principle"><strong>Context hierarchy:</strong> center selection → tree node → sector/scope/overlay → startup. The interface is the workshop; the large library comes later.</div>
 </header>
 <div class="ribbon">
@@ -47,6 +51,22 @@ header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;b
 </div>
 </div>
 <div class="modalShade" id="modalShade"><div class="modal"><div class="modalHead"><h2 id="modalTitle">Object Editor</h2><button class="smallBtn" id="closeModal">Close</button></div><div class="editorGrid"><label>ID</label><input id="edId"><label>Label</label><input id="edLabel"><label>Type</label><input id="edType"><label>Parent</label><input id="edParent"><label>Sector</label><input id="edSector"><label>Description</label><input id="edDesc"><label>JSON Fields</label><textarea id="edJson"></textarea></div><div class="modalFoot"><button class="smallBtn" id="deleteObj">Delete Custom Object</button><button class="smallBtn primary" id="saveObj">Save Object</button></div></div></div>
+
+<div class="modalShade" id="nodeBuilderShade"><div class="modal builderModal"><div class="modalHead"><h2>Tree Node Builder + Datagrid Proposal</h2><button class="smallBtn" id="closeNodeBuilder">Close</button></div>
+  <div class="builderMini">Create a local TreeView node under the selected parent, describe the real-world context, then generate a contextual datagrid template, 5 dummy rows, and an AI handoff prompt. Saved nodes live in browser storage until exported.</div>
+  <div class="builderGrid">
+    <label>Node Label</label><input id="nbLabel" placeholder="e.g. Mineral Rights Title Record">
+    <label>Node Role</label><select id="nbRole"><option>ComparableClass</option><option>Category</option><option>Group</option><option>Domain</option></select>
+    <label>Parent Node ID</label><input id="nbParent">
+    <label>Sector</label><input id="nbSector">
+    <label>Object Kind</label><select id="nbKind"><option value="auto">Auto infer</option><option value="consumer_need_fulfillment">Consumer Need Fulfillment</option><option value="source_provider">Source / Provider</option><option value="offer_listing">Offer / Listing</option><option value="shopping_list">Shopping List / Requirement</option><option value="delivery_service">Delivery / Service</option><option value="business_system">Business System</option><option value="public_registry">Public Registry / Record</option><option value="public_service_case">Public Service / Case</option><option value="public_permission">Permit / Licence</option><option value="finance_instrument">Finance Instrument / Account</option><option value="market_exchange">Market Exchange</option></select>
+    <label>Template Confidence</label><input id="nbConfidence" readonly value="Not generated">
+    <label>Real-world Meaning / Context</label><textarea id="nbMeaning" placeholder="Describe what this node represents, who uses it, what is compared or recorded, and what rows should mean."></textarea>
+    <label>Custom field hints</label><textarea id="nbFieldHints" placeholder="Optional: fields you already know you want, comma separated or one per line."></textarea>
+  </div>
+  <div class="proposalSplit"><div class="proposalBox"><h3>Generated Datagrid Proposal JSON</h3><textarea id="nbProposal" readonly></textarea></div><div class="proposalBox"><h3>AI Handoff Prompt</h3><textarea id="nbPrompt" readonly></textarea></div></div>
+  <div class="modalFoot"><button class="smallBtn" id="genNodeGrid">Generate Grid Proposal</button><button class="smallBtn" id="copyNodePrompt">Copy AI Prompt</button><button class="smallBtn" id="exportNodeProposal">Export Proposal JSON</button><button class="smallBtn primary" id="saveNodeWithGrid">Save Node + Grid</button></div>
+</div></div>
 <script src="data/sector_trees_embedded.js"></script>
 <script>
 const sectors=['Home','Human / Consumer','Market / Exchange','Business / Commercial','Finance / Capital','Public / Government'];
@@ -618,5 +638,6 @@ app.evidence.unshift('REC | v2.6 adds template-aware datagrid rendering; externa
 
 defaultSelectForSector();wireButtons();render();
 </script>
+<script src="data/v27_node_builder.js"></script>
 </body>
 </html>
