@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.10 Workspace</title>
+<title>Economy Master Interface v2.10.1 Workspace</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -38,20 +38,76 @@ header{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-item
 .workspacePanel{display:grid;gap:10px}.workspaceHeader{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 6px 14px rgba(35,61,81,.05)}
 .workspaceHeader h3{margin:0 0 5px;font-size:14px}.workspaceHeader p{margin:0;color:var(--muted);font-size:11px;line-height:1.35}.workspaceGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.editCard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 6px 14px rgba(35,61,81,.05)}.editCard h3{margin:0 0 7px;font-size:13px}.editCard p{margin:0 0 8px;color:var(--muted);font-size:11px;line-height:1.35}.editForm{display:grid;grid-template-columns:130px 1fr;gap:6px 8px;align-items:start}.editForm label{font-size:10px;font-weight:900;color:#526c7f;padding-top:6px}.editForm input,.editForm textarea,.editForm select{font:11px var(--font);border:1px solid var(--line2);border-radius:7px;padding:6px;background:#fbfdff;min-width:0}.editForm textarea{min-height:95px;font-family:var(--mono);resize:vertical}.editForm .wide{grid-column:1 / -1}.buttonRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.pdcaGrid{display:grid;gap:6px}.pdcaRow{display:grid;grid-template-columns:58px 1fr 90px;gap:8px;align-items:center;border:1px solid #e2edf4;background:#fff;border-radius:10px;padding:7px;font-size:11px}.pdcaRow .phase{font-weight:900;color:#334d60}.pdcaRow .status{font-weight:900;text-align:center;border-radius:999px;padding:3px 6px;background:#f5f8fb}.pdcaRow.pass .status{background:#eaf8f1;color:#137348}.pdcaRow.fail .status{background:#fff0f3;color:#a51e38}.pdcaRow.warn .status{background:#fff7e7;color:#915a00}.changeBox{max-height:180px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:6px;font:10px var(--mono);white-space:pre-wrap}.templatePreview{font:10px var(--mono);background:#f7fbfe;border:1px solid var(--line);border-radius:8px;padding:8px;max-height:130px;overflow:auto}.hiddenV29{display:none!important}
 
+
+/* v2.10.1 corrected workspace layout: separate TreeView edit controls from center-panel controls; no center scope/overlay strip */
+.app{grid-template-rows:auto auto minmax(0,1fr) 64px;gap:5px;padding:5px;}
+header{grid-template-columns:auto minmax(0,1fr);padding:6px 9px;gap:12px;}
+.title h1{font-size:17px;}
+.ribbon{grid-template-columns:1fr!important;}
+.modeBar{width:100%;justify-content:flex-start;padding:4px 7px;border-radius:12px;}
+.modeBar .pill{border-radius:8px;min-width:76px;text-align:center;text-transform:capitalize;}
+.modeBar .pill[data-tool="Compare / Transact"],.modeBar .pill[data-tool="Objects / Definitions"]{min-width:128px;}
+.main{grid-template-columns:288px minmax(650px,1fr) 300px;gap:6px;}
+.leftPanel{grid-template-rows:auto auto minmax(0,1fr) auto;}
+.treeActionBar{display:flex;gap:4px;flex-wrap:nowrap;padding:6px 7px 5px;background:#fff;border-bottom:1px solid var(--line);}
+.treeActionBar .smallBtn{height:27px;min-width:42px;padding:5px 7px;font-size:10px;border-radius:7px;}
+.treeSelectedBox{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line);background:#fbfdff;}
+.treeSelectedBox>div{padding:6px 8px;border-right:1px solid var(--line);min-width:0;}
+.treeSelectedBox>div:last-child{border-right:0;}
+.selLabel{font-size:9px;color:var(--muted);font-weight:800;}
+.selValue{font-size:11px;font-weight:900;color:#0756ad;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.centerPanel{grid-template-rows:auto auto minmax(0,1fr);}
+.centerPanel .panelHead{padding:6px 9px;align-items:flex-start;}
+#centerTitle{font-size:11px;}
+#centerSource{display:none;}
+.contextBar{display:none!important;}
+.workspaceTools{padding:6px 8px;align-items:center;}
+.toolButtons{align-items:center;gap:5px;}
+.toolButtons .smallBtn{height:27px;min-width:42px;padding:5px 8px;border-radius:7px;}
+#canonicalSampleBtn,#saveAllBtn,#raiseVRQBtn,#clearBtn,#v29WorkspaceBtn,#v29PDCABtn,#v29ExportWorkspaceBtn,#v29ImportWorkspaceBtn{display:none!important;}
+.centerStatusStrip{display:flex;gap:8px;margin-left:auto;align-items:stretch;}
+.statusCell{min-width:140px;border-left:1px solid var(--line);padding:0 8px;}
+.statusCell .selLabel{font-size:9px;}
+.statusCell .selValue{font-size:11px;}
+.workspace{padding:5px;overflow:auto;}
+.leftControls .scopeGrid{grid-template-columns:repeat(2,1fr);gap:4px;}
+.leftControls .scopeBtn,.leftControls .chip{height:24px;min-width:0;font-size:10px;line-height:14px;padding:4px 6px;border-radius:8px;font-weight:800;}
+.overlayChips{gap:4px;}
+.v2101SwimCanvas{height:100%;min-height:430px;display:grid;grid-template-rows:minmax(0,1fr) 18px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.v2101LaneScroller{overflow:auto;position:relative;background-image:linear-gradient(#eef4f8 1px, transparent 1px),linear-gradient(90deg,#eef4f8 1px, transparent 1px);background-size:18px 18px;scrollbar-width:thin;}
+.v2101LaneInner{min-width:1180px;padding:6px 8px 4px 8px;position:relative;}
+.v2101Lane{height:108px;border:2px solid #326ca7;border-radius:9px;background:rgba(255,255,255,.82);margin-bottom:4px;position:relative;overflow:visible;}
+.v2101Lane:after{content:"";position:absolute;left:76px;right:10px;top:50%;border-top:1px dashed #6d93b4;opacity:.75;}
+.v2101LaneLabel{position:absolute;left:0;top:0;bottom:0;width:48px;background:linear-gradient(180deg,#2a76cf,#2a63a3);border-radius:6px;color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.04em;}
+.v2101Block{position:absolute;left:95px;top:28px;width:112px;height:60px;background:#fff;border:2px solid #222;box-shadow:0 5px 14px rgba(0,0,0,.06);z-index:2;font-size:9px;text-align:center;cursor:pointer;}
+.v2101Block.selected{outline:3px solid rgba(38,119,255,.35);}
+.v2101BlockTitle{height:16px;line-height:16px;font-weight:900;border-bottom:1px solid #222;}
+.v2101BlockCols{display:grid;grid-template-columns:1fr 1fr 1fr;height:42px;}
+.v2101BlockCols div{border-right:1px solid #222;font-size:8px;padding-top:3px}.v2101BlockCols div:last-child{border-right:0;}
+.port{position:absolute;width:9px;height:9px;border:1.5px solid #111;background:#fff;border-radius:50%;z-index:3;}
+.pL1{left:-14px;top:18px}.pL2{left:-14px;top:30px}.pL3{left:-14px;top:42px}.pR1{right:-14px;top:18px}.pR2{right:-14px;top:30px}.pR3{right:-14px;top:42px}.pBottom{left:51px;bottom:-7px;}
+.v2101Wire{position:absolute;left:151px;top:194px;width:2px;height:340px;background:#1f2933;z-index:1;}
+.v2101Wire:after{content:"";position:absolute;bottom:-4px;left:-3px;width:8px;height:8px;background:#111;border-radius:50%;}
+.v2101SharedScroll{height:18px;background:#f7fbfe;border-top:1px solid var(--line);display:flex;align-items:center;padding:0 8px;gap:8px;}
+.v2101ScrollRail{height:8px;background:#e3ecf2;border-radius:8px;flex:1;position:relative;}
+.v2101ScrollThumb{position:absolute;left:110px;width:520px;top:0;bottom:0;background:#8d9aa4;border-radius:8px;}
+.branchOverview .branchGrid{font-size:10px;}
+@media(max-height:850px){.v2101Lane{height:92px}.v2101SwimCanvas{min-height:360px}.v2101Wire{height:285px}.bottom{grid-template-rows:55px}.logRow{height:14px;font-size:9px}}
+
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.10 Workspace</h1></div>
+  <div class="title"><h1>Economy Master Interface v2.10.1 Workspace</h1></div>
   <div class="bar topSectorBar" id="sectorBar"><span class="barLabel">Sector / Viewpoint</span></div>
 </header>
 <div class="ribbon">
   <div class="bar modeBar" id="toolBar"><span class="barLabel">Mode Select</span></div>
 </div>
 <div class="main">
-  <section class="panel leftPanel"><div class="panelHead"><h2>Contextual TreeView</h2><span class="mini" id="nodeCount">0 nodes</span></div><div class="tree" id="tree"></div><div class="leftControls"><div class="controlTitle">Primary Scope — where the user/system is standing</div><div class="scopeGrid" id="scopeGrid"></div><div class="controlTitle">Cross-sector Overlay — relationship layer</div><div class="overlayChips" id="overlayChips"></div></div></section>
-  <section class="panel centerPanel"><div class="panelHead"><h2 id="centerTitle">Home / Economy Orientation</h2><span class="mini" id="centerSource">clickable five-sector wheel</span></div><div class="contextBar" id="contextBar"></div><div class="workspaceTools"><div class="toolButtons"><button class="smallBtn primary" id="newObjBtn">Add Object</button><button class="smallBtn" id="canonicalSampleBtn">Shared Data Sample</button><button class="smallBtn" id="editObjBtn">Edit Object</button><button class="smallBtn green" id="saveAllBtn">Save Local</button><button class="smallBtn orange" id="raiseVRQBtn">Raise VRQ</button><button class="smallBtn" id="clearBtn">Clear Selection</button></div><span class="mini">Tree node × Activity Tool drives the center workspace</span></div><div class="workspace" id="workspace"></div></section>
+  <section class="panel leftPanel"><div class="panelHead"><h2>Contextual TreeView</h2><span class="mini" id="nodeCount">0 nodes</span></div><div class="treeActionBar"><button class="smallBtn" id="treeHomeBtn">Home</button><button class="smallBtn" id="treeUpBtn">Up</button><button class="smallBtn" id="treeBookmarkBtn">Bookmark</button><button class="smallBtn" id="treeAddBtn">Add</button><button class="smallBtn" id="treeEditBtn">Edit</button><button class="smallBtn" id="treeDeleteBtn">Delete</button></div><div class="treeSelectedBox"><div><div class="selLabel">Selected Sector:</div><div class="selValue" id="treeSelectedSector">Home</div></div><div><div class="selLabel">Selected Node:</div><div class="selValue" id="treeSelectedNode">none</div></div></div><div class="tree" id="tree"></div><div class="leftControls"><div class="controlTitle">Primary Scope — where the user/system is standing</div><div class="scopeGrid" id="scopeGrid"></div><div class="controlTitle">Cross-sector Overlay — relationship layer</div><div class="overlayChips" id="overlayChips"></div></div></section>
+  <section class="panel centerPanel"><div class="panelHead"><h2 id="centerTitle">System View</h2><span class="mini" id="centerSource"></span></div><div class="contextBar" id="contextBar"></div><div class="workspaceTools"><div class="toolButtons"><span class="mini">Selected Mode: <b id="centerSelectedMode">SWIMLANE</b></span><button class="smallBtn" id="centerHomeBtn">Home</button><button class="smallBtn" id="centerUpBtn">Up</button><button class="smallBtn" id="centerBookmarkBtn">Bookmark</button><button class="smallBtn primary" id="newObjBtn">Add</button><button class="smallBtn" id="editObjBtn">Edit</button><button class="smallBtn" id="centerDeleteBtn">Delete</button><button class="smallBtn" id="canonicalSampleBtn">Shared Data Sample</button><button class="smallBtn green" id="saveAllBtn">Save Local</button><button class="smallBtn orange" id="raiseVRQBtn">Raise VRQ</button><button class="smallBtn" id="clearBtn">Clear Selection</button></div><div class="centerStatusStrip"><div class="statusCell"><div class="selLabel">Selected Swimlane:</div><div class="selValue" id="selectedSwimlaneLabel">Marketing</div></div><div class="statusCell"><div class="selLabel">Selected Object:</div><div class="selValue" id="selectedObjectLabel">none</div></div></div></div><div class="workspace" id="workspace"></div></section>
   <section class="panel inspector"><div class="panelHead"><h2>Selected Item Inspector</h2><span class="mini" id="inspectorSource">Startup</span></div><div class="actionGrid"><button class="act" id="actNew">NEW</button><button class="act" id="actOpen">OPEN</button><button class="act" id="actEdit">EDIT</button><button class="act" id="actSave">SAVE</button></div><div class="actionGrid second"><button class="act" id="actSim">SIMULATE</button><button class="act" id="actAssess">ASSESS</button><button class="act" id="actDoc">DOCUMENT</button></div><div class="hierarchyBox"><h3>Inspector Context Hierarchy</h3><div id="hierarchySteps"></div></div><div class="desc" id="desc"></div><div class="fieldGrid" id="fieldGrid"></div><div class="moreBox"><button class="smallBtn primary" id="moreEditor">More / Custom Editor</button><button class="smallBtn" id="exportBtn">Export JSON</button><button class="smallBtn" id="importBtn">Import</button><input id="importFile" type="file" accept="application/json" class="hiddenFile"></div></section>
 </div>
 <div class="bottom">
@@ -1037,7 +1093,68 @@ app.evidence.unshift('REC | v2.10 layout removes center scope/overlay/context st
 app.evidence.unshift('REC | v2.9 workspace editor/export/import and PDCA acceptance checks added | Saved');
 // ---------------- end v2.9 user-editable workspace + PDCA control layer ----------------
 
-defaultSelectForSector();wireButtons();render();
+
+// ---------------- v2.10.1 corrected layout patch ----------------
+const V2101_VERSION='v2.10.1_workspace_layout';
+function v2101SelectedNodeLabel(){const n=selectedNode();return n?n.label:'none';}
+function v2101UpdateLayoutStatus(){
+  const n=selectedNode();
+  const sec=document.getElementById('treeSelectedSector'); if(sec)sec.textContent=app.activeSector;
+  const node=document.getElementById('treeSelectedNode'); if(node)node.textContent=n?n.label:'none';
+  const mode=document.getElementById('centerSelectedMode'); if(mode)mode.textContent=String(app.activeTool||'').toUpperCase();
+  const swim=document.getElementById('selectedSwimlaneLabel'); if(swim)swim.textContent=app.activeTool==='Swimlane'?'Marketing':app.activeTool;
+  const obj=document.getElementById('selectedObjectLabel'); if(obj) obj.textContent=app.selectedCenterId?(findCenterObject(app.selectedCenterId)||{}).name||app.selectedCenterId:(app.activeTool==='Swimlane'?'Marketing Report':'none');
+  const title=document.getElementById('centerTitle'); if(title) title.textContent='System View';
+  const src=document.getElementById('centerSource'); if(src) src.textContent='';
+}
+function v2101SelectParent(){const n=selectedNode();if(n&&n.parent){app.selectedNodeId=n.parent.id;render();}}
+function v2101Bookmark(){app.evidence.unshift('REC | Bookmark requested for '+contextTitle()+' | Saved');renderBottom();}
+function v2101DeleteCenter(){if(app.selectedCenterId){deleteCustom();}else alert('Select a center-panel object first. TreeView deletes use the TreeView Delete button.');}
+function v2101DeleteTree(){alert('Delete TreeView node is protected in this prototype. Use Delete Local Node logic from the node editor/workspace export rather than deleting base sector tree nodes.');}
+function v2101WireLayoutButtons(){
+  const by=id=>document.getElementById(id);
+  if(by('treeHomeBtn'))by('treeHomeBtn').onclick=()=>switchSector('Home');
+  if(by('treeUpBtn'))by('treeUpBtn').onclick=v2101SelectParent;
+  if(by('treeBookmarkBtn'))by('treeBookmarkBtn').onclick=v2101Bookmark;
+  if(by('treeAddBtn'))by('treeAddBtn').onclick=()=>openEditor('new');
+  if(by('treeEditBtn'))by('treeEditBtn').onclick=()=>openEditor('edit');
+  if(by('treeDeleteBtn'))by('treeDeleteBtn').onclick=v2101DeleteTree;
+  if(by('centerHomeBtn'))by('centerHomeBtn').onclick=()=>switchSector('Home');
+  if(by('centerUpBtn'))by('centerUpBtn').onclick=v2101SelectParent;
+  if(by('centerBookmarkBtn'))by('centerBookmarkBtn').onclick=v2101Bookmark;
+  if(by('centerDeleteBtn'))by('centerDeleteBtn').onclick=v2101DeleteCenter;
+}
+function renderSwimlane(){
+  const w=document.getElementById('workspace'), n=selectedNode();
+  const selected=app.selectedCenterId==='v2101_marketing_report';
+  w.innerHTML=`<div class="v2101SwimCanvas"><div class="v2101LaneScroller" id="v2101LaneScroller"><div class="v2101LaneInner">
+    <div class="v2101Lane"><div class="v2101LaneLabel">CUSTOMER</div></div>
+    <div class="v2101Lane"><div class="v2101LaneLabel">MARKETING</div><div class="v2101Block ${selected?'selected':''}" data-id="v2101_marketing_report"><div class="v2101BlockTitle">Marketing Report</div><div class="v2101BlockCols"><div>in</div><div>xform</div><div>out</div></div><span class="port pL1"></span><span class="port pL2"></span><span class="port pL3"></span><span class="port pR1"></span><span class="port pR2"></span><span class="port pR3"></span><span class="port pBottom"></span></div></div>
+    <div class="v2101Lane"><div class="v2101LaneLabel">DEFINITION</div></div>
+    <div class="v2101Lane"><div class="v2101LaneLabel">DISTRIBUTION</div></div>
+    <div class="v2101Lane"><div class="v2101LaneLabel">CONSTRAINTS</div></div>
+    <div class="v2101Wire"></div>
+  </div></div><div class="v2101SharedScroll"><span>‹</span><div class="v2101ScrollRail"><div class="v2101ScrollThumb"></div></div><span>›</span></div></div>`;
+  const block=w.querySelector('.v2101Block'); if(block)block.onclick=()=>{app.selectedCenterId='v2101_marketing_report';app.selectedCenterType='center';render();};
+}
+const __v2101OldFindCenterObject=findCenterObject;
+findCenterObject=function(id){if(id==='v2101_marketing_report')return {id:'v2101_marketing_report',name:'Marketing Report',type:'swimlane object',description:'Sample center-panel swimlane object with connector ports and cross-lane wire.'};return __v2101OldFindCenterObject(id);};
+const __v2101OldRenderWorkspace=renderWorkspace;
+renderWorkspace=function(){
+  if(app.v29Mode==='workspace'){v29RenderWorkspaceEditor();v2101UpdateLayoutStatus();return;}
+  if(app.v29Mode==='pdca'){v29RenderPDCA();v2101UpdateLayoutStatus();return;}
+  document.getElementById('centerTitle').textContent='System View';
+  document.getElementById('centerSource').textContent='';
+  if(app.activeSector==='Home'){renderHome();v2101UpdateLayoutStatus();return;}
+  if(app.activeTool==='Swimlane')renderSwimlane();else if(app.activeTool==='Datagrid')renderDatagrid();else if(app.activeTool==='Model')renderModel();else if(app.activeTool==='Simulate')renderSimulate();else if(app.activeTool==='Assess')renderAssess();else if(app.activeTool==='Compare / Transact')renderCompare();else renderDefinitions();
+  v2101UpdateLayoutStatus();
+};
+const __v2101OldRender=render;
+render=function(){__v2101OldRender();v2101UpdateLayoutStatus();v2101WireLayoutButtons();};
+app.evidence.unshift('REC | v2.10.1 separates TreeView edit buttons from center-panel edit buttons and removes center scope/overlay controls | Saved');
+// ---------------- end v2.10.1 corrected layout patch ----------------
+
+defaultSelectForSector();wireButtons();v2101WireLayoutButtons();render();
 </script>
 <script src="data/v27_node_builder.js"></script>
 </body>
