@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.10.2 Workspace</title>
+<title>Economy Master Interface v2.10.3 Workspace</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -123,12 +123,24 @@ header{grid-template-columns:auto minmax(0,1fr);padding:6px 9px;gap:12px;}
 .v2101LaneScroller{height:calc(100% - 28px)!important;}
 @media (max-width:1400px){.main{grid-template-columns:335px minmax(560px,1fr) 300px!important}.treeActionBar .smallBtn{min-width:43px!important;padding-left:6px!important;padding-right:6px!important;font-size:9.5px!important}.statusCell{min-width:118px!important}}
 
+
+/* v2.10.3 local-node delete dialog */
+.deleteDialogShade{position:fixed;inset:0;background:rgba(18,34,48,.28);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;}
+.deleteDialog{width:min(520px,calc(100vw - 48px));background:#fff;border:1px solid var(--line2);border-radius:14px;box-shadow:0 24px 70px rgba(20,40,60,.28);overflow:hidden;}
+.deleteDialogHead{padding:12px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#f8fbfd);}
+.deleteDialogHead h3{margin:0;font-size:15px;letter-spacing:-.01em;}
+.deleteDialogBody{padding:14px;color:#334d60;font-size:12px;line-height:1.45;}
+.deleteDialogBody code{font-family:var(--mono);background:#f3f7fa;border:1px solid var(--line);border-radius:5px;padding:1px 4px;}
+.deleteDialogActions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line);background:#fbfdff;}
+.deleteDialogActions .smallBtn{min-width:110px;background:#fff!important;color:#385267!important;border-color:var(--line)!important;}
+.deleteDialogActions .smallBtn:hover{border-color:#9fb8c8!important;box-shadow:0 5px 14px rgba(38,119,255,.08);}
+
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.10.2 Workspace</h1></div>
+  <div class="title"><h1>Economy Master Interface v2.10.3 Workspace</h1></div>
   <div class="bar topSectorBar" id="sectorBar"><span class="barLabel">Sector / Viewpoint</span></div>
 </header>
 <div class="ribbon">
@@ -1124,7 +1136,7 @@ app.evidence.unshift('REC | v2.9 workspace editor/export/import and PDCA accepta
 
 
 // ---------------- v2.10.1 corrected layout patch ----------------
-const V2101_VERSION='v2.10.2_workspace_layout';
+const V2101_VERSION='v2.10.3_workspace_layout_delete_local';
 function v2101SelectedNodeLabel(){const n=selectedNode();return n?n.label:'none';}
 function v2101UpdateLayoutStatus(){
   const n=selectedNode();
@@ -1139,7 +1151,51 @@ function v2101UpdateLayoutStatus(){
 function v2101SelectParent(){const n=selectedNode();if(n&&n.parent){app.selectedNodeId=n.parent.id;render();}}
 function v2101Bookmark(){app.evidence.unshift('REC | Bookmark requested for '+contextTitle()+' | Saved');renderBottom();}
 function v2101DeleteCenter(){if(app.selectedCenterId){deleteCustom();}else alert('Select a center-panel object first. TreeView deletes use the TreeView Delete button.');}
-function v2101DeleteTree(){alert('Delete TreeView node is protected in this prototype. Use Delete Local Node logic from the node editor/workspace export rather than deleting base sector tree nodes.');}
+function v2103IsLocalNode(n){return !!(n && Array.isArray(app.customNodes) && app.customNodes.some(c=>c.id===n.id));}
+function v2103LocalDescendantIds(rootId, sectorOnly){
+  const ids=new Set([rootId]);
+  let changed=true;
+  while(changed){
+    changed=false;
+    (app.customNodes||[]).forEach(c=>{
+      if(sectorOnly && c.sector && c.sector!==app.activeSector)return;
+      if(c.parent && ids.has(c.parent) && !ids.has(c.id)){ids.add(c.id);changed=true;}
+    });
+  }
+  return ids;
+}
+function v2103CloseDeleteDialog(){const d=document.getElementById('deleteLocalDialogShade');if(d)d.remove();}
+function v2103DoDeleteTree(scope){
+  const n=selectedNode();
+  if(!n || !v2103IsLocalNode(n)){v2103CloseDeleteDialog();alert('This is a protected base TreeView node. Only local/browser-created nodes can be deleted. Use Edit/Workspace overrides for base nodes.');return;}
+  const label=n.label||n.id;
+  const inThisTree=(scope==='this');
+  const msg=inThisTree?`Delete the local node "${label}" from this ${app.activeSector} tree only?`:`Delete the local node "${label}" everywhere it appears in local workspace data?`;
+  if(!confirm(msg))return;
+  const ids=v2103LocalDescendantIds(n.id,inThisTree);
+  const sameLabel=n.label;
+  app.customNodes=(app.customNodes||[]).filter(c=>{
+    if(inThisTree) return !(ids.has(c.id) && (!c.sector || c.sector===app.activeSector));
+    return !(ids.has(c.id) || c.id===n.id || (sameLabel && c.label===sameLabel));
+  });
+  ids.forEach(id=>{delete app.customObjects[id];});
+  if(!inThisTree){Object.keys(app.customObjects||{}).forEach(id=>{const obj=app.customObjects[id];if(id===n.id || ids.has(id) || (sameLabel && obj && obj.label===sameLabel))delete app.customObjects[id];});}
+  app.selectedNodeId=null;
+  app.selectedCenterId=null;
+  v29Log('delete',inThisTree?`Deleted local node from current tree: ${label}`:`Deleted local node everywhere: ${label}`);
+  saveAll();attachCustomNodes();v2103CloseDeleteDialog();render();
+}
+function v2101DeleteTree(){
+  const n=selectedNode();
+  if(!n){alert('Select a TreeView node first.');return;}
+  const isLocal=v2103IsLocalNode(n);
+  const shade=document.createElement('div');
+  shade.id='deleteLocalDialogShade';
+  shade.className='deleteDialogShade';
+  shade.innerHTML=`<div class="deleteDialog" role="dialog" aria-modal="true"><div class="deleteDialogHead"><h3>Delete TreeView Node</h3></div><div class="deleteDialogBody">${isLocal?`Selected local node: <b>${esc(n.label||n.id)}</b><br><br>Choose whether to remove it only from the current <code>${esc(app.activeSector)}</code> tree, or from every local tree/workspace reference where it appears.`:`Selected node: <b>${esc(n.label||n.id)}</b><br><br>This is a protected base TreeView node. Base sector taxonomy nodes are not deleted from this prototype. You can edit them with overrides, or create/delete local nodes.`}</div><div class="deleteDialogActions">${isLocal?`<button class="smallBtn" onclick="v2103DoDeleteTree('this')">Delete Local — This Tree</button><button class="smallBtn" onclick="v2103DoDeleteTree('all')">Delete Local — Every Tree</button>`:''}<button class="smallBtn" onclick="v2103CloseDeleteDialog()">Cancel</button></div></div>`;
+  shade.addEventListener('click',e=>{if(e.target===shade)v2103CloseDeleteDialog();});
+  document.body.appendChild(shade);
+}
 function v2101WireLayoutButtons(){
   const by=id=>document.getElementById(id);
   if(by('treeHomeBtn'))by('treeHomeBtn').onclick=()=>switchSector('Home');

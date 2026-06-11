@@ -1,14 +1,23 @@
-# Economy Master Overview v2.10.2 Workspace
+# Economy Master Overview v2.10.3 Workspace
 
-Focused layout repair based on the user's marked screenshot.
+Focused repair over v2.10.2.
 
-Changes:
-- Fixed TreeView panel row layout so selected-sector/selected-node boxes do not consume the tree area.
-- Widened TreeView panel and added a visible splitter affordance.
-- Kept TreeView edit buttons above TreeView and separate from center-panel edit buttons.
-- Removed center-panel scope/overlay/context strip from the working area.
-- Hid home explanatory cards inside center workspace so the center panel remains full-width/clean.
-- Standardized center toolbar buttons to white/neutral styling; no red center delete button.
-- Preserved existing TreeView data and functionality.
+## Changes
 
-Upload the contents of this folder to the repository root.
+- TreeView Delete now opens a confirmation popup instead of only showing a protected-node alert.
+- For local/browser-created TreeView nodes, popup offers:
+  - Delete Local — This Tree
+  - Delete Local — Every Tree
+  - Cancel
+- Base/external sector taxonomy nodes remain protected from deletion.
+- TreeView data, center-panel layout, datagrid behavior, workspace editor, import/export, and v2.10.2 layout repair are preserved.
+
+## GitHub Pages
+
+Upload the contents so `index.html` is at the repository root.
+
+Forced reload URL:
+
+```text
+https://chrisg288.github.io/Economy-Master-Overview/?v=2_10_3_delete_local_choices
+```
