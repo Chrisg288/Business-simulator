@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Economy Master Interface v2.10.1 Workspace</title>
+<title>Economy Master Interface v2.10.2 Workspace</title>
 <style>
 :root{
   --bg:#eef5f8;--panel:#fff;--panel2:#f8fbfd;--ink:#142331;--muted:#65798b;--line:#d9e7ef;--line2:#b7cdd9;
@@ -39,7 +39,7 @@ header{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-item
 .workspaceHeader h3{margin:0 0 5px;font-size:14px}.workspaceHeader p{margin:0;color:var(--muted);font-size:11px;line-height:1.35}.workspaceGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.editCard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 6px 14px rgba(35,61,81,.05)}.editCard h3{margin:0 0 7px;font-size:13px}.editCard p{margin:0 0 8px;color:var(--muted);font-size:11px;line-height:1.35}.editForm{display:grid;grid-template-columns:130px 1fr;gap:6px 8px;align-items:start}.editForm label{font-size:10px;font-weight:900;color:#526c7f;padding-top:6px}.editForm input,.editForm textarea,.editForm select{font:11px var(--font);border:1px solid var(--line2);border-radius:7px;padding:6px;background:#fbfdff;min-width:0}.editForm textarea{min-height:95px;font-family:var(--mono);resize:vertical}.editForm .wide{grid-column:1 / -1}.buttonRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.pdcaGrid{display:grid;gap:6px}.pdcaRow{display:grid;grid-template-columns:58px 1fr 90px;gap:8px;align-items:center;border:1px solid #e2edf4;background:#fff;border-radius:10px;padding:7px;font-size:11px}.pdcaRow .phase{font-weight:900;color:#334d60}.pdcaRow .status{font-weight:900;text-align:center;border-radius:999px;padding:3px 6px;background:#f5f8fb}.pdcaRow.pass .status{background:#eaf8f1;color:#137348}.pdcaRow.fail .status{background:#fff0f3;color:#a51e38}.pdcaRow.warn .status{background:#fff7e7;color:#915a00}.changeBox{max-height:180px;overflow:auto;border:1px solid var(--line);border-radius:10px;background:#fbfdff;padding:6px;font:10px var(--mono);white-space:pre-wrap}.templatePreview{font:10px var(--mono);background:#f7fbfe;border:1px solid var(--line);border-radius:8px;padding:8px;max-height:130px;overflow:auto}.hiddenV29{display:none!important}
 
 
-/* v2.10.1 corrected workspace layout: separate TreeView edit controls from center-panel controls; no center scope/overlay strip */
+/* v2.10.2 corrected workspace layout: separate TreeView edit controls from center-panel controls; no center scope/overlay strip */
 .app{grid-template-rows:auto auto minmax(0,1fr) 64px;gap:5px;padding:5px;}
 header{grid-template-columns:auto minmax(0,1fr);padding:6px 9px;gap:12px;}
 .title h1{font-size:17px;}
@@ -94,12 +94,41 @@ header{grid-template-columns:auto minmax(0,1fr);padding:6px 9px;gap:12px;}
 .branchOverview .branchGrid{font-size:10px;}
 @media(max-height:850px){.v2101Lane{height:92px}.v2101SwimCanvas{min-height:360px}.v2101Wire{height:285px}.bottom{grid-template-rows:55px}.logRow{height:14px;font-size:9px}}
 
+
+
+/* v2.10.2 focused layout repair
+   - TreeView rows no longer collapse/stretch incorrectly.
+   - TreeView panel is widened and gets a visible splitter affordance.
+   - Center panel removes internal help/explanation cards so workspace stays dominant.
+   - Center toolbar buttons stay visually neutral/white; no red delete button in the workspace toolbar.
+*/
+.main{grid-template-columns:345px minmax(720px,1fr) 320px!important;gap:7px!important;}
+.leftPanel{grid-template-rows:auto auto auto minmax(0,1fr) auto!important;position:relative;min-width:335px;}
+.leftPanel::after{content:"";position:absolute;top:0;right:-5px;width:8px;height:100%;cursor:col-resize;background:linear-gradient(90deg,transparent,rgba(65,99,124,.16),transparent);opacity:.55;z-index:5;}
+.treeActionBar{display:flex!important;flex-wrap:nowrap!important;gap:4px!important;overflow:visible!important;padding:6px 7px 5px!important;}
+.treeActionBar .smallBtn{flex:0 0 auto!important;min-width:46px!important;height:27px!important;padding:5px 7px!important;font-size:10px!important;}
+.treeSelectedBox{display:grid!important;grid-template-columns:1fr 1fr!important;min-height:48px!important;max-height:58px!important;overflow:hidden!important;}
+.treeSelectedBox>div{padding:6px 8px!important;min-width:0!important;}
+.treeSelectedBox .selValue{font-size:11px!important;line-height:1.15!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.tree{min-height:150px!important;}
+.workspaceTools{padding:5px 8px!important;align-items:center!important;}
+.workspaceTools .toolButtons{align-items:center!important;gap:5px!important;}
+.workspaceTools .smallBtn.primary,.workspaceTools .smallBtn.danger,.workspaceTools .smallBtn.green,.workspaceTools .smallBtn.orange{background:#fff!important;color:#385267!important;border-color:var(--line)!important;box-shadow:none!important;}
+.workspaceTools .smallBtn:hover{border-color:#9fb8c8!important;box-shadow:0 4px 12px rgba(38,119,255,.08)!important;}
+.homeWrap{grid-template-columns:1fr!important;height:100%!important;}
+.homeText{display:none!important;}
+.wheelCard{height:100%!important;width:100%!important;}
+.wheelSvg{height:min(60vh,520px)!important;}
+.v2101SwimCanvas{height:100%!important;min-height:540px!important;}
+.v2101LaneScroller{height:calc(100% - 28px)!important;}
+@media (max-width:1400px){.main{grid-template-columns:335px minmax(560px,1fr) 300px!important}.treeActionBar .smallBtn{min-width:43px!important;padding-left:6px!important;padding-right:6px!important;font-size:9.5px!important}.statusCell{min-width:118px!important}}
+
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div class="title"><h1>Economy Master Interface v2.10.1 Workspace</h1></div>
+  <div class="title"><h1>Economy Master Interface v2.10.2 Workspace</h1></div>
   <div class="bar topSectorBar" id="sectorBar"><span class="barLabel">Sector / Viewpoint</span></div>
 </header>
 <div class="ribbon">
@@ -1095,7 +1124,7 @@ app.evidence.unshift('REC | v2.9 workspace editor/export/import and PDCA accepta
 
 
 // ---------------- v2.10.1 corrected layout patch ----------------
-const V2101_VERSION='v2.10.1_workspace_layout';
+const V2101_VERSION='v2.10.2_workspace_layout';
 function v2101SelectedNodeLabel(){const n=selectedNode();return n?n.label:'none';}
 function v2101UpdateLayoutStatus(){
   const n=selectedNode();
@@ -1151,7 +1180,7 @@ renderWorkspace=function(){
 };
 const __v2101OldRender=render;
 render=function(){__v2101OldRender();v2101UpdateLayoutStatus();v2101WireLayoutButtons();};
-app.evidence.unshift('REC | v2.10.1 separates TreeView edit buttons from center-panel edit buttons and removes center scope/overlay controls | Saved');
+app.evidence.unshift('REC | v2.10.2 fixes TreeView layout rows, keeps center workspace clean, and standardizes center toolbar buttons | Saved');
 // ---------------- end v2.10.1 corrected layout patch ----------------
 
 defaultSelectForSector();wireButtons();v2101WireLayoutButtons();render();
